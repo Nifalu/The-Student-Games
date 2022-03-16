@@ -1,6 +1,10 @@
 package Game;
 
+import Server.ClientHandler;
+import Server.GameServer;
+
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -11,6 +15,7 @@ import java.util.Random;
 public class Game {
 
   final HashMap<InetAddress, User> userlist = new HashMap<>();
+  final ArrayList<Server.ClientHandler> activeClientList = new ArrayList<>();
 
   public Game() {
   }
@@ -25,7 +30,7 @@ public class Game {
    * @param username Username
    * @return user
    */
-  public User connect(InetAddress ip, String username) {
+  public User connect(InetAddress ip,ClientHandler clientHandler, String username) {
     // new user is added
     if (!userlist.containsKey(ip)) {
       // generates and allocates district to new user
@@ -36,6 +41,10 @@ public class Game {
       // known user is not firstTime anymore
       userlist.get(ip).setFirstTime(false);
     }
+
+    // Adds Client to activeClientList:
+    activeClientList.add(clientHandler);
+
     return userlist.get(ip);
   }
 
@@ -46,4 +55,7 @@ public class Game {
     return random.nextInt(12) + 1;
   }
 
+  public ArrayList<ClientHandler> getActiveClientList() {
+    return activeClientList;
+  }
 }

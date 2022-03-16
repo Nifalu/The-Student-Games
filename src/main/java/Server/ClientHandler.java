@@ -37,7 +37,7 @@ public class ClientHandler implements Runnable {
   public void run() {
 
     // Identifies the new Client
-    user = game.connect(socket.getInetAddress(), socket.getInetAddress().getHostName());
+    user = game.connect(socket.getInetAddress(),this, socket.getInetAddress().getHostName());
     welcomeUser();
 
     try {
@@ -81,20 +81,16 @@ public class ClientHandler implements Runnable {
    *
    */
   private void welcomeUser() {
-    if (user.isFirstTime()) {
-      System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
-      try {
+    try {
+      if (user.isFirstTime()) {
+        System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
         out.writeUTF("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    } else {
-      System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has reconnected");
-      try {
+      } else {
+        System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has reconnected");
         out.writeUTF("Welcome back " + user.getUsername() + " from district " + user.getDistrict() + "!");
-      } catch (IOException e) {
-        e.printStackTrace();
       }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
@@ -110,6 +106,7 @@ public class ClientHandler implements Runnable {
   public void disconnectClient(Socket socket, DataInputStream in, DataOutputStream out) {
     System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
     user.setIsConnected(false);
+    game.getActiveClientList().remove(this);
     try {
       if (in != null) {
         in.close();
