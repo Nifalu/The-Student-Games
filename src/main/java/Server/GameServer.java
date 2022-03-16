@@ -18,6 +18,7 @@ public class GameServer implements Runnable {
 
 
   // Lists all active GameServers (Threads) in a List.
+  // will be used to play several games at once
   private static final ArrayList<GameServer> gameServerList = new ArrayList<>();
 
 

@@ -15,11 +15,13 @@ public class User {
   private String username;
   private boolean firstTime = true;
   private boolean isConnected = true;
+  private final int  district;
 
-  public User(InetAddress ip, String username, int id) {
+  public User(InetAddress ip, String username, int district, int id) {
     this.id = id;
     this.ip = ip;
     this.username = username;
+    this.district = district;
   }
 
 
@@ -27,6 +29,8 @@ public class User {
   public String getUsername() {
     return username;
   }
+
+  public int getDistrict() { return district; }
 
   public int getId() {
     return id;
@@ -52,5 +56,6 @@ public class User {
   public void setIsConnected(boolean isConnected) {
     this.isConnected = isConnected;
   }
+
 }
 
