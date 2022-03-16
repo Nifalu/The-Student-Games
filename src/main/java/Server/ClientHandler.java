@@ -83,8 +83,18 @@ public class ClientHandler implements Runnable {
   private void welcomeUser() {
     if (user.isFirstTime()) {
       System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
+      try {
+        out.writeUTF("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     } else {
       System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has reconnected");
+      try {
+        out.writeUTF("Welcome back " + user.getUsername() + " from district " + user.getDistrict() + "!");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 
