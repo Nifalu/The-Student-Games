@@ -31,7 +31,6 @@ public class ClientHandler implements Runnable {
     } catch (IOException e) {
       disconnectClient(socket, in, out);
     }
-    //broadcastMessage("SERVER: " + user.getUsername() + " has entered the arena."); // msg for clients that are already online
   }
 
 
@@ -66,7 +65,7 @@ public class ClientHandler implements Runnable {
 
         } else {
             // message gets sent to all clients
-            // needs to be replaced with method which doesn't send a message to the author for chatting
+            // needs to be replaced with a method which doesn't send a message to the author
           broadcastMessage(s);
         }
 
@@ -86,6 +85,11 @@ public class ClientHandler implements Runnable {
    */
   private void welcomeUser() {
     try {
+      // Server asks for name and sets it as a username
+      out.writeUTF("Please enter your name: ");
+      String username = in.readUTF();
+      user.setUsername(username);
+
       if (user.isFirstTime()) {
         System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
         out.writeUTF("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
