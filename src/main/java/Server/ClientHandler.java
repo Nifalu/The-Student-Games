@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 
 /**
@@ -21,7 +22,7 @@ public class ClientHandler implements Runnable {
   DataOutputStream out; // Send data to client
 
 
-  public ClientHandler(Socket socket, Game.Game game) {
+  public ClientHandler(Socket socket, Game.Game game) throws IOException {
     this.socket = socket;
     this.game = game;
     try {
@@ -30,6 +31,7 @@ public class ClientHandler implements Runnable {
     } catch (IOException e) {
       disconnectClient(socket, in, out);
     }
+    //broadcastMessage("SERVER: " + user.getUsername() + " has entered the arena."); // msg for clients that are already online
   }
 
 
@@ -37,11 +39,11 @@ public class ClientHandler implements Runnable {
   public void run() {
 
     // Identifies the new Client
-    user = game.connect(socket.getInetAddress(),this, socket.getInetAddress().getHostName());
+    user = game.connect(socket.getInetAddress(), this, socket.getInetAddress().getHostName());
     welcomeUser();
 
     try {
-      String s;
+      String s; // message sent by client
       String[] input;
 
       // do chont vlt pinpong here??
@@ -63,7 +65,9 @@ public class ClientHandler implements Runnable {
           out.writeUTF("PONG");
 
         } else {
-          out.writeUTF(input[0]);
+            // message gets sent to all clients
+            // needs to be replaced with method which doesn't send a message to the author for chatting
+          broadcastMessage(s);
         }
 
 
@@ -120,6 +124,26 @@ public class ClientHandler implements Runnable {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * method sends a message to all clients
+   */
+
+  public void broadcastMessage(String msg) throws IOException {
+    // goes through all clients
+      ArrayList<ClientHandler> activeClientList = game.getActiveClientList();
+      for(ClientHandler clientHandler : activeClientList){
+          clientHandler.out.writeUTF(msg);
+      }
+  }
+
+  /**
+   * broadcast method for chat
+   * method sends a message to all clients, but not the one who sent it
+   */
+  public void broadcastChatMessage(String msg) throws IOException {
+      // TO DO
   }
 
 }
