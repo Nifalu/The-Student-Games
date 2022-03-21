@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class Game {
 
-  final HashMap<InetAddress, User> userlist = new HashMap<>();
+  final HashMap<String, User> userlist = new HashMap<>();
   final ArrayList<Server.ClientHandler> activeClientList = new ArrayList<>();
 
   public Game() {
@@ -32,20 +32,20 @@ public class Game {
    */
   public User connect(InetAddress ip,ClientHandler clientHandler, String username) {
     // new user is added
-    if (!userlist.containsKey(ip)) {
+    if (!userlist.containsKey(username)) {
       // generates and allocates district to new user
       int district = assignDistrict();
       User user = new User(ip, username, district, userlist.size());
-      userlist.put(ip, user);
+      userlist.put(username, user);
     } else {
       // known user is not firstTime anymore
-      userlist.get(ip).setFirstTime(false);
+      userlist.get(username).setFirstTime(false);
     }
 
     // Adds Client to activeClientList:
     activeClientList.add(clientHandler);
 
-    return userlist.get(ip);
+    return userlist.get(username);
   }
 
   // generates a random district for new clients

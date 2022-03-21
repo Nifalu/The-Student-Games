@@ -38,7 +38,13 @@ public class ClientHandler implements Runnable {
   public void run() {
 
     // Identifies the new Client
-    user = game.connect(socket.getInetAddress(), this, socket.getInetAddress().getHostName());
+    String username = null;
+    try {
+      username = askUsername();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    user = game.connect(socket.getInetAddress(), this, username);
     welcomeUser();
 
     try {
@@ -64,8 +70,8 @@ public class ClientHandler implements Runnable {
           out.writeUTF("PONG");
 
         } else {
-            // message gets sent to all clients
-            // needs to be replaced with a method which doesn't send a message to the author
+          // message gets sent to all clients
+          // needs to be replaced with a method which doesn't send a message to the author
           broadcastMessage(s);
         }
 
@@ -85,10 +91,6 @@ public class ClientHandler implements Runnable {
    */
   private void welcomeUser() {
     try {
-      // Server asks for name and sets it as a username
-      out.writeUTF("Please enter your name: ");
-      String username = in.readUTF();
-      user.setUsername(username);
 
       if (user.isFirstTime()) {
         System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
@@ -136,26 +138,24 @@ public class ClientHandler implements Runnable {
 
   public void broadcastMessage(String msg) throws IOException {
     // goes through all clients
-      ArrayList<ClientHandler> activeClientList = game.getActiveClientList();
-      for(ClientHandler clientHandler : activeClientList){
+    ArrayList<ClientHandler> activeClientList = game.getActiveClientList();
+    for (ClientHandler clientHandler : activeClientList) {
 
-          // send message to everyone but not yourself
+      // send message to everyone but not yourself
           /*
           if (clientHandler != this) {
             clientHandler.out.writeUTF(msg);
           }
           */
 
-          clientHandler.out.writeUTF(msg); // send message to everyone
-      }
+      clientHandler.out.writeUTF(msg); // send message to everyone
+    }
   }
 
-  /**
-   * broadcast method for chat
-   * method sends a message to all clients, but not the one who sent it
-   */
-  public void broadcastChatMessage(String msg) throws IOException {
-      // TO DO
+  public String askUsername() throws IOException {
+    out.writeUTF("Please enter your name: ");
+    String username = in.readUTF();
+    return username;
   }
 
 }
