@@ -38,16 +38,13 @@ public class ClientHandler implements Runnable {
   public void run() {
 
     // Identifies the new Client
-    String username = null;
     try {
-      username = askUsername();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+      String username = askUsername();
+
     user = game.connect(socket.getInetAddress(), this, username);
     welcomeUser();
 
-    try {
+
       String s; // message sent by client
       String[] input;
 
@@ -154,8 +151,7 @@ public class ClientHandler implements Runnable {
 
   public String askUsername() throws IOException {
     out.writeUTF("Please enter your name: ");
-    String username = in.readUTF();
-    return username;
+    return in.readUTF();
   }
 
 }
