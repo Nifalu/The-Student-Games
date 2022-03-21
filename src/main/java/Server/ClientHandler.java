@@ -38,14 +38,7 @@ public class ClientHandler implements Runnable {
   public void run() {
 
     // Identifies the new Client
-    String username = null;
-    try {
-      username = askUsername(); // asks client to enter name
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    // user = game.connect(socket.getInetAddress(), this, socket.getInetAddress().getHostName());
-    user = game.connect(socket.getInetAddress(), this, username);
+    user = game.connect(socket.getInetAddress(), this, socket.getInetAddress().getHostName());
     welcomeUser();
 
     try {
@@ -86,34 +79,17 @@ public class ClientHandler implements Runnable {
     }
   }
 
-  /**
-   * Server asks for clients name when joining
-   */
-  public String askUsername() throws IOException {
-    // Server asks for name and sets it as a username
-    try {
-      out.writeUTF("Please enter your name: ");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    String username = null;
-    try {
-      username = in.readUTF();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    // implementation needed so that two clients can't be logged in as the same user
-    return username;
-
-  }
-
 
   /**
    *
    */
   private void welcomeUser() {
     try {
+      // Server asks for name and sets it as a username
+      out.writeUTF("Please enter your name: ");
+      String username = in.readUTF();
+      user.setUsername(username);
+
       if (user.isFirstTime()) {
         System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
         out.writeUTF("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
@@ -174,5 +150,12 @@ public class ClientHandler implements Runnable {
       }
   }
 
+  /**
+   * broadcast method for chat
+   * method sends a message to all clients, but not the one who sent it
+   */
+  public void broadcastChatMessage(String msg) throws IOException {
+      // TO DO
+  }
 
 }
