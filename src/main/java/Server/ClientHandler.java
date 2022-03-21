@@ -153,5 +153,8 @@ public class ClientHandler implements Runnable {
     out.writeUTF("Please enter your name: ");
     return in.readUTF();
   }
+  public String proposeUsername() {
+    return null;
+  }
 
 }
