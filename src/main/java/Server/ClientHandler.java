@@ -3,7 +3,8 @@ package Server;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
+import java.net.*;
+import java.rmi.server.UID;
 import java.util.ArrayList;
 
 
@@ -21,6 +22,12 @@ public class ClientHandler implements Runnable {
   DataInputStream in; // Receive data from client
   DataOutputStream out; // Send data to client
 
+  private DatagramSocket dataSocket;
+  ServerSocket serverSocket;
+  private Thread run, receive, send, tick;
+  private boolean running = false;
+
+
 
   public ClientHandler(Socket socket, Game.Game game) throws IOException {
     this.socket = socket;
@@ -28,19 +35,27 @@ public class ClientHandler implements Runnable {
     try {
       this.in = new DataInputStream(socket.getInputStream());
       this.out = new DataOutputStream(socket.getOutputStream());
+      this.dataSocket = new DatagramSocket();
+      run = new Thread(this, "Server");
+      run.start();
     } catch (IOException e) {
       disconnectClient(socket, in, out);
     }
     //broadcastMessage("SERVER: " + user.getUsername() + " has entered the arena."); // msg for clients that are already online
   }
 
-
   @Override
   public void run() {
 
     // Identifies the new Client
-    user = game.connect(socket.getInetAddress(), this, socket.getInetAddress().getHostName());
+    user = game.connect(socket.getInetAddress(), this, socket.getInetAddress().getHostName(), socket.getPort());
     welcomeUser();
+    running = true;
+    ping();
+    tick();
+    receive();
+
+    /* changed with read()
 
     try {
       String s; // message sent by client
@@ -53,23 +68,21 @@ public class ClientHandler implements Runnable {
         // ( "instruction" and "value" ) which are saved in an array.
         input = s.split("-", 2); // Splits the String (limit - 1) times at the first "-"
 
-
         // Some possible Instructions. --> should be sent to a separate protocol class for more clarity.
         if (input[0].equals("CHANGENAME")) { // (use: CHANGENAME-YourNewName )
           System.out.println(user.getUsername() + "is now called: " + input[1]);
           user.setUsername(input[1]);
           out.writeUTF("Your new nickname is: " + user.getUsername());
 
-        } else if (input[0].equals("PING")) { // (use: PING )
-          System.out.println(user.getUsername() + ": " + input[0]);
-          out.writeUTF("PONG");
+          //} else if (input[0].equals("PING")) { // (use: PING )
+          //  System.out.println(user.getUsername() + ": " + input[0]);
+          //  out.writeUTF("PONG");
 
         } else {
-            // message gets sent to all clients
-            // needs to be replaced with method which doesn't send a message to the author for chatting
+          // message gets sent to all clients
+          // needs to be replaced with method which doesn't send a message to the author for chatting
           broadcastMessage(s);
         }
-
 
       }
       out.writeUTF("QUIT");
@@ -78,12 +91,90 @@ public class ClientHandler implements Runnable {
     } catch (IOException e) {
       e.printStackTrace();
     }
+     */
+  }
+  public void tick() {
+    tick = new Thread("Tick") {
+      public void run() {
+        while (running) {
+
+        }
+      }
+    };
+    tick.start();
+  }
+
+  private void ping() {
+    while (true) {
+
+    }
+  }
+
+  private void receive() {
+    receive = new Thread("Receive") {
+      public void run() {
+        while (running) {
+          //System.out.println(clients.size());
+          byte[] data = new byte[1024];
+          DatagramPacket packet = new DatagramPacket(data, data.length);
+          try {
+            dataSocket.receive(packet);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+          read(packet);
+        }
+      }
+    };
+    receive.start();
+  }
+
+  private void send(final byte[] data, final InetAddress address, final int port) {
+    send = new Thread("Send") {
+      public void run() {
+        DatagramPacket packet = new DatagramPacket(data, data.length, address, port);
+        try {
+          dataSocket.send(packet);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    };
+    send.start();
+  }
+
+  private void send(String message, InetAddress address, int port) {
+    String msg = "/b/" + message + "/e/";
+    send(msg.getBytes(), address, port);
+  }
+
+  private void read(DatagramPacket packet) {
+    String message = new String(packet.getData());
+    String[] input;
+
+    // Reads the incoming String and splits it into two parts
+    // ( "instruction" and "value" ) which are saved in an array.
+    input = message.split("-", 2); // Splits the String (limit - 1) times at the first "-"
+    try {
+      if (input[0].equals("PING")) {
+        System.out.println(user.getUsername() + ": " + input[0]);
+        send("PONG", dataSocket.getInetAddress(), dataSocket.getPort());
+      } else if (input[0].equals("CHANGENAME")) { // (use: CHANGENAME-YourNewName )
+        System.out.println(user.getUsername() + "is now called: " + input[1]);
+        user.setUsername(input[1]);
+        send("Your new nickname is: " + user.getUsername(), dataSocket.getInetAddress(), dataSocket.getPort());
+      } else if (input[0].equals("QUIT")) {
+        System.out.println("Got disconnect request: " + message.substring(3, message.length()));
+        disconnectClient(socket, in, out);
+      } else {
+        broadcastMessage(message);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 
-  /**
-   *
-   */
   private void welcomeUser() {
     try {
       if (user.isFirstTime()) {

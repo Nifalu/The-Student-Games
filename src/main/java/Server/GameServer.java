@@ -3,9 +3,8 @@ package Server;
 import Game.Game;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,7 +20,6 @@ public class GameServer implements Runnable {
   // will be used to play several games at once
   private static final ArrayList<GameServer> gameServerList = new ArrayList<>();
 
-
   /**
    * Empty Constructor. Creates his own random Port Number between 2000 and 10000.
    * Should not be used when multiple instances are made.
@@ -31,11 +29,9 @@ public class GameServer implements Runnable {
       this.port = (2000 + random.nextInt(8000));
       this.serverSocket = new ServerSocket(port);
       gameServerList.add(this);
-
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 
   /**
@@ -48,18 +44,15 @@ public class GameServer implements Runnable {
       this.port = port;
       this.serverSocket = new ServerSocket(port);
       gameServerList.add(this);
-
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-
   @Override
   public void run() {
 
     Game game = new Game();
-
 
     try {
       System.out.println("Server created: " + InetAddress.getLocalHost().getHostAddress() + " Port: " + port);
@@ -78,10 +71,7 @@ public class GameServer implements Runnable {
       e.printStackTrace();
       closeGameServer();
     }
-
-
   }
-
 
   // GETTER -> Returns list with all current GameServerThreads
   public static ArrayList<GameServer> getGameServerList() {

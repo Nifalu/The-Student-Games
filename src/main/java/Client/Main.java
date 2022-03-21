@@ -13,8 +13,11 @@ public class Main {
    * @param args Server Address, Port Number
    */
   public static void main(String[] args) {
-
-    GameClient client = new GameClient(args[0], Integer.parseInt(args[1]));
-    client.startClient();
+    try {
+      GameClient client = new GameClient(args[0], Integer.parseInt(args[1]));
+      client.startClient();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
