@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class ClientHandler implements Runnable {
 
 
+  // hi
+
   Game.Game game; // ClientHandler gets Access to the Game
   Socket socket; // ClientHandler is connected with the Client
   Game.User user; // ClientHandler knows which User the Client belongs to
