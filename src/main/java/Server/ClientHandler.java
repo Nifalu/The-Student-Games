@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class ClientHandler implements Runnable {
 
 
-  // hi
 
   Game.Game game; // ClientHandler gets Access to the Game
   Socket socket; // ClientHandler is connected with the Client
@@ -155,7 +154,9 @@ public class ClientHandler implements Runnable {
     out.writeUTF("Please enter your name: ");
     return in.readUTF();
   }
-  public String proposeUsername() {
+  public String proposeUsername() throws IOException{
+    String proposedUsername = user.getUsername() + user.getDistrict();
+    out.writeUTF("Would you like to go by the name: " + proposedUsername);
     return null;
   }
 
