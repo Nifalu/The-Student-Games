@@ -162,7 +162,15 @@ public class ClientHandler implements Runnable {
     // goes through all clients
       ArrayList<ClientHandler> activeClientList = game.getActiveClientList();
       for(ClientHandler clientHandler : activeClientList){
-          clientHandler.out.writeUTF(msg);
+
+          // send message to everyone but not yourself
+          /*
+          if (clientHandler != this) {
+            clientHandler.out.writeUTF(msg);
+          }
+          */
+
+          clientHandler.out.writeUTF(msg); // send message to everyone
       }
   }
 
