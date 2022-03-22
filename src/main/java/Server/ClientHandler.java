@@ -42,10 +42,10 @@ public class ClientHandler implements Runnable {
     try {
       String username = askUsername();
 
-    user = game.connect(socket.getInetAddress(), this, username);
-    welcomeUser();
-    String answer = proposeUsername();
-    String newUsername = usernameProposals();
+      user = game.connect(socket.getInetAddress(), this, username);
+      welcomeUser();
+      String answer = proposeUsername();
+      String newUsername = usernameProposals();
       if (answer.equalsIgnoreCase("YES")) {
         user.setUsername(newUsername);
         out.writeUTF("Your username has been changed to " + "\"" + user.getUsername() + "\"" + ".");
@@ -54,18 +54,20 @@ public class ClientHandler implements Runnable {
       }
 
 
+      while (socket.getInputStream().read() != -1) {
 
+        String input; // message sent by client
 
-      String input; // message sent by client
-
-      // do chont vlt pinpong here??
-      while (!(input = in.readUTF()).equals("QUIT")) {
-
-        out.writeUTF(ServerProtocol.get(game, user, input));
-
+        // do chont vlt pinpong here??
+        while (!(input = in.readUTF()).equals("QUIT")) {
+          out.writeUTF(ServerProtocol.get(game, user, input));
+        }
       }
-      out.writeUTF("QUIT");
+      System.out.println("has left the Game. LOOSER");
+      socket.close();
+      //out.writeUTF("QUIT");
       disconnectClient(socket, in, out);
+
 
     } catch (IOException e) {
       e.printStackTrace();
