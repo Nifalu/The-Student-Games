@@ -1,10 +1,7 @@
 package Server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 
 
 /**
@@ -14,21 +11,19 @@ import java.util.ArrayList;
  */
 public class ClientHandler implements Runnable {
 
-
-
   Game.Game game; // ClientHandler gets Access to the Game
   Socket socket; // ClientHandler is connected with the Client
   public Game.User user; // ClientHandler knows which User the Client belongs to
-  DataInputStream in; // Receive data from client
-  DataOutputStream out; // Send data to client
+  InputStream in; // Receive data from client
+  OutputStream out; // Send data to client
 
 
   public ClientHandler(Socket socket, Game.Game game) throws IOException {
     this.socket = socket;
     this.game = game;
     try {
-      this.in = new DataInputStream(socket.getInputStream());
-      this.out = new DataOutputStream(socket.getOutputStream());
+      this.in = socket.getInputStream();
+      this.out = socket.getOutputStream();
     } catch (IOException e) {
       disconnectClient(socket, in, out);
     }
@@ -48,66 +43,99 @@ public class ClientHandler implements Runnable {
       String newUsername = usernameProposals();
       if (answer.equalsIgnoreCase("YES")) {
         user.setUsername(newUsername);
-        out.writeUTF("Your username has been changed to " + "\"" + user.getUsername() + "\"" + ".");
+        send("Your username has been changed to " + "\"" + user.getUsername() + "\"" + ".");
       } else {
-        out.writeUTF("Your username remains " + "\"" + user.getUsername() + "\"" + ".");
+        send("Your username remains " + "\"" + user.getUsername() + "\"" + ".");
       }
 
 
-      while (socket.getInputStream().read() != -1) {
+      /* ------------------------------- receive incoming msg block -----------------------------
 
-        String input; // message sent by client
-        while (!(input = in.readUTF()).equals("QUIT")) {
-          out.writeUTF(ServerProtocol.get(game, user, input));
+      A StringBuilder (sb) appends every received byte (c) to a String until a break-character is found.
+      Then the break-character is removed and the String is given to the Server Protocol.
+      The result (return) of the Server Protocol is then sent back to the Client.
+      After that the String is cleared, the counter is set to 0 and the StringBuilder starts a new String.
+
+      If String equals "QUIT", the ServerProtocol is given the message but nothing is sent back.
+      The loop breaks and the Client is disconnected
+      */
+
+      int c;
+      int i = 0;
+      StringBuilder sb = new StringBuilder();
+
+      while ((c = in.read()) != -1) {
+        sb.append((char) c);
+        if (sb.toString().charAt(i) == ';') {
+          sb.delete(i, i + 1);
+          if (sb.toString().equalsIgnoreCase("QUIT")) {
+            ServerProtocol.get(game, user, sb.toString());
+            break;
+          }
+          send(ServerProtocol.get(game, user, sb.toString()));
+          sb.delete(0, i + 1);
+          i = 0;
+        } else {
+          i++;
         }
       }
 
-      // Client has lost connection
-      System.out.println(user.getUsername() + " has left the Game.");
-      socket.close();
-      //out.writeUTF("QUIT");
-      disconnectClient(socket, in, out);
-
+      disconnectClient(socket, in, out); //
 
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-
-  public void send(String s) {
+  /**
+   * "Send a String to the Client."
+   * Use this instead of "out.write" to avoid errors.
+   * It converts the given String to bytes before sending.
+   */
+  public void send(String msg) {
     try {
-      out.writeUTF(s);
+      out.write((msg + ';').getBytes());
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * "Receive a String from the Client"
+   * A StringBuilder appends every incoming byte to a String until a certain break-character is found.
+   * Then removes the break-character and returns the String.
+   */
+  public String receive() {
+    int c;
+    int i = 0;
+    StringBuilder sb = new StringBuilder();
+
+    try {
+      while (true) {
+        c = in.read();
+        sb.append((char) c);
+
+        if (sb.toString().charAt(i) == ';') {
+          sb.delete(i, i + 1);
+          break;
+
+        } else {
+          i++;
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return sb.toString();
   }
 
 
   /**
-   *
+   * "Does everything that needs to be done when a Client disconnects."
+   * Closes the In/Out-Streams, the socket and removes the Client from the ActiveClientList.
    */
-  private void welcomeUser() {
-    try {
-      System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
-      out.writeUTF("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-
-  /**
-   * Disconnects this Client from the Server, sets the status of the user to "disconnected".
-   * Closes the socket and all streams.
-   *
-   * @param socket Socket
-   * @param in     DataInputStream
-   * @param out    DataOutputStream
-   */
-  public void disconnectClient(Socket socket, DataInputStream in, DataOutputStream out) {
-    //System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
-    user.setIsConnected(false);
+  public void disconnectClient(Socket socket, InputStream in, OutputStream out) {
+    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
     game.getActiveClientList().remove(this);
     try {
       if (in != null) {
@@ -124,25 +152,25 @@ public class ClientHandler implements Runnable {
     }
   }
 
-  /**
-   * method sends a message to all clients
-   */
 
-
-
-  public String askUsername() throws IOException {
-    out.writeUTF("Please enter your name: ");
-    return in.readUTF();
+  private void welcomeUser() {
+    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
+    send("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
   }
 
-  public String proposeUsername() throws IOException{
+  public String askUsername() {
+    send("Please enter your name: ");
+    return receive();
+  }
+
+  public String proposeUsername() {
     String proposedUsername = usernameProposals();
-    out.writeUTF("Would you like to change your username to " + "\"" + proposedUsername + "\"?");
-    return in.readUTF();
+    send("Would you like to change your username to " + "\"" + proposedUsername + "\"?");
+    return receive();
   }
+
   public String usernameProposals() {
-    String proposedUsername = user.getUsername() + "_" + user.getDistrict();
-    return proposedUsername;
+    return user.getUsername() + "_" + user.getDistrict();
   }
 
 }

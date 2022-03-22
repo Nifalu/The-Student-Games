@@ -14,8 +14,7 @@ public class User {
   private final InetAddress ip;
   private String username;
   private boolean firstTime = true;
-  private boolean isConnected = true;
-  private final int  district;
+  private final int district;
 
   public User(InetAddress ip, String username, int district, int id) {
     this.id = id;
@@ -30,19 +29,22 @@ public class User {
     return username;
   }
 
-  public int getDistrict() { return district; }
+  public int getDistrict() {
+    return district;
+  }
 
   public int getId() {
     return id;
+  }
+
+  public InetAddress getIp() {
+    return ip;
   }
 
   public boolean isFirstTime() {
     return firstTime;
   }
 
-  public boolean isConnected() {
-    return isConnected;
-  }
 
   // ----- SETTERS -----
   public void setUsername(String username) {
@@ -53,9 +55,6 @@ public class User {
     this.firstTime = firstTime;
   }
 
-  public void setIsConnected(boolean isConnected) {
-    this.isConnected = isConnected;
-  }
 
 }
 

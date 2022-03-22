@@ -1,8 +1,7 @@
 package Client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.Socket;
 
 
 /**
@@ -10,32 +9,40 @@ import java.io.IOException;
  */
 public class InThread implements Runnable {
 
-  DataInputStream in;
-  DataOutputStream out;
+  InputStream in;
+  OutputStream out;
+  Socket socket;
 
-  public InThread(DataInputStream in, DataOutputStream out) {
+  public InThread(Socket socket, InputStream in, OutputStream out) {
     this.in = in;
     this.out = out;
+    this.socket = socket;
   }
 
   @Override
   public void run() {
 
-    String s;
-    // String[] input;
+    int c;
+    int i = 0;
+    StringBuilder sb = new StringBuilder();
+
     try {
-      while (!(s = in.readUTF()).equals("QUIT")) {
+      while ((c = in.read()) != -1) {
+        sb.append((char) c);
+        if (sb.toString().charAt(i) == ';') {
+          sb.delete(i, i + 1);
 
-        // Reads the incoming String and splits it into two parts
-        // ( "instruction" and "value" ) which are saved in an array.
+          // Write here what should happen with the incoming message (sb.toString())
+          System.out.println(sb);
 
-        // input = s.split("-",2); // Splits the String (limit - 1) times at the first "-"
-
-        System.out.println(s);
+          sb.delete(0, i + 1);
+          i = 0;
+        } else {
+          i++;
+        }
       }
-
     } catch (IOException e) {
-      e.printStackTrace();
+      // does nothing. --> in.read() will always throw "Socket closed" Exception when leaving with "QUIT"
     }
   }
 }

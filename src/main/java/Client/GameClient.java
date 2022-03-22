@@ -16,17 +16,18 @@ public class GameClient {
   public GameClient(String serverAddress, int serverPort) {
     this.serverAddress = serverAddress;
     this.serverPort = serverPort;
+
   }
 
   public void startClient() {
     try {
       // Connection to the server is made and in/out streams are created:
       Socket socket = new Socket(serverAddress, serverPort);
-      DataInputStream in = new DataInputStream(socket.getInputStream());
-      DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+      InputStream in = socket.getInputStream();
+      OutputStream out = socket.getOutputStream();
 
       // Thread to handle incoming data is started:
-      InThread th = new InThread(in, out);
+      InThread th = new InThread(socket, in, out);
       Thread clientIn = new Thread(th);
       clientIn.start();
 
@@ -34,16 +35,21 @@ public class GameClient {
       BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
       String line;
 
-      do {
+      while (true) {
         // Reading User-Input from Console
         line = consoleIn.readLine();
 
+        // break statement to leave the loop and disconnect
+        if (line.equalsIgnoreCase("QUIT")) {
+          break;
+        }
+
         // Sending Client Input to Server
-        out.writeUTF(line);
 
-        // Quit
-      } while (!line.equalsIgnoreCase("QUIT"));
+        out.write((line + ';').getBytes());
+      }
 
+      // disconnects the Streams and closes the socket
       disconnect(socket, in, out);
 
     } catch (IOException e) {
@@ -52,10 +58,12 @@ public class GameClient {
   }
 
 
-  public void disconnect(Socket socket, DataInputStream in, DataOutputStream out) {
+  /**
+   * Does Everything that needs to be done when the client disconnects.
+   */
+  public void disconnect(Socket socket, InputStream in, OutputStream out) {
     System.out.println("terminating...");
     try {
-      Thread.sleep(1000);
       if (in != null) {
         in.close();
       }
@@ -65,7 +73,7 @@ public class GameClient {
       if (socket != null) {
         socket.close();
       }
-    } catch (IOException | InterruptedException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }
