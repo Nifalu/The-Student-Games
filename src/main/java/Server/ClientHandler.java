@@ -44,6 +44,16 @@ public class ClientHandler implements Runnable {
 
     user = game.connect(socket.getInetAddress(), this, username);
     welcomeUser();
+    String answer = proposeUsername();
+    String newUsername = usernameProposals();
+      if (answer.equalsIgnoreCase("YES")) {
+        user.setUsername(newUsername);
+        out.writeUTF("Your username has been changed to " + "\"" + user.getUsername() + "\"" + ".");
+      } else {
+        out.writeUTF("Your username remains " + "\"" + user.getUsername() + "\"" + ".");
+      }
+
+
 
 
       String input; // message sent by client
@@ -122,10 +132,15 @@ public class ClientHandler implements Runnable {
     out.writeUTF("Please enter your name: ");
     return in.readUTF();
   }
+
   public String proposeUsername() throws IOException{
-    String proposedUsername = user.getUsername() + user.getDistrict();
-    out.writeUTF("Would you like to go by the name: " + proposedUsername);
-    return null;
+    String proposedUsername = usernameProposals();
+    out.writeUTF("Would you like to change your username to " + "\"" + proposedUsername + "\"?");
+    return in.readUTF();
+  }
+  public String usernameProposals() {
+    String proposedUsername = user.getUsername() + "_" + user.getDistrict();
+    return proposedUsername;
   }
 
 }
