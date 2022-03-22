@@ -57,13 +57,13 @@ public class ClientHandler implements Runnable {
       while (socket.getInputStream().read() != -1) {
 
         String input; // message sent by client
-
-        // do chont vlt pinpong here??
         while (!(input = in.readUTF()).equals("QUIT")) {
           out.writeUTF(ServerProtocol.get(game, user, input));
         }
       }
-      System.out.println("has left the Game. LOOSER");
+
+      // Client has lost connection
+      System.out.println(user.getUsername() + " has left the Game.");
       socket.close();
       //out.writeUTF("QUIT");
       disconnectClient(socket, in, out);
@@ -106,7 +106,7 @@ public class ClientHandler implements Runnable {
    * @param out    DataOutputStream
    */
   public void disconnectClient(Socket socket, DataInputStream in, DataOutputStream out) {
-    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
+    //System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
     user.setIsConnected(false);
     game.getActiveClientList().remove(this);
     try {
