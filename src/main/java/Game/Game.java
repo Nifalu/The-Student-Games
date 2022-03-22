@@ -3,6 +3,7 @@ package Game;
 import Server.ClientHandler;
 import Server.GameServer;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Random;
  */
 public class Game {
 
-  final HashMap<String, User> userlist = new HashMap<>();
+  final HashMap<Integer, User> userlist = new HashMap<>();
   final ArrayList<Server.ClientHandler> activeClientList = new ArrayList<>();
 
   public Game() {
@@ -32,20 +33,10 @@ public class Game {
    */
   public User connect(InetAddress ip,ClientHandler clientHandler, String username) {
     // new user is added
-    if (!userlist.containsKey(username)) {
-      // generates and allocates district to new user
-      int district = assignDistrict();
-      User user = new User(ip, username, district, userlist.size());
-      userlist.put(username, user);
-    } else {
-      // known user is not firstTime anymore
-      userlist.get(username).setFirstTime(false);
-    }
-
-    // Adds Client to activeClientList:
+    int district = assignDistrict();
+    User user = new User(ip, username, district, userlist.size() + 1);
     activeClientList.add(clientHandler);
-
-    return userlist.get(username);
+    return user;
   }
 
   // generates a random district for new clients
@@ -57,5 +48,21 @@ public class Game {
 
   public ArrayList<ClientHandler> getActiveClientList() {
     return activeClientList;
+  }
+
+  /**
+   * method sends a message to all clients
+   */
+
+  public void broadcastMessage(User sender, String msg) {
+    // goes through all clients
+    for (ClientHandler clientHandler : activeClientList) {
+
+      // send message to everyone but not yourself
+
+        if (clientHandler.user != sender) {
+          clientHandler.send(msg);
+        }
+    }
   }
 }

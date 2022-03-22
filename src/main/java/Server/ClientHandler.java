@@ -18,7 +18,7 @@ public class ClientHandler implements Runnable {
 
   Game.Game game; // ClientHandler gets Access to the Game
   Socket socket; // ClientHandler is connected with the Client
-  Game.User user; // ClientHandler knows which User the Client belongs to
+  public Game.User user; // ClientHandler knows which User the Client belongs to
   DataInputStream in; // Receive data from client
   DataOutputStream out; // Send data to client
 
@@ -46,33 +46,12 @@ public class ClientHandler implements Runnable {
     welcomeUser();
 
 
-      String s; // message sent by client
-      String[] input;
+      String input; // message sent by client
 
       // do chont vlt pinpong here??
-      while (!(s = in.readUTF()).equals("QUIT")) {
+      while (!(input = in.readUTF()).equals("QUIT")) {
 
-        // Reads the incoming String and splits it into two parts
-        // ( "instruction" and "value" ) which are saved in an array.
-        input = s.split("-", 2); // Splits the String (limit - 1) times at the first "-"
-
-
-        // Some possible Instructions. --> should be sent to a separate protocol class for more clarity.
-        if (input[0].equals("CHANGENAME")) { // (use: CHANGENAME-YourNewName )
-          System.out.println(user.getUsername() + "is now called: " + input[1]);
-          user.setUsername(input[1]);
-          out.writeUTF("Your new nickname is: " + user.getUsername());
-
-        } else if (input[0].equals("PING")) { // (use: PING )
-          System.out.println(user.getUsername() + ": " + input[0]);
-          out.writeUTF("PONG");
-
-        } else {
-          // message gets sent to all clients
-          // needs to be replaced with a method which doesn't send a message to the author
-          broadcastMessage(s);
-        }
-
+        out.writeUTF(ServerProtocol.get(game, user, input));
 
       }
       out.writeUTF("QUIT");
@@ -84,19 +63,22 @@ public class ClientHandler implements Runnable {
   }
 
 
+  public void send(String s) {
+    try {
+      out.writeUTF(s);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+
   /**
    *
    */
   private void welcomeUser() {
     try {
-
-      if (user.isFirstTime()) {
-        System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
-        out.writeUTF("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
-      } else {
-        System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has reconnected");
-        out.writeUTF("Welcome back " + user.getUsername() + " from district " + user.getDistrict() + "!");
-      }
+      System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
+      out.writeUTF("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -134,21 +116,7 @@ public class ClientHandler implements Runnable {
    * method sends a message to all clients
    */
 
-  public void broadcastMessage(String msg) throws IOException {
-    // goes through all clients
-    ArrayList<ClientHandler> activeClientList = game.getActiveClientList();
-    for (ClientHandler clientHandler : activeClientList) {
 
-      // send message to everyone but not yourself
-          /*
-          if (clientHandler != this) {
-            clientHandler.out.writeUTF(msg);
-          }
-          */
-
-      clientHandler.out.writeUTF(msg); // send message to everyone
-    }
-  }
 
   public String askUsername() throws IOException {
     out.writeUTF("Please enter your name: ");
