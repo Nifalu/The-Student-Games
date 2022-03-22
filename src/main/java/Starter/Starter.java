@@ -7,8 +7,7 @@ public class Starter {
   public static void main(String[] args) {
     if (args.length == 0) {
       System.out.println("not enough arguments");
-    }
-    if (args[0].equals("Server")) {
+    } else if (args[0].equals("Server")) {
       if (args.length == 2) {
         Server.Main.start(args[1]);
       } else {
