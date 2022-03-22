@@ -1,8 +1,6 @@
 package Server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -53,21 +51,27 @@ public class ClientHandler implements Runnable {
         out.writeUTF("Your username remains " + "\"" + user.getUsername() + "\"" + ".");
       }
 
+      // PING Server
+      while (!socket.isClosed()) {
+        BufferedReader inputStream = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
 
-      while (socket.getInputStream().read() != -1) {
+        if (inputStream.read() != -1) {
 
-        String input; // message sent by client
-        while (!(input = in.readUTF()).equals("QUIT")) {
+          String input = inputStream.readLine();
+          // Stream valid input to console
           out.writeUTF(ServerProtocol.get(game, user, input));
         }
+
+        // Client has lost connection
+        if (inputStream.read() == -1) {
+
+          System.out.println(user.getUsername() + " has left the Game.");
+          socket.close();
+          //out.writeUTF("QUIT");
+          disconnectClient(socket, in, out);
+        }
       }
-
-      // Client has lost connection
-      System.out.println(user.getUsername() + " has left the Game.");
-      socket.close();
-      //out.writeUTF("QUIT");
-      disconnectClient(socket, in, out);
-
 
     } catch (IOException e) {
       e.printStackTrace();
