@@ -9,7 +9,7 @@ javafx {
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
 }
 
-group 'ch.unibas.dmi.dbis'
+group 'district-9'
 version '0.0.1-ALPHA'
 mainClassName = 'ch.unibas.dmi.dbis.cs108.example.HelloWorld'
 

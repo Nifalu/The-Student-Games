@@ -9,12 +9,10 @@ public class Main {
 
   /**
    * Connect to the Game
-   *
-   * @param args Server Address, Port Number
    */
-  public static void main(String[] args) {
+  public static void start(String serverAddress, String port) {
 
-    GameClient client = new GameClient(args[0], Integer.parseInt(args[1]));
+    GameClient client = new GameClient(serverAddress, Integer.parseInt(port));
     client.startClient();
   }
 }
