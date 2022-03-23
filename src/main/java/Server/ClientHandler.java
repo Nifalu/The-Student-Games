@@ -35,20 +35,7 @@ public class ClientHandler implements Runnable {
 
     // Identifies the new Client
     try {
-      String username = askUsername();
-
-      user = game.connect(socket.getInetAddress(), this, username);
-      welcomeUser();
-      String answer = proposeUsername();
-      String newUsername = usernameProposals();
-      if (answer.equalsIgnoreCase("YES")) {
-        user.setUsername(newUsername);
-        send("Your username has been changed to " + "\"" + user.getUsername() + "\"" + ".");
-      } else {
-        send("Your username remains " + "\"" + user.getUsername() + "\"" + ".");
-      }
-
-
+      askUsername();
       /* ----------- receive incoming msg and check for connection loss -----------------------------
 
       A StringBuilder (sb) appends every received byte (c) to a String until a break-character is found.
@@ -158,19 +145,58 @@ public class ClientHandler implements Runnable {
     send("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
   }
 
-  public String askUsername() {
+  public void askUsername() {
     send("Please enter your name: ");
-    return receive();
+    String answer = receive();
+    user = game.connect(socket.getInetAddress(), this, answer);
+    proposeUsername();
+    if (nameAlreadyExists(user.getUsername())) {
+      proposeUsernameIfTaken();
+    } else {
+      welcomeUser();
+    }
   }
 
-  public String proposeUsername() {
-    String proposedUsername = usernameProposals();
-    send("Would you like to change your username to " + "\"" + proposedUsername + "\"?");
-    return receive();
+  public void proposeUsername() {
+    String proposedUsername = user.getUsername() + "_" + user.getDistrict();
+    send("We found a way cooler username for you! Would you like to change it to " + "\"" + proposedUsername + "\"?");
+    String answer = receive();
+    if (answer.equalsIgnoreCase("YES")) {
+      user.setUsername(proposedUsername);
+      send("Your username has been changed to " + "\"" + user.getUsername() + "\"" + ".");
+    } else {
+      send("Your username remains " + "\"" + user.getUsername() + "\"" + ".");
+    }
   }
 
-  public String usernameProposals() {
-    return user.getUsername() + "_" + user.getDistrict();
+  public void proposeUsernameIfTaken() {
+    String newName = user.getUsername() + ".1";
+    send("Oooops that one was already taken, but here's a new one: " + newName);
+    user.setUsername(newName);
+  }
+
+  public void getUsernamesInGame() {
+    String s = "";
+    int length = game.getUserlist().size() - 1;
+    for (int i = 0; i < length; i++) {
+      s = s + " " + game.getUserlist().get(i).getUsername();
+    }
+    send("Users in game:" + s);
+  }
+  public boolean nameAlreadyExists(String name) {
+    boolean alreadyExists = false;
+    int length = game.getUserlist().size() - 1;
+    int counter = 0;
+    for (int i = 0; i < length; i++) {
+      String username = game.getUserlist().get(i).getUsername();
+      if (username.equalsIgnoreCase(name)) {
+        counter++;
+      }
+    }
+    if (counter > 0) {
+      alreadyExists = true;
+    }
+    return alreadyExists;
   }
 
 }
