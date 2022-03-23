@@ -34,7 +34,8 @@ public class Game {
   public User connect(InetAddress ip,ClientHandler clientHandler, String username) {
     // new user is added
     int district = assignDistrict();
-    User user = new User(ip, username, district, userlist.size() + 1);
+    User user = new User(ip, username, district, userlist.size());
+    userlist.put(userlist.size(), user);
     activeClientList.add(clientHandler);
     return user;
   }
@@ -48,6 +49,10 @@ public class Game {
 
   public ArrayList<ClientHandler> getActiveClientList() {
     return activeClientList;
+  }
+
+  public HashMap<Integer, User> getUserlist() {
+    return userlist;
   }
 
   /**
