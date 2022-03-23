@@ -2,6 +2,8 @@ package Server;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 
 /**
@@ -146,6 +148,11 @@ public class ClientHandler implements Runnable {
   }
 
   public void askUsername() {
+    try {
+      proposeUsernameBasedOnSystemName();
+    } catch (UnknownHostException e) {
+      e.printStackTrace(); //muss noch eine bessere Lösung hin
+    }
     send("Please enter your name: ");
     String answer = receive();
     user = game.connect(socket.getInetAddress(), this, answer);
@@ -164,15 +171,19 @@ public class ClientHandler implements Runnable {
     if (answer.equalsIgnoreCase("YES")) {
       user.setUsername(proposedUsername);
       send("Your username has been changed to " + "\"" + user.getUsername() + "\"" + ".");
-    } else {
-      send("Your username remains " + "\"" + user.getUsername() + "\"" + ".");
     }
+  }
+  public void proposeUsernameBasedOnSystemName() throws UnknownHostException {
+    InetAddress ip = InetAddress.getLocalHost();
+    String systemName = ip.getHostName();
+    send("Hello there, would you like to be named " + systemName + "?");
   }
 
   public void proposeUsernameIfTaken() {
     String newName = user.getUsername() + ".1";
-    send("Oooops that one was already taken, but here's a new one: " + newName);
+    send("Oooops that one was already taken, but here's a new one: " + newName + ":)");
     user.setUsername(newName);
+    welcomeUser();
   }
 
   public void getUsernamesInGame() {
