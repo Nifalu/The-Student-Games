@@ -140,23 +140,23 @@ public class ClientHandler implements Runnable {
       e.printStackTrace();
     }
   }
-
-
-  private void welcomeUser() {
-    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
-    send("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
-  }
+  /**
+   * This method first calls the proposeUsernameBasedOnSystemName Method and asks the Client if he wants the name
+   proposed to be his username. If the user doesn't agree, he is then asked to type in his own username. A new user is created
+   and connected to the game. If the username already exists in the game he will get a new username assigned.
+  **/
 
   public void askUsername() {
     try {
       proposeUsernameBasedOnSystemName();
     } catch (UnknownHostException e) {
-      e.printStackTrace(); //muss noch eine bessere Lösung hin
+      send("Your Hostname could not be detected.");
+      e.printStackTrace();
+      send("Please enter a name below.");
+      String answer = receive();
+      user = game.connect(socket.getInetAddress(), this, answer);
     }
-    send("Please enter your name: ");
-    String answer = receive();
-    user = game.connect(socket.getInetAddress(), this, answer);
-    proposeUsername();
+    //proposeUsername();
     if (nameAlreadyExists(user.getUsername())) {
       proposeUsernameIfTaken();
     } else {
@@ -164,20 +164,25 @@ public class ClientHandler implements Runnable {
     }
   }
 
-  public void proposeUsername() {
-    String proposedUsername = user.getUsername() + "_" + user.getDistrict();
-    send("We found a way cooler username for you! Would you like to change it to " + "\"" + proposedUsername + "\"?");
+  /**
+   * Proposes a username based on the system name and proceeds to ask if the user actually wants that name. If not
+   * the user can type in a different one.
+   */
+  public void proposeUsernameBasedOnSystemName() throws UnknownHostException {
+    String systemName = InetAddress.getLocalHost().getHostName();
+    String[] proposedName;
+    proposedName = systemName.split("-", 2);
+    send("Hello there, would you like to be named " + proposedName[0] + "?");
     String answer = receive();
     if (answer.equalsIgnoreCase("YES")) {
-      user.setUsername(proposedUsername);
-      send("Your username has been changed to " + "\"" + user.getUsername() + "\"" + ".");
+      user = game.connect(socket.getInetAddress(), this, proposedName[0]);
+    } else {
+      send("Please enter your desired name below.");
+      String desiredName = receive();
+      user = game.connect(socket.getInetAddress(), this, desiredName);
     }
   }
-  public void proposeUsernameBasedOnSystemName() throws UnknownHostException {
-    InetAddress ip = InetAddress.getLocalHost();
-    String systemName = ip.getHostName();
-    send("Hello there, would you like to be named " + systemName + "?");
-  }
+
 
   public void proposeUsernameIfTaken() {
     String newName = user.getUsername() + ".1";
@@ -186,14 +191,9 @@ public class ClientHandler implements Runnable {
     welcomeUser();
   }
 
-  public void getUsernamesInGame() {
-    String s = "";
-    int length = game.getUserlist().size() - 1;
-    for (int i = 0; i < length; i++) {
-      s = s + " " + game.getUserlist().get(i).getUsername();
-    }
-    send("Users in game:" + s);
-  }
+  /**
+   * checks if the username already exists and returns true or false.
+   */
   public boolean nameAlreadyExists(String name) {
     boolean alreadyExists = false;
     int length = game.getUserlist().size() - 1;
@@ -208,6 +208,12 @@ public class ClientHandler implements Runnable {
       alreadyExists = true;
     }
     return alreadyExists;
+  }
+
+
+  private void welcomeUser() {
+    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
+    send("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
   }
 
 }
