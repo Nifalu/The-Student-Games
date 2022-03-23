@@ -171,15 +171,18 @@ public class ClientHandler implements Runnable {
   public void proposeUsernameBasedOnSystemName() throws UnknownHostException {
     String systemName = InetAddress.getLocalHost().getHostName();
     String[] proposedName;
+    String selectedName;
     proposedName = systemName.split("-", 2);
     if (proposedName[0].equals("Desktop")) {
-      send("Hello there, would you like to be named " + proposedName[1] + "?");
+      selectedName = proposedName[1];
+      send("Hello there, would you like to be named " + selectedName + "?");
     } else {
-      send("Hello there, would you like to be named " + proposedName[0].substring(0, proposedName[0].length() - 1) + "?");
+      selectedName = proposedName[0].substring(0, proposedName[0].length() - 1);
+      send("Hello there, would you like to be named " + selectedName + "?");
     }
     String answer = receive();
     if (answer.equalsIgnoreCase("YES")) {
-      user = game.connect(socket.getInetAddress(), this, proposedName[0]);
+      user = game.connect(socket.getInetAddress(), this, selectedName);
     } else {
       send("Please enter your desired name below.");
       String desiredName = receive();
