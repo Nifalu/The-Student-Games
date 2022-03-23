@@ -172,7 +172,11 @@ public class ClientHandler implements Runnable {
     String systemName = InetAddress.getLocalHost().getHostName();
     String[] proposedName;
     proposedName = systemName.split("-", 2);
-    send("Hello there, would you like to be named " + proposedName[0] + "?");
+    if (proposedName[0].equals("Desktop")) {
+      send("Hello there, would you like to be named " + proposedName[1] + "?");
+    } else {
+      send("Hello there, would you like to be named " + proposedName[0].substring(0, proposedName[0].length() - 1) + "?");
+    }
     String answer = receive();
     if (answer.equalsIgnoreCase("YES")) {
       user = game.connect(socket.getInetAddress(), this, proposedName[0]);
