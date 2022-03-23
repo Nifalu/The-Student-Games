@@ -10,7 +10,7 @@ import java.net.Socket;
  * To be able to process the input correctly, the ClientHandler knows the game and the user he's connected to.
  */
 public class ClientHandler implements Runnable {
-
+  
   Game.Game game; // ClientHandler gets Access to the Game
   Socket socket; // ClientHandler is connected with the Client
   public Game.User user; // ClientHandler knows which User the Client belongs to
@@ -49,7 +49,7 @@ public class ClientHandler implements Runnable {
       }
 
 
-      /* ------------------------------- receive incoming msg block -----------------------------
+      /* ----------- receive incoming msg and check for connection loss -----------------------------
 
       A StringBuilder (sb) appends every received byte (c) to a String until a break-character is found.
       Then the break-character is removed and the String is given to the Server Protocol.
@@ -80,7 +80,7 @@ public class ClientHandler implements Runnable {
         }
       }
 
-      disconnectClient(socket, in, out); //
+      disconnectClient(socket, in, out);
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -99,7 +99,7 @@ public class ClientHandler implements Runnable {
       e.printStackTrace();
     }
   }
-
+  
   /**
    * "Receive a String from the Client"
    * A StringBuilder appends every incoming byte to a String until a certain break-character is found.
