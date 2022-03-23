@@ -70,4 +70,22 @@ public class Game {
         }
     }
   }
+
+  /**
+   * sends a message to one specific client
+   * used for chatting between two clients (instead of chatting with everyone)
+   * @param recipient
+   * @param msg
+   */
+  public void whisper(String recipient, String sender, String msg) {
+    for (ClientHandler clientHandler : activeClientList) {
+      if(clientHandler.user.getUsername().equals(recipient)) {
+        clientHandler.send(sender + " to " + recipient + ": " + msg);
+      }
+    }
+
+  }
+
+
+  // maybe add sendTo method to message one client
 }

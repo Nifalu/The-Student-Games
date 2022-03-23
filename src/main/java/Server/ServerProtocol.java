@@ -32,6 +32,12 @@ public class ServerProtocol {
         return user.getUsername() + ": " + input[1];
 
 
+      case "WHISPER":
+        String[] splitUserAndMsg = input[1].split(":", 2);
+        game.whisper(splitUserAndMsg[0], user.getUsername(), splitUserAndMsg[1]);
+        return user.getUsername() + " to " + splitUserAndMsg[0] + ": " +  splitUserAndMsg[1];
+
+
       case "CHANGENAME":
 
         // was soll passieren wenn jemand seinen Namen aendern moechte?
