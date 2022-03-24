@@ -67,11 +67,12 @@ public class ClientHandler implements Runnable {
         } else {
           i++;
         }
+        Thread.sleep(1); // for more efficiency
       }
 
       disconnectClient(socket, in, out);
 
-    } catch (IOException e) {
+    } catch (IOException | InterruptedException e) {
       e.printStackTrace();
     }
   }
@@ -101,6 +102,7 @@ public class ClientHandler implements Runnable {
 
     try {
       while (true) {
+        Thread.sleep(1); // for more efficiency
         c = in.read();
         sb.append((char) c);
 
@@ -112,7 +114,7 @@ public class ClientHandler implements Runnable {
           i++;
         }
       }
-    } catch (IOException e) {
+    } catch (IOException | InterruptedException e) {
       e.printStackTrace();
     }
     return sb.toString();
@@ -126,6 +128,7 @@ public class ClientHandler implements Runnable {
   public void disconnectClient(Socket socket, InputStream in, OutputStream out) {
     System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
     game.getActiveClientList().remove(this);
+    game.getUserlist().remove(user.getId(),user);
     try {
       if (in != null) {
         in.close();

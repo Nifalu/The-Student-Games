@@ -13,6 +13,5 @@ public class Main {
   public static void start(String serverAddress, String port) {
 
     GameClient client = new GameClient(serverAddress, Integer.parseInt(port));
-    client.startClient();
   }
 }

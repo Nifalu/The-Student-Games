@@ -12,11 +12,13 @@ public class InThread implements Runnable {
   InputStream in;
   OutputStream out;
   Socket socket;
+  ClientProtokoll clientProtocol;
 
-  public InThread(Socket socket, InputStream in, OutputStream out) {
+  public InThread(Socket socket, InputStream in, OutputStream out, ClientProtokoll clientProtocol) {
     this.in = in;
     this.out = out;
     this.socket = socket;
+    this.clientProtocol = clientProtocol;
   }
 
   @Override
@@ -32,17 +34,19 @@ public class InThread implements Runnable {
         if (sb.toString().charAt(i) == ';') {
           sb.delete(i, i + 1);
 
-          // Write here what should happen with the incoming message (sb.toString())
-          System.out.println(sb);
+          clientProtocol.sendToClient(sb.toString());
 
           sb.delete(0, i + 1);
           i = 0;
         } else {
           i++;
         }
+        Thread.sleep(1); // for more efficiency
       }
     } catch (IOException e) {
-      // does nothing. --> in.read() will always throw "Socket closed" Exception when leaving with "QUIT"
+      // will be thrown when Client quits. Nothing needs to be done.
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
   }
 }

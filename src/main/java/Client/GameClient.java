@@ -12,56 +12,47 @@ public class GameClient {
 
   String serverAddress;
   int serverPort;
+  InputStream in;
+  OutputStream out;
+  Socket socket;
+  ClientProtokoll clientProtocol;
+  Thread clientIn;
+  Thread conin;
 
   public GameClient(String serverAddress, int serverPort) {
     this.serverAddress = serverAddress;
     this.serverPort = serverPort;
+    this.clientProtocol = new ClientProtokoll(this);
 
-  }
-
-  public void startClient() {
+    // Connection to the server is made and in/out streams are created:
     try {
-      // Connection to the server is made and in/out streams are created:
-      Socket socket = new Socket(serverAddress, serverPort);
-      InputStream in = socket.getInputStream();
-      OutputStream out = socket.getOutputStream();
+      this.socket = new Socket(serverAddress, serverPort);
+      this.in = socket.getInputStream();
+      this.out = socket.getOutputStream();
 
-      // Thread to handle incoming data is started:
-      InThread th = new InThread(socket, in, out);
-      Thread clientIn = new Thread(th);
+      // Thread to handle incoming data:
+      InThread th = new InThread(socket, in, out, clientProtocol);
+      clientIn = new Thread(th);
       clientIn.start();
 
-      // InputStream to read user-input is created:
-      BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
-      String line;
 
-      while (true) {
-        // Reading User-Input from Console
-        line = consoleIn.readLine();
-
-        // break statement to leave the loop and disconnect
-        if (line.equalsIgnoreCase("QUIT")) {
-          break;
-        }
-
-        // Sending Client Input to Server
-
-        out.write((line + ';').getBytes());
-      }
-
-      // disconnects the Streams and closes the socket
-      disconnect(socket, in, out);
+      // Thread to read console Input:
+      ConsoleInput consoleInput = new ConsoleInput(clientProtocol);
+      conin = new Thread(consoleInput);
+      conin.start();
 
     } catch (IOException e) {
-      e.printStackTrace();
+      disconnect();
     }
+
   }
+
 
 
   /**
    * Does Everything that needs to be done when the client disconnects.
    */
-  public void disconnect(Socket socket, InputStream in, OutputStream out) {
+  public void disconnect() {
     System.out.println("terminating...");
     try {
       if (in != null) {
@@ -69,6 +60,12 @@ public class GameClient {
       }
       if (out != null) {
         out.close();
+      }
+      if (conin.isAlive()) {
+        conin.interrupt();
+      }
+      if (clientIn.isAlive()) {
+        clientIn.interrupt();
       }
       if (socket != null) {
         socket.close();
