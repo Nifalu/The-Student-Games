@@ -41,6 +41,7 @@ public class ServerProtocol {
       case "CHANGENAME":
 
         // was soll passieren wenn jemand seinen Namen aendern moechte?
+        user.setUsername(input[1]);
 
         return "new name: " + user.getUsername();
     }
