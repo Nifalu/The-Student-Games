@@ -41,9 +41,12 @@ public class ServerProtocol {
       case "CHANGENAME":
 
         // was soll passieren wenn jemand seinen Namen aendern moechte?
-        user.setUsername(input[1]);
-
-        return "new name: " + user.getUsername();
+        if (Name.nameAlreadyExists(game, input[1])) {
+          return "SORRY! This tribute already exists. Please try another name.";
+        } else {
+          user.setUsername(input[1]);
+          return "SUCCESS! You're now called : " + user.getUsername();
+        }
     }
 
     // Was soll passieren wenn der Befehl nicht bekannt ist? (aktuell Echo)
