@@ -156,7 +156,6 @@ public class ClientHandler implements Runnable {
       String answer = receive();
       user = game.connect(socket.getInetAddress(), this, answer);
     }
-    //proposeUsername();
     if (nameAlreadyExists(user.getUsername())) {
       proposeUsernameIfTaken();
     } else {
@@ -173,27 +172,42 @@ public class ClientHandler implements Runnable {
     String[] proposedName;
     String selectedName;
     proposedName = systemName.split("-", 2);
-    if (proposedName[0].equals("Desktop")) {
-      selectedName = proposedName[1];
-      send("Hello there, would you like to be named " + selectedName + "?");
+
+    if (proposedName[0].equalsIgnoreCase("DESKTOP")) {
+      selectedName = proposedName[0];
     } else {
       selectedName = proposedName[0].substring(0, proposedName[0].length() - 1);
-      send("Hello there, would you like to be named " + selectedName + "?");
     }
+    user = game.connect(socket.getInetAddress(), this, selectedName);
+    if (nameAlreadyExists(user.getUsername())) {
+      int i = 1;
+      String name = user.getUsername();
+      while (nameAlreadyExists(name)) {
+        name = name + "." + i;
+        user.setUsername(name);
+        i++;
+      }
+    }
+    send("Hey there, would you like to be named " + user.getUsername() + "?");
     String answer = receive();
-    if (answer.equalsIgnoreCase("YES")) {
-      user = game.connect(socket.getInetAddress(), this, selectedName);
-    } else {
+    if (!answer.equalsIgnoreCase("YES")) {
       send("Please enter your desired name below.");
       String desiredName = receive();
-      user = game.connect(socket.getInetAddress(), this, desiredName);
+      user.setUsername(desiredName);
     }
   }
 
 
   public void proposeUsernameIfTaken() {
-    String newName = user.getUsername() + ".1";
-    send("Oooops that one was already taken, but here's a new one: " + newName + ":)");
+    String newName = user.getUsername() + user.getDistrict();
+    user.setUsername(newName);
+    if (nameAlreadyExists(user.getUsername())) {
+      int i = 1;
+      while (nameAlreadyExists(user.getUsername())) {
+        user.setUsername(user.getUsername() + ".i");
+      }
+    }
+    send("Oooops that one was already taken, but here's a new one: " + newName);
     user.setUsername(newName);
     welcomeUser();
   }
