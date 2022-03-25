@@ -1,5 +1,7 @@
 package Client;
 
+import Game.Game;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -28,6 +30,7 @@ public class InThread implements Runnable {
     int i = 0;
     StringBuilder sb = new StringBuilder();
 
+    //Detects when the server loses connection
     try {
       while ((c = in.read()) != -1) {
         sb.append((char) c);
@@ -43,6 +46,8 @@ public class InThread implements Runnable {
         }
         Thread.sleep(1); // for more efficiency
       }
+      System.out.println("Server went offline");
+
     } catch (IOException e) {
       // will be thrown when Client quits. Nothing needs to be done.
     } catch (InterruptedException e) {
