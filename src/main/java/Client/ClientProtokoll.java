@@ -28,7 +28,7 @@ public class ClientProtokoll {
       switch (input[0].toLowerCase()) {
 
         case "/quit":
-          // send("QUIT");
+          send("QUIT");
           gameClient.disconnect();
           break;
 
@@ -52,14 +52,15 @@ public class ClientProtokoll {
       gameClient.out.newLine();
       gameClient.out.flush();
     } catch (IOException e) {
-      System.out.println("cannot reach Server");
+      System.out.println("cannot reach Server! - terminating");
+      gameClient.disconnect();
     }
   }
 
   public void sendToClient(String msg){
 
     // Right now incoming msg are just printed to console:
-    System.out.println("Server answered: " +msg);
+    System.out.println(msg);
 
   }
 

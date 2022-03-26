@@ -1,4 +1,4 @@
-package Game;
+package Server;
 
 import java.net.InetAddress;
 
@@ -10,13 +10,15 @@ import java.net.InetAddress;
  */
 public class User {
 
+  private final ClientHandler clienthandler;
   private final int id;
   private final InetAddress ip;
   private String username;
   private boolean firstTime = true;
   private final int district;
 
-  public User(InetAddress ip, String username, int district, int id) {
+  public User(ClientHandler clientHandler, InetAddress ip, String username, int district, int id) {
+    this.clienthandler = clientHandler;
     this.id = id;
     this.ip = ip;
     this.username = username;
@@ -45,6 +47,9 @@ public class User {
     return firstTime;
   }
 
+  public ClientHandler getClienthandler() {
+    return clienthandler;
+  }
 
   // ----- SETTERS -----
   public void setUsername(String username) {

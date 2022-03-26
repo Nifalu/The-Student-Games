@@ -11,18 +11,24 @@ public class ServerProtocol {
    * @param s string
    * @return string
    */
-  public static String get(Game.Game game, Game.User user, String s) {
+  public static String get(Game game, User user, String s) {
 
     // How to:
     // case "Befehl":
     // process the command
-    // return a command (String) to answer the client
+    // return a command (String) to answer the client (-1 to not send anything back)
 
     // input[0] = command, input[1] = msg
     String[] input;
     input = s.split("-", 2); // Splits the String (limit - 1) times at the first "-"
 
     switch(input[0]) {
+
+      case "QUIT":
+        user.getClienthandler().disconnectClient(); // disconnects Client
+        user.getClienthandler().requestStop(); // stops the thread
+        //maybe broadcast to everyone that user X has quit?
+        return "-1";
 
       case "PING":
         return "PONG";

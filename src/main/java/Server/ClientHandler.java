@@ -2,8 +2,6 @@ package Server;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
 
@@ -14,14 +12,15 @@ import java.nio.charset.StandardCharsets;
  */
 public class ClientHandler implements Runnable {
   
-  Game.Game game; // ClientHandler gets Access to the Game
+  Game game; // ClientHandler gets Access to the Game
   Socket socket; // ClientHandler is connected with the Client
-  public Game.User user; // ClientHandler knows which User the Client belongs to
+  public User user; // ClientHandler knows which User the Client belongs to
   BufferedReader in; // send data
   BufferedWriter out; // receive data
+  private volatile boolean stop = false; // stop the thread
 
 
-  public ClientHandler(Socket socket, Game.Game game) throws IOException {
+  public ClientHandler(Socket socket, Game game) throws IOException {
     this.socket = socket;
     this.game = game;
     try {
@@ -41,7 +40,7 @@ public class ClientHandler implements Runnable {
 
     // processes traffic with serverProtocol
     String msg;
-    while (true) {
+    while (!stop) {
       msg = receive();
       if (msg == null) {
         break;
@@ -58,12 +57,15 @@ public class ClientHandler implements Runnable {
    */
   public void send(String msg) {
     try {
+      if (msg.equals("-1")) {
+        return;
+      }
       System.out.println("sending: " + msg);
       out.write(msg);
       out.newLine();
       out.flush();
     } catch (IOException e) {
-      System.out.println("cannot reach " + user.getUsername());
+      System.out.println("cannot reach user" );
     }
   }
   
@@ -73,10 +75,15 @@ public class ClientHandler implements Runnable {
    * Then removes the break-character and returns the String.
    */
   public String receive() {
-    String line;
+    String line = "";
     try {
-      // reads incoming data
-      line = in.readLine();
+      while(!stop) {
+        if (in.ready()) {
+          line = in.readLine();
+          break;
+        }
+        Thread.sleep(0,200000);
+      }
       return line;
       // if connection fails
     } catch (IOException e) {
@@ -90,6 +97,8 @@ public class ClientHandler implements Runnable {
         System.out.println("cannot reach user");
         disconnectClient();
       }
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
     return null;
   }
@@ -129,6 +138,10 @@ public class ClientHandler implements Runnable {
   public void welcomeUser() {
     System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
     send("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
+  }
+
+  public void requestStop() {
+    stop = true;
   }
 
 }
