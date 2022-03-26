@@ -46,18 +46,20 @@ public class ClientProtokoll {
       }
     }
 
-  private void send(String msg) {
+  public void send(String msg) {
     try {
-      gameClient.out.write((msg + ";").getBytes());
+      gameClient.out.write(msg);
+      gameClient.out.newLine();
+      gameClient.out.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("cannot reach Server");
     }
   }
 
   public void sendToClient(String msg){
 
     // Right now incoming msg are just printed to console:
-    System.out.println(msg);
+    System.out.println("Server answered: " +msg);
 
   }
 

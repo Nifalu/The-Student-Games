@@ -3,6 +3,7 @@ package Client;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -12,8 +13,8 @@ public class GameClient {
 
   String serverAddress;
   int serverPort;
-  InputStream in;
-  OutputStream out;
+  BufferedReader in;
+  BufferedWriter out;
   Socket socket;
   ClientProtokoll clientProtocol;
   Thread clientIn;
@@ -27,11 +28,11 @@ public class GameClient {
     // Connection to the server is made and in/out streams are created:
     try {
       this.socket = new Socket(serverAddress, serverPort);
-      this.in = socket.getInputStream();
-      this.out = socket.getOutputStream();
+      this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+      this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
 
       // Thread to handle incoming data:
-      InThread th = new InThread(socket, in, out, clientProtocol);
+      InThread th = new InThread(socket, in, clientProtocol);
       clientIn = new Thread(th);
       clientIn.start();
 

@@ -9,44 +9,39 @@ import java.net.Socket;
  */
 public class InThread implements Runnable {
 
-  InputStream in;
-  OutputStream out;
+  BufferedReader in;
   Socket socket;
   ClientProtokoll clientProtocol;
 
-  public InThread(Socket socket, InputStream in, OutputStream out, ClientProtokoll clientProtocol) {
+  public InThread(Socket socket, BufferedReader in, ClientProtokoll clientProtocol) {
     this.in = in;
-    this.out = out;
     this.socket = socket;
     this.clientProtocol = clientProtocol;
   }
 
   @Override
   public void run() {
-
-    int c;
-    int i = 0;
-    StringBuilder sb = new StringBuilder();
-
-    try {
-      while ((c = in.read()) != -1) {
-        sb.append((char) c);
-        if (sb.toString().charAt(i) == ';') {
-          sb.delete(i, i + 1);
-
-          clientProtocol.sendToClient(sb.toString());
-
-          sb.delete(0, i + 1);
-          i = 0;
-        } else {
-          i++;
-        }
-        Thread.sleep(1); // for more efficiency
+    String msg;
+    while (true) {
+      msg = receive();
+      if (msg == null) {
+        break;
       }
-    } catch (IOException e) {
-      // will be thrown when Client quits. Nothing needs to be done.
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+      clientProtocol.sendToClient(msg);
     }
+  }
+
+
+  public String receive() {
+    String line;
+    try {
+      // reads incoming data
+      line = in.readLine();
+      return line;
+      // if connection fails
+    } catch (IOException e) {
+      System.out.println("cannot reach Server");
+    }
+    return null;
   }
 }

@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -16,18 +17,18 @@ public class ClientHandler implements Runnable {
   Game.Game game; // ClientHandler gets Access to the Game
   Socket socket; // ClientHandler is connected with the Client
   public Game.User user; // ClientHandler knows which User the Client belongs to
-  InputStream in; // Receive data from client
-  OutputStream out; // Send data to client
+  BufferedReader in; // send data
+  BufferedWriter out; // receive data
 
 
   public ClientHandler(Socket socket, Game.Game game) throws IOException {
     this.socket = socket;
     this.game = game;
     try {
-      this.in = socket.getInputStream();
-      this.out = socket.getOutputStream();
+      this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+      this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
     } catch (IOException e) {
-      disconnectClient(socket, in, out);
+      disconnectClient();
     }
   }
 
@@ -36,45 +37,18 @@ public class ClientHandler implements Runnable {
   public void run() {
 
     // Identifies the new Client
-    try {
-      Name.askUsername(game, this);
-      /* ----------- receive incoming msg and check for connection loss -----------------------------
+    Name.askUsername(game, this);
 
-      A StringBuilder (sb) appends every received byte (c) to a String until a break-character is found.
-      Then the break-character is removed and the String is given to the Server Protocol.
-      The result (return) of the Server Protocol is then sent back to the Client.
-      After that the String is cleared, the counter is set to 0 and the StringBuilder starts a new String.
-
-      If String equals "QUIT", the ServerProtocol is given the message but nothing is sent back.
-      The loop breaks and the Client is disconnected
-      */
-
-      int c;
-      int i = 0;
-      StringBuilder sb = new StringBuilder();
-
-      while ((c = in.read()) != -1) {
-        sb.append((char) c);
-        if (sb.toString().charAt(i) == ';') {
-          sb.delete(i, i + 1);
-          if (sb.toString().equalsIgnoreCase("QUIT")) {
-            ServerProtocol.get(game, user, sb.toString());
-            break;
-          }
-          send(ServerProtocol.get(game, user, sb.toString()));
-          sb.delete(0, i + 1);
-          i = 0;
-        } else {
-          i++;
-        }
-        Thread.sleep(1); // for more efficiency
+    // processes traffic with serverProtocol
+    String msg;
+    while (true) {
+      msg = receive();
+      if (msg == null) {
+        break;
       }
-
-      disconnectClient(socket, in, out);
-
-    } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
+      send(ServerProtocol.get(game, user, msg));
     }
+
   }
 
   /**
@@ -84,9 +58,12 @@ public class ClientHandler implements Runnable {
    */
   public void send(String msg) {
     try {
-      out.write((msg + ';').getBytes());
+      System.out.println("sending: " + msg);
+      out.write(msg);
+      out.newLine();
+      out.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("cannot reach " + user.getUsername());
     }
   }
   
@@ -96,28 +73,25 @@ public class ClientHandler implements Runnable {
    * Then removes the break-character and returns the String.
    */
   public String receive() {
-    int c;
-    int i = 0;
-    StringBuilder sb = new StringBuilder();
-
+    String line;
     try {
-      while (true) {
-        Thread.sleep(1); // for more efficiency
-        c = in.read();
-        sb.append((char) c);
+      // reads incoming data
+      line = in.readLine();
+      return line;
+      // if connection fails
+    } catch (IOException e) {
 
-        if (sb.toString().charAt(i) == ';') {
-          sb.delete(i, i + 1);
-          break;
-
-        } else {
-          i++;
-        }
+      if (user != null) {
+        // error message when user is known
+        System.out.println("cannot reach " + user.getUsername());
+        disconnectClient();
+      } else {
+        // error message if user is unknown
+        System.out.println("cannot reach user");
+        disconnectClient();
       }
-    } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
     }
-    return sb.toString();
+    return null;
   }
 
 
@@ -125,10 +99,12 @@ public class ClientHandler implements Runnable {
    * "Does everything that needs to be done when a Client disconnects."
    * Closes the In/Out-Streams, the socket and removes the Client from the ActiveClientList.
    */
-  public void disconnectClient(Socket socket, InputStream in, OutputStream out) {
-    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
-    game.getActiveClientList().remove(this);
-    game.getUserlist().remove(user.getId(),user);
+  public void disconnectClient() {
+
+    if (user != null) {
+      goodbye();
+    }
+
     try {
       if (in != null) {
         in.close();
@@ -142,6 +118,12 @@ public class ClientHandler implements Runnable {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public void goodbye() {
+    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
+    game.getActiveClientList().remove(this);
+    game.getUserlist().remove(user.getId(),user);
   }
 
   public void welcomeUser() {

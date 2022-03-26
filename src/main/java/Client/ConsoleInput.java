@@ -3,6 +3,7 @@ package Client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class ConsoleInput implements Runnable{
 
@@ -17,7 +18,7 @@ public class ConsoleInput implements Runnable{
     try {
 
       // InputStream to read user-input is created:
-      BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
+      BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
       String line;
 
       while (true) {
@@ -25,6 +26,7 @@ public class ConsoleInput implements Runnable{
 
         // Reading User-Input from Console
         line = consoleIn.readLine();
+        System.out.println("you wrote: " + line);
 
         // Sends Console Input to the Protocol for further processing
         clientProtocol.sendToServer(line);
