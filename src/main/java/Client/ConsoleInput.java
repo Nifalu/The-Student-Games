@@ -30,6 +30,7 @@ public class ConsoleInput implements Runnable{
         line = line.replace("ü","ue");
         line = line.replace("é","e");
         line = line.replace("è","e");
+        line = line.replace("à","a");
 
         // Sends Console Input to the Protocol for further processing
         clientProtocol.sendToServer(line);

@@ -59,6 +59,9 @@ public class ClientHandler implements Runnable {
         s = s.replace("ä","ae");
         s = s.replace("ö","oe");
         s = s.replace("ü","ue");
+        s = s.replace("é","e");
+        s = s.replace("è","e");
+        s = s.replace("à","a");
         if (s.charAt(i) == ';') {
           sb.delete(i, i + 1);
           if (s.equalsIgnoreCase("QUIT")) {

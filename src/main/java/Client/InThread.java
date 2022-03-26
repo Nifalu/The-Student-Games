@@ -40,6 +40,9 @@ public class InThread implements Runnable {
           s = s.replace("ä","ae");
           s = s.replace("ö","oe");
           s = s.replace("ü","ue");
+          s = s.replace("é","e");
+          s = s.replace("è","e");
+          s = s.replace("à","a");
           clientProtocol.sendToClient(s);
 
           sb.delete(0, i + 1);
