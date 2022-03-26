@@ -17,6 +17,4 @@ public class Starter {
       Client.Main.start(args[1], args[2]);
     }
   }
-
-
 }

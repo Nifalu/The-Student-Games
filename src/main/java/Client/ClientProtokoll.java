@@ -28,7 +28,7 @@ public class ClientProtokoll {
       switch (input[0].toLowerCase()) {
 
         case "/quit":
-          // send("QUIT");
+          send("QUIT");
           gameClient.disconnect();
           break;
 
@@ -46,11 +46,14 @@ public class ClientProtokoll {
       }
     }
 
-  private void send(String msg) {
+  public void send(String msg) {
     try {
-      gameClient.out.write((msg + ";").getBytes());
+      gameClient.out.write(msg);
+      gameClient.out.newLine();
+      gameClient.out.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("cannot reach Server! - terminating");
+      gameClient.disconnect();
     }
   }
 
