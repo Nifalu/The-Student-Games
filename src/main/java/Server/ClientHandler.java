@@ -55,13 +55,17 @@ public class ClientHandler implements Runnable {
 
       while ((c = in.read()) != -1) {
         sb.append((char) c);
-        if (sb.toString().charAt(i) == ';') {
+        String s = sb.toString();
+        s = s.replace("ä","ae");
+        s = s.replace("ö","oe");
+        s = s.replace("ü","ue");
+        if (s.charAt(i) == ';') {
           sb.delete(i, i + 1);
-          if (sb.toString().equalsIgnoreCase("QUIT")) {
-            ServerProtocol.get(game, user, sb.toString());
+          if (s.equalsIgnoreCase("QUIT")) {
+            ServerProtocol.get(game, user, s);
             break;
           }
-          send(ServerProtocol.get(game, user, sb.toString()));
+          send(ServerProtocol.get(game, user, s));
           sb.delete(0, i + 1);
           i = 0;
         } else {

@@ -25,6 +25,11 @@ public class ConsoleInput implements Runnable{
 
         // Reading User-Input from Console
         line = consoleIn.readLine();
+        line = line.replace("ä","ae");
+        line = line.replace("ö","oe");
+        line = line.replace("ü","ue");
+        line = line.replace("é","e");
+        line = line.replace("è","e");
 
         // Sends Console Input to the Protocol for further processing
         clientProtocol.sendToServer(line);

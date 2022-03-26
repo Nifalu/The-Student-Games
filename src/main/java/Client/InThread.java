@@ -36,8 +36,11 @@ public class InThread implements Runnable {
         sb.append((char) c);
         if (sb.toString().charAt(i) == ';') {
           sb.delete(i, i + 1);
-
-          clientProtocol.sendToClient(sb.toString());
+          String s = sb.toString();
+          s = s.replace("ä","ae");
+          s = s.replace("ö","oe");
+          s = s.replace("ü","ue");
+          clientProtocol.sendToClient(s);
 
           sb.delete(0, i + 1);
           i = 0;
