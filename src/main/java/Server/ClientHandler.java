@@ -14,10 +14,12 @@ public class ClientHandler implements Runnable {
   
   Game game; // ClientHandler gets Access to the Game
   Socket socket; // ClientHandler is connected with the Client
+  ConnectionToClientMonitor connectionToClientMonitor;
   public User user; // ClientHandler knows which User the Client belongs to
   BufferedReader in; // send data
   BufferedWriter out; // receive data
   private volatile boolean stop = false; // stop the thread
+  Thread connectionMonitor;
 
 
   public ClientHandler(Socket socket, Game game) throws IOException {
@@ -38,6 +40,10 @@ public class ClientHandler implements Runnable {
     // Identifies the new Client
     Name.askUsername(game, this);
 
+    this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
+    connectionMonitor = new Thread(connectionToClientMonitor);
+    connectionMonitor.start();
+
     // processes traffic with serverProtocol
     String msg;
     while (!stop) {
@@ -47,7 +53,6 @@ public class ClientHandler implements Runnable {
       }
       send(ServerProtocol.get(game, user, msg));
     }
-    disconnectClient();
   }
 
   /**
@@ -60,7 +65,6 @@ public class ClientHandler implements Runnable {
       if (msg.equals("-1")) {
         return;
       }
-      System.out.println("sending: " + msg);
       out.write(msg);
       out.newLine();
       out.flush();
@@ -90,12 +94,10 @@ public class ClientHandler implements Runnable {
 
       if (user != null) {
         // error message when user is known
-        System.out.println("cannot reach " + user.getUsername());
-        disconnectClient();
+        System.out.println("cannot receive from " + user.getUsername());
       } else {
         // error message if user is unknown
-        System.out.println("cannot reach user");
-        disconnectClient();
+        System.out.println("cannot receive from user");
       }
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -113,7 +115,13 @@ public class ClientHandler implements Runnable {
     if (user != null) {
       goodbye();
     }
+    // close thread
+    if (connectionMonitor.isAlive()) {
+      connectionToClientMonitor.requestStop();
+    }
+    requestStop();
 
+    // close streams
     try {
       if (in != null) {
         in.close();

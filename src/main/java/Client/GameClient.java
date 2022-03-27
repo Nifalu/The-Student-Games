@@ -25,6 +25,8 @@ public class GameClient {
   Thread clientIn;
   ConsoleInput consoleInput;
   Thread conin;
+  ConnectionToServerMonitor  connectionToServerMonitor;
+  Thread pingpong;
 
   // other
   ClientProtokoll clientProtocol;
@@ -52,6 +54,11 @@ public class GameClient {
       conin = new Thread(consoleInput);
       conin.start();
 
+      // Ping-Pong Thread:
+      connectionToServerMonitor = new ConnectionToServerMonitor(this, clientProtocol);
+      pingpong = new Thread(connectionToServerMonitor);
+      pingpong.start();
+
     } catch (IOException e) {
       disconnect();
     }
@@ -67,6 +74,9 @@ public class GameClient {
     System.out.println("terminating...");
     try {
       Thread.sleep(10);
+      if (pingpong.isAlive()) {
+        connectionToServerMonitor.requestStop();
+      }
       if (conin.isAlive()) {
         consoleInput.requestStop();
       }

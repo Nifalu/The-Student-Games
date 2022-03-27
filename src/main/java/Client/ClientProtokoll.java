@@ -46,24 +46,39 @@ public class ClientProtokoll {
       }
     }
 
+
+  public void receive(String msg){
+
+    // Right now incoming msg are just printed to console:
+    String[] input;
+    input = msg.split("-", 2);
+
+    switch(input[0]) {
+
+      case "PING":
+        send("PONG-" + input[1]);
+        break;
+
+      case "PONG":
+        gameClient.connectionToServerMonitor.setLastReceivedPong(Long.parseLong(input[1]));
+        break;
+
+      default:
+        System.out.println(msg);
+        break;
+    }
+  }
+
+
   public void send(String msg) {
     try {
       gameClient.out.write(msg);
       gameClient.out.newLine();
       gameClient.out.flush();
     } catch (IOException e) {
-      System.out.println("cannot reach Server! - terminating");
-      gameClient.disconnect();
+      System.out.println("cannot reach Server");
     }
   }
-
-  public void sendToClient(String msg){
-
-    // Right now incoming msg are just printed to console:
-    System.out.println(msg);
-
-  }
-
 }
 
 

@@ -29,7 +29,7 @@ public class InThread implements Runnable {
         // reads incoming data
         if (in.ready()) { // this makes sure the following readLine() does not block.
           line = in.readLine();
-          clientProtocol.sendToClient(line);
+          clientProtocol.receive(line);
         }
       }
       System.out.println("Server went offline");

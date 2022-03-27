@@ -11,7 +11,7 @@ public class ServerProtocol {
    * @param s string
    * @return string
    */
-  public static String get(Game game, User user, String s) {
+  public synchronized static String get(Game game, User user, String s) {
 
     // How to:
     // case "Befehl":
@@ -26,12 +26,16 @@ public class ServerProtocol {
 
       case "QUIT":
         user.getClienthandler().disconnectClient(); // disconnects Client
-        user.getClienthandler().requestStop(); // stops the thread
         //maybe broadcast to everyone that user X has quit?
         return "-1";
 
       case "PING":
-        return "PONG";
+        return ("PONG-" + input[1]);
+
+
+      case "PONG":
+        user.getClienthandler().connectionToClientMonitor.setLastReceivedPong(Long.parseLong(input[1]));
+        return "-1";
 
       case "CHAT":
         game.broadcastMessage(user,user.getUsername() + ": " + input[1]);
