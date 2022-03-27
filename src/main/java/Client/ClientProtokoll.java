@@ -40,6 +40,13 @@ public class ClientProtokoll {
           send("CHANGENAME-" + input[1]);
           break;
 
+        case "/whisper":
+          String[] splitUserAndMsg = input[1].split(" ");
+          send("WHISPER-" + splitUserAndMsg[0] + "-" + splitUserAndMsg[1]);
+          break;
+
+
+
         default:
           send(msg); // Echo
           break;

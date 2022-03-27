@@ -39,11 +39,25 @@ public class Game {
     return user;
   }
 
-  // generates a random district for new clients
-  // max. 2 clients per district! (TO DO)
+  /**
+   * assigns districts from 1-12. There shouldn't be more than 2 clients in one district.
+   * district one is "reserved" in case that the other ones get full.
+   * @return randomInt or 1
+   */
   public int assignDistrict(){
     Random random = new Random();
-    return random.nextInt(12) + 1;
+    int counter = 0;
+    int randomInt = random.nextInt(11) + 2;
+    for (int i  = 0; i < userlist.size(); i++) {
+      if (randomInt == userlist.get(i).getDistrict()) {
+        counter++;
+      }
+    }
+    if (counter < 2) {
+      return randomInt;
+    } else {
+      return 1;
+    }
   }
 
   public ArrayList<ClientHandler> getActiveClientList() {
