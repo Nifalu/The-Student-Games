@@ -42,7 +42,7 @@ public class Game {
   /**
    * assigns districts from 1-12. There shouldn't be more than 2 clients in one district.
    * district one is "reserved" in case that the other ones get full.
-   * @return
+   * @return randomInt or 1
    */
   public int assignDistrict(){
     Random random = new Random();
