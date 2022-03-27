@@ -69,7 +69,11 @@ public class Name {
         }
     }
 
-
+    /**
+     * In case a username is already taken this method proposes a new username for the client.
+     * @param game
+     * @param clientHandler
+     */
     public static void proposeUsernameIfTaken(Game game, ClientHandler clientHandler) {
         String newName = clientHandler.user.getUsername() + clientHandler.user.getDistrict();
         clientHandler.user.setUsername(newName);
