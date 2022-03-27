@@ -39,7 +39,7 @@ public class ServerProtocol {
 
 
       case "WHISPER":
-        String[] splitUserAndMsg = input[1].split(":", 2);
+        String[] splitUserAndMsg = input[1].split("-", 2);
         game.whisper(splitUserAndMsg[0], user.getUsername(), splitUserAndMsg[1]);
         return user.getUsername() + " to " + splitUserAndMsg[0] + ": " +  splitUserAndMsg[1];
 
