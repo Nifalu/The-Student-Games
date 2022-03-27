@@ -47,17 +47,8 @@ public class Game {
   public int assignDistrict(){
     Random random = new Random();
     int counter = 0;
-    int randomInt = random.nextInt(11) + 2;
-    for (int i  = 0; i < userlist.size(); i++) {
-      if (randomInt == userlist.get(i).getDistrict()) {
-        counter++;
-      }
-    }
-    if (counter < 2) {
-      return randomInt;
-    } else {
-      return 1;
-    }
+    int randomInt = random.nextInt(12) + 1;
+    return randomInt;
   }
 
   public ArrayList<ClientHandler> getActiveClientList() {
