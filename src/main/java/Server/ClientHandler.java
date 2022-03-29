@@ -20,6 +20,7 @@ public class ClientHandler implements Runnable {
   BufferedWriter out; // receive data
   private volatile boolean stop = false; // stop the thread
   Thread connectionMonitor;
+  Name nameClass = new Name();
 
 
   public ClientHandler(Socket socket, Game game) throws IOException {
@@ -38,7 +39,7 @@ public class ClientHandler implements Runnable {
   public void run() {
 
     // Identifies the new Client
-    Name.askUsername(game, this);
+    nameClass.askUsername(game, this);
 
     this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
     connectionMonitor = new Thread(connectionToClientMonitor);

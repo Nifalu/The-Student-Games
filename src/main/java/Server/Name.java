@@ -18,7 +18,7 @@ public class Name {
      and connected to the game. If the username already exists in the game he will get a new username assigned.
      **/
 
-    public static void askUsername(Game game, ClientHandler clientHandler) {
+    public void askUsername(Game game, ClientHandler clientHandler) {
         try {
             proposeUsernameBasedOnSystemName(game, clientHandler);
         } catch (UnknownHostException e) {
@@ -39,7 +39,7 @@ public class Name {
      * Proposes a username based on the system name and proceeds to ask if the user actually wants that name. If not
      * the user can type in a different one.
      */
-    public static void proposeUsernameBasedOnSystemName(Game game, ClientHandler clientHandler) throws UnknownHostException {
+    public void proposeUsernameBasedOnSystemName(Game game, ClientHandler clientHandler) throws UnknownHostException {
         String systemName = InetAddress.getLocalHost().getHostName();
         String[] proposedName;
         String selectedName;
@@ -74,7 +74,7 @@ public class Name {
      * @param game
      * @param clientHandler
      */
-    public static void proposeUsernameIfTaken(Game game, ClientHandler clientHandler) {
+    public void proposeUsernameIfTaken(Game game, ClientHandler clientHandler) {
         String newName = clientHandler.user.getUsername() + clientHandler.user.getDistrict();
         clientHandler.user.setUsername(newName);
         if (nameAlreadyExists(game, clientHandler.user.getUsername())) {
@@ -91,7 +91,7 @@ public class Name {
     /**
      * checks if the username already exists and returns true or false.
      */
-    public static boolean nameAlreadyExists(Game game, String name) {
+    public boolean nameAlreadyExists(Game game, String name) {
         boolean alreadyExists = false;
         int length = game.getUserlist().size() - 1;
         int counter = 0;

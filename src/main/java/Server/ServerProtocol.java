@@ -51,7 +51,7 @@ public class ServerProtocol {
       case "CHANGENAME":
 
         // was soll passieren wenn jemand seinen Namen aendern moechte?
-        if (Name.nameAlreadyExists(game, input[1])) {
+        if (user.getClienthandler().nameClass.nameAlreadyExists(game, input[1])) {
           return "SORRY! This tribute already exists. Please try another name.";
         } else {
           user.setUsername(input[1]);
