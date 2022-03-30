@@ -19,11 +19,11 @@ public class PlayingFields {
     public void changePosition(User user, int move) {
         int currentPosition = position.get(user);
         int newPosition = currentPosition + move;
-        if (position.containsValue(newPosition)) {
+        if (position.containsValue(newPosition) && newPosition <= 90) {
             // iterate each entry of hashmap
             for(Map.Entry<User, Integer> entry: position.entrySet()) {
 
-                // if give value is equal to value from entry
+                // If given value is equal to value from entry
                 // position will be switched
                 if(entry.getValue() == newPosition) {
                     position.replace(entry.getKey(), currentPosition);
@@ -31,8 +31,11 @@ public class PlayingFields {
                 }
             }
         }
-        position.replace(user, currentPosition + move);
-        checkField(user, position.get(user));
+        if (newPosition > 90) {
+            newPosition = 91;
+        }
+        position.replace(user, newPosition);
+        checkField(user, newPosition);
     }
 
     public void checkField(User user, int field) {
@@ -56,11 +59,12 @@ public class PlayingFields {
             changePosition(user, 68 - field);
         } // Ereigniskarten
         else if (field == 18 || field == 46 || field == 74) {
-
+            changePosition(user,Cards.getCards());
         } // Quiz
         else if (field == 23 || field == 50) {
 
-        } else if (field > 90) {
+        } // This is the end
+        else if (field == 90) {
 
         }
     }
