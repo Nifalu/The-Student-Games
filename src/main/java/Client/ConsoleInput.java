@@ -7,10 +7,10 @@ import java.nio.charset.StandardCharsets;
 
 public class ConsoleInput implements Runnable{
 
-  ClientProtokoll clientProtocol;
+  ClientProtocol clientProtocol;
   private volatile boolean stop = false;
 
-  public ConsoleInput(ClientProtokoll clientProtocol) {
+  public ConsoleInput(ClientProtocol clientProtocol) {
     this.clientProtocol = clientProtocol;
   }
 

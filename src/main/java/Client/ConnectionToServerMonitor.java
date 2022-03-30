@@ -7,9 +7,9 @@ public class ConnectionToServerMonitor implements Runnable{
   private long timedOut;
 
   GameClient client;
-  ClientProtokoll protocol;
+  ClientProtocol protocol;
 
-  public ConnectionToServerMonitor(GameClient client, ClientProtokoll protocol) {
+  public ConnectionToServerMonitor(GameClient client, ClientProtocol protocol) {
     this.client = client;
     this.protocol = protocol;
   }

@@ -57,6 +57,10 @@ public class ServerProtocol {
           user.setUsername(input[1]);
           return "SUCCESS! You're now called : " + user.getUsername();
         }
+
+      case "NAME":
+        user.getClienthandler().nameClass.setMessage(input[1]);
+        return input[1] + " gesendet von Serverprotokoll";
     }
 
     // Was soll passieren wenn der Befehl nicht bekannt ist? (aktuell Echo)

@@ -11,10 +11,10 @@ public class InThread implements Runnable {
 
   BufferedReader in;
   Socket socket;
-  ClientProtokoll clientProtocol;
+  ClientProtocol clientProtocol;
   private volatile boolean stop = false;
 
-  public InThread(Socket socket, BufferedReader in, ClientProtokoll clientProtocol) {
+  public InThread(Socket socket, BufferedReader in, ClientProtocol clientProtocol) {
     this.in = in;
     this.socket = socket;
     this.clientProtocol = clientProtocol;

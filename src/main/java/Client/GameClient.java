@@ -29,13 +29,13 @@ public class GameClient {
   Thread pingpong;
 
   // other
-  ClientProtokoll clientProtocol;
+  ClientProtocol clientProtocol;
 
 
   public GameClient(String serverAddress, int serverPort) {
     this.serverAddress = serverAddress;
     this.serverPort = serverPort;
-    this.clientProtocol = new ClientProtokoll(this);
+    this.clientProtocol = new ClientProtocol(this);
 
     // Connection to the server is made and in/out streams are created:
     try {

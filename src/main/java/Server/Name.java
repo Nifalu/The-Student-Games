@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
  */
 
 public class Name {
+    String nameMessage = null;
 
 
     /**
@@ -19,6 +20,25 @@ public class Name {
      and connected to the game. If the username already exists in the game he will get a new username assigned.
      **/
 
+    // receives messages
+    // the ServerProtocol will use the setMessage method
+    public String receive() {
+        while(true) {
+            if (this.nameMessage != null) {
+                System.out.println("Msg ist nicht mehr null in while loop");
+                String tmp = this.nameMessage;
+                this.nameMessage = null;
+                return tmp;
+            }
+        }
+    }
+
+    public void setMessage(String message) {
+        System.out.println("in Name Class: Msg wurde gesettet zu: " + message);
+        this.nameMessage = message;
+    }
+
+
     public void askUsername(Game game, ClientHandler clientHandler) {
         try {
             proposeUsernameBasedOnSystemName(game, clientHandler);
@@ -26,7 +46,7 @@ public class Name {
             clientHandler.send("Your Hostname could not be detected.");
             e.printStackTrace();
             clientHandler.send("Please enter a name below.");
-            String answer = clientHandler.receive();
+            String answer = receive();
             clientHandler.user.setUsername(answer);
         }
         if (nameAlreadyExists(game, clientHandler.user.getUsername())) {
@@ -62,10 +82,11 @@ public class Name {
             }
         }
         clientHandler.send("Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
-        String answer = clientHandler.receive();
+        String answer = receive();
+        System.out.println("Answer: " + answer);
         if (!answer.equalsIgnoreCase("YES")) {
             clientHandler.send("Please enter your desired name below.");
-            String desiredName = clientHandler.receive();
+            String desiredName = receive();
             clientHandler.user.setUsername(desiredName);
         }
     }

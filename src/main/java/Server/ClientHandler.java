@@ -22,6 +22,8 @@ public class ClientHandler implements Runnable {
   private volatile boolean stop = false; // stop the thread
   Thread connectionMonitor;
   Name nameClass = new Name();
+  ClientHandlerIn clientHandlerIn;
+  Thread clientHandlerInThread;
 
 
   public ClientHandler(Socket socket, Game game) throws IOException {
@@ -30,6 +32,9 @@ public class ClientHandler implements Runnable {
     try {
       this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
       this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+      this.clientHandlerIn = new ClientHandlerIn(this, in);
+      this.clientHandlerInThread = new Thread(clientHandlerIn);
+      clientHandlerInThread.start();
     } catch (IOException e) {
       disconnectClient();
     }
@@ -49,7 +54,7 @@ public class ClientHandler implements Runnable {
     connectionMonitor = new Thread(connectionToClientMonitor);
     connectionMonitor.start();
 
-    // processes traffic with serverProtocol
+    /*// processes traffic with serverProtocol
     String msg;
     while (!stop) {
       msg = receive();
@@ -57,7 +62,7 @@ public class ClientHandler implements Runnable {
         break;
       }
       send(ServerProtocol.get(game, user, msg));
-    }
+    }*/
   }
 
   /**
@@ -83,7 +88,7 @@ public class ClientHandler implements Runnable {
    * A StringBuilder appends every incoming byte to a String until a certain break-character is found.
    * Then removes the break-character and returns the String.
    */
-  public String receive() {
+  /*public String receive() {
     String line = "";
     try {
       while(!stop) {
@@ -108,7 +113,7 @@ public class ClientHandler implements Runnable {
       e.printStackTrace();
     }
     return null;
-  }
+  }*/
 
 
   /**

@@ -7,11 +7,11 @@ import java.io.IOException;
  * Anything that needs to go to the Server is first send through the CLient-Protocol.
  * It processes the message and formats it to be readable by the Server.
  */
-public class ClientProtokoll {
+public class ClientProtocol {
 
   GameClient gameClient;
 
-  public ClientProtokoll(GameClient gameClient) {
+  public ClientProtocol(GameClient gameClient) {
     this.gameClient = gameClient;
   }
 
@@ -45,7 +45,9 @@ public class ClientProtokoll {
           send("WHISPER-" + splitUserAndMsg[0] + "-" + splitUserAndMsg[1]);
           break;
 
-
+          case "/name":
+            send("NAME-" + input[1]);
+            break;
 
         default:
           send(msg); // Echo
@@ -79,6 +81,7 @@ public class ClientProtokoll {
 
   public void send(String msg) {
     try {
+      System.out.println("ClientProtkoll sendet" + msg);
       gameClient.out.write(msg);
       gameClient.out.newLine();
       gameClient.out.flush();
