@@ -4,6 +4,7 @@ package Server;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+// test comment
 
 /**
  * this class handles all methods related to setting and changing usernames
