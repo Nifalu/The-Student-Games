@@ -27,7 +27,7 @@ public class Name {
             e.printStackTrace();
             clientHandler.send("Please enter a name below.");
             String answer = clientHandler.receive();
-            clientHandler.user = game.connect(clientHandler.socket.getInetAddress(), clientHandler, answer);
+            clientHandler.user.setUsername(answer);
         }
         if (nameAlreadyExists(game, clientHandler.user.getUsername())) {
             proposeUsernameIfTaken(game, clientHandler);
@@ -51,7 +51,7 @@ public class Name {
         } else {
             selectedName = proposedName[0].substring(0, proposedName[0].length() - 1);
         }
-        clientHandler.user = game.connect(clientHandler.socket.getInetAddress(), clientHandler, selectedName);
+        clientHandler.user.setUsername(selectedName);
         if (nameAlreadyExists(game, clientHandler.user.getUsername())) {
             int i = 1;
             String name = clientHandler.user.getUsername();

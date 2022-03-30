@@ -1,6 +1,7 @@
 package Server;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
@@ -32,6 +33,9 @@ public class ClientHandler implements Runnable {
     } catch (IOException e) {
       disconnectClient();
     }
+
+    // creates and connects user
+    user = game.connect(this.socket.getInetAddress(), this, "Player" + game.userlist.size());
   }
 
 
