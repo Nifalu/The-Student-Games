@@ -51,13 +51,13 @@ public class ServerProtocol {
       case "CHANGENAME":
 
         // was soll passieren wenn jemand seinen Namen aendern moechte?
-        user.getClienthandler().nameClass.changeNameTo(input[1]);
+        user.getClienthandler().nameClass.changeNameTo(user.getUsername(),input[1]);
         return "-1";
 
 
       case "NAME":
         user.getClienthandler().nameClass.setMessage(input[1]);
-        return input[1] + " gesendet von Serverprotokoll";
+        return "-1";
 
       default:
         return s; // Echo

@@ -59,13 +59,17 @@ public class Name {
         if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
             clientHandler.send("Please enter your desired name below.");
             String desiredName = receive();
-            changeNameTo(desiredName);
+            if (!desiredName.equals(clientHandler.user.getUsername())) {
+                changeNameTo("", desiredName);
+            }
         }
         welcomeUser();
     }
 
-    public void changeNameTo(String preferredName) {
-        if (nameAlreadyExists(preferredName)) { // Wenn preferredName bereits exisitert:
+    public void changeNameTo(String currentName, String preferredName) {
+        if (currentName.equals(preferredName)) {
+            clientHandler.send("This is already your name");
+        } else if (nameAlreadyExists(preferredName)) { // Wenn preferredName bereits exisitert:
             String newName;
             newName = proposeUsernameIfTaken(preferredName);
             clientHandler.send("SORRY! This tribute already exists. Here is a new one: " + newName);
@@ -79,10 +83,11 @@ public class Name {
     /**
      * In case a username is already taken this method proposes a new username for the client.
      */
-    private String proposeUsernameIfTaken(String preferredName) {
+    public String proposeUsernameIfTaken(String preferredName) {
         int i = 1;
-        while (!nameAlreadyExists(preferredName)) {
+        while (nameAlreadyExists(preferredName)) {
             preferredName = preferredName + "_" + i;
+            System.out.println("-");
         }
         return preferredName;
     }
@@ -92,10 +97,12 @@ public class Name {
      */
     private boolean nameAlreadyExists(String desiredName) {
         String tmp_name;
-        int length = game.getUserlist().size() - 1;
+        int length = game.getUserlist().size();
         for (int i = 0; i < length; i++) {
+            System.out.println("in");
             tmp_name = game.getUserlist().get(i).getUsername();
             if (tmp_name.equalsIgnoreCase(desiredName)) {
+                System.out.println("true");
                 return true;
             }
         }

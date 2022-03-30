@@ -37,9 +37,8 @@ public class ClientHandler implements Runnable {
 
       // Gets the Home-directory name of the Client and creates a User
       this.nameClass = new Name(this);
-      System.out.println("waiting for name");
       String ClientHomeDirectoryName = in.readLine();
-      System.out.println("got the name: " + ClientHomeDirectoryName);
+      ClientHomeDirectoryName = nameClass.proposeUsernameIfTaken(ClientHomeDirectoryName);
       user = game.connect(this.socket.getInetAddress(), this,  ClientHomeDirectoryName);
 
       // Creates a receiving Thread that receives messages in the background
@@ -62,21 +61,8 @@ public class ClientHandler implements Runnable {
 
   @Override
   public void run() {
-
-    // Identifies the new Client
     nameClass.askUsername();
-
-    /*// processes traffic with serverProtocol
-    String msg;
-    while (!stop) {
-      msg = receive();
-      if (msg == null) {
-        break;
-      }
-      send(ServerProtocol.get(game, user, msg));
-    }*/
   }
-
   /**
    * "Send a String to the Client."
    * Use this instead of "out.write" to avoid errors.
@@ -94,40 +80,6 @@ public class ClientHandler implements Runnable {
       System.out.println("cannot reach user" );
     }
   }
-  
-  /**
-   * "Receive a String from the Client"
-   * A StringBuilder appends every incoming byte to a String until a certain break-character is found.
-   * Then removes the break-character and returns the String.
-   */
-  /*public String receive() {
-    String line = "";
-    try {
-      while(!stop) {
-        if (in.ready()) {
-          line = in.readLine();
-          break;
-        }
-        Thread.sleep(0,200000);
-      }
-      return line;
-      // if connection fails
-    } catch (IOException e) {
-
-      if (user != null) {
-        // error message when user is known
-        System.out.println("cannot receive from " + user.getUsername());
-      } else {
-        // error message if user is unknown
-        System.out.println("cannot receive from user");
-      }
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }*/
-
-
   /**
    * "Does everything that needs to be done when a Client disconnects."
    * Closes the In/Out-Streams, the socket and removes the Client from the ActiveClientList.
