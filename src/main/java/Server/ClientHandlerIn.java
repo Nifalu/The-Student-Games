@@ -15,12 +15,10 @@ public class ClientHandlerIn implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Client an ClientHandlerIn RUN laeuft");
         // processes traffic with serverProtocol
         String msg;
         while (!stop) {
             msg = receive();
-            System.out.println("Receive :" + msg);
             if (msg == null) {
                 break;
             }

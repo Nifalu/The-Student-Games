@@ -11,8 +11,9 @@ import java.net.UnknownHostException;
  */
 
 public class Name {
-    String nameMessage = null;
-
+    private String nameMessage = null;
+    ClientHandler clientHandler;
+    Game game;
 
     /**
      * This method first calls the proposeUsernameBasedOnSystemName Method and asks the Client if he wants the name
@@ -20,114 +21,90 @@ public class Name {
      and connected to the game. If the username already exists in the game he will get a new username assigned.
      **/
 
+    public Name(ClientHandler clientHandler) {
+        this.clientHandler = clientHandler;
+        this.game = clientHandler.game;
+    }
+
     // receives messages
     // the ServerProtocol will use the setMessage method
     public String receive() {
-        while(true) {
-            if (this.nameMessage != null) {
-                System.out.println("Msg ist nicht mehr null in while loop");
-                String tmp = this.nameMessage;
-                this.nameMessage = null;
-                return tmp;
+        String tmp_msg;
+        while(nameMessage == null) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
+        tmp_msg = nameMessage;
+        nameMessage = null;
+        return tmp_msg;
     }
 
-    public void setMessage(String message) {
-        System.out.println("in Name Class: Msg wurde gesettet zu: " + message);
-        this.nameMessage = message;
+
+
+    public void setMessage(String msg) {
+        System.out.println("in Name Class: Msg wurde gesettet zu: " + msg);
+        this.nameMessage = msg;
     }
 
 
-    public void askUsername(Game game, ClientHandler clientHandler) {
-        try {
-            proposeUsernameBasedOnSystemName(game, clientHandler);
-        } catch (UnknownHostException e) {
-            clientHandler.send("Your Hostname could not be detected.");
-            e.printStackTrace();
-            clientHandler.send("Please enter a name below.");
-            String answer = receive();
-            clientHandler.user.setUsername(answer);
-        }
-        if (nameAlreadyExists(game, clientHandler.user.getUsername())) {
-            proposeUsernameIfTaken(game, clientHandler);
-        } else {
-            clientHandler.welcomeUser();
-        }
-    }
 
-    /**
-     * Proposes a username based on the system name and proceeds to ask if the user actually wants that name. If not
-     * the user can type in a different one.
-     */
-    public void proposeUsernameBasedOnSystemName(Game game, ClientHandler clientHandler) throws UnknownHostException {
-        String systemName = InetAddress.getLocalHost().getHostName();
-        String[] proposedName;
-        String selectedName;
-        proposedName = systemName.split("-", 2);
 
-        if (proposedName[0].equalsIgnoreCase("DESKTOP")) {
-            selectedName = proposedName[0];
-        } else {
-            selectedName = proposedName[0].substring(0, proposedName[0].length() - 1);
-        }
-        clientHandler.user.setUsername(selectedName);
-        if (nameAlreadyExists(game, clientHandler.user.getUsername())) {
-            int i = 1;
-            String name = clientHandler.user.getUsername();
-            while (nameAlreadyExists(game, name)) {
-                name = name + "." + i;
-                clientHandler.user.setUsername(name);
-                i++;
-            }
-        }
+    public void askUsername() {
+
         clientHandler.send("Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
         String answer = receive();
-        System.out.println("Answer: " + answer);
-        if (!answer.equalsIgnoreCase("YES")) {
+        if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
             clientHandler.send("Please enter your desired name below.");
             String desiredName = receive();
-            clientHandler.user.setUsername(desiredName);
+            changeNameTo(desiredName);
+        }
+        welcomeUser();
+    }
+
+    public void changeNameTo(String preferredName) {
+        if (nameAlreadyExists(preferredName)) { // Wenn preferredName bereits exisitert:
+            String newName;
+            newName = proposeUsernameIfTaken(preferredName);
+            clientHandler.send("SORRY! This tribute already exists. Here is a new one: " + newName);
+            clientHandler.user.setUsername(newName);
+        } else { // wenn preferredName frei ist:
+            clientHandler.user.setUsername(preferredName);
+            clientHandler.send("Success! You're now called : " + preferredName);
         }
     }
 
     /**
      * In case a username is already taken this method proposes a new username for the client.
-     * @param game
-     * @param clientHandler
      */
-    public void proposeUsernameIfTaken(Game game, ClientHandler clientHandler) {
-        String newName = clientHandler.user.getUsername() + clientHandler.user.getDistrict();
-        clientHandler.user.setUsername(newName);
-        if (nameAlreadyExists(game, clientHandler.user.getUsername())) {
-            int i = 1;
-            while (nameAlreadyExists(game, clientHandler.user.getUsername())) {
-                clientHandler.user.setUsername(clientHandler.user.getUsername() + ".i");
-            }
+    private String proposeUsernameIfTaken(String preferredName) {
+        int i = 1;
+        while (!nameAlreadyExists(preferredName)) {
+            preferredName = preferredName + "_" + i;
         }
-        clientHandler.send("Oooops that one was already taken, but here's a new one: " + newName);
-        clientHandler.user.setUsername(newName);
-        clientHandler.welcomeUser();
+        return preferredName;
     }
 
     /**
      * checks if the username already exists and returns true or false.
      */
-    public boolean nameAlreadyExists(Game game, String name) {
-        boolean alreadyExists = false;
+    private boolean nameAlreadyExists(String desiredName) {
+        String tmp_name;
         int length = game.getUserlist().size() - 1;
-        int counter = 0;
         for (int i = 0; i < length; i++) {
-            String username = game.getUserlist().get(i).getUsername();
-            if (username.equalsIgnoreCase(name)) {
-                counter++;
+            tmp_name = game.getUserlist().get(i).getUsername();
+            if (tmp_name.equalsIgnoreCase(desiredName)) {
+                return true;
             }
         }
-        if (counter > 0) {
-            alreadyExists = true;
-        }
-        return alreadyExists;
+        return false;
     }
 
+    private void welcomeUser() {
+        System.out.println(clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + " has connected");
+        clientHandler.send("Your name was drawn at the reaping. Welcome to the Student Games, " + clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + "!");
+    }
 
 }

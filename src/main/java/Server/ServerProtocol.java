@@ -22,7 +22,7 @@ public class ServerProtocol {
     String[] input;
     input = s.split("-", 2); // Splits the String (limit - 1) times at the first "-"
 
-    switch(input[0]) {
+    switch (input[0]) {
 
       case "QUIT":
         user.getClienthandler().disconnectClient(); // disconnects Client
@@ -38,33 +38,29 @@ public class ServerProtocol {
         return "-1";
 
       case "CHAT":
-        game.broadcastMessage(user,user.getUsername() + ": " + input[1]);
+        game.broadcastMessage(user, user.getUsername() + ": " + input[1]);
         return user.getUsername() + ": " + input[1];
 
 
       case "WHISPER":
         String[] splitUserAndMsg = input[1].split("-", 2);
         game.whisper(splitUserAndMsg[0], user.getUsername(), splitUserAndMsg[1]);
-        return user.getUsername() + " to " + splitUserAndMsg[0] + ": " +  splitUserAndMsg[1];
+        return user.getUsername() + " to " + splitUserAndMsg[0] + ": " + splitUserAndMsg[1];
 
 
       case "CHANGENAME":
 
         // was soll passieren wenn jemand seinen Namen aendern moechte?
-        if (user.getClienthandler().nameClass.nameAlreadyExists(game, input[1])) {
-          return "SORRY! This tribute already exists. Please try another name.";
-        } else {
-          user.setUsername(input[1]);
-          return "SUCCESS! You're now called : " + user.getUsername();
-        }
+        user.getClienthandler().nameClass.changeNameTo(input[1]);
+        return "-1";
+
 
       case "NAME":
         user.getClienthandler().nameClass.setMessage(input[1]);
         return input[1] + " gesendet von Serverprotokoll";
+
+      default:
+        return s; // Echo
     }
-
-    // Was soll passieren wenn der Befehl nicht bekannt ist? (aktuell Echo)
-    return s;
   }
-
 }

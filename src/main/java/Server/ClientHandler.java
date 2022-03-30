@@ -21,26 +21,42 @@ public class ClientHandler implements Runnable {
   BufferedWriter out; // receive data
   private volatile boolean stop = false; // stop the thread
   Thread connectionMonitor;
-  Name nameClass = new Name();
+  public Name nameClass;
   ClientHandlerIn clientHandlerIn;
   Thread clientHandlerInThread;
 
 
-  public ClientHandler(Socket socket, Game game) throws IOException {
-    this.socket = socket;
-    this.game = game;
+  public ClientHandler(Socket socket, Game game) {
     try {
+      this.socket = socket;
+      this.game = game;
+
+      // creating Streams
       this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
       this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+
+      // Gets the Home-directory name of the Client and creates a User
+      this.nameClass = new Name(this);
+      System.out.println("waiting for name");
+      String ClientHomeDirectoryName = in.readLine();
+      System.out.println("got the name: " + ClientHomeDirectoryName);
+      user = game.connect(this.socket.getInetAddress(), this,  ClientHomeDirectoryName);
+
+      // Creates a receiving Thread that receives messages in the background
       this.clientHandlerIn = new ClientHandlerIn(this, in);
       this.clientHandlerInThread = new Thread(clientHandlerIn);
       clientHandlerInThread.start();
+
+      // Creates a ConnectionMonitor Thread that detects when the connection times out.
+      this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
+      connectionMonitor = new Thread(connectionToClientMonitor);
+      connectionMonitor.start();
+
+
+
     } catch (IOException e) {
       disconnectClient();
     }
-
-    // creates and connects user
-    user = game.connect(this.socket.getInetAddress(), this, "Player" + game.userlist.size());
   }
 
 
@@ -48,11 +64,7 @@ public class ClientHandler implements Runnable {
   public void run() {
 
     // Identifies the new Client
-    nameClass.askUsername(game, this);
-
-    this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
-    connectionMonitor = new Thread(connectionToClientMonitor);
-    connectionMonitor.start();
+    nameClass.askUsername();
 
     /*// processes traffic with serverProtocol
     String msg;
@@ -151,11 +163,6 @@ public class ClientHandler implements Runnable {
     System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
     game.getActiveClientList().remove(this);
     game.getUserlist().remove(user.getId(),user);
-  }
-
-  public void welcomeUser() {
-    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
-    send("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
   }
 
   public void requestStop() {

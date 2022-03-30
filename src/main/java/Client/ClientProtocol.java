@@ -81,7 +81,6 @@ public class ClientProtocol {
 
   public void send(String msg) {
     try {
-      System.out.println("ClientProtkoll sendet" + msg);
       gameClient.out.write(msg);
       gameClient.out.newLine();
       gameClient.out.flush();
