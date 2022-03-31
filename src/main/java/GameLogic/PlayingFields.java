@@ -2,6 +2,7 @@ package GameLogic;
 
 import Server.User;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,9 @@ import java.util.Map;
  * There are ladders where you skip fields or fall back if you land on them.
  */
 public class PlayingFields {
+
+    public HighScore HighScore;
+
     public HashMap<User, Integer> position = new HashMap<>();
 
     public void startGame(User user) {
@@ -65,7 +69,7 @@ public class PlayingFields {
 
         } // This is the end
         else if (field == 90) {
-
+            HighScore.add("vladimir", 1);
         }
     }
 
