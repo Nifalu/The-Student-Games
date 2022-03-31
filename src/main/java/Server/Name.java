@@ -60,7 +60,7 @@ public class Name {
             clientHandler.send("Please enter your desired name below.");
             String desiredName = receive();
             if (!desiredName.equals(clientHandler.user.getUsername())) {
-                changeNameTo("", desiredName);
+                changeNameTo(clientHandler.user.getUsername(), desiredName);
             }
         }
         welcomeUser();
@@ -101,7 +101,7 @@ public class Name {
         for (int i = 0; i < length; i++) {
             System.out.println("in");
             tmp_name = game.getUserlist().get(i).getUsername();
-            if (tmp_name.equalsIgnoreCase(desiredName)) {
+            if (tmp_name.equalsIgnoreCase(desiredName) && !tmp_name.equals(clientHandler.user.getUsername())) {
                 System.out.println("true");
                 return true;
             }
