@@ -1,4 +1,4 @@
-package GUI;
+package GUI_Tests;
 
 import javafx.application.Application;
 
@@ -10,7 +10,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-            Application.launch(GUI.class, args);
+            //Application.launch(Buttons.class, args);
+            Application.launch(Scenes.class, args);
     }
 
 
