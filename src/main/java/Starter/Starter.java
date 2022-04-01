@@ -3,7 +3,6 @@ package Starter;
 public class Starter {
 
 
-
   public static void main(String[] args) {
     if (args.length == 0) {
       System.out.println("not enough arguments");
@@ -12,9 +11,14 @@ public class Starter {
         Server.Main.start(args[1]);
       } else {
         Server.Main.start();
-        }
+      }
     } else if (args[0].equals("Client")) {
-      Client.Main.start(args[1], args[2]);
+      String[] address = args[1].split(":", 2);
+      if (address.length == 2) {
+        Client.Main.start(address[0], address[1]);
+      } else {
+        System.out.println("not enough arguments");
+      }
     }
   }
 }

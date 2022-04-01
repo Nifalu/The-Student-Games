@@ -7,17 +7,16 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * GameServer is the Container in which everything takes place.
+ * Clients can connect to this GameServer with an Ip-Address and Port.
+ */
 public class GameServer implements Runnable {
 
   int port;
   ServerSocket serverSocket;
 
   private static final Random random = new Random();
-
-
-  // Lists all active GameServers (Threads) in a List.
-  // will be used to play several games at once
-  private static final ArrayList<GameServer> gameServerList = new ArrayList<>();
 
 
   /**
@@ -28,7 +27,6 @@ public class GameServer implements Runnable {
     try {
       this.port = (2000 + random.nextInt(8000));
       this.serverSocket = new ServerSocket(port);
-      gameServerList.add(this);
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -45,7 +43,6 @@ public class GameServer implements Runnable {
     try {
       this.port = port;
       this.serverSocket = new ServerSocket(port);
-      gameServerList.add(this);
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -56,20 +53,20 @@ public class GameServer implements Runnable {
   @Override
   public void run() {
 
-    Game game = new Game();
-
-
     try {
-      System.out.println("Server created: " + InetAddress.getLocalHost().getHostAddress() + " Port: " + port);
+      System.out.println("Server created: " + InetAddress.getLocalHost() + ":" + port);
       System.out.println("Server is running and waiting for a connection... ");
+      int i = 0;
 
       while (!serverSocket.isClosed()) {
         Socket socket = serverSocket.accept(); // program waits here until someone connects !
 
         // Each User gets his own thread
-        ClientHandler clientHandler = new ClientHandler(socket, game);
+        ClientHandler clientHandler = new ClientHandler(socket);
         Thread clientHandlerThread = new Thread(clientHandler);
+        clientHandlerThread.setName("ClientHandlerThread" + i);
         clientHandlerThread.start();
+        i++;
       }
 
     } catch (IOException e) {
@@ -80,21 +77,11 @@ public class GameServer implements Runnable {
 
   }
 
-
-  // GETTER -> Returns list with all current GameServerThreads
-  public static ArrayList<GameServer> getGameServerList() {
-    return gameServerList;
-  }
-
-
   /**
-   * Removes this GameServer from the GameServer list and closes the ServerSocket.
-   * Running this Method will disconnect all Clients connected to this Socket.
-   * This Method should be called when this game has finished and all users have left.
+   * closes the ServerSocket
    */
   public void closeGameServer() {
     try {
-      gameServerList.remove(this);
       if (serverSocket != null) {
         serverSocket.close();
       }

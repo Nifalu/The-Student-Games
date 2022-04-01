@@ -1,113 +1,83 @@
 package Server;
 
+import utility.IO.CommandsToClient;
+import utility.IO.SendToClient;
+
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 
 /**
  * Each Client is connected to a separate thread of this class.
- * The ClientHandler receives input from the Client, processes it and sends an answer back.
- * To be able to process the input correctly, the ClientHandler knows the game and the user he's connected to.
+ * The ClientHandler handles the connection between the client and itself.
+ * It starts Threads to handle incoming messages in the background and continuously check for connection loss.
+ * <p>
+ * The first message the ClientHandler receives will be the initial Username of this Client.
  */
 public class ClientHandler implements Runnable {
-  
-  Game game; // ClientHandler gets Access to the Game
-  Socket socket; // ClientHandler is connected with the Client
-  ConnectionToClientMonitor connectionToClientMonitor;
-  public User user; // ClientHandler knows which User the Client belongs to
-  BufferedReader in; // send data
-  BufferedWriter out; // receive data
+
+  //close
   private volatile boolean stop = false; // stop the thread
-  Thread connectionMonitor;
-  Name nameClass = new Name();
+
+  //Connection:
+  private Socket socket; // connection to the client
+
+  //Streams:
+  private BufferedReader in; // send data
+  private BufferedWriter out; // receive data
+
+  //Objects:
+  public User user; // ClientHandler knows which User the Client belongs to
+  public Name nameClass = new Name(this);
+  public Chat chat = new Chat();
+  private final SendToClient sendToClient = new SendToClient();
+
+  //Threads:
+  private ClientHandlerIn clientHandlerIn;
+  private Thread clientHandlerInThread;
+
+  private ConnectionToClientMonitor connectionToClientMonitor;
+  private Thread connectionMonitor;
 
 
-  public ClientHandler(Socket socket, Game game) throws IOException {
-    this.socket = socket;
-    this.game = game;
+  public ClientHandler(Socket socket) {
     try {
+      this.socket = socket;
+
+      // creating Streams
       this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
       this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+
+      // Gets the Home-directory name of the Client and creates a User
+      this.nameClass = new Name(this);
+      user = ServerManager.connect(this.socket.getInetAddress(), this, "Player_" + ServerManager.userlist.size());
+      String ClientHomeDirectoryName = in.readLine();
+      ClientHomeDirectoryName = nameClass.proposeUsernameIfTaken(ClientHomeDirectoryName);
+      user.setUsername(ClientHomeDirectoryName);
+
+      // Creates a receiving Thread that receives messages in the background
+      this.clientHandlerIn = new ClientHandlerIn(this, in);
+      this.clientHandlerInThread = new Thread(clientHandlerIn);
+      clientHandlerInThread.setName(user.getUsername() + "'s ClientHandlerIn Thread");
+      clientHandlerInThread.start();
+
+      // Creates a ConnectionMonitor Thread that detects when the connection times out.
+      this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
+      connectionMonitor = new Thread(connectionToClientMonitor);
+      connectionMonitor.setName("connectionMonitor  Thread");
+      connectionMonitor.start();
+
+
     } catch (IOException e) {
       disconnectClient();
     }
-
-    // creates and connects user
-    user = game.connect(this.socket.getInetAddress(), this, "Player" + game.userlist.size());
   }
 
 
   @Override
   public void run() {
-
-    // Identifies the new Client
-    nameClass.askUsername(game, this);
-
-    this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
-    connectionMonitor = new Thread(connectionToClientMonitor);
-    connectionMonitor.start();
-
-    // processes traffic with serverProtocol
-    String msg;
-    while (!stop) {
-      msg = receive();
-      if (msg == null) {
-        break;
-      }
-      send(ServerProtocol.get(game, user, msg));
-    }
-  }
-
-  /**
-   * "Send a String to the Client."
-   * Use this instead of "out.write" to avoid errors.
-   * It converts the given String to bytes before sending.
-   */
-  public void send(String msg) {
-    try {
-      if (msg.equals("-1")) {
-        return;
-      }
-      out.write(msg);
-      out.newLine();
-      out.flush();
-    } catch (IOException e) {
-      System.out.println("cannot reach user" );
-    }
-  }
-  
-  /**
-   * "Receive a String from the Client"
-   * A StringBuilder appends every incoming byte to a String until a certain break-character is found.
-   * Then removes the break-character and returns the String.
-   */
-  public String receive() {
-    String line = "";
-    try {
-      while(!stop) {
-        if (in.ready()) {
-          line = in.readLine();
-          break;
-        }
-        Thread.sleep(0,200000);
-      }
-      return line;
-      // if connection fails
-    } catch (IOException e) {
-
-      if (user != null) {
-        // error message when user is known
-        System.out.println("cannot receive from " + user.getUsername());
-      } else {
-        // error message if user is unknown
-        System.out.println("cannot receive from user");
-      }
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    return null;
+    nameClass.askUsername(); // Asks the User if he's fine with his name or wants to change
   }
 
 
@@ -126,6 +96,10 @@ public class ClientHandler implements Runnable {
     }
     requestStop();
 
+    if (clientHandlerInThread.isAlive()) {
+      clientHandlerIn.requestStop();
+    }
+
     // close streams
     try {
       if (in != null) {
@@ -138,23 +112,31 @@ public class ClientHandler implements Runnable {
         socket.close();
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Everything closed");
     }
   }
 
+  /**
+   * Sends goodbye message and removes this ClientHandler from all lists its in.
+   */
   public void goodbye() {
-    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
-    game.getActiveClientList().remove(this);
-    game.getUserlist().remove(user.getId(),user);
+    sendToClient.serverBroadcast(CommandsToClient.PRINT, user.getUsername() + " from district " + user.getDistrict() + " has left");
+    ServerManager.getActiveClientList().remove(this);
+    ServerManager.getUserlist().remove(user.getId(), user);
   }
 
-  public void welcomeUser() {
-    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has connected");
-    send("Your name was drawn at the reaping. Welcome to the Student Games, " + user.getUsername() + " from district " + user.getDistrict() + "!");
-  }
-
-  public void requestStop() {
+  /**
+   * exits possible infinite loops to end the Thread
+   */
+  protected void requestStop() {
     stop = true;
   }
 
+  public synchronized BufferedWriter getOut() {
+    return out;
+  }
+
+  protected ConnectionToClientMonitor getConnectionToClientMonitor() {
+    return connectionToClientMonitor;
+  }
 }
