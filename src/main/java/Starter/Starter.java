@@ -1,5 +1,7 @@
 package Starter;
 
+import ch.unibas.dmi.dbis.cs108.example.gui.javafx.GUI;
+
 public class Starter {
 
 
@@ -16,6 +18,7 @@ public class Starter {
       String[] address = args[1].split(":", 2);
       if (address.length == 2) {
         Client.Main.start(address[0], address[1]);
+        Server.GUI.Main.main(args);
       } else {
         System.out.println("not enough arguments");
       }
