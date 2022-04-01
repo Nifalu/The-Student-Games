@@ -63,7 +63,13 @@ public class PlayingFields {
             changePosition(user, 68 - field);
         } // Ereigniskarten
         else if (field == 18 || field == 46 || field == 74) {
-            changePosition(user,Cards.getCards());
+            String card = Cards.getCards();
+            String arr[] = card.split(" ", 2);
+            int positionToChange = Integer.parseInt(arr[0]);
+            String msg = arr[1];
+            //TODO Print out message
+
+            changePosition(user, positionToChange);
         } // Quiz
         else if (field == 23 || field == 50) {
 

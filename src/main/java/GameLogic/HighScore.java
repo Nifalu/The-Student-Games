@@ -36,11 +36,11 @@ public class HighScore {
         }
     }
 
-    void printList() {
+    void printHighScore() {
         Node n = first;
         int count = 0;
         while (n != null && count < 10) {
-            System.out.println(count + 1 + ". Platz: " + n.name + " " + n.score);
+            System.out.println(count + 1 + ". Platz: " + n.name + " Anzahl Punkte: " + n.score);
             n = n.next;
             count++;
         }
