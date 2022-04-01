@@ -1,8 +1,8 @@
 package Server;
 
-import utility.CommandsToServer;
-import utility.CommandsToClient;
-import utility.SendToClient;
+import utility.IO.CommandsToServer;
+import utility.IO.CommandsToClient;
+import utility.IO.SendToClient;
 
 public class ServerReceive {
 
@@ -69,7 +69,7 @@ public class ServerReceive {
 
       case NAME: // sends a message to the Name class
         System.out.println("1");
-        client.nameClass.setMessage(msg);
+        client.nameClass.receiveFromClient.setMessage(msg);
         break;
     }
   }

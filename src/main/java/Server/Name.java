@@ -1,16 +1,17 @@
 package Server;
 
-import utility.CommandsToClient;
-import utility.SendToClient;
+import utility.IO.CommandsToClient;
+import utility.IO.SendToClient;
+import utility.IO.ReceiveFromProtocol;
 
 /**
  * This class handles all methods related to setting and changing usernames as well as checking
  * if a certain name is available and if not propose an alternative.
  */
 public class Name {
-  private String nameMessage = null;
   private final ClientHandler clientHandler;
-  private final SendToClient sendToClient;
+  private final SendToClient sendToClient = new SendToClient();
+  protected final ReceiveFromProtocol receiveFromClient = new ReceiveFromProtocol();
 
   /**
    * This method first calls the proposeUsernameBasedOnSystemName Method and asks the Client if he wants the name
@@ -19,7 +20,6 @@ public class Name {
    **/
   public Name(ClientHandler clientHandler) {
     this.clientHandler = clientHandler;
-    this.sendToClient = new SendToClient();
   }
 
 
@@ -30,10 +30,10 @@ public class Name {
    */
   public void askUsername() {
     sendToClient.send(clientHandler, CommandsToClient.PRINT, "Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
-    String answer = receive();
+    String answer = receiveFromClient.receive();
     if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
       sendToClient.send(clientHandler, CommandsToClient.PRINT, ("Please enter your desired name below."));
-      String desiredName = receive();
+      String desiredName = receiveFromClient.receive();
       if (!desiredName.equals(clientHandler.user.getUsername())) {
         changeNameTo("", desiredName);
       }
@@ -101,28 +101,4 @@ public class Name {
     sendToClient.serverBroadcast(CommandsToClient.PRINT, ("Welcome to the Student Games, " + clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + "!"));
   }
 
-
-  /**
-   * Local Receive Method that waits until a defined value changes and then return it.
-   *
-   * @return String
-   */
-  public synchronized String receive() {
-    String tmp_msg;
-    while (nameMessage == null) {
-      try {
-        wait(0, 100000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-    tmp_msg = nameMessage;
-    nameMessage = null;
-    return tmp_msg;
-  }
-
-
-  public void setMessage(String msg) {
-    this.nameMessage = msg;
-  }
 }

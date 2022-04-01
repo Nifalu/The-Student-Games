@@ -1,7 +1,7 @@
 package Server;
 
-import utility.CommandsToClient;
-import utility.SendToClient;
+import utility.IO.CommandsToClient;
+import utility.IO.SendToClient;
 
 
 /**
@@ -22,18 +22,22 @@ public class Chat {
     String[] splitUserAndMsg = input.split("-", 2);
     String recipient = splitUserAndMsg[0];
     String msg = splitUserAndMsg[1];
+    boolean found = false;
 
     for (ClientHandler clientHandler : ServerManager.getActiveClientList()) {
       if(clientHandler.user.getUsername().equalsIgnoreCase(recipient)) {
         // Send message to recipient:
         sendToClient.send(clientHandler, CommandsToClient.PRINT, sender.user.getUsername() + " to " + recipient + ": " + msg);
-      } else {
-        // Recipient does not exist:
-        sendToClient.send(sender,CommandsToClient.PRINT, recipient + " is not here...");
+        found = true;
       }
     }
-    // Send message also to myself:
-    sendToClient.send(sender, CommandsToClient.PRINT, sender.user.getUsername() + " to " + recipient + ": " + msg);
+    // Recipient does not exist:
+    if (found) {
+      // Send message also to myself:
+      sendToClient.send(sender, CommandsToClient.PRINT, sender.user.getUsername() + " to " + recipient + ": " + msg);
+    } else {
+      sendToClient.send(sender, CommandsToClient.PRINT, recipient + " is not here...");
+    }
   }
 
 

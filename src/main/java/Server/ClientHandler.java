@@ -1,7 +1,7 @@
 package Server;
 
-import utility.CommandsToClient;
-import utility.SendToClient;
+import utility.IO.CommandsToClient;
+import utility.IO.SendToClient;
 
 import java.io.*;
 import java.net.Socket;

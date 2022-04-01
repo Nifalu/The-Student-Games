@@ -1,7 +1,7 @@
 package Server;
 
-import utility.CommandsToClient;
-import utility.SendToClient;
+import utility.IO.CommandsToClient;
+import utility.IO.SendToClient;
 
 /**
  * Continuously checks the connection to the Client, disconnects the Client if it

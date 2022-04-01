@@ -1,6 +1,6 @@
 package Client;
 
-import utility.CommandsToClient;
+import utility.IO.CommandsToClient;
 
 
 /**

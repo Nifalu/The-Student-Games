@@ -1,4 +1,4 @@
-package utility;
+package utility.IO;
 
 public enum CommandsToServer {
   ECHO,

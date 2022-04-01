@@ -1,7 +1,7 @@
 package Client;
 
-import utility.CommandsToServer;
-import utility.SendToServer;
+import utility.IO.CommandsToServer;
+import utility.IO.SendToServer;
 
 
 /**
