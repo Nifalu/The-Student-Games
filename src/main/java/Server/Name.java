@@ -82,7 +82,7 @@ public class Name {
     int length = ServerManager.getUserlist().size();
     for (int i = 0; i < length; i++) {
       tmp_name = ServerManager.getUserlist().get(i).getUsername();
-      if (tmp_name.equalsIgnoreCase(desiredName)) {
+      if (tmp_name.equalsIgnoreCase(desiredName) && !tmp_name.equals(clientHandler.user.getUsername())) {
         return true;
       }
     }

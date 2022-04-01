@@ -51,9 +51,10 @@ public class ClientHandler implements Runnable {
 
       // Gets the Home-directory name of the Client and creates a User
       this.nameClass = new Name(this);
+      user = ServerManager.connect(this.socket.getInetAddress(), this, "Player_" + ServerManager.userlist.size());
       String ClientHomeDirectoryName = in.readLine();
       ClientHomeDirectoryName = nameClass.proposeUsernameIfTaken(ClientHomeDirectoryName);
-      user = ServerManager.connect(this.socket.getInetAddress(), this, ClientHomeDirectoryName);
+      user.setUsername(ClientHomeDirectoryName);
 
       // Creates a receiving Thread that receives messages in the background
       this.clientHandlerIn = new ClientHandlerIn(this, in);
