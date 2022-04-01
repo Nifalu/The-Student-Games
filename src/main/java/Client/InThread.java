@@ -8,28 +8,24 @@ import java.net.Socket;
  * This Thread receives and processes inputs from the server
  */
 public class InThread implements Runnable {
-
-  BufferedReader in;
-  Socket socket;
-  ClientProtocol clientProtocol;
+  private final BufferedReader in;
   private volatile boolean stop = false;
 
-  public InThread(Socket socket, BufferedReader in, ClientProtocol clientProtocol) {
+  public InThread(BufferedReader in) {
     this.in = in;
-    this.socket = socket;
-    this.clientProtocol = clientProtocol;
   }
 
   @Override
-  public void run() {
+  public synchronized void run() {
     String line;
     try {
       while (!stop) {
-        Thread.sleep(0,200000);
+        wait(0, 100000);
         // reads incoming data
+
         if (in.ready()) { // this makes sure the following readLine() does not block.
-          line = in.readLine();
-          clientProtocol.receive(line);
+          line = in.readLine(); // reads line
+          ClientReceive.receive(line); // sends line to the ClientReceive for processing
         }
       }
       System.out.println("Server went offline");

@@ -2,16 +2,16 @@ package Client;
 
 
 /**
- * This Class contains the main Method to start the GameClient.
+ * This Class contains the main Method to start the ClientManager.
  * It only exists to easily find the main method.
  */
 public class Main {
 
   /**
-   * Connect to the Game
+   * Connect to the Server
    */
   public static void start(String serverAddress, String port) {
 
-    GameClient client = new GameClient(serverAddress, Integer.parseInt(port));
+    ClientManager client = new ClientManager(serverAddress, Integer.parseInt(port));
   }
 }

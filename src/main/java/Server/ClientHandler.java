@@ -1,35 +1,49 @@
 package Server;
 
+import utility.CommandsToClient;
+import utility.SendToClient;
+
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 
 /**
  * Each Client is connected to a separate thread of this class.
- * The ClientHandler receives input from the Client, processes it and sends an answer back.
- * To be able to process the input correctly, the ClientHandler knows the game and the user he's connected to.
+ * The ClientHandler handles the connection between the client and itself.
+ * It starts Threads to handle incoming messages in the background and continuously check for connection loss.
+ * <p>
+ * The first message the ClientHandler receives will be the initial Username of this Client.
  */
 public class ClientHandler implements Runnable {
-  
-  Game game; // ClientHandler gets Access to the Game
-  Socket socket; // ClientHandler is connected with the Client
-  ConnectionToClientMonitor connectionToClientMonitor;
-  public User user; // ClientHandler knows which User the Client belongs to
-  BufferedReader in; // send data
-  BufferedWriter out; // receive data
+
+  //close
   private volatile boolean stop = false; // stop the thread
-  Thread connectionMonitor;
-  public Name nameClass;
-  ClientHandlerIn clientHandlerIn;
-  Thread clientHandlerInThread;
+
+  //Connection:
+  private Socket socket; // connection to the client
+
+  //Streams:
+  private BufferedReader in; // send data
+  private BufferedWriter out; // receive data
+
+  //Objects:
+  public User user; // ClientHandler knows which User the Client belongs to
+  public Name nameClass = new Name(this);
+  public Chat chat = new Chat();
+  private final SendToClient sendToClient = new SendToClient();
+
+  //Threads:
+  private ClientHandlerIn clientHandlerIn;
+  private Thread clientHandlerInThread;
+
+  private ConnectionToClientMonitor connectionToClientMonitor;
+  private Thread connectionMonitor;
 
 
-  public ClientHandler(Socket socket, Game game) {
+  public ClientHandler(Socket socket) {
     try {
       this.socket = socket;
-      this.game = game;
 
       // creating Streams
       this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
@@ -39,18 +53,19 @@ public class ClientHandler implements Runnable {
       this.nameClass = new Name(this);
       String ClientHomeDirectoryName = in.readLine();
       ClientHomeDirectoryName = nameClass.proposeUsernameIfTaken(ClientHomeDirectoryName);
-      user = game.connect(this.socket.getInetAddress(), this,  ClientHomeDirectoryName);
+      user = ServerManager.connect(this.socket.getInetAddress(), this, ClientHomeDirectoryName);
 
       // Creates a receiving Thread that receives messages in the background
       this.clientHandlerIn = new ClientHandlerIn(this, in);
       this.clientHandlerInThread = new Thread(clientHandlerIn);
+      clientHandlerInThread.setName(user.getUsername() + "'s ClientHandlerIn Thread");
       clientHandlerInThread.start();
 
       // Creates a ConnectionMonitor Thread that detects when the connection times out.
       this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
       connectionMonitor = new Thread(connectionToClientMonitor);
+      connectionMonitor.setName("connectionMonitor  Thread");
       connectionMonitor.start();
-
 
 
     } catch (IOException e) {
@@ -61,25 +76,10 @@ public class ClientHandler implements Runnable {
 
   @Override
   public void run() {
-    nameClass.askUsername();
+    nameClass.askUsername(); // Asks the User if he's fine with his name or wants to change
   }
-  /**
-   * "Send a String to the Client."
-   * Use this instead of "out.write" to avoid errors.
-   * It converts the given String to bytes before sending.
-   */
-  public void send(String msg) {
-    try {
-      if (msg.equals("-1")) {
-        return;
-      }
-      out.write(msg);
-      out.newLine();
-      out.flush();
-    } catch (IOException e) {
-      System.out.println("cannot reach user" );
-    }
-  }
+
+
   /**
    * "Does everything that needs to be done when a Client disconnects."
    * Closes the In/Out-Streams, the socket and removes the Client from the ActiveClientList.
@@ -95,6 +95,10 @@ public class ClientHandler implements Runnable {
     }
     requestStop();
 
+    if (clientHandlerInThread.isAlive()) {
+      clientHandlerIn.requestStop();
+    }
+
     // close streams
     try {
       if (in != null) {
@@ -107,18 +111,31 @@ public class ClientHandler implements Runnable {
         socket.close();
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Everything closed");
     }
   }
 
+  /**
+   * Sends goodbye message and removes this ClientHandler from all lists its in.
+   */
   public void goodbye() {
-    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
-    game.getActiveClientList().remove(this);
-    game.getUserlist().remove(user.getId(),user);
+    sendToClient.serverBroadcast(CommandsToClient.PRINT, user.getUsername() + " from district " + user.getDistrict() + " has left");
+    ServerManager.getActiveClientList().remove(this);
+    ServerManager.getUserlist().remove(user.getId(), user);
   }
 
-  public void requestStop() {
+  /**
+   * exits possible infinite loops to end the Thread
+   */
+  protected void requestStop() {
     stop = true;
   }
 
+  public synchronized BufferedWriter getOut() {
+    return out;
+  }
+
+  protected ConnectionToClientMonitor getConnectionToClientMonitor() {
+    return connectionToClientMonitor;
+  }
 }

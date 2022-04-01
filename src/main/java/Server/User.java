@@ -1,11 +1,12 @@
 package Server;
 
 import java.net.InetAddress;
+import java.util.Random;
 
 
 /**
  * The User Object holds various information that is connected to this individual User.
- * Since this User Object is known by the Game, it can also store game related information
+ * Since this User Object is known by the ServerManager, it can also store serverManager related information
  * like avatars, positions, scores etc...
  */
 public class User {
@@ -17,46 +18,57 @@ public class User {
   private boolean firstTime = true;
   private final int district;
 
-  public User(ClientHandler clientHandler, InetAddress ip, String username, int district, int id) {
+  public User(ClientHandler clientHandler, InetAddress ip, String username, int id) {
     this.clienthandler = clientHandler;
     this.id = id;
     this.ip = ip;
     this.username = username;
-    this.district = district;
+    this.district = assignDistrict();
+  }
+
+  /**
+   * assigns districts from 1-12. There shouldn't be more than 2 clients in one district.
+   * district one is "reserved" in case that the other ones get full.
+   *
+   * @return randomInt or 1
+   */
+  public synchronized static int assignDistrict() {
+    Random random = new Random();
+    return random.nextInt(12) + 1;
   }
 
 
   // ----- GETTERS -----
-  public String getUsername() {
+  public synchronized String getUsername() {
     return username;
   }
 
-  public int getDistrict() {
+  public synchronized int getDistrict() {
     return district;
   }
 
-  public int getId() {
+  public synchronized int getId() {
     return id;
   }
 
-  public InetAddress getIp() {
+  public synchronized InetAddress getIp() {
     return ip;
   }
 
-  public boolean isFirstTime() {
+  public synchronized boolean isFirstTime() {
     return firstTime;
   }
 
-  public ClientHandler getClienthandler() {
+  public synchronized ClientHandler getClienthandler() {
     return clienthandler;
   }
 
   // ----- SETTERS -----
-  public void setUsername(String username) {
+  public synchronized void setUsername(String username) {
     this.username = username;
   }
 
-  public void setFirstTime(boolean firstTime) {
+  public synchronized void setFirstTime(boolean firstTime) {
     this.firstTime = firstTime;
   }
 

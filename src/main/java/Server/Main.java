@@ -3,6 +3,7 @@ package Server;
 
 /**
  * Class with a main() Method to start the Server.
+ * This is only to easily find the main method.
  */
 public class Main {
 
