@@ -10,5 +10,6 @@ public enum CommandsToServer {
   CHAT,
   WHISPER,
   CHANGENAME,
+  LOBBY,
 }
 
