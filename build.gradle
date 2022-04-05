@@ -4,14 +4,9 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
-javafx {
-    version = "11.0.2"
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
-}
-
 group 'district-9'
-version 'v1'
-mainClassName = 'Starter.Starter'
+// version 'v1'
+mainClassName = 'gui.FXMLExample'
 
 java {
     toolchain {
@@ -47,6 +42,11 @@ dependencies {
     Since it is a `testCompile` dependency, it will not be part of the final product, only during testing.
      */
     testImplementation("org.junit.jupiter:junit-jupiter:5.+")
+}
+
+javafx {
+    version = "11.0.2"
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
 }
 
 test {
