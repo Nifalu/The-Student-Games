@@ -1,5 +1,6 @@
 package Server;
 
+import GameLogic.CreateLobbyHelper;
 import utility.IO.CommandsToClient;
 import utility.IO.SendToClient;
 
@@ -32,6 +33,7 @@ public class ClientHandler implements Runnable {
   public Name nameClass = new Name(this);
   public Chat chat = new Chat();
   private final SendToClient sendToClient = new SendToClient();
+  public GameLogic.CreateLobbyHelper lobbyhelper = new CreateLobbyHelper(this);
 
   //Threads:
   private ClientHandlerIn clientHandlerIn;
@@ -55,6 +57,7 @@ public class ClientHandler implements Runnable {
       String ClientHomeDirectoryName = in.readLine();
       ClientHomeDirectoryName = nameClass.proposeUsernameIfTaken(ClientHomeDirectoryName);
       user.setUsername(ClientHomeDirectoryName);
+      this.lobbyhelper = new CreateLobbyHelper(this);
 
       // Creates a receiving Thread that receives messages in the background
       this.clientHandlerIn = new ClientHandlerIn(this, in);
@@ -78,6 +81,7 @@ public class ClientHandler implements Runnable {
   @Override
   public void run() {
     nameClass.askUsername(); // Asks the User if he's fine with his name or wants to change
+    lobbyhelper.askWhatLobbyToJoin(this);
   }
 
 

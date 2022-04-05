@@ -71,6 +71,10 @@ public class ServerReceive {
         System.out.println("1");
         client.nameClass.receiveFromClient.setMessage(msg);
         break;
+
+      case LOBBY:
+        client.lobbyhelper.receiveFromClient.setMessage(msg);
+        break;
     }
   }
 }
