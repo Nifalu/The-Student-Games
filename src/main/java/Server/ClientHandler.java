@@ -82,10 +82,8 @@ public class ClientHandler implements Runnable {
 
   @Override
   public void run() {
-    testController.getClientHandler(this);
     nameClass.askUsername(); // Asks the User if he's fine with his name or wants to change
     lobbyhelper.askWhatLobbyToJoin(this);
-    gui.launcher.main(new String[0]);
   }
 
 

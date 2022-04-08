@@ -27,7 +27,4 @@
         </items>
       </SplitPane>
    </top>
-   <right>
-      <Button fx:id="sendUsername" mnemonicParsing="false" onAction="#sendUsername" text="username" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>

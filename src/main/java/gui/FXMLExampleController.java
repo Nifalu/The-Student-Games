@@ -12,7 +12,7 @@ import utility.IO.*;
 import javax.swing.*;
 
 public class FXMLExampleController {
-    ClientHandler clientHandler;
+    SendToServer sendToServer = new SendToServer();
 
     @FXML
     private TextField chatTextField;
@@ -23,21 +23,11 @@ public class FXMLExampleController {
     @FXML
     void sendChatMessage(ActionEvent event) {
       String msg = (chatTextField.getText());
-      chat.appendText(clientHandler.user.getUsername() + msg);
-      chat.appendText("\n");
+      sendToServer.send(CommandsToServer.CHAT, msg);
+      //chat.appendText(clientHandler.user.getUsername() + msg);
+      //chat.appendText("\n");
     }
 
-    @FXML
-    void sendUsername(ActionEvent event) {
-        System.out.println(clientHandler.user.getUsername());
-    }
 
-    /**
-     * knows which clientHandler this controller belongs to
-     * @param clientHandler
-     */
-    public void getClientHandler(ClientHandler clientHandler) {
-        this.clientHandler = clientHandler;
-    }
 }
 

@@ -12,6 +12,8 @@ public class Main {
    */
   public static void start(String serverAddress, String port) {
 
-    ClientManager client = new ClientManager(serverAddress, Integer.parseInt(port));
+    ClientManager.connect(serverAddress, Integer.parseInt(port));
+    gui.launcher.main(new String[0]);
+
   }
 }
