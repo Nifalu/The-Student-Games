@@ -47,7 +47,7 @@ public class Chat {
    * @param msg String
    */
   public synchronized void broadcast(ClientHandler client, String msg) {
-    sendToClient.serverBroadcast(CommandsToClient.PRINT, client.user.getUsername() + ": " + msg);
+    sendToClient.serverBroadcast(CommandsToClient.CHAT, client.user.getUsername() + ": " + msg);
   }
 
 }

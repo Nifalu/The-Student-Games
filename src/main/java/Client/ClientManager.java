@@ -27,7 +27,7 @@ public class ClientManager {
   private static Thread pingpong;
 
 
-  public ClientManager(String serverAddress, int serverPort) {
+  public static void connect(String serverAddress, int serverPort) {
 
     // Connection to the server is made and in/out streams are created:
     try {

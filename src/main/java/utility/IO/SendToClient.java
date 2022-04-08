@@ -55,6 +55,10 @@ public class SendToClient {
         sendTo(recipient, "PRINT--" + msg);
         break;
 
+      case CHAT:
+        sendTo(recipient, "CHAT--" + msg);
+        break;
+
       case LOBBY:
         sendTo(recipient, "PRINT--" + msg);
         break;

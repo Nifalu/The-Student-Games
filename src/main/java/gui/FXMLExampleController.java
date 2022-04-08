@@ -1,5 +1,7 @@
 package gui;
 
+import Client.ClientManager;
+import Server.Chat;
 import Server.ClientHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,32 +14,32 @@ import utility.IO.*;
 import javax.swing.*;
 
 public class FXMLExampleController {
-    ClientHandler clientHandler;
+    SendToServer sendToServer = new SendToServer();
+
+
+    String msg = null;
 
     @FXML
-    private TextField chatTextField;
+    private static TextField chatTextField;
 
     @FXML
-    private TextArea chat;
+    private static TextArea chat;
 
     @FXML
     void sendChatMessage(ActionEvent event) {
       String msg = (chatTextField.getText());
-      chat.appendText(clientHandler.user.getUsername() + msg);
-      chat.appendText("\n");
+      sendToServer.send(CommandsToServer.CHAT, msg);
     }
+
 
     @FXML
-    void sendUsername(ActionEvent event) {
-        System.out.println(clientHandler.user.getUsername());
+    public static void printChatMessage(String msg) {
+        chat.appendText(msg);
+        chat.appendText("\n");
     }
 
-    /**
-     * knows which clientHandler this controller belongs to
-     * @param clientHandler
-     */
-    public void getClientHandler(ClientHandler clientHandler) {
-        this.clientHandler = clientHandler;
+    public void startChat(ActionEvent actionEvent) {
+
     }
 }
 

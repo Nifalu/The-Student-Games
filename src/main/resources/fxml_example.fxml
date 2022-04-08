@@ -28,6 +28,6 @@
       </SplitPane>
    </top>
    <right>
-      <Button fx:id="sendUsername" mnemonicParsing="false" onAction="#sendUsername" text="username" BorderPane.alignment="CENTER" />
+      <Button fx:id="sendUsername" mnemonicParsing="false" onAction="#startChat" text="start chat" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>
