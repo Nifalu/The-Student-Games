@@ -14,6 +14,7 @@ public class GUI extends Application {
     /**
      * Launching this method will not work on some platforms.
      * What you should do is to create a separate main class and launch the GUI class from there as is done in {@link Main}
+     * @param args args
      */
     public static void main(String[] args) {
         launch(args);

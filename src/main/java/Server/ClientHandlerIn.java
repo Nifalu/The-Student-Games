@@ -32,6 +32,8 @@ public class ClientHandlerIn implements Runnable {
 
   /**
    * Wait until a message is received from the Client, return that message
+   *
+   * @return String received Message
    */
   public synchronized String receive() {
     String line = "";

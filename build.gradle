@@ -4,6 +4,23 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
+apply plugin: 'java'
+compileJava {options.encoding = "UTF-8"}
+compileTestJava {options.encoding = "UTF-8"}
+
+
+javadoc {
+    options.encoding = 'UTF-8'
+    options.docEncoding = 'UTF-8'
+    options.charSet = 'UTF-8'
+}
+
+
+tasks.register('build-cs108') {
+    dependsOn jar
+    dependsOn javadoc
+}
+
 javafx {
     version = "11.0.2"
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']

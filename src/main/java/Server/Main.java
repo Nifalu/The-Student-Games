@@ -10,6 +10,7 @@ public class Main {
 
   /**
    * Starts the Server.
+   * @param s Port as String
    */
   public static void start(String s) {
     GameServer justAGame = new GameServer(Integer.parseInt(s)); // specific Port Number

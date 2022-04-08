@@ -9,6 +9,8 @@ public class Main {
 
   /**
    * Connect to the Server
+   * @param port int
+   * @param serverAddress String
    */
   public static void start(String serverAddress, String port) {
 

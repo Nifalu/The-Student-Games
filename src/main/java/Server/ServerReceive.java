@@ -15,7 +15,8 @@ public class ServerReceive {
   }
 
   /**
-   *
+   * Processes the incoming message and sends it to the declared class
+   * @param line String to process
    */
   public synchronized void process(String line) {
     // Incoming message is split into command (cmd) and message (msg)
