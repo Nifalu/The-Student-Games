@@ -7,6 +7,7 @@ import utility.IO.SendToClient;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import gui.*;
 
 
 /**
@@ -34,6 +35,7 @@ public class ClientHandler implements Runnable {
   public Chat chat = new Chat();
   private final SendToClient sendToClient = new SendToClient();
   public GameLogic.CreateLobbyHelper lobbyhelper = new CreateLobbyHelper(this);
+  FXMLExampleController testController = new FXMLExampleController(); // has it's own controller for the chat GUI
 
   //Threads:
   private ClientHandlerIn clientHandlerIn;
@@ -80,6 +82,7 @@ public class ClientHandler implements Runnable {
 
   @Override
   public void run() {
+    testController.getClientHandler(this);
     nameClass.askUsername(); // Asks the User if he's fine with his name or wants to change
     lobbyhelper.askWhatLobbyToJoin(this);
     gui.launcher.main(new String[0]);

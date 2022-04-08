@@ -8,4 +8,8 @@ public class launcher {
     Application.launch(FXMLExample.class, args);
   }
 
+  /*public static void main(String[] args) {
+    Application.launch(askNameMain.class, args);
+  }*/
+
 }
