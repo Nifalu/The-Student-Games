@@ -4,5 +4,5 @@ public enum CommandsToClient {
   LOBBY,
   PRINT,
   INITIALPING,
-  PING,
+  PING, CHAT,
 }

@@ -47,6 +47,10 @@ public class FXMLExampleController implements Initializable {
     chat.appendText("\n");
   }
 
+
+  // initialize wird usgführt sobald die class startet.
+  // mir missbruche sie nur um en "Thread" bzw es runlater
+  // z'starte. Susch bruche mir da ned wiiter.
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
