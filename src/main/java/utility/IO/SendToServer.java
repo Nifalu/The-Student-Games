@@ -57,6 +57,10 @@ public class SendToServer {
         sendTo("LOBBY--" + msg);
         break;
 
+      case CREATELOBBY:
+        sendTo("CREATELOBBY--" + msg);
+        break;
+
 
       case ECHO: // Sends a message to be echoed by the Server
         sendTo("ECHO--" + msg);

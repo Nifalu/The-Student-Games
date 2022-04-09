@@ -1,5 +1,6 @@
 package Server;
 
+import GameLogic.GameList;
 import utility.IO.CommandsToServer;
 import utility.IO.CommandsToClient;
 import utility.IO.SendToClient;
@@ -69,8 +70,11 @@ public class ServerReceive {
         break;
 
       case NAME: // sends a message to the Name class
-        System.out.println("1");
         client.nameClass.receiveFromClient.setMessage(msg);
+        break;
+
+      case CREATELOBBY:
+        client.lobbyhelper.connectLobby(msg);
         break;
 
       case LOBBY:

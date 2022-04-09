@@ -59,6 +59,10 @@ public class SendToClient {
         sendTo(recipient, "PRINT--" + msg);
         break;
 
+      /**case CREATELOBBY:
+        sendTo(recipient, "CHANEGNAME--" + msg);
+        break;**/
+
     }
   }
 
