@@ -1,6 +1,8 @@
 package Client;
 
 
+import gui.FXMLExampleController;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +27,7 @@ public class ClientManager {
   private static Thread conin;
   protected static ConnectionToServerMonitor connectionToServerMonitor;
   private static Thread pingpong;
+
 
 
   public static void connect(String serverAddress, int serverPort) {

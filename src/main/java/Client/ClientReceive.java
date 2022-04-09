@@ -46,6 +46,9 @@ public class ClientReceive {
         ClientManager.connectionToServerMonitor.start(msg);
         break;
 
+      case CHAT:
+        System.out.println(msg);
+        break;
     }
   }
 }

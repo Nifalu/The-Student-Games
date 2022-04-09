@@ -15,19 +15,14 @@ import utility.IO.*;
 import javax.swing.*;
 
 public class FXMLExampleController {
+
     SendToServer sendToServer = new SendToServer();
-    String msg = null;
-
-    public static StringProperty stringProperty = new SimpleStringProperty("");
-
-
-
 
     @FXML
     private TextField chatTextField;
 
     @FXML
-    private TextArea chat;
+    public TextArea chat;
 
 
     @FXML
@@ -38,9 +33,11 @@ public class FXMLExampleController {
     }
 
     @FXML
-    void printChatMessage() {
+    public void printChatMessage(String msg) {
+        System.out.println("das esch en nochrecht");
         chat.appendText(msg);
         chat.appendText("\n");
+
     }
 
 
