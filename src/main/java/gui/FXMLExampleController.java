@@ -1,28 +1,21 @@
 package gui;
 
-import Server.ClientHandler;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import utility.IO.*;
 
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FXMLExampleController implements Initializable {
-  SendToServer sendToServer = new SendToServer();
-  public static String chatmsg;
-  public static ReceiveFromProtocol receiveFromProtocol;
+  private final SendToServer sendToServer = new SendToServer();
+  private static String msg;
+  public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
 
   @FXML
   private TextField chatTextField;
@@ -36,58 +29,26 @@ public class FXMLExampleController implements Initializable {
     String msg = (chatTextField.getText());
     sendToServer.send(CommandsToServer.CHAT, msg);
     chatTextField.clear();
-    // chat.appendText(msg);
   }
-
 
   @FXML
   public void printChatMessage(String msg) {
-    System.out.println("in printChatMessage");
     chat.appendText(msg);
     chat.appendText("\n");
   }
 
-
-  // initialize wird usgführt sobald die class startet.
-  // mir missbruche sie nur um en "Thread" bzw es runlater
-  // z'starte. Susch bruche mir da ned wiiter.
+  // This Method runs when this class is created
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
-    Platform.runLater(new Runnable() {
-
-      @Override
-      public void run() {
-
-
-          // Ich wart bis de static String nüm null isch. --> Funktioniert aber halt nur 1x
-          while(chatmsg == null) {
-          }
-          printChatMessage(chatmsg);
-
-
-          /*
-          // Eigentlich sgliche wie obe nur im loop, --> Fenster blockiert D:
-          while(true) {
-            if (chatmsg != null) {
-              printChatMessage(chatmsg);
-              chatmsg = null;
-            }
-          }
-
-           */
-
-        /*
-        // git en nullpointer??
-        String s;
-        s = receiveFromProtocol.receive();
-        printChatMessage(s);
-         */
+    // A new Thread is made that waits for incoming messages
+    Thread waitForChatThread = new Thread(() -> {
+      while(true) {
+        msg = receiveFromProtocol.receive(); // blocks until a message is received
+        Platform.runLater(() -> printChatMessage(msg)); // a javafx "thread" that calls the print method
       }
     });
-
-    System.out.println("finished initialize");
-
+    waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
+    waitForChatThread.start(); // start thread
   }
 }
 

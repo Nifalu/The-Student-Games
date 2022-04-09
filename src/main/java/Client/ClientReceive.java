@@ -39,15 +39,6 @@ public class ClientReceive {
 
       case PRINT: // prints the msg
         System.out.println(msg);
-        System.out.println("in print case");
-
-        // ich set e static String chatmsg. --> funktioniert
-        FXMLExampleController.chatmsg = msg;
-
-        // ich ruef e static method uf --> funktioniert ned
-        // FXMLExampleController.receiveFromProtocol.setMessage((msg));
-
-        System.out.println("finished print case");
         break;
 
       case PING: // Sends a Ping to the Connection Monitor of the Client
@@ -58,8 +49,9 @@ public class ClientReceive {
         ClientManager.connectionToServerMonitor.start(msg);
         break;
 
-      case CHAT:
+      case CHAT: // Sends a Chat into the console and also to the chat-gui
         System.out.println(msg);
+        FXMLExampleController.receiveFromProtocol.setMessage(msg);
         break;
     }
   }
