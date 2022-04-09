@@ -64,12 +64,11 @@ public class ServerReceive {
         client.chat.whisper(client, msg);
         break;
 
-      case CHANGENAME: // changes the users nickname
+      case NICK: // changes the users nickname
         client.nameClass.changeNameTo(client.user.getUsername(), msg);
         break;
 
       case NAME: // sends a message to the Name class
-        System.out.println("1");
         client.nameClass.receiveFromClient.setMessage(msg);
         break;
 
