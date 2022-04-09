@@ -51,10 +51,10 @@ public class FXMLExampleController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> {
-            if(!tmp.equals(lastChatMsg)) {
+            if(!lastChatMsg.equals("")) {
                 chat.appendText(lastChatMsg);
                 chat.appendText("\n");
-                tmp = lastChatMsg;
+                lastChatMsg = "";
             }
 
         }));
