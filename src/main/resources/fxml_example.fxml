@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXMLExampleController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXMLExampleController">
    <bottom>
       <SplitPane dividerPositions="0.5" BorderPane.alignment="CENTER">
          <items>
@@ -20,11 +20,13 @@
       <TextArea id="chat" fx:id="chat" BorderPane.alignment="CENTER" />
    </center>
    <top>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" BorderPane.alignment="CENTER">
+      <SplitPane id="sPane" fx:id="sPane" dividerPositions="0.5" orientation="VERTICAL" BorderPane.alignment="CENTER">
         <items>
             <Label id="loggedInAs" fx:id="loggedInAs" text="You're logged in as: " />
             <Label text="CHAT" />
         </items>
       </SplitPane>
    </top>
+   <right>
+   </right>
 </BorderPane>

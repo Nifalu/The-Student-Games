@@ -1,6 +1,8 @@
 package Client;
 
 
+import gui.FXMLExampleController;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +15,8 @@ public class ClientManager {
 
   // connection
   private static Socket socket;
+
+  public static FXMLExampleController fxmlExampleController;
 
   //streams
   private static BufferedReader in;
@@ -41,20 +45,20 @@ public class ClientManager {
       // Thread to handle incoming data:
       inThread = new InThread(in);
       clientIn = new Thread(inThread);
-      clientIn.setName("clientIn");
+      clientIn.setName("InThread");
       clientIn.start();
 
 
       // Thread to read console Input:
       consoleInput = new ConsoleInput();
       conin = new Thread(consoleInput);
-      conin.setName("ConsoleIn");
+      conin.setName("ConsoleInput");
       conin.start();
 
       // Ping-Pong Thread:
       connectionToServerMonitor = new ConnectionToServerMonitor();
       pingpong = new Thread(connectionToServerMonitor);
-      pingpong.setName("Client-pingpong");
+      pingpong.setName("ConnectionToServerMonitor");
       pingpong.start();
 
     } catch (IOException e) {
