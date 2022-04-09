@@ -1,5 +1,6 @@
 package Client;
 
+import gui.FXMLExampleController;
 import utility.IO.CommandsToClient;
 
 
@@ -48,6 +49,7 @@ public class ClientReceive {
 
       case CHAT:
         System.out.println(msg);
+        gui.FXMLExampleController.lastChatMsg = msg;
         break;
     }
   }
