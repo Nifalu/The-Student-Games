@@ -12,5 +12,7 @@ public enum CommandsToServer {
   CHANGENAME,
   LOBBY,
   CREATELOBBY,
+  READY,
+  START,
 }
 
