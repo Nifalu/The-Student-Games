@@ -1,6 +1,7 @@
 package Server;
 
 import GameLogic.CreateLobbyHelper;
+import GameLogic.Lobby;
 import utility.IO.CommandsToClient;
 import utility.IO.SendToClient;
 

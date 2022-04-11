@@ -19,6 +19,8 @@ public class Lobby {
      * contains a HashMap of all the users in the Lobby
      */
     HashMap<Integer, Server.User> usersInLobby = new HashMap<>();
+    HashMap<Server.User, Integer> lobbyUserIsIn = new HashMap<>();
+    HashMap<Integer, Server.User> usersReady = new HashMap<>();
 
     public Lobby(String name) {
         this.name = name;
@@ -32,12 +34,20 @@ public class Lobby {
         return usersInLobby;
     }
 
+    public HashMap<Integer, User> getUsersReady() {
+        return usersReady;
+    }
+
     public String getLobbyName() {
         return name;
     }
 
     public int getLobbyStatus() {
         return status;
+    }
+
+    public int getLobbyUserIsIn(Server.User user) {
+        return lobbyUserIsIn.get(user);
     }
 
     // ----------------------- SETTERS ----------------------------------------
@@ -57,9 +67,17 @@ public class Lobby {
     /**
      * adds a user to the open lobby (to the list)
      * @param user the user which is added to the lobby in the method
-     */
+     * */
     public void addUserToLobby(Server.User user) {
         int size = usersInLobby.size();
         usersInLobby.put(size, user);
+        lobbyUserIsIn.put(user, size);
+    }
+
+    public void waitingToPlay(Server.ClientHandler clientHandler) {
+        if (!usersReady.containsValue(clientHandler)) {
+            int size = usersReady.size();
+            usersReady.put(size, clientHandler.user);
+        }
     }
 }

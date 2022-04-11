@@ -108,6 +108,14 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.CREATELOBBY, msg);
         break;
 
+      case "/ready":
+        sendToServer.send(CommandsToServer.READY, "");
+        break;
+
+      case "/start":
+        sendToServer.send(CommandsToServer.START, "");
+        break;
+
       default: // when no command is detected, Echo the message.
         sendToServer.send(CommandsToServer.ECHO, line);
 

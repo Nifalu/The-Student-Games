@@ -17,13 +17,12 @@ public class CreateLobbyHelper {
     private final SendToClient sendToClient = new SendToClient();
     public final ReceiveFromProtocol receiveFromClient = new ReceiveFromProtocol();
     private final ClientHandler clienthandler;
+    Game Game;
 
 
     Server.User user;
 
     //add createLobby
-
-
     public CreateLobbyHelper(Server.ClientHandler clienthandler) {
         this.clienthandler = clienthandler;
     }
@@ -42,21 +41,21 @@ public class CreateLobbyHelper {
             String openLobbyList = GameList.printLobbies(openLobbies);
             sendToClient.send(clienthandler, CommandsToClient.PRINT, openLobbyList);
         }
-
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "Would you like to create your own lobby?");
         String answer1 = receiveFromClient.receive();
-        if (answer1.equalsIgnoreCase("YES")) {
-
+            if (answer1.equalsIgnoreCase("YES")) {
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "Enter Name of the lobby below:");
             String answer2 = receiveFromClient.receive();
             connectLobby(answer2);
-        }
+            }
+
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "what's the number of the lobby which you " +
-                "would like to choose? ");
+            "would like to choose? ");
         String answer = receiveFromClient.receive();
         if (checkIfLobbyExists(answer)) {
             int number = Integer.parseInt(answer);
             GameList.getOpenLobbies().get(number).addUserToLobby(user);
+            GameList.getUserInLobby().put(user, number);
             //GameList.getLobbyList().get(number).addUserToLobby(user);
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have been added to lobby "
                     + GameList.getLobbyList().get(number).getLobbyName() + ".");
@@ -68,19 +67,37 @@ public class CreateLobbyHelper {
             int number2 = Integer.parseInt(answer3);
             if (checkIfLobbyExists(answer3)) {
                 GameList.getOpenLobbies().get(number2).addUserToLobby(user);
+                GameList.getUserInLobby().put(user, number2);
                 //GameList.getLobbyList().get(number2).addUserToLobby(user);
                 sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have been added to lobby "
                         + GameList.getOpenLobbies().get(number2).getLobbyName() + ".");
-            }
-            Random random = new Random();
-            int randomLobby = random.nextInt(GameList.getOpenLobbies().size());
-            GameList.getOpenLobbies().get(randomLobby).addUserToLobby(user);
-            //GameList.getLobbyList().get(randomLobby).addUserToLobby(user);
-            sendToClient.send(clienthandler, CommandsToClient.PRINT, " Sorry, this lobby doesn't exist, " +
-                    "we have added you randomly to another lobby.");
-            sendToClient.send(clienthandler, CommandsToClient.PRINT, " You have been added to lobby "
-                    + GameList.getOpenLobbies().get(randomLobby).getLobbyName() + ".");
         }
+        Random random = new Random();
+        int randomLobby = random.nextInt(GameList.getOpenLobbies().size());
+        GameList.getOpenLobbies().get(randomLobby).addUserToLobby(user);
+        GameList.getUserInLobby().put(user, randomLobby);
+            //GameList.getLobbyList().get(randomLobby).addUserToLobby(user);
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, " Sorry, this lobby doesn't exist, " +
+                "we have added you randomly to another lobby.");
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, " You have been added to lobby "
+                + GameList.getOpenLobbies().get(randomLobby).getLobbyName() + ".");
+        }
+        //askIfReadyToPlay(clienthandler, Integer.parseInt(answer));
+    }
+
+    public void readyToPlay(Server.ClientHandler clienthandler) {
+        int lobbyNumber = GameList.getUserInLobby().get(user);
+        GameList.getOpenLobbies().get(lobbyNumber).waitingToPlay(clienthandler);
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now waiting…");
+        //Game Game = new Game(lobbyNumber);
+        //Thread GameThread = new Thread(Game);
+        //GameThread.run();
+    }
+
+    public void startGame(Server.ClientHandler clienthandler) {
+        int lobbyNumber = GameList.getUserInLobby().get(user);
+        Game Game = new Game(lobbyNumber);
+        Game.startGame();
     }
 
     /**

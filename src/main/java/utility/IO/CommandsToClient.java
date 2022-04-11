@@ -5,4 +5,5 @@ public enum CommandsToClient {
   PRINT,
   INITIALPING,
   PING,
+  CREATELOBBY,
 }

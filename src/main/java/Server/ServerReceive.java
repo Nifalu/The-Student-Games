@@ -80,6 +80,14 @@ public class ServerReceive {
       case LOBBY:
         client.lobbyhelper.receiveFromClient.setMessage(msg);
         break;
+
+      case READY:
+        client.lobbyhelper.readyToPlay(client.user.getClienthandler());
+        break;
+
+      case START:
+        client.lobbyhelper.startGame(client.user.getClienthandler());
+        break;
     }
   }
 }
