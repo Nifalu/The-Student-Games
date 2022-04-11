@@ -70,7 +70,6 @@ public class ServerReceive {
         break;
 
       case NAME: // sends a message to the Name class
-        System.out.println("1");
         client.nameClass.receiveFromClient.setMessage(msg);
         break;
 

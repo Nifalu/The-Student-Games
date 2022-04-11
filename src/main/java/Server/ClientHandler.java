@@ -78,7 +78,10 @@ public class ClientHandler implements Runnable {
     }
   }
 
-
+  /**
+   * First asks the user want name they want to choose and after that if they want to create a new lobby or
+   * join an existing one.
+   */
   @Override
   public void run() {
     nameClass.askUsername(); // Asks the User if he's fine with his name or wants to change
