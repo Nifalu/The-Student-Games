@@ -17,8 +17,6 @@ public class PlayingFields {
 
     private final SendToClient sendToClient = new SendToClient();
 
-    public static HighScore HighScore = new HighScore();
-
     public static HashMap<User, Integer> position = new HashMap<>();
 
     public static void putPlayersToStart(User user) { position.put(user,0); }
@@ -94,8 +92,7 @@ public class PlayingFields {
          */
         } // This is the end
         else if (field > 90) {
-            System.out.println(user.getUsername() + " Finished the game");
-            HighScore.add("vladimir", 1);
+            System.out.println(user.getUsername() + " has successfully graduated from university");
         }
     }
     public static int getPosition(User user) {

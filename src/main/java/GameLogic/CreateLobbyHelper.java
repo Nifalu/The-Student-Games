@@ -100,23 +100,6 @@ public class CreateLobbyHelper {
         Game.startGame();
     }
 
-    public void askIfReadyToPlay(Server.ClientHandler clienthandler) {
-        sendToClient.send(clienthandler, CommandsToClient.PRINT, "Are you ready to play?");
-        String answerReadyToPlay = receiveFromClient.receive();
-        int lobbyNumber = GameList.getUserInLobby().get(user);
-        if (answerReadyToPlay.equalsIgnoreCase("YES")) {
-            GameList.getOpenLobbies().get(lobbyNumber).waitingToPlay(clienthandler);
-            sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now waiting…");
-        } else {
-            try {
-                Thread.sleep(5000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            askIfReadyToPlay(clienthandler);
-        }
-    }
-
     /**
      * checks if a lobby exists.
      * @param number The number of the lobby

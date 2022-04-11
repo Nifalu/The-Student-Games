@@ -7,8 +7,6 @@ import java.util.Random;
  */
 public class Dice {
 
-    //private boolean diced = false;
-
     public static int Dice() {
         Random random = new Random();
         int randomInt = random.nextInt(6) + 1;
@@ -16,9 +14,4 @@ public class Dice {
         return randomInt;
     }
 
-    /*
-    public void resetDice() {
-        diced = false;
-    }
-    */
 }

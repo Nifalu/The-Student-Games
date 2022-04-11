@@ -47,6 +47,6 @@ public class Calendar {
 
 
     public String getCurrentDate() {
-        return "" + this.day + "." + this.month + "." + this.year;
+        return String.format("%02d", this.day) + "." + String.format("%02d", this.month) + "." + this.year;
     }
 }

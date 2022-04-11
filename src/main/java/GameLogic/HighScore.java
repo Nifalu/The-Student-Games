@@ -24,11 +24,11 @@ public class HighScore {
     void add(String name, int score) {
         Node current = first;
         Node n = new Node(name, score);
-        if (current == null || first.score < n.score) {
+        if (current == null || first.score > n.score) {
             n.next = first;
             first = n;
         } else {
-            while (current.next != null && current.next.score > n.score) {
+            while (current.next != null && current.next.score <= n.score) {
                 current = current.next;
             }
             n.next = current.next;
@@ -40,7 +40,11 @@ public class HighScore {
         Node n = first;
         int count = 0;
         while (n != null && count < 10) {
-            System.out.println(count + 1 + ". Platz: " + n.name + " Anzahl Punkte: " + n.score);
+            String date = String.valueOf(n.score);
+            int year = Integer.parseInt(date.substring(0, 4));
+            int month = Integer.parseInt(date.substring(4, 6));
+            int day = Integer.parseInt(date.substring(6, 8));
+            System.out.println(count + 1 + ". Platz: " + n.name + " Abschluss: " + day + "." + month + "." + year);
             n = n.next;
             count++;
         }
