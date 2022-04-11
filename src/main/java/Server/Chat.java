@@ -50,9 +50,4 @@ public class Chat {
     sendToClient.serverBroadcast(CommandsToClient.PRINT, client.user.getUsername() + ": " + msg);
   }
 
-  public synchronized void gameResults(String msg) {
-    sendToClient.serverBroadcast(CommandsToClient.PRINT, msg);
-  }
-
-
 }

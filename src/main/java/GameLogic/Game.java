@@ -53,8 +53,10 @@ public class Game{
                             }
                         }
                     }
+
                     calendar.newRound6();
                     System.out.println("");
+
                 }
                 GameList.getLobbyList().get(lobbyNumber).setLobbyStatusToFinished();
                 //sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT, "Game ended. Sorry you looser.");

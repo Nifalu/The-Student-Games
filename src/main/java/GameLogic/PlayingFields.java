@@ -98,5 +98,4 @@ public class PlayingFields {
     public static int getPosition(User user) {
         return position.get(user);
     }
-
 }

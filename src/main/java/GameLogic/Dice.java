@@ -13,5 +13,4 @@ public class Dice {
         System.out.println("Dice = " + randomInt);
         return randomInt;
     }
-
 }
