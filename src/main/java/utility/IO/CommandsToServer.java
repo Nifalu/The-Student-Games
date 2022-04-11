@@ -11,5 +11,6 @@ public enum CommandsToServer {
   WHISPER,
   CHANGENAME,
   LOBBY,
+  CREATELOBBY,
 }
 

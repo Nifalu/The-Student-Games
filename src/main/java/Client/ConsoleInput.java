@@ -100,6 +100,14 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.LOBBY, msg);
         break;
 
+      case "/ctlb":
+        if (msg.equals("-1")) {
+          System.out.println("We need a message!");
+          break;
+        }
+        sendToServer.send(CommandsToServer.CREATELOBBY, msg);
+        break;
+
       default: // when no command is detected, Echo the message.
         sendToServer.send(CommandsToServer.ECHO, line);
 

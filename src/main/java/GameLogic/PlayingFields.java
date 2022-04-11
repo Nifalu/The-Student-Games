@@ -1,6 +1,8 @@
 package GameLogic;
 
+import Server.ClientHandler;
 import Server.User;
+import utility.IO.CommandsToClient;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,15 +14,13 @@ import java.util.Map;
  */
 public class PlayingFields {
 
-    public HighScore HighScore;
+    public static HighScore HighScore = new HighScore();
 
-    public HashMap<User, Integer> position = new HashMap<>();
+    public static HashMap<User, Integer> position = new HashMap<>();
 
-    public void startGame(User user) {
-        position.put(user,0);
-    }
+    public static void putPlayersToStart(User user) { position.put(user,0); }
 
-    public void changePosition(User user, int move) {
+    public static void changePosition(User user, int move) {
         int currentPosition = position.get(user);
         int newPosition = currentPosition + move;
         if (position.containsValue(newPosition) && newPosition <= 90) {
@@ -42,7 +42,7 @@ public class PlayingFields {
         checkField(user, newPosition);
     }
 
-    public void checkField(User user, int field) {
+    public static void checkField(Server.User user, int field) {
         // 2 + 56 ladder up
         if (field == 2) {
             changePosition(user, 15 - field);
@@ -68,15 +68,20 @@ public class PlayingFields {
             int positionToChange = Integer.parseInt(arr[0]);
             String msg = arr[1];
             //TODO Print out message
-
+            //user.send(user, CommandsToClient.PRINT, msg);
+            //Server.ClientHandler.send(ServerProtocol.get(game, user, msg));
             changePosition(user, positionToChange);
         } // Quiz
         else if (field == 23 || field == 50) {
-
+            int positionToChange = Quiz.quiz();
+            changePosition(user, positionToChange);
         } // This is the end
         else if (field == 90) {
             HighScore.add("vladimir", 1);
         }
+    }
+    public static int getPosition(User user) {
+        return position.get(user);
     }
 
 }

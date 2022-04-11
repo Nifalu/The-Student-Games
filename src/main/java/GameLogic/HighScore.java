@@ -36,7 +36,7 @@ public class HighScore {
         }
     }
 
-    void printHighScore() {
+    void getTop10() {
         Node n = first;
         int count = 0;
         while (n != null && count < 10) {

@@ -17,6 +17,7 @@ public class User {
   private String username;
   private boolean firstTime = true;
   private final int district;
+  private boolean isReady;
 
   public User(ClientHandler clientHandler, InetAddress ip, String username, int id) {
     this.clienthandler = clientHandler;
@@ -35,6 +36,10 @@ public class User {
   public synchronized static int assignDistrict() {
     Random random = new Random();
     return random.nextInt(12) + 1;
+  }
+
+  public void setReadyToPlay (boolean isReady) {
+    this.isReady = isReady;
   }
 
 

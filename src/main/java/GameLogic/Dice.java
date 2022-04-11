@@ -7,9 +7,17 @@ import java.util.Random;
  */
 public class Dice {
 
-    public int Dice() {
+    //private boolean diced = false;
+
+    public static int Dice() {
         Random random = new Random();
         int randomInt = random.nextInt(6) + 1;
         return randomInt;
     }
+
+    /*
+    public void resetDice() {
+        diced = false;
+    }
+    */
 }

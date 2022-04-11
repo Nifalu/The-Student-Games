@@ -8,9 +8,15 @@ package GameLogic;
 
 public class Calendar {
 
-    int year = 2021;
-    int month = 9;
-    int day = 1;
+    int year;
+    int month;
+    int day;
+
+    public Calendar(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
 
     //1 month interval
     public void newRound4() {
