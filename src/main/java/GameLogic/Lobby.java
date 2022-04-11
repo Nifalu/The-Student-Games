@@ -33,6 +33,11 @@ public class Lobby {
     public HashMap<Integer, User> getUsersInLobby() {
         return usersInLobby;
     }
+
+    public HashMap<Integer, User> getUsersReady() {
+        return usersReady;
+    }
+
     public String getLobbyName() {
         return name;
     }
@@ -69,10 +74,10 @@ public class Lobby {
         lobbyUserIsIn.put(user, size);
     }
 
-    public void readyToPlay(Server.User user) {
-        if (!usersReady.containsValue(user)) {
+    public void waitingToPlay(Server.ClientHandler clientHandler) {
+        if (!usersReady.containsValue(clientHandler)) {
             int size = usersReady.size();
-            usersReady.put(size, user);
+            usersReady.put(size, clientHandler.user);
         }
     }
 }

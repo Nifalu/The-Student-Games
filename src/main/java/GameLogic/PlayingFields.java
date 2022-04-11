@@ -3,6 +3,7 @@ package GameLogic;
 import Server.ClientHandler;
 import Server.User;
 import utility.IO.CommandsToClient;
+import utility.IO.SendToClient;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +14,8 @@ import java.util.Map;
  * There are ladders where you skip fields or fall back if you land on them.
  */
 public class PlayingFields {
+
+    private final SendToClient sendToClient = new SendToClient();
 
     public static HighScore HighScore = new HighScore();
 
@@ -31,35 +34,45 @@ public class PlayingFields {
                 // position will be switched
                 if(entry.getValue() == newPosition) {
                     position.replace(entry.getKey(), currentPosition);
-                    break;
+                    System.out.println(user.getUsername() + " pushed back " + entry.getKey().getUsername() + " to " + currentPosition);
                 }
             }
         }
-        if (newPosition > 90) {
-            newPosition = 91;
-        }
         position.replace(user, newPosition);
+        if (newPosition <= 90) {
+            System.out.println(user.getUsername() + " moved from: " + currentPosition + " to: " + newPosition);
+            //sendToClient.send(clienthandler, CommandsToClient.PRINT, "Your new position: " + newPosition);
+        }
         checkField(user, newPosition);
+
     }
 
     public static void checkField(Server.User user, int field) {
         // 2 + 56 ladder up
         if (field == 2) {
+            System.out.println("Leiter hoch");
             changePosition(user, 15 - field);
         } else if (field == 56) {
+            System.out.println("Leiter hoch");
             changePosition(user, 59 - field);
         } // 21 - 89 ladder down
         else if (field == 21) {
+            System.out.println("Leiter runter");
             changePosition(user, 14 - field);
         } else if (field == 27) {
+            System.out.println("Leiter runter");
             changePosition(user, 10 - field);
         } else if (field == 53) {
+            System.out.println("Leiter runter");
             changePosition(user, 36 - field);
         } else if (field == 58) {
+            System.out.println("Leiter runter");
             changePosition(user, 40 - field);
         } else if (field == 81) {
+            System.out.println("Leiter runter");
             changePosition(user, 78 - field);
         } else if (field == 89) {
+            System.out.println("Leiter runter");
             changePosition(user, 68 - field);
         } // Ereigniskarten
         else if (field == 18 || field == 46 || field == 74) {
@@ -70,13 +83,18 @@ public class PlayingFields {
             //TODO Print out message
             //user.send(user, CommandsToClient.PRINT, msg);
             //Server.ClientHandler.send(ServerProtocol.get(game, user, msg));
+            System.out.println("Ereigniskarte: " + msg);
             changePosition(user, positionToChange);
-        } // Quiz
+        // Quiz
+        /*
+        }
         else if (field == 23 || field == 50) {
             int positionToChange = Quiz.quiz();
             changePosition(user, positionToChange);
+         */
         } // This is the end
-        else if (field == 90) {
+        else if (field > 90) {
+            System.out.println(user.getUsername() + " Finished the game");
             HighScore.add("vladimir", 1);
         }
     }

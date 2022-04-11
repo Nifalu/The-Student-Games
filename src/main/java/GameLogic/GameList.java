@@ -11,10 +11,16 @@ public class GameList {
      * HashMap with all the Lobbies, can be accessed via the lobby number.
      */
     private static final HashMap<Integer, Lobby> lobbyList = new HashMap<>();
+    private static final HashMap<Server.User, Integer> userInLobby = new HashMap<>();
+
 
     public synchronized static HashMap<Integer, Lobby> getLobbyList() {
         return lobbyList;
     }
+    public synchronized static HashMap<Server.User, Integer> getUserInLobby() {
+        return userInLobby;
+    }
+
 
     /**
      *

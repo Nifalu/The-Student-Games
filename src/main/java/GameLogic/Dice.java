@@ -12,6 +12,7 @@ public class Dice {
     public static int Dice() {
         Random random = new Random();
         int randomInt = random.nextInt(6) + 1;
+        System.out.println("Dice = " + randomInt);
         return randomInt;
     }
 
