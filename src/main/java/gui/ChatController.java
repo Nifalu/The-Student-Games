@@ -12,7 +12,7 @@ import utility.IO.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FXMLExampleController implements Initializable {
+public class ChatController implements Initializable {
   private final SendToServer sendToServer = new SendToServer();
   private static String msg;
   public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();

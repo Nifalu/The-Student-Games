@@ -1,8 +1,6 @@
 package Client;
 
-import gui.FXMLExample;
-import gui.FXMLExampleController;
-import javafx.fxml.FXMLLoader;
+import gui.ChatController;
 import utility.IO.CommandsToClient;
 
 
@@ -51,7 +49,7 @@ public class ClientReceive {
 
       case CHAT: // Sends a Chat into the console and also to the chat-gui
         System.out.println(msg);
-        FXMLExampleController.receiveFromProtocol.setMessage(msg);
+        ChatController.receiveFromProtocol.setMessage(msg);
         break;
     }
   }

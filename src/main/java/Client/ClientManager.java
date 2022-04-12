@@ -1,7 +1,7 @@
 package Client;
 
 
-import gui.FXMLExampleController;
+import gui.ChatController;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,7 +16,7 @@ public class ClientManager {
   // connection
   private static Socket socket;
 
-  public static FXMLExampleController fxmlExampleController;
+  public static ChatController fxmlExampleController;
 
   //streams
   private static BufferedReader in;
