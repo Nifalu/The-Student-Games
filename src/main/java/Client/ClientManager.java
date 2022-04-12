@@ -1,7 +1,6 @@
 package Client;
 
-
-import gui.ChatController;
+import utility.Exceptions;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,8 +15,6 @@ public class ClientManager {
   // connection
   private static Socket socket;
 
-  public static ChatController fxmlExampleController;
-
   //streams
   private static BufferedReader in;
   private static BufferedWriter out;
@@ -30,23 +27,26 @@ public class ClientManager {
   protected static ConnectionToServerMonitor connectionToServerMonitor;
   private static Thread pingpong;
 
-
-
-  public static void connect(String serverAddress, int serverPort) {
+  public static void runClientManager(String serverAddress, int serverPort, String username) {
 
     // Connection to the server is made and in/out streams are created:
     try {
       socket = new Socket(serverAddress, serverPort);
+    } catch (IOException e) {
+      Exceptions.invalidServerAddress(serverAddress,serverPort);
+      return;
+    }
+    try {
       in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
       out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
-      out.write(System.getProperty("user.name"));
+      out.write(username);
       out.newLine();
       out.flush();
 
       // Thread to handle incoming data:
       inThread = new InThread(in);
       clientIn = new Thread(inThread);
-      clientIn.setName("InThread");
+      clientIn.setName("inThread");
       clientIn.start();
 
 
@@ -59,15 +59,15 @@ public class ClientManager {
       // Ping-Pong Thread:
       connectionToServerMonitor = new ConnectionToServerMonitor();
       pingpong = new Thread(connectionToServerMonitor);
-      pingpong.setName("ConnectionToServerMonitor");
+      pingpong.setName("connectionToServerMonitor");
       pingpong.start();
 
     } catch (IOException e) {
+      Exceptions.invalidServerAddress(serverAddress,serverPort);
       disconnect();
     }
 
   }
-
 
   /**
    * disconnect() makes sure that everything is closed when the client disconnects from the Server.
@@ -95,7 +95,7 @@ public class ClientManager {
         socket.close();
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("done");
     }
   }
 

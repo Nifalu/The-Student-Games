@@ -15,7 +15,8 @@ public class ServerReceive {
   }
 
   /**
-   *
+   * Processes the incoming message and sends it to the declared class
+   * @param line String to process
    */
   public synchronized void process(String line) {
     // Incoming message is split into command (cmd) and message (msg)
@@ -63,12 +64,11 @@ public class ServerReceive {
         client.chat.whisper(client, msg);
         break;
 
-      case CHANGENAME: // changes the users nickname
+      case NICK: // changes the users nickname
         client.nameClass.changeNameTo(client.user.getUsername(), msg);
         break;
 
       case NAME: // sends a message to the Name class
-        System.out.println("1");
         client.nameClass.receiveFromClient.setMessage(msg);
         break;
 

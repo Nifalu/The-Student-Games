@@ -4,9 +4,31 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
+apply plugin: 'java'
+compileJava {options.encoding = "UTF-8"}
+compileTestJava {options.encoding = "UTF-8"}
+
+
+javadoc {
+    options.encoding = 'UTF-8'
+    options.docEncoding = 'UTF-8'
+    options.charSet = 'UTF-8'
+}
+
+
+tasks.register('build-cs108') {
+    dependsOn jar
+    dependsOn javadoc
+}
+
+javafx {
+    version = "11.0.2"
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
+}
+
 group 'district-9'
-// version 'v1'
-mainClassName = 'gui.FXMLExample'
+version 'v1'
+mainClassName = 'Starter.Starter'
 
 java {
     toolchain {
@@ -42,11 +64,6 @@ dependencies {
     Since it is a `testCompile` dependency, it will not be part of the final product, only during testing.
      */
     testImplementation("org.junit.jupiter:junit-jupiter:5.+")
-}
-
-javafx {
-    version = "11.0.2"
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
 }
 
 test {
