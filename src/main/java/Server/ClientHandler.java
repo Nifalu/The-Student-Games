@@ -98,11 +98,12 @@ public class ClientHandler implements Runnable {
     if (connectionMonitor.isAlive()) {
       connectionToClientMonitor.requestStop();
     }
-    requestStop();
 
     if (clientHandlerInThread.isAlive()) {
       clientHandlerIn.requestStop();
     }
+
+    requestStop();
 
     // close streams
     try {

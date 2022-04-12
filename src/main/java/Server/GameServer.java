@@ -1,57 +1,27 @@
 package Server;
 
+import utility.Exceptions;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * GameServer is the Container in which everything takes place.
  * Clients can connect to this GameServer with an Ip-Address and Port.
  */
-public class GameServer implements Runnable {
+public class GameServer {
 
-  int port;
-  ServerSocket serverSocket;
+  static ServerSocket serverSocket;
 
-  private static final Random random = new Random();
-
-
-  /**
-   * Empty Constructor. Creates his own random Port Number between 2000 and 10000.
-   * Should not be used when multiple instances are made.
-   */
-  public GameServer() {
+  public static void runGameServer(int port) {
     try {
-      this.port = (2000 + random.nextInt(8000));
-      this.serverSocket = new ServerSocket(port);
-
+      serverSocket = new ServerSocket(port);
     } catch (IOException e) {
-      e.printStackTrace();
+      Exceptions.failedToCreateServer(e, port);
+      return;
     }
-
-  }
-
-  /**
-   * Constructor to use a given Port Number.
-   *
-   * @param port Port Number
-   */
-  public GameServer(int port) {
-    try {
-      this.port = port;
-      this.serverSocket = new ServerSocket(port);
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-
-  @Override
-  public void run() {
 
     try {
       System.out.println("Server created: " + InetAddress.getLocalHost() + ":" + port);
@@ -73,14 +43,12 @@ public class GameServer implements Runnable {
       e.printStackTrace();
       closeGameServer();
     }
-
-
   }
 
   /**
    * closes the ServerSocket
    */
-  public void closeGameServer() {
+  public static void closeGameServer() {
     try {
       if (serverSocket != null) {
         serverSocket.close();
