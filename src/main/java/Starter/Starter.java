@@ -34,6 +34,8 @@ public class Starter {
               // Start the Client with the users Home Directory Name as username
               ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), System.getProperty("user.name"));
             }
+            // Starts the GUI
+            gui.Launcher.main(new String[0]);
           }
         }
         break;
