@@ -4,8 +4,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import utility.IO.*;
 
 
@@ -22,6 +24,9 @@ public class ChatController implements Initializable {
 
   @FXML
   private TextArea chat;
+
+  @FXML
+  private Button quitButton;
 
 
     /**
@@ -74,9 +79,13 @@ public class ChatController implements Initializable {
     waitForChatThread.start(); // start thread
   }
 
+  @FXML
     public void quitGame(ActionEvent actionEvent) {
-        sendToServer.send(CommandsToServer.QUIT, msg);
-        chat.appendText("You left the game.");
+      sendToServer.send(CommandsToServer.CHAT, "left the chat"); // not pretty, needs to be changed
+        Stage stage = (Stage) quitButton.getScene().getWindow();
+        stage.close();
+      sendToServer.send(CommandsToServer.QUIT, msg);
+
     }
 }
 

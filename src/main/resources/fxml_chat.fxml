@@ -12,7 +12,7 @@
          <items>
             <TextField id="chatTextField" fx:id="chatTextField" onAction="#sendChatMessage" promptText="type your message here to chat..." />
             <Button mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
-            <Button mnemonicParsing="false" onAction="#quitGame" text="quit" />
+            <Button id="quitButton" fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
          </items>
       </SplitPane>
    </bottom>
