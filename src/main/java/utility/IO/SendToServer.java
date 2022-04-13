@@ -69,6 +69,10 @@ public class SendToServer {
         sendTo("START--");
         break;
 
+      case ROLLDICE:
+        sendTo("ROLLDICE--");
+        break;
+
       case ECHO: // Sends a message to be echoed by the Server
         sendTo("ECHO--" + msg);
         break;

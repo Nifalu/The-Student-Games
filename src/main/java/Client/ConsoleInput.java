@@ -116,6 +116,10 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.START, "");
         break;
 
+      case "/rolldice":
+        sendToServer.send(CommandsToServer.ROLLDICE, "");
+        break;
+
       default: // when no command is detected, Echo the message.
         sendToServer.send(CommandsToServer.ECHO, line);
 

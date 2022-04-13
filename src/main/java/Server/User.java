@@ -1,5 +1,7 @@
 package Server;
 
+import GameLogic.Lobby;
+
 import java.net.InetAddress;
 import java.util.Random;
 

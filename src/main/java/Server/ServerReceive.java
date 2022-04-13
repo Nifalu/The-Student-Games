@@ -86,7 +86,14 @@ public class ServerReceive {
         break;
 
       case START:
-        client.lobbyhelper.startGame(client.user.getClienthandler());
+        System.out.println("before setting start");
+        System.out.println(client.user.getLobby());
+        client.user.getLobby().receiveFromProtocol.setMessage("start");
+        System.out.println("after setting start");
+        break;
+
+      case ROLLDICE:
+        //client.(client.user.getUsername());
         break;
     }
   }

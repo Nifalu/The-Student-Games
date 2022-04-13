@@ -2,8 +2,11 @@ package utility.IO;
 
 import Server.ClientHandler;
 import Server.ServerManager;
+import Server.User;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Offers multiple ways to send a message to a specific Client while also checking if the commands are valid
@@ -24,13 +27,19 @@ public class SendToClient {
 
 
   // Send a message to a group of people ? Lobby?
-  /*
-  public void lobbyBroadcast( >>some list of recipients<< ,CommandsToClient cmd, String msg) {
-    for (ClientHandler clientHandler : >>list of recipients<< ) {
-      send(clientHandler, cmd, msg);
+
+  public void lobbyBroadcast(HashMap<User, Integer> map, CommandsToClient cmd, String msg) {
+    for(Map.Entry<User, Integer> entry: map.entrySet()) {
+      send(entry.getKey().getClienthandler(),cmd,msg);
     }
   }
-   */
+
+  public void lobbyBroadcastDice(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
+    for(User user : map.values()) {
+      send(user.getClienthandler(),cmd,msg);
+    }
+  }
+
 
   /**
    * Validates the given Message and sends it to the recipient.

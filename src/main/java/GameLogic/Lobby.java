@@ -1,6 +1,7 @@
 package GameLogic;
 import Server.ServerManager;
 import Server.User;
+import utility.IO.ReceiveFromProtocol;
 
 import java.util.HashMap;
 
@@ -11,7 +12,8 @@ import java.util.HashMap;
 public class Lobby {
 
     String name;
-    Server.User user;
+    public ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+
     /**
      * Int status is -1 if the game is already finished, 0 if the game is ongoing, 1 if the game is open.
      */
@@ -25,13 +27,14 @@ public class Lobby {
     //public HashMap<Integer, User> usersInLobby = new HashMap<>();
 
 
-    // beide werden nachher nicht mehr vorhanden sein.
+    // beide werden nacher nicht mehr vorhanden sein.
     HashMap<Server.User, Integer> lobbyUserIsIn = new HashMap<>();
     HashMap<Integer, Server.User> usersReady = new HashMap<>();
 
     public Lobby(String name) {
         this.name = name;
         this.status = 1; // status of lobby is automatically set to open
+        startThread();
         this.lobbyNumber = GameList.getLobbyList().size();
     }
 
@@ -87,4 +90,31 @@ public class Lobby {
             usersReady.put(size, clientHandler.user);
         }
     }
+
+    private void startGame() {
+        Game game = new Game(this, usersReady);
+        //Thread gameThread = new Thread(game);
+        game.start();
+    }
+
+    public void startThread() {
+        System.out.println("in initialize");
+        Thread LobbyWaitForMessageThread = new Thread(() -> {
+            System.out.println("in thread");
+            String msg;
+            while(true) {
+                msg = receiveFromProtocol.receive(); // blocks until a message is received
+                System.out.println("in loop" + msg);
+                if (msg.equals("start")) {
+                    System.out.println("in if" + msg);
+                    break;
+                }
+            }
+            System.out.println("out of loop" + msg);
+            startGame();
+        });
+        LobbyWaitForMessageThread.setName("LobbyWaitForMessageThread"); // set name of thread
+        LobbyWaitForMessageThread.start(); // start thread
+    }
 }
+

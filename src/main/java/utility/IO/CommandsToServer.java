@@ -14,5 +14,6 @@ public enum CommandsToServer {
   CREATELOBBY,
   READY,
   START,
+  ROLLDICE,
 }
 

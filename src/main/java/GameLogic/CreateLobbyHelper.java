@@ -7,7 +7,6 @@ import Server.ServerReceive;
 import utility.IO.CommandsToClient;
 import utility.IO.ReceiveFromProtocol;
 import utility.IO.SendToClient;
-
 import java.util.Random;
 
 import java.util.HashMap;
@@ -20,7 +19,6 @@ public class CreateLobbyHelper {
     private final SendToClient sendToClient = new SendToClient();
     public final ReceiveFromProtocol receiveFromClient = new ReceiveFromProtocol();
     private final ClientHandler clienthandler;
-    Game Game;
 
 
     Server.User user;
@@ -129,21 +127,11 @@ public class CreateLobbyHelper {
     }
 
     public void readyToPlay(Server.ClientHandler clienthandler) {
-        int lobbyNumber = user.getLobby().getLobbyNumber();
-        //int lobbyNumber = GameList.getUserInLobby().get(user);
-        GameList.getOpenLobbies().get(lobbyNumber).waitingToPlay(clienthandler);
+        user.setReadyToPlay(true);
+        user.getLobby().waitingToPlay(clienthandler);
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now waiting…");
-        //Game Game = new Game(lobbyNumber);
-        //Thread GameThread = new Thread(Game);
-        //GameThread.run();
     }
 
-    public void startGame(Server.ClientHandler clienthandler) {
-        int lobbyNumber = user.getLobby().getLobbyNumber();
-        //int lobbyNumber = GameList.getUserInLobby().get(user);
-        Game Game = new Game(lobbyNumber);
-        Game.startGame();
-    }
 
     /**
      * checks if a lobby exists.

@@ -19,14 +19,14 @@ public class Cards {
                 "-9 Statistikprüfung nicht bestanden.",
                 "-6 GDP oder EGDP nicht bestanden.",
                 "-8 Deine Bachelorarbeit war miserabel.",
-                "-2 Dein Code läuft nicht. Gehe  Felder zurück.",
-                "-2 Jemand schickt dir die falschen Lösungen der dieswöchigen Matheaufgaben in den Chat und du schreibst sie ab. Gehe Felder zurück.",
+                "-2 Dein Code läuft nicht. Gehe  Felder 2 zurück.",
+                "-2 Jemand schickt dir die falschen Lösungen der dieswöchigen Matheaufgaben in den Chat und du schreibst sie ab. Gehe Felder 2 zurück.",
                 "-3 Du vergisst, dass du eine Vorlesung gehabt hättest. Gehe 3 Felder zurück.",
                 "4 Stipendium erhalten.",
                 "3 Tolle Lerngruppe.",
                 "4 Deine Eltern unterstützen dich finanziell, so dass du nicht arbeiten musst.",
                 "-4 Du hast dich für Analysis statt Mathematische Methoden entschieden. Gehe 4 Felder zurück.",
-                "-5 Das Leben besteht aus Höhen und Tiefen, vor allem während des Studiums. Gehe 6 Schritte zurück.",
+                "-6 Das Leben besteht aus Höhen und Tiefen, vor allem während des Studiums. Gehe 6 Schritte zurück.",
         };
 
         //TODO Ereigniskarten mit Bonuswürfel oder Tausch erstellen.
