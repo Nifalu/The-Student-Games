@@ -18,6 +18,7 @@ public class ChatController implements Initializable {
   private final SendToServer sendToServer = new SendToServer();
   private static String msg;
   public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+  public static boolean hasJoinedChat = false;
 
   @FXML
   private TextField chatTextField;
@@ -68,16 +69,25 @@ public class ChatController implements Initializable {
   // This Method runs when this class is created
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    // A new Thread is made that waits for incoming messages
-    Thread waitForChatThread = new Thread(() -> {
-      while(true) {
-        msg = receiveFromProtocol.receive(); // blocks until a message is received
-        Platform.runLater(() -> printChatMessage(msg)); // a javafx "thread" that calls the print method
-      }
-    });
-    waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
-    waitForChatThread.start(); // start thread
+      // A new Thread is made that waits for incoming messages
+      Thread waitForChatThread = new Thread(() -> {
+          while(!hasJoinedChat) {
+              try {
+                  wait(2000);
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+          }
+          receiveFromProtocol.setMessage("You have joined the chat.");
+          while(true) {
+              msg = receiveFromProtocol.receive(); // blocks until a message is received
+              Platform.runLater(() -> printChatMessage(msg)); // a javafx "thread" that calls the print method
+          }
+      });
+      waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
+      waitForChatThread.start(); // start thread
   }
+
 
   @FXML
     public void quitGame(ActionEvent actionEvent) {

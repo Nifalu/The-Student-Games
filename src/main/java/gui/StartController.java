@@ -38,6 +38,7 @@ public class StartController implements Initializable {
     private Parent root;
 
     public void switchToChat(ActionEvent event) throws Exception {
+        ChatController.hasJoinedChat = true;
         root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_chat.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

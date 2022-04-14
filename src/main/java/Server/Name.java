@@ -1,6 +1,7 @@
 package Server;
 
 import utility.IO.CommandsToClient;
+import utility.IO.CommandsToServer;
 import utility.IO.SendToClient;
 import utility.IO.ReceiveFromProtocol;
 
@@ -39,8 +40,8 @@ public class Name {
         changeNameTo("", desiredName);
       }
     }
-    String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
-    sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
+
+
     welcomeUser();
   }
 
@@ -58,9 +59,13 @@ public class Name {
       String newName;
       newName = proposeUsernameIfTaken(preferredName);
       sendToClient.send(clientHandler, CommandsToClient.PRINT, ("Sorry! This tribute already exists. Try this one: " + newName));
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Sorry! This tribute already exists. Try this one: " + newName + ". Feel free to switch to the chat now.");
+
     } else { // wenn preferredName frei ist:
       sendToClient.serverBroadcast(CommandsToClient.PRINT, (clientHandler.user.getUsername() + " is now called: " + preferredName));
       clientHandler.user.setUsername(preferredName);
+      String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
     }
   }
 
@@ -99,7 +104,9 @@ public class Name {
    */
   private void welcomeUser() {
     // Serverside
-    System.out.println(clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + " has connected");
+    String msg = clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + " has connected.";
+    System.out.println(msg);
+    sendToClient.serverBroadcast(CommandsToClient.CHAT, msg);
 
     // Clientside
     sendToClient.send(clientHandler, CommandsToClient.PRINT, "Your name was drawn at the reaping.");
