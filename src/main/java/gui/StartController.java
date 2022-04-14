@@ -1,14 +1,39 @@
 package gui;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import utility.IO.CommandsToServer;
+import utility.IO.ReceiveFromProtocol;
+import utility.IO.SendToServer;
 
-public class StartController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class StartController implements Initializable {
+    private final SendToServer sendToServer = new SendToServer();
+    public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+    public static String msg = "Welcome!";
+    private String tmp = "Welcome!";
+
+    @FXML
+    private Label showText;
+
+    @FXML
+    private TextField textInput;
+
+
+    /**
+     * used to switch to the chat scene
+     */
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -21,4 +46,29 @@ public class StartController {
         stage.show();
     }
 
+
+    /**
+     * This method reads the text from textInput and sends it to the Server
+     * @param actionEvent
+     */
+    public void sendMsg(ActionEvent actionEvent) {
+        String msg = textInput.getText();
+        sendToServer.send(CommandsToServer.NAME, msg);
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // A new Thread is made which waits
+        Thread waitForMsgChange = new Thread(() -> {
+            while(true) {
+                if (!msg.equals(tmp)) {
+                    showText.setText(msg);
+                    tmp = msg;
+                }
+            }
+        });
+        waitForMsgChange.setName("GuiStartWaitForMsgChange"); // set name of thread
+        waitForMsgChange.start(); // start thread
+    }
 }

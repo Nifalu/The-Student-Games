@@ -26,4 +26,10 @@ public enum CommandsToClient {
    */
   CHAT,
 
+  /**
+   * Sets the msg field in the StartController
+   * StartController will decide, when and how to display it
+   */
+  PRINTGUISTART,
+
 }

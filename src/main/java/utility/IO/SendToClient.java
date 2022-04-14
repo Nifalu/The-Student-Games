@@ -63,6 +63,9 @@ public class SendToClient {
         sendTo(recipient, "CHAT--" + msg);
         break;
 
+      case PRINTGUISTART:
+        gui.StartController.msg = msg;
+
     }
   }
 
