@@ -92,7 +92,7 @@ public class CreateLobbyHelper {
      */
     public boolean checkIfLobbyExists(int number) {
         HashMap<Integer, Lobby> lobbyList = GameList.getLobbyList();
-        if (number >= lobbyList.size() || number < 0) {
+        if (number > lobbyList.size() || number < 0) {
             return false;
         } else {
             return true;
