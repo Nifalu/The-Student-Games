@@ -4,21 +4,23 @@ import utility.IO.CommandsToServer;
 import utility.IO.CommandsToClient;
 import utility.IO.SendToClient;
 
-public class ServerReceive {
+public class ServerReceive implements Runnable {
 
   private final SendToClient sendToClient = new SendToClient();
   private final ClientHandler client;
+  private final String line;
 
 
-  public ServerReceive(ClientHandler client) {
+  public ServerReceive(ClientHandler client, String line) {
     this.client = client;
+    this.line = line;
   }
 
   /**
    * Processes the incoming message and sends it to the declared class
-   * @param line String to process
    */
-  public synchronized void process(String line) {
+  @Override
+  public void run() {
     // Incoming message is split into command (cmd) and message (msg)
     String[] input;
     String msg;
@@ -37,6 +39,8 @@ public class ServerReceive {
       sendToClient.send(client, CommandsToClient.PRINT, "Unknown command: " + line);
       return;
     }
+
+
 
     switch (cmd) {
 

@@ -19,14 +19,13 @@ public class ClientHandlerIn implements Runnable {
   @Override
   public void run() {
     // continuously waits for incoming messages and sends them to ServerReceive for processing
-    ServerReceive protocol = new ServerReceive(clientHandler);
     String msg;
     while (!stop) {
       msg = receive();
-      if (msg == null) {
-        break;
-      }
-      protocol.process(msg);
+      ServerReceive protocol = new ServerReceive(clientHandler, msg);
+      Thread ServerReceiveThread = new Thread(protocol);
+      ServerReceiveThread.start();
+      ServerReceiveThread.setName("ServerReceiveThread");
     }
   }
 
