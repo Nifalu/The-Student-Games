@@ -160,7 +160,6 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.ECHO, line);
 
     }
-
   }
 
   // requests to stop the thread.

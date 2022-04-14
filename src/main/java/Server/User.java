@@ -123,6 +123,4 @@ public class User {
         Random random = new Random();
         return random.nextInt(12) + 1;
     }
-
 }
-

@@ -130,6 +130,7 @@ public class ServerReceive {
       case QUIZ:
         client.user.getLobby().receiveFromProtocol.setMessage("quiz-" + client.user.getUsername() + "-" + msg);
         break;
+
     }
   }
 }

@@ -19,3 +19,4 @@ public class Dice {
         return randomInt;
     }
 }
+

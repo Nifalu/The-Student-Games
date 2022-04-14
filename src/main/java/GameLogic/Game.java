@@ -176,7 +176,6 @@ public class Game implements Runnable{
         }
     }
 
-
     public void changePosition(User user, int move) {
         int currentPosition = user.getPlayingField();
         int newPosition = currentPosition + move;
