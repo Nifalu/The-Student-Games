@@ -100,12 +100,40 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.LOBBY, msg);
         break;
 
-      case "/ctlb":
+      case "/createLobby":
         if (msg.equals("-1")) {
           System.out.println("We need a message!");
           break;
         }
         sendToServer.send(CommandsToServer.CREATELOBBY, msg);
+        break;
+
+      case "/printUserList":
+        sendToServer.send(CommandsToServer.PRINTUSERLIST, msg);
+        break;
+
+      case "/printLobbies":
+        sendToServer.send(CommandsToServer.PRINTLOBBIES, msg);
+        break;
+
+      case "/printLoungingList":
+        sendToServer.send(CommandsToServer.PRINTLOUNGINGLIST, msg);
+        break;
+
+      case "/printOpenLobbies":
+        sendToServer.send(CommandsToServer.PRINTOPENLOBBIES, msg);
+        break;
+
+      case "/printFinishedLobbies":
+        sendToServer.send(CommandsToServer.PRINTFINISHEDLOBBIES, msg);
+        break;
+
+      case "/printOnGoingLobbies":
+        sendToServer.send(CommandsToServer.PRINTONGOINGLOBBIES, msg);
+        break;
+
+      case "/changeLobby":
+        sendToServer.send(CommandsToServer.CHANGELOBBY, msg);
         break;
 
       case "/ready":

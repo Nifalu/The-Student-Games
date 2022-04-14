@@ -1,5 +1,6 @@
 package Server;
 
+import GameLogic.GameList;
 import GameLogic.Lobby;
 
 import java.net.InetAddress;
@@ -109,10 +110,6 @@ public class User {
     public synchronized static int assignDistrict() {
         Random random = new Random();
         return random.nextInt(12) + 1;
-    }
-
-    public synchronized void changeLobby(GameLogic.Lobby newLobby) {
-        setLobby(newLobby);
     }
 
 }

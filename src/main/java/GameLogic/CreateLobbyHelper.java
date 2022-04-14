@@ -36,11 +36,11 @@ public class CreateLobbyHelper {
      * @param clienthandler sends and receives the information through the clienthandler.
      */
     public void askWhatLobbyToJoin(Server.ClientHandler clienthandler) {
+        user.setLobby(GameList.getLobbyList().get(0));
         if (GameList.getOpenLobbies().size() == 0) {
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "There are no open Lobbies yet.");
         } else {
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "Hello there, here are the open lobbies:");
-            //HashMap<Integer, Lobby> openLobbies = GameList.getOpenLobbies();
             String openLobbyList = GameList.printLobbies(GameList.getOpenLobbies());
             sendToClient.send(clienthandler, CommandsToClient.PRINT, openLobbyList);
         }
@@ -49,81 +49,33 @@ public class CreateLobbyHelper {
         if (answer1.equalsIgnoreCase("YES")) {
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "Enter Name of the lobby below:");
             String answer2 = receiveFromClient.receive();
-            connectLobby(answer2); //puts Lobby into the lobbyList
+            connectLobby(answer2);
         }
 
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "what's the number of the lobby which you " +
                 "would like to choose? ");
         String answer = receiveFromClient.receive();
-        if (checkIfLobbyExists(answer)) {
-            int number = Integer.parseInt(answer);
-
-            //Lobby lobby = GameList.getOpenLobbies().get(number);
-
-
-            //System.out.println(number);
-            //System.out.println(GameList.getOpenLobbies().get(number).getLobbyName());
-            //System.out.println(GameList.printLobbies(GameList.getOpenLobbies()));
-            //System.out.println(lobby.getLobbyName() + "nnn"); // all the print outs work
-
-            //user.lobby = lobby; //das geht jetzt
-            user.setLobby(GameList.getOpenLobbies().get(number)); // wird momentan null pointer Exception
-
-
-            //GameList.getOpenLobbies().get(number).addUserToLobby(user);
-            //GameList.getUserInLobby().put(user, number);
+        int number = Integer.parseInt(answer);
+        if (checkIfLobbyExists(number)) {
+            user.setLobby(GameList.getOpenLobbies().get(number));
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have been added to lobby "
-                    + user.getLobby().getLobbyName() + "."); //wirft eine Exception
+                    + user.getLobby().getLobbyName() + ".");
         } else {
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "Oooops sorry there this Lobby doesn't exist. " +
                     "Please try again.");
             String answer3 = receiveFromClient.receive();
-            //int number2 = Integer.parseInt(answer3);
-            if (checkIfLobbyExists(answer3)) {
-                int number3 = Integer.parseInt(answer3);
-                //Lobby lobby = GameList.getOpenLobbies().get(number3);
+            int number3 = Integer.parseInt(answer3);
+            if (checkIfLobbyExists(number3)) {
                 user.setLobby(GameList.getOpenLobbies().get(number3));
-                //Lobby lobby1 = GameList.getLobbyList().get(answer3);
-                //user.setLobby(lobby1);
-
-                //GameList.getOpenLobbies().get(answer3).addUserToLobby(user);
-                //GameList.getUserInLobby().put(user, number2);
-                //GameList.getLobbyList().get(number2).addUserToLobby(user);
                 sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have been added to lobby "
                         + user.getLobby().getLobbyName() + ".");
             } else {
-                Random random = new Random();
-                int randomLobby = random.nextInt(GameList.getOpenLobbies().size());
-                //Lobby lobby2 = GameList.getLobbyList().get(randomLobby);
-                user.setLobby(GameList.getLobbyList().get(randomLobby));
-                //GameList.getOpenLobbies().get(randomLobby).addUserToLobby(user);
-                //GameList.getUserInLobby().put(user, randomLobby);
-                //GameList.getLobbyList().get(randomLobby).addUserToLobby(user);
-                sendToClient.send(clienthandler, CommandsToClient.PRINT, " Sorry, this lobby doesn't exist, " +
-                        "we have added you randomly to another lobby.");
-                sendToClient.send(clienthandler, CommandsToClient.PRINT, " You have been added to lobby "
+                user.setLobby(GameList.getLobbyList().get(0));
+                sendToClient.send(clienthandler, CommandsToClient.PRINT, " Sorry, this lobby doesn't exist," +
+                        "you have been added to lobby "
                         + user.getLobby().getLobbyName() + ".");
             }
         }
-        //user.setLobby(GameList.getOpenLobbies().get(0));
-        //user.changeLobby(GameList.getOpenLobbies().get(0));
-        //askIfReadyToPlay(clienthandler, Integer.parseInt(answer));
-        //String s = "";
-        /**for (int i = 0; i < ServerManager.getUserlist().size(); i++) {
-            String user = ServerManager.getUserlist().get(i).getUsername();
-            String lobby = ServerManager.getUserlist().get(i).getLobby().getLobbyName();
-            System.out.println(user + lobby);
-        }**/
-
-        /**for (int i = 0; i < GameList.getOpenLobbies().size(); i ++) {
-            String s = "";
-            s = "lobby: " + GameList.getOpenLobbies().get(i).getLobbyName();
-            for ( int j = 0; j < GameList.getUsersInLobby(GameList.getOpenLobbies().get(i)).size(); j++) {
-                Lobby lobby = GameList.getOpenLobbies().get(i);
-                s = s +  GameList.getUsersInLobby(lobby).get(j).getUsername();
-            }
-            System.out.println(s);
-        }**/
     }
 
     public void readyToPlay(Server.ClientHandler clienthandler) {
@@ -135,14 +87,30 @@ public class CreateLobbyHelper {
 
     /**
      * checks if a lobby exists.
-     *
      * @param number The number of the lobby
      * @return boolean true (Lobby already exists) or false (lobby doesn't exist yet)
      */
-    public boolean checkIfLobbyExists(String number) {
-        int number1 = Integer.parseInt(number);
+    public boolean checkIfLobbyExists(int number) {
         HashMap<Integer, Lobby> lobbyList = GameList.getLobbyList();
-        return number1 <= lobbyList.size();
+        if (number >= lobbyList.size() || number < 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public synchronized void changeLobby(String number) {
+        int lobbyNumber = Integer.parseInt(number);
+        if (lobbyNumber >= GameList.getLobbyList().size() || lobbyNumber < 0) {
+            sendToClient.send(clienthandler, CommandsToClient.PRINT, "Whoops that lobby does not exist. ");
+        }
+        for (int i = 0; i < GameList.getLobbyList().size(); i++) {
+            if (GameList.getLobbyList().get(i).getLobbyNumber() == lobbyNumber) {
+                user.setLobby(GameList.getLobbyList().get(i));
+                sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby : "  +
+                        GameList.getLobbyList().get(i).getLobbyName());
+            }
+        }
     }
 
 
@@ -155,6 +123,30 @@ public class CreateLobbyHelper {
         Lobby lobby = new Lobby(name);
         GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have created Lobby " + lobby.getLobbyName());
+    }
+
+    public synchronized void printUserListAndSendToClient() {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, "UserList: " + GameList.printUserList());
+    }
+
+    public synchronized void printLoungingListAndSendToClient() {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLoungingList());
+    }
+
+    public synchronized void printOpenLobbiesAndSendToClient() {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getOpenLobbies()));
+    }
+
+    public synchronized void printFinishedLobbiesAndSendToClient() {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getFinishedLobbies()));
+    }
+
+    public synchronized void printOnGoingLobbiesAndSendToClient() {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getOnGoingLobbies()));
+    }
+
+    public synchronized void printLobbiesAndSendToClient() {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getLobbyList()));
     }
 
 }

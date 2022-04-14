@@ -46,6 +46,18 @@ public class Lobby {
         return usersReady;
     }
 
+    public HashMap<Integer, User> getUsersInLobby() {
+        HashMap<Integer, User> usersInLobby = new HashMap<>();
+        int counter = 0;
+        for (int i = 0; i < GameList.getUserlist().size(); i++) {
+            if (GameList.getUserlist().get(i).getLobby().equals(this)) {
+                usersInLobby.put(counter, GameList.getUserlist().get(i));
+                counter++;
+            }
+        }
+        return usersInLobby;
+    }
+
     public int getLobbyNumber() { return lobbyNumber; }
 
     public String getLobbyName() {
@@ -68,6 +80,8 @@ public class Lobby {
     }
 
     public void setLobbyStatusToOnGoing() { status = 0; }
+
+    public void setLobbyStatusToStandard() { status = 69; }
 
     // --------------------------ANDERE METHODEN-------------------------------
 

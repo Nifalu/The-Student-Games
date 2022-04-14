@@ -54,6 +54,7 @@ public class GameServer implements Runnable {
   public void run() {
 
     try {
+      ServerManager.createMainLobby();
       System.out.println("Server created: " + InetAddress.getLocalHost() + ":" + port);
       System.out.println("Server is running and waiting for a connection... ");
       int i = 0;

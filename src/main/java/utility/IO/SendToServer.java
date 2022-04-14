@@ -61,6 +61,34 @@ public class SendToServer {
         sendTo("CREATELOBBY--" + msg);
         break;
 
+      case PRINTUSERLIST:
+          sendTo("PRINTUSERLIST--");
+        break;
+
+      case PRINTLOBBIES:
+        sendTo("PRINTLOBBIES--");
+        break;
+
+      case PRINTLOUNGINGLIST:
+        sendTo("PRINTLOUNGINGLIST--");
+        break;
+
+      case PRINTOPENLOBBIES:
+        sendTo("PRINTOPENLOBBIES--");
+        break;
+
+      case PRINTFINISHEDLOBBIES:
+        sendTo("PRINTFINISHEDLOBBIES--");
+        break;
+
+      case PRINTONGOINGLOBBIES:
+        sendTo("PRINTONGOINGLOBBIES--");
+        break;
+
+      case CHANGELOBBY:
+        sendTo("CHANGELOBBY--" + msg);
+        break;
+
       case READY:
         sendTo("READY--");
         break;

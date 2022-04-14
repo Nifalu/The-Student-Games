@@ -1,5 +1,9 @@
 package Server;
 
+import GameLogic.GameList;
+import GameLogic.Lobby;
+import utility.IO.CommandsToClient;
+
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +35,12 @@ public class ServerManager {
     userlist.put(userlist.size(), user);
     activeClientList.add(clientHandler);
     return user;
+  }
+
+  public static synchronized void createMainLobby() {
+    Lobby lobby = new Lobby("StandardLobby");
+    GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
+    lobby.setLobbyStatusToStandard();
   }
 
   public synchronized static ArrayList<ClientHandler> getActiveClientList() {

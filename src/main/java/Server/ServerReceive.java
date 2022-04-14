@@ -81,6 +81,35 @@ public class ServerReceive {
         client.lobbyhelper.receiveFromClient.setMessage(msg);
         break;
 
+      case PRINTUSERLIST:
+        client.lobbyhelper.printUserListAndSendToClient();
+        break;
+
+      case PRINTLOUNGINGLIST:
+        client.lobbyhelper.printLoungingListAndSendToClient();
+        break;
+
+      case PRINTOPENLOBBIES:
+        client.lobbyhelper.printOpenLobbiesAndSendToClient();
+        break;
+
+      case PRINTFINISHEDLOBBIES:
+        client.lobbyhelper.printFinishedLobbiesAndSendToClient();
+        break;
+
+      case PRINTONGOINGLOBBIES:
+        client.lobbyhelper.printOnGoingLobbiesAndSendToClient();
+        break;
+
+      case PRINTLOBBIES:
+        client.lobbyhelper.printLobbiesAndSendToClient();
+        break;
+
+
+      case CHANGELOBBY:
+        client.lobbyhelper.changeLobby(msg);
+        break;
+
       case READY:
         client.lobbyhelper.readyToPlay(client.user.getClienthandler());
         break;

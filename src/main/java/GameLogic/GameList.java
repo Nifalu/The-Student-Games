@@ -19,6 +19,9 @@ public class GameList {
     public synchronized static HashMap<Integer, Lobby> getLobbyList() {
         return lobbyList;
     }
+    Lobby lobby = new Lobby("standard");
+
+
 
     //muss im Lobby Objekt sein
     // wird gelöscht
@@ -45,6 +48,30 @@ public class GameList {
      *
      * @return return a String of all the open lobbies
      */
+
+    public synchronized static String printUserList() {
+        String s = "";
+        for (int i = 0; i < getUserlist().size(); i++) {
+            s = s + " " + getUserlist().get(i).getUsername();
+        }
+        return s;
+    }
+
+
+    public synchronized static String printLoungingList() {
+        String print = "";
+        for (int i = 0; i < getLobbyList().size(); i++) {
+            String s = "";
+            s = getLobbyList().get(i).getLobbyName();
+            HashMap<Integer, User> list = getLobbyList().get(i).getUsersInLobby();
+            for (int j = 0; j < list.size(); j++) {
+                s = s + " " + list.get(j).getUsername();
+            }
+            print = print + " " + s;
+        }
+        return print;
+    }
+
     public synchronized static String printLobbies(HashMap<Integer, Lobby> lobbyList) {
         String s = "";
         for (int i = 0; i < lobbyList.size(); i++) {
@@ -54,7 +81,7 @@ public class GameList {
     }
 
 
-    public synchronized static HashMap<Integer, User> getUsersInLobby(Lobby lobby) {
+    /**public synchronized static HashMap<Integer, User> getUsersInLobby(Lobby lobby) {
         int size = ServerManager.getUserlist().size();
         int counter = 0;
         HashMap<Integer, User> usersInLobby = new HashMap<>();
@@ -65,7 +92,7 @@ public class GameList {
             }
         }
         return usersInLobby;
-    }
+    }**/
 
     /**
      *
