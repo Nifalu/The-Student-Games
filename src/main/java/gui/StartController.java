@@ -21,8 +21,7 @@ import java.util.ResourceBundle;
 public class StartController implements Initializable {
     private final SendToServer sendToServer = new SendToServer();
     public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
-    public static String msg = "Welcome!";
-    private String tmp = "Welcome!";
+    String msg;
 
     @FXML
     private Label showText;
@@ -54,6 +53,11 @@ public class StartController implements Initializable {
     public void sendMsg(ActionEvent actionEvent) {
         String msg = textInput.getText();
         sendToServer.send(CommandsToServer.NAME, msg);
+        textInput.clear();
+    }
+
+    public void printMsg(String msg) {
+        showText.setText(msg);
     }
 
 
@@ -62,10 +66,8 @@ public class StartController implements Initializable {
         // A new Thread is made which waits
         Thread waitForMsgChange = new Thread(() -> {
             while(true) {
-                if (!msg.equals(tmp)) {
-                    showText.setText(msg);
-                    tmp = msg;
-                }
+                msg = receiveFromProtocol.receive(); // blocks until a message is received
+                Platform.runLater(() -> printMsg(msg)); // a javafx "thread" that calls the print method
             }
         });
         waitForMsgChange.setName("GuiStartWaitForMsgChange"); // set name of thread

@@ -64,8 +64,8 @@ public class SendToClient {
         break;
 
       case PRINTGUISTART:
-        gui.StartController.msg = msg;
-
+        sendTo(recipient, "PRINTGUISTART--" + msg);
+        break;
     }
   }
 

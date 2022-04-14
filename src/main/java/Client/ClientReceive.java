@@ -1,6 +1,7 @@
 package Client;
 
 import gui.ChatController;
+import gui.StartController;
 import utility.IO.CommandsToClient;
 
 
@@ -51,6 +52,10 @@ public class ClientReceive {
         System.out.println(msg);
         ChatController.receiveFromProtocol.setMessage(msg);
         break;
+
+      case PRINTGUISTART:
+        System.out.println(msg);
+        StartController.receiveFromProtocol.setMessage(msg);
     }
   }
 }

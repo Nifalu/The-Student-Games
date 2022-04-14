@@ -30,17 +30,17 @@ public class Name {
    * if not proposes a new one.
    */
   public void askUsername() {
-    sendToClient.send(clientHandler, CommandsToClient.PRINT, "Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
     sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
     String answer = receiveFromClient.receive();
     if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
-      sendToClient.send(clientHandler, CommandsToClient.PRINT, ("Please enter your desired name below."));
       sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, ("Please enter your desired name below."));
       String desiredName = receiveFromClient.receive();
       if (!desiredName.equals(clientHandler.user.getUsername())) {
         changeNameTo("", desiredName);
       }
     }
+    String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
+    sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
     welcomeUser();
   }
 
