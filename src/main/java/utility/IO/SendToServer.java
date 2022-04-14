@@ -73,6 +73,10 @@ public class SendToServer {
         sendTo("ROLLDICE--");
         break;
 
+      case QUIZ:
+        sendTo("QUIZ--" + msg);
+        break;
+
       case ECHO: // Sends a message to be echoed by the Server
         sendTo("ECHO--" + msg);
         break;

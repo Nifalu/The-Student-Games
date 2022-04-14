@@ -15,5 +15,6 @@ public enum CommandsToServer {
   READY,
   START,
   ROLLDICE,
+  QUIZ,
 }
 

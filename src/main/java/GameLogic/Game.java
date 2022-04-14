@@ -9,17 +9,28 @@ import utility.IO.SendToClient;
 
 import java.awt.desktop.SystemSleepEvent;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-public class Game{
+public class Game implements Runnable{
 
     public static HighScore HighScore = new HighScore();
     private static final SendToClient sendToClient = new SendToClient();
     //private static ReceiveFromProtocol receiveFromClient = new ReceiveFromProtocol();
 
     final Lobby lobby;
-    final int minToStart = 1;
+    final int minToStart = 2;
     public HashMap<Integer, Server.User> playersPlaying;
+    int numPlayers;
+    int maxTimeToAnswerQuiz = 15000;
+    int maxTimeToRollDice = 10000;
+    boolean rolledDice;
+    public User userToRollDice;
+    boolean quizAnsweredCorrect;
+    boolean quizAnsweredWrong;
+    boolean quizOngoing;
+    public User userToAnswerQuiz;
+    public String correctAnswer;
 
     public Game(Lobby lobby, HashMap playersPlaying) {
         this.lobby = lobby;
@@ -27,8 +38,8 @@ public class Game{
     }
 
     //Starts the game
-    public void start() {
-        int numPlayers = lobby.getUsersReady().size();
+    public void run() {
+        numPlayers = lobby.getUsersReady().size();
         if (lobby.getLobbyStatus() == 1){
 
             //If enough players are ready to play the calendar will be set to 21.09.2021 and
@@ -55,14 +66,15 @@ public class Game{
                         if (playersPlaying.get(i) != null) {
                             if (playersPlaying.get(i).getPlayingField() <= 90) {
                                 lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
-                                //TODO Players have to Dice (delete try/catch)
+                                /**
                                 try {
-                                    Thread.sleep(1000);
+                                    Thread.sleep(500);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                 */
                                 //sends the current users turn and the diced number to PlayingFields
-                                changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler()));
+                                changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
 
                                 //checks if a player has ended the game and adds him to the high score
                                 if (playersPlaying.get(i).getPlayingField() > 90) {
@@ -80,9 +92,6 @@ public class Game{
                     calendar.newRound6();
                 }
                 //At the end of the game the lobby will be set to finished
-                lobby.setLobbyStatusToFinished();
-                lobbyBroadcastToPlayer(HighScore.getTop10());
-                lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
                 closeGame();
             } else {
                 lobbyBroadcastToPlayer("Life is boring without friends");
@@ -94,15 +103,59 @@ public class Game{
     }
 
     //Will send a message to all players of the game and tells them who's turn it is to roll the dice.
-    public int sendAllDice(ClientHandler user) {
+    public int sendAllDice(Server.User user) {
+        setUserToRollDice(user);
+        user.setRolledDice(false);
+        for (int i = 0; i < maxTimeToRollDice; i++) {
+            if (rolledDice) {
+                break;
+            } else {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        user.setRolledDice(true);
+        rolledDice = false;
+        //setUserToRollDice(null);
         int dice = Dice.dice();
-        lobbyBroadcastToPlayer(user.user.getUsername() + " rolled " + dice);
+        lobbyBroadcastToPlayer(user.getUsername() + " rolled " + dice);
         return dice;
     }
 
-    public static void closeGame() {
-
+    public void setRolledDice(String user) {
+        if (!userToRollDice.getRolledDice()) {
+            if (userToRollDice.getUsername().equals(user)) {
+                rolledDice = true;
+            } else {
+                System.out.println("already rolled the dice");
+            }
+        }
     }
+    public void setUserToRollDice(Server.User user) {
+        userToRollDice = user;
+    }
+
+    public void setAnswer(String answer) {
+        correctAnswer = answer;
+    }
+    public void setUserToAnswerQuiz(Server.User user) {
+        userToAnswerQuiz = user;
+    }
+    public void quizAnswer(String user, String receivedAnswer) {
+        if (quizOngoing) {
+            if (userToAnswerQuiz.getUsername().equals(user)) {
+                if (correctAnswer.equals(receivedAnswer)) {
+                    quizAnsweredCorrect = true;
+                } else {
+                    quizAnsweredWrong = true;
+                }
+            }
+        }
+    }
+
 
     public void changePosition(User user, int move) {
         int currentPosition = user.getPlayingField();
@@ -167,10 +220,30 @@ public class Game{
         }
         // Quiz
         else if (field == 23 || field == 50) {
+            quizOngoing = true;
             String quizQuestion = Quiz.quiz();
             String quiz[] = quizQuestion.split("§");
-            lobbyBroadcastToPlayer(quiz[0]);
-            changePosition(user, Integer.parseInt(quiz[2]));
+            setUserToAnswerQuiz(user);
+            setAnswer(quiz[1]);
+            lobbyBroadcastToPlayer("Quizfrage an " + user.getUsername() + ". " + quiz[0]);
+            for (int i = 0; i < maxTimeToAnswerQuiz; i++) {
+                if (quizAnsweredCorrect) {
+                    changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]));
+                    quizAnsweredCorrect = false;
+                    break;
+                } else if (quizAnsweredWrong || i == 14999){
+                    changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]) * -1);
+                    quizAnsweredWrong = false;
+                    break;
+                } else {
+                    try {
+                        Thread.sleep(1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            quizOngoing = false;
         }
         // This is the end
         else if (field > 90) {
@@ -181,5 +254,14 @@ public class Game{
     public void lobbyBroadcastToPlayer(String msg) {
         sendToClient.lobbyBroadcastDice(lobby.usersReady,
                 CommandsToClient.PRINT, msg);
+    }
+
+    public void closeGame() {
+        lobbyBroadcastToPlayer(HighScore.getTop10());
+        lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
+        for (int i = 0; i < numPlayers; i++) {
+            lobby.removeUserFromLobby(lobby.usersReady.get(i));
+        }
+        lobby.setLobbyStatusToFinished();
     }
 }

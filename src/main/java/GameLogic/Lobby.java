@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class Lobby {
 
     String name;
+    Game game;
     public ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
 
     /**
@@ -28,7 +29,6 @@ public class Lobby {
 
 
     // beide werden nacher nicht mehr vorhanden sein.
-    HashMap<Server.User, Integer> lobbyUserIsIn = new HashMap<>();
     HashMap<Integer, Server.User> usersReady = new HashMap<>();
 
     public Lobby(String name) {
@@ -85,33 +85,37 @@ public class Lobby {
 
 
     public void waitingToPlay(Server.ClientHandler clientHandler) {
-        if (!usersReady.containsValue(clientHandler)) {
+        if (!usersReady.containsValue(clientHandler) && getLobbyStatus() == 1) {
             int size = usersReady.size();
             usersReady.put(size, clientHandler.user);
         }
     }
 
-    private void startGame() {
-        Game game = new Game(this, usersReady);
-        //Thread gameThread = new Thread(game);
-        game.start();
-    }
+    //private void startGame() {
+    //    game = new Game(this, usersReady);
+    //    Thread gameThread = new Thread(game);
+    //    gameThread.start();
+    //}
 
     public void startThread() {
-        System.out.println("in initialize");
         Thread LobbyWaitForMessageThread = new Thread(() -> {
-            System.out.println("in thread");
             String msg;
+            String[] answer;
             while(true) {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
-                System.out.println("in loop" + msg);
-                if (msg.equals("start")) {
-                    System.out.println("in if" + msg);
-                    break;
+                answer = msg.split("-");
+                if (msg.equals("start") && getLobbyStatus() == 1) {
+                    game = new Game(this, usersReady);
+                    Thread gameThread = new Thread(game);
+                    gameThread.start();
+                }
+                else if (answer[0].equals("dice")) {
+                    game.setRolledDice(answer[1]);
+                }
+                else if (answer[0].equals("quiz")) {
+                    game.quizAnswer(answer[1], answer[2]);
                 }
             }
-            System.out.println("out of loop" + msg);
-            startGame();
         });
         LobbyWaitForMessageThread.setName("LobbyWaitForMessageThread"); // set name of thread
         LobbyWaitForMessageThread.start(); // start thread

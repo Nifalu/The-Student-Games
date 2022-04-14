@@ -86,14 +86,16 @@ public class ServerReceive {
         break;
 
       case START:
-        System.out.println("before setting start");
         System.out.println(client.user.getLobby());
         client.user.getLobby().receiveFromProtocol.setMessage("start");
-        System.out.println("after setting start");
         break;
 
       case ROLLDICE:
-        //client.(client.user.getUsername());
+        client.user.getLobby().receiveFromProtocol.setMessage("dice-" + client.user.getUsername());
+        break;
+
+      case QUIZ:
+        client.user.getLobby().receiveFromProtocol.setMessage("quiz-" + client.user.getUsername() + "-" + msg);
         break;
     }
   }

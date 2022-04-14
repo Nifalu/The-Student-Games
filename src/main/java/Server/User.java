@@ -22,6 +22,7 @@ public class User {
     private boolean isReady;
     private GameLogic.Lobby lobby;
     private int playingField;
+    private boolean rolledDice;
 
     public User(ClientHandler clientHandler, InetAddress ip, String username, int id) {
         this.clienthandler = clientHandler;
@@ -69,6 +70,11 @@ public class User {
         return playingField;
     }
 
+    public synchronized boolean getRolledDice() {
+        return rolledDice;
+    }
+
+
     // ----- SETTERS -----
     public synchronized void setUsername(String username) {
         this.username = username;
@@ -88,6 +94,10 @@ public class User {
 
     public synchronized void setPlayingField(int newPlayingField) {
         playingField = newPlayingField;
+    }
+
+    public void setRolledDice(boolean rolledDice) {
+        this.rolledDice = rolledDice;
     }
 
 
