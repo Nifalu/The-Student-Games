@@ -8,16 +8,19 @@ import utility.IO.CommandsToClient;
 /**
  * ClientReceive processes and validates incoming Messages.
  */
-public class ClientReceive {
+public class ClientReceive implements Runnable{
 
+  String line;
 
+  ClientReceive(String line) {
+    this.line = line;
+  }
   /**
    * Takes a String and splits it at the first "--". The first part is the command and is validated
    * with the command enum before it's processed in a switch-case.
-   *
-   * @param line String
    */
-  public synchronized static void receive(String line) {
+  @Override
+  public void run() {
     // splits the line:
     String msg;
     String[] input;

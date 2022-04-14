@@ -18,8 +18,6 @@ import java.nio.charset.StandardCharsets;
  */
 public class ClientHandler implements Runnable {
 
-  //close
-  private volatile boolean stop = false; // stop the thread
 
   //Connection:
   private Socket socket; // connection to the client
@@ -91,9 +89,11 @@ public class ClientHandler implements Runnable {
    */
   public void disconnectClient() {
 
-    if (user != null) {
-      goodbye();
-    }
+    sendToClient.serverBroadcast(CommandsToClient.PRINT, user.getUsername() + " from district " + user.getDistrict() + " has left");
+    System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
+    ServerManager.getActiveClientList().remove(this);
+    ServerManager.getUserlist().remove(user.getId(), user);
+
     // close thread
     if (connectionMonitor.isAlive()) {
       connectionToClientMonitor.requestStop();
@@ -119,22 +119,6 @@ public class ClientHandler implements Runnable {
     } catch (IOException e) {
       System.out.println("Everything closed");
     }
-  }
-
-  /**
-   * Sends goodbye message and removes this ClientHandler from all lists its in.
-   */
-  public void goodbye() {
-    sendToClient.serverBroadcast(CommandsToClient.PRINT, user.getUsername() + " from district " + user.getDistrict() + " has left");
-    ServerManager.getActiveClientList().remove(this);
-    ServerManager.getUserlist().remove(user.getId(), user);
-  }
-
-  /**
-   * exits possible infinite loops to end the Thread
-   */
-  protected void requestStop() {
-    stop = true;
   }
 
   public synchronized BufferedWriter getOut() {

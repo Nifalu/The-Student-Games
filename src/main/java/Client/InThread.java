@@ -25,7 +25,10 @@ public class InThread implements Runnable {
 
         if (in.ready()) { // this makes sure the following readLine() does not block.
           line = in.readLine(); // reads line
-          ClientReceive.receive(line); // sends line to the ClientReceive for processing
+          ClientReceive protocol = new ClientReceive(line);
+          Thread ClientReceiveThread = new Thread(protocol);
+          ClientReceiveThread.start();
+          ClientReceiveThread.setName("ClientReceiveThread");
         }
       }
       System.out.println("Server went offline");
