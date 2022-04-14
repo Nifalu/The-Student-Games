@@ -147,4 +147,8 @@ public class ClientHandler implements Runnable {
   protected ConnectionToClientMonitor getConnectionToClientMonitor() {
     return connectionToClientMonitor;
   }
+
+  public boolean getHasStopped() {
+    return clientHandlerInThread.isAlive();
+  }
 }

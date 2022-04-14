@@ -68,6 +68,17 @@ public class Lobby {
         return status;
     }
 
+    public boolean getPlayerStillActiv (Server.User user) {
+        boolean alive = false;
+        for (Server.User players: getUsersReady().values()) {
+            if (players.equals(user)) {
+                alive = true;
+                break;
+            }
+        }
+        return alive;
+    }
+
 
     // ----------------------- SETTERS ----------------------------------------
 
@@ -124,7 +135,10 @@ public class Lobby {
                     gameThread.start();
                 }
                 else if (answer[0].equals("dice")) {
-                    game.setRolledDice(answer[1]);
+                    game.setRolledDice(answer[1], 6);
+                }
+                else if (answer[0].equals("dicedice")) {
+                    game.setRolledDice(answer[1], 4);
                 }
                 else if (answer[0].equals("quiz")) {
                     game.quizAnswer(answer[1], answer[2]);

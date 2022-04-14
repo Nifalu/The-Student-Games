@@ -12,4 +12,10 @@ public class Dice {
         int randomInt = random.nextInt(6) + 1;
         return randomInt;
     }
+
+    public static int specialDice() {
+        Random random = new Random();
+        int randomInt = random.nextInt(4) + 1;
+        return randomInt;
+    }
 }

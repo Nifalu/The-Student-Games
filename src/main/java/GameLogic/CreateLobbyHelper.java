@@ -79,9 +79,13 @@ public class CreateLobbyHelper {
     }
 
     public void readyToPlay(Server.ClientHandler clienthandler) {
-        user.setReadyToPlay(true);
-        user.getLobby().waitingToPlay(clienthandler);
-        sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now waiting…");
+        if (user.getLobby().getLobbyStatus() == 1) {
+            user.setReadyToPlay(true);
+            user.getLobby().waitingToPlay(clienthandler);
+            sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now waiting…");
+        } else {
+            sendToClient.send(clienthandler, CommandsToClient.PRINT, "please choose a lobby");
+        }
     }
 
 
