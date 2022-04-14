@@ -24,6 +24,7 @@ public class User {
     private GameLogic.Lobby lobby;
     private int playingField;
     private boolean rolledDice;
+    private int specialDiceLeft = 3;
 
     public User(ClientHandler clientHandler, InetAddress ip, String username, int id) {
         this.clienthandler = clientHandler;
@@ -75,10 +76,21 @@ public class User {
         return rolledDice;
     }
 
+    public int getSpecialDiceLeft() {
+        return specialDiceLeft;
+    }
 
     // ----- SETTERS -----
     public synchronized void setUsername(String username) {
         this.username = username;
+    }
+
+    public void usedSpecialDice() {
+        specialDiceLeft--;
+    }
+
+    public void resetSpecialDice() {
+        specialDiceLeft = 3;
     }
 
     public synchronized void setFirstTime(boolean firstTime) {

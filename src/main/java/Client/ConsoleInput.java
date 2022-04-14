@@ -148,6 +148,10 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.ROLLDICE, "");
         break;
 
+      case "/dicedice":
+        sendToServer.send(CommandsToServer.DICEDICE, "");
+        break;
+
       case "/quiz":
         sendToServer.send(CommandsToServer.QUIZ, msg);
         break;

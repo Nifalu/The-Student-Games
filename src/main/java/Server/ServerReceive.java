@@ -123,6 +123,10 @@ public class ServerReceive {
         client.user.getLobby().receiveFromProtocol.setMessage("dice-" + client.user.getUsername());
         break;
 
+      case DICEDICE:
+        client.user.getLobby().receiveFromProtocol.setMessage("dicedice-" + client.user.getUsername());
+        break;
+
       case QUIZ:
         client.user.getLobby().receiveFromProtocol.setMessage("quiz-" + client.user.getUsername() + "-" + msg);
         break;

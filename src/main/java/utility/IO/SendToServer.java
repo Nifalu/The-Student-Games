@@ -101,6 +101,10 @@ public class SendToServer {
         sendTo("ROLLDICE--");
         break;
 
+      case DICEDICE:
+        sendTo("DICEDICE--");
+        break;
+
       case QUIZ:
         sendTo("QUIZ--" + msg);
         break;

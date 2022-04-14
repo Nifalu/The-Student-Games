@@ -15,6 +15,7 @@ public enum CommandsToServer {
   READY,
   START,
   ROLLDICE,
+  DICEDICE,
   QUIZ,
   PRINTUSERLIST,
   PRINTLOUNGINGLIST,
