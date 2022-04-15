@@ -12,11 +12,11 @@ public class Game implements Runnable{
     private static final SendToClient sendToClient = new SendToClient();
 
     final Lobby lobby;
-    final int minToStart = 2;
     public HashMap<Integer, Server.User> playersPlaying;
     int numPlayers;
     int maxTimeToAnswerQuiz = 15000;
-    int maxTimeToRollDice = 10000;
+    int maxTimeToRollDice = 15000;
+    int maxTimeWhenInactive = 5000;
     int playersEndedGame = 0;
     boolean rolledDice;
     boolean rolledSpecialDice;
@@ -39,68 +39,56 @@ public class Game implements Runnable{
         numPlayers = lobby.getUsersReady().size();
         if (lobby.getLobbyStatus() == 1){
 
-            //If enough players are ready to play the calendar will be set to 21.09.2021 and
-            //every player will be put to the starting point of the playing field.
-            if (numPlayers >= minToStart) {
-                lobby.setLobbyStatusToOnGoing();
-                Calendar calendar = new Calendar(2021, 9, 21);
-                calendar.getCurrentDate();
-                for (int u = 0; u < numPlayers; u++) {
-                    lobby.getUsersReady().get(u).setPlayingField(0);
-                    playersPlaying.put(u, lobby.getUsersReady().get(u));
-                    System.out.println(lobby.getUsersReady().get(u).getUsername());
-                }
+        //Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
+            lobby.setLobbyStatusToOnGoing();
+            Calendar calendar = new Calendar(2021, 9, 21);
+            calendar.getCurrentDate();
+            for (int u = 0; u < numPlayers; u++) {
+                lobby.getUsersReady().get(u).setPlayingField(0);
+                playersPlaying.put(u, lobby.getUsersReady().get(u));
+                lobby.getUsersReady().get(u).setIsPlaying(true);
+            }
 
-                //The game will end when the second last player has ended the game
-                while (numPlayers - playersEndedGame != 1) {
-                    for (int i = 0; i < numPlayers; i++) {
-                        if (i == 0) {
+            //The game will end when the second last player has ended the game
+            while (numPlayers - playersEndedGame != 1) {
+                for (int i = 0; i < numPlayers; i++) {
+                    if (i == 0) {
 
-                            //Sends at the beginning of each round the current date.
-                            lobbyBroadcastToPlayer(calendar.getCurrentDate());
+                        //Sends at the beginning of each round the current date.
+                        lobbyBroadcastToPlayer(calendar.getCurrentDate());
+                    }
+                    if (playersPlaying.get(i).getClienthandler().getHasStopped()){
+                        if (playersPlaying.get(i).getPlayingField() <= 90 &&
+                                playersPlaying.get(i).getPlayingField() != -69) {
+                            lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
+
+                            //sends the current users turn and the diced number to PlayingFields
+                            changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
+
+                            //checks if a player has ended the game and adds him to the high score
+                            if (playersPlaying.get(i).getPlayingField() > 90) {
+                                playersEndedGame += 1;
+                                sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
+                                        "Graduated in " + calendar.getCurrentDate() + " Ready for Masters?");
+                                HighScore.add("" + playersPlaying.get(i).getUsername(),
+                                        Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
+                                highScoreGame.add("" + playersPlaying.get(i).getUsername(),
+                                        Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
+                            }
                         }
-                        if (playersPlaying.get(i).getClienthandler().getHasStopped()){
-                            if (playersPlaying.get(i).getPlayingField() <= 90 &&
-                                    playersPlaying.get(i).getPlayingField() != -69) {
-                                lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
-                                /**
-                                try {
-                                    Thread.sleep(500);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                 */
-                                //sends the current users turn and the diced number to PlayingFields
-                                changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
-
-                                //checks if a player has ended the game and adds him to the high score
-                                if (playersPlaying.get(i).getPlayingField() > 90) {
-                                    playersEndedGame += 1;
-                                    sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
-                                            "Graduated in " + calendar.getCurrentDate() + " Ready for Master?");
-                                    HighScore.add("" + playersPlaying.get(i).getUsername(),
-                                            Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
-                                    highScoreGame.add("" + playersPlaying.get(i).getUsername(),
-                                            Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
-                                }
-                            }
-                        } else {
-                            if (playersPlaying.get(i).getPlayingField() != -69) {
-                                lostConnection(playersPlaying.get(i));
-                            }
+                    } else {
+                        if (playersPlaying.get(i).getPlayingField() != -69) {
+                            lostConnection(playersPlaying.get(i));
                         }
                     }
-                    lobbyBroadcastToPlayer("");
-                    calendar.newRound6();
                 }
-                //At the end of the game the lobby will be set to finished
-                closeGame();
-            } else {
-                lobbyBroadcastToPlayer("Life is boring without friends");
+                lobbyBroadcastToPlayer("");
+                calendar.newRound6();
             }
+            //At the end of the game the lobby will be set to finished
+            closeGame();
         } else {
-            //TODO
-            sendToClient.send(lobby.usersReady.get(0).getClienthandler(), CommandsToClient.PRINT, "Game is already ongoing or has ended");
+            lobbyBroadcastToPlayer("Life is boring without friends");
         }
     }
 
@@ -109,12 +97,18 @@ public class Game implements Runnable{
         setUserToRollDice(user);
         user.setRolledDice(false);
         int dice = Dice.dice();
-        for (int i = 0; i < maxTimeToRollDice; i++) {
+        int time = maxTimeToRollDice;
+        if (user.getIsNotActivelyRollingTheDice()) {
+            time = maxTimeWhenInactive;
+        }
+        for (int i = 0; i < time; i++) {
             if (rolledDice) {
                 dice = Dice.dice();
                 break;
             } else if (rolledSpecialDice) {
                 dice = Dice.specialDice();
+            } else if (i == time - 1) {
+                user.setNotActivelyRollingTheDice();
             }
             else {
                 try {
@@ -287,14 +281,15 @@ public class Game implements Runnable{
     public void gameOver (Server.User user) {
         lobbyBroadcastToPlayer(user.getUsername() + " has been exmatriculated.");
         user.setPlayingField(-69);
-        user.resetSpecialDice();
+        resetPlayer(user);
         playersEndedGame++;
     }
 
     public void lostConnection (Server.User user) {
         lobbyBroadcastToPlayer(user.getUsername() + " lost connection and left the game.");
         user.setPlayingField(-69);
-        user.resetSpecialDice();
+        resetPlayer(user);
+        user.setIsPlaying(false);
         playersEndedGame++;
     }
 
@@ -306,9 +301,15 @@ public class Game implements Runnable{
             User user = lobby.getUsersReady().get(i);
             lobby.removeUserFromLobby(user);
             user.setLobby(GameList.getLobbyList().get(0));
-            user.setFirstTime(true);
-            user.resetSpecialDice();
+            resetPlayer(user);
+            user.setIsPlaying(false);
         }
         lobby.setLobbyStatusToFinished();
+    }
+    
+    public void resetPlayer (Server.User user) {
+        user.setFirstTime(true);
+        user.resetSpecialDice();
+        user.setReadyToPlay(false);
     }
 }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class Lobby {
 
+    final int minToStart = 2;
     String name;
     Game game;
     public ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
@@ -23,10 +24,6 @@ public class Lobby {
     /**
      * contains a HashMap of all the users in the Lobby
      */
-
-    // this is now a Method in GameList
-    //public HashMap<Integer, User> usersInLobby = new HashMap<>();
-
 
     // beide werden nacher nicht mehr vorhanden sein.
     HashMap<Integer, Server.User> usersReady = new HashMap<>();
@@ -101,27 +98,29 @@ public class Lobby {
     public void waitingToPlay(Server.ClientHandler clientHandler) {
         if (!usersReady.containsValue(clientHandler) && getLobbyStatus() == 1) {
             int size = usersReady.size();
+            clientHandler.user.setReadyToPlay(true);
             usersReady.put(size, clientHandler.user);
         }
     }
 
-    //private void startGame() {
-    //    game = new Game(this, usersReady);
-    //    Thread gameThread = new Thread(game);
-    //    gameThread.start();
-    //}
+    public void removeFromWaitingList(Server.ClientHandler clientHandler) {
+        clientHandler.user.setReadyToPlay(false);
+        usersReady.values().remove(clientHandler.user);
+    }
 
     public void startThread() {
         Thread LobbyWaitForMessageThread = new Thread(() -> {
             String msg;
             String[] answer;
-            while(true) {
+            while(getLobbyStatus() != -1) {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
-                answer = msg.split("-");
+                answer = msg.split("§");
                 if (msg.equals("start") && getLobbyStatus() == 1) {
-                    game = new Game(this, usersReady);
-                    Thread gameThread = new Thread(game);
-                    gameThread.start();
+                    if (usersReady.size() >= minToStart) {
+                        game = new Game(this, usersReady);
+                        Thread gameThread = new Thread(game);
+                        gameThread.start();
+                    }
                 }
                 else if (answer[0].equals("dice")) {
                     game.setRolledDice(answer[1], 6);
@@ -139,6 +138,10 @@ public class Lobby {
         });
         LobbyWaitForMessageThread.setName("LobbyWaitForMessageThread"); // set name of thread
         LobbyWaitForMessageThread.start(); // start thread
+    }
+
+    public boolean getIsReadyToStartGame() {
+        return (usersReady.size() >= minToStart);
     }
 }
 

@@ -93,6 +93,10 @@ public class SendToServer {
         sendTo("READY--");
         break;
 
+      case UNREADY:
+        sendTo("UNREADY--");
+        break;
+
       case START:
         sendTo("START--");
         break;

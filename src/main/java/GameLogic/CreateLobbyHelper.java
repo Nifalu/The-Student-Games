@@ -30,7 +30,7 @@ public class CreateLobbyHelper {
      *
      * @param clienthandler sends and receives the information through the clienthandler.
      */
-    public void askWhatLobbyToJoin(Server.ClientHandler clienthandler) {
+    public void askWhatLobbyToJoin(ClientHandler clienthandler) {
         user.setLobby(GameList.getLobbyList().get(0));
         if (GameList.getOpenLobbies().size() == 0) {
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "There are no open Lobbies yet.");

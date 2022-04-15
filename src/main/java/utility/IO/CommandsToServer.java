@@ -13,6 +13,7 @@ public enum CommandsToServer {
   LOBBY,
   CREATELOBBY,
   READY,
+  UNREADY,
   START,
   ROLLDICE,
   DICEDICE,

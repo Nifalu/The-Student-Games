@@ -140,6 +140,10 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.READY, "");
         break;
 
+      case "/unready":
+        sendToServer.send(CommandsToServer.UNREADY, "");
+        break;
+
       case "/start":
         sendToServer.send(CommandsToServer.START, "");
         break;

@@ -1,8 +1,5 @@
 package Server;
 
-import GameLogic.GameList;
-import GameLogic.Lobby;
-
 import java.net.InetAddress;
 import java.util.Random;
 
@@ -25,6 +22,8 @@ public class User {
     private int playingField;
     private boolean rolledDice;
     private int specialDiceLeft = 3;
+    private boolean isPlaying;
+    private boolean isNotActivelyRollingTheDice;
 
     public User(ClientHandler clientHandler, InetAddress ip, String username, int id) {
         this.clienthandler = clientHandler;
@@ -80,6 +79,10 @@ public class User {
         return specialDiceLeft;
     }
 
+    public boolean getIsPlaying() { return isPlaying; }
+
+    public boolean getIsNotActivelyRollingTheDice() { return isNotActivelyRollingTheDice; }
+
     // ----- SETTERS -----
     public synchronized void setUsername(String username) {
         this.username = username;
@@ -89,9 +92,7 @@ public class User {
         specialDiceLeft--;
     }
 
-    public void resetSpecialDice() {
-        specialDiceLeft = 3;
-    }
+    public void resetSpecialDice() { specialDiceLeft = 3; }
 
     public synchronized void setFirstTime(boolean firstTime) {
         this.firstTime = firstTime;
@@ -112,6 +113,10 @@ public class User {
     public void setRolledDice(boolean rolledDice) {
         this.rolledDice = rolledDice;
     }
+
+    public void setIsPlaying(boolean playing) { isPlaying = playing; }
+
+    public void setNotActivelyRollingTheDice() { isNotActivelyRollingTheDice = true; }
 
 
     //-------------OTHER METHODS------------------------------
