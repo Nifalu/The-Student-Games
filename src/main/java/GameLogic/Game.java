@@ -14,8 +14,8 @@ public class Game implements Runnable{
     final Lobby lobby;
     public HashMap<Integer, Server.User> playersPlaying;
     int numPlayers;
-    int maxTimeToAnswerQuiz = 15000;
-    int maxTimeToRollDice = 15000;
+    int maxTimeToAnswerQuiz = 30000;
+    int maxTimeToRollDice = 20000;
     int maxTimeWhenInactive = 5000;
     int playersEndedGame = 0;
     boolean rolledDice;
@@ -49,8 +49,6 @@ public class Game implements Runnable{
 
         //The game will end when the second last player has ended the game
         while (numPlayers - playersEndedGame != 1) {
-            System.out.println(numPlayers);
-            System.out.println(playersEndedGame);
             for (int i = 0; i < numPlayers; i++) {
                 if (i == 0) {
 
@@ -141,6 +139,7 @@ public class Game implements Runnable{
     public void cheat(String user, int number) {
         if (!userToRollDice.getRolledDice()) {
             if (userToRollDice.getUsername().equals(user)) {
+                lobbyBroadcastToPlayer(userToRollDice.getUsername() + " has rich parents.");
                 changePosition(userToRollDice, number - userToRollDice.getPlayingField());
                 rolledDice = true;
             }

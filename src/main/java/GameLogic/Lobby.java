@@ -1,7 +1,9 @@
 package GameLogic;
 
 import Server.User;
+import utility.IO.CommandsToClient;
 import utility.IO.ReceiveFromProtocol;
+import utility.IO.SendToClient;
 
 import java.util.HashMap;
 
@@ -14,6 +16,7 @@ public class Lobby {
     final int minToStart = 2;
     String name;
     Game game;
+    private final SendToClient sendToClient = new SendToClient();
     public ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
 
     /**
@@ -103,8 +106,21 @@ public class Lobby {
         }
     }
 
+    public void readyToPlay(Server.ClientHandler clientHandler) {
+        if (getLobbyStatus() == 1) {
+            clientHandler.user.setReadyToPlay(true);
+            waitingToPlay(clientHandler);
+            sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are now waiting…");
+            //lobbyBroadcastToPlayer(clientHandler.user + " is ready.");
+        } else {
+            sendToClient.send(clientHandler, CommandsToClient.PRINT, "please choose a lobby");
+        }
+    }
+
     public void removeFromWaitingList(Server.ClientHandler clientHandler) {
         clientHandler.user.setReadyToPlay(false);
+        sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are not waiting anymore.");
+        lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is not ready.");
         usersReady.values().remove(clientHandler.user);
     }
 
@@ -130,7 +146,6 @@ public class Lobby {
                     } else if (answer[0].equals("quiz")) {
                         game.quizAnswer(answer[1], answer[2]);
                     } else if (answer[0].equals("wwcd")) {
-                        System.out.println(getLobbyStatus());
                         game.cheat(answer[1], Integer.parseInt(answer[2]));
                     }
                 }
@@ -142,6 +157,10 @@ public class Lobby {
 
     public boolean getIsReadyToStartGame() {
         return (usersReady.size() >= minToStart);
+    }
+
+    public void lobbyBroadcastToPlayer(String msg) {
+        sendToClient.lobbyBroadcastDice(getUsersInLobby(), CommandsToClient.PRINT, msg);
     }
 }
 

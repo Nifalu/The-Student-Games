@@ -128,7 +128,7 @@ public class ServerReceive {
       case READY:
         if (!client.user.getIsReady()) {
           if (client.user.getLobby().getLobbyStatus() == 1) {
-            client.lobbyhelper.readyToPlay(client.user.getClienthandler());
+            client.user.getLobby().readyToPlay(client.user.getClienthandler());
           } else if (client.user.getLobby().getLobbyStatus() == 0) {
             sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You missed the start of the Game.");
           } else if (client.user.getLobby().getLobbyStatus() == -1) {
@@ -143,7 +143,6 @@ public class ServerReceive {
         if (client.user.getIsReady() && client.user.getLobby().getLobbyStatus() == 1) {
           client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
           client.user.setReadyToPlay(false);
-          sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You are not waiting anymore.");
         }
         break;
 
