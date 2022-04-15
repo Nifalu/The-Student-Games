@@ -1,5 +1,7 @@
 package Server;
 
+
+import org.apache.logging.log4j.*;
 import utility.Exceptions;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.net.Socket;
 public class GameServer {
 
   static ServerSocket serverSocket;
+  private static final Logger logger = LogManager.getLogger(GameServer.class);
 
   public static void runGameServer(int port) {
     try {
@@ -24,8 +27,13 @@ public class GameServer {
     }
 
     try {
+      logger.info("Server is running");
+      logger.trace("trace");
+      logger.error("error");
+      logger.trace("trace2");
       System.out.println("Server created: " + InetAddress.getLocalHost() + ":" + port);
       System.out.println("Server is running and waiting for a connection... ");
+
       int i = 0;
 
       while (!serverSocket.isClosed()) {
