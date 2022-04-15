@@ -127,8 +127,12 @@ public class ServerReceive {
         client.user.getLobby().receiveFromProtocol.setMessage("dicedice-" + client.user.getUsername());
         break;
 
+      case WWCD:
+        client.user.getLobby().receiveFromProtocol.setMessage("wwcd-" + client.user.getUsername() + "-" + msg);
+        break;
+
       case QUIZ:
-        client.user.getLobby().receiveFromProtocol.setMessage("quiz-" + client.user.getUsername() + "-" + msg);
+        client.user.getLobby().receiveFromProtocol.setMessage("quiz-" + client.user + "-" + msg);
         break;
 
     }

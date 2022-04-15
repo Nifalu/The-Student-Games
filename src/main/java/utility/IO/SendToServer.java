@@ -109,6 +109,10 @@ public class SendToServer {
         sendTo("QUIZ--" + msg);
         break;
 
+      case WWCD:
+        sendTo("WWCD--" + msg);
+        break;
+
       case ECHO: // Sends a message to be echoed by the Server
         sendTo("ECHO--" + msg);
         break;

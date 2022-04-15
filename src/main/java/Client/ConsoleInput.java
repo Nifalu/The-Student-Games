@@ -156,6 +156,10 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.QUIZ, msg);
         break;
 
+      case "/winnerwinnerchickendinner":
+        sendToServer.send(CommandsToServer.WWCD, msg);
+        break;
+
       default: // when no command is detected, Echo the message.
         sendToServer.send(CommandsToServer.ECHO, line);
 

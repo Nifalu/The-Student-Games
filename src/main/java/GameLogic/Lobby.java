@@ -1,5 +1,5 @@
 package GameLogic;
-import Server.ServerManager;
+
 import Server.User;
 import utility.IO.ReceiveFromProtocol;
 
@@ -68,17 +68,6 @@ public class Lobby {
         return status;
     }
 
-    public boolean getPlayerStillActiv (Server.User user) {
-        boolean alive = false;
-        for (Server.User players: getUsersReady().values()) {
-            if (players.equals(user)) {
-                alive = true;
-                break;
-            }
-        }
-        return alive;
-    }
-
 
     // ----------------------- SETTERS ----------------------------------------
 
@@ -142,6 +131,9 @@ public class Lobby {
                 }
                 else if (answer[0].equals("quiz")) {
                     game.quizAnswer(answer[1], answer[2]);
+                }
+                else if (answer[0].equals("wwcd")) {
+                    game.cheat(answer[1], Integer.parseInt(answer[2]));
                 }
             }
         });

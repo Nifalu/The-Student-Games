@@ -1,29 +1,22 @@
 package GameLogic;
 
 
-import Server.ClientHandler;
 import Server.User;
 import utility.IO.CommandsToClient;
-import utility.IO.ReceiveFromProtocol;
 import utility.IO.SendToClient;
-
-import java.awt.desktop.SystemSleepEvent;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 public class Game implements Runnable{
 
     public static HighScore HighScore = new HighScore();
     private static final SendToClient sendToClient = new SendToClient();
-    //private static ReceiveFromProtocol receiveFromClient = new ReceiveFromProtocol();
 
     final Lobby lobby;
     final int minToStart = 2;
     public HashMap<Integer, Server.User> playersPlaying;
     int numPlayers;
     int maxTimeToAnswerQuiz = 15000;
-    int maxTimeToRollDice = 3000;
+    int maxTimeToRollDice = 10000;
     int playersEndedGame = 0;
     boolean rolledDice;
     boolean rolledSpecialDice;
@@ -150,6 +143,15 @@ public class Game implements Runnable{
                 } else {
                     rolledDice = true;
                 }
+            }
+        }
+    }
+
+    public void cheat(String user, int number) {
+        if (!userToRollDice.getRolledDice()) {
+            if (userToRollDice.getUsername().equals(user)) {
+                changePosition(userToRollDice, number - userToRollDice.getPlayingField());
+                rolledDice = true;
             }
         }
     }
