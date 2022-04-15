@@ -22,12 +22,6 @@ public class GameList {
     Lobby lobby = new Lobby("standard");
 
 
-
-    //muss im Lobby Objekt sein
-    // wird gelöscht
-    private static final HashMap<Integer, User> usersInLobby = new HashMap<>();
-    public synchronized static HashMap<Integer, User> getUsersInLobby() { return usersInLobby; }
-
     // es gibt keine UserInLobby HashMap mehr, weil jedes User Objekt eine Lobby Variable hat mit zugehöriger
     // LobbyNumber
     //public synchronized static HashMap<Server.User, Integer> getUserInLobby() { return userInLobby;}

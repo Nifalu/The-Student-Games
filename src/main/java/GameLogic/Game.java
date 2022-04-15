@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Game implements Runnable{
 
-    public static HighScore HighScore = new HighScore();
+    public static HighScore highScore = new HighScore();
     private static final SendToClient sendToClient = new SendToClient();
 
     final Lobby lobby;
@@ -37,59 +37,56 @@ public class Game implements Runnable{
     public void run() {
         highScoreGame = new HighScore();
         numPlayers = lobby.getUsersReady().size();
-        if (lobby.getLobbyStatus() == 1){
 
-        //Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
-            lobby.setLobbyStatusToOnGoing();
-            Calendar calendar = new Calendar(2021, 9, 21);
-            calendar.getCurrentDate();
-            for (int u = 0; u < numPlayers; u++) {
-                lobby.getUsersReady().get(u).setPlayingField(0);
-                playersPlaying.put(u, lobby.getUsersReady().get(u));
-                lobby.getUsersReady().get(u).setIsPlaying(true);
-            }
+    //Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
+        Calendar calendar = new Calendar(2021, 9, 21);
+        calendar.getCurrentDate();
+        for (int u = 0; u < numPlayers; u++) {
+            lobby.getUsersReady().get(u).setPlayingField(0);
+            playersPlaying.put(u, lobby.getUsersReady().get(u));
+            lobby.getUsersReady().get(u).setIsPlaying(true);
+        }
 
-            //The game will end when the second last player has ended the game
-            while (numPlayers - playersEndedGame != 1) {
-                for (int i = 0; i < numPlayers; i++) {
-                    if (i == 0) {
+        //The game will end when the second last player has ended the game
+        while (numPlayers - playersEndedGame != 1) {
+            System.out.println(numPlayers);
+            System.out.println(playersEndedGame);
+            for (int i = 0; i < numPlayers; i++) {
+                if (i == 0) {
 
-                        //Sends at the beginning of each round the current date.
-                        lobbyBroadcastToPlayer(calendar.getCurrentDate());
+                    //Sends at the beginning of each round the current date.
+                    lobbyBroadcastToPlayer(calendar.getCurrentDate());
+                }
+                if (playersPlaying.get(i).getClienthandler().getHasStopped()){
+                    if (playersPlaying.get(i).getPlayingField() <= 90 &&
+                            playersPlaying.get(i).getPlayingField() != -69) {
+                        lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
+
+                        //sends the current users turn and the diced number to PlayingFields
+                        changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
+
+                        //checks if a player has ended the game and adds him to the high score
+                        if (playersPlaying.get(i).getPlayingField() > 90) {
+                            playersEndedGame += 1;
+                            sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
+                                    "Graduated in " + calendar.getCurrentDate() + " Ready for Masters?");
+                            highScore.add("" + playersPlaying.get(i).getUsername(),
+                                    Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
+                            highScoreGame.add("" + playersPlaying.get(i).getUsername(),
+                                    Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
+                        }
                     }
-                    if (playersPlaying.get(i).getClienthandler().getHasStopped()){
-                        if (playersPlaying.get(i).getPlayingField() <= 90 &&
-                                playersPlaying.get(i).getPlayingField() != -69) {
-                            lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
-
-                            //sends the current users turn and the diced number to PlayingFields
-                            changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
-
-                            //checks if a player has ended the game and adds him to the high score
-                            if (playersPlaying.get(i).getPlayingField() > 90) {
-                                playersEndedGame += 1;
-                                sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
-                                        "Graduated in " + calendar.getCurrentDate() + " Ready for Masters?");
-                                HighScore.add("" + playersPlaying.get(i).getUsername(),
-                                        Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
-                                highScoreGame.add("" + playersPlaying.get(i).getUsername(),
-                                        Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
-                            }
-                        }
-                    } else {
-                        if (playersPlaying.get(i).getPlayingField() != -69) {
-                            lostConnection(playersPlaying.get(i));
-                        }
+                } else {
+                    if (playersPlaying.get(i).getPlayingField() != -69) {
+                        lostConnection(playersPlaying.get(i));
                     }
                 }
-                lobbyBroadcastToPlayer("");
-                calendar.newRound6();
             }
-            //At the end of the game the lobby will be set to finished
-            closeGame();
-        } else {
-            lobbyBroadcastToPlayer("Life is boring without friends");
+            lobbyBroadcastToPlayer("");
+            calendar.newRound6();
         }
+        //At the end of the game the lobby will be set to finished
+        closeGame();
     }
 
     //Will send a message to all players of the game and tells them who's turn it is to roll the dice.
@@ -198,30 +195,30 @@ public class Game implements Runnable{
         // 2 + 56 ladder up
         String msg = null;
         if (field == 2) {
-            lobbyBroadcastToPlayer(user.getUsername() + ": Leiter hoch");
+            lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
             changePosition(user, 15 - field);
         } else if (field == 56) {
-            lobbyBroadcastToPlayer(user.getUsername() + ": Leiter hoch");
+            lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
             changePosition(user, 59 - field);
         }
         // 21 - 89 ladder down
         else if (field == 21) {
-            lobbyBroadcastToPlayer(user.getUsername() + ": Leiter runter");
+            lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 14 - field);
         } else if (field == 27) {
-            lobbyBroadcastToPlayer(user.getUsername() + ": Leiter runter");
+            lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 10 - field);
         } else if (field == 53) {
-            lobbyBroadcastToPlayer(user.getUsername() + ": Leiter runter");
+            lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 36 - field);
         } else if (field == 58) {
-            lobbyBroadcastToPlayer(user.getUsername() + ": Leiter runter");
+            lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 40 - field);
         } else if (field == 81) {
-            lobbyBroadcastToPlayer(user.getUsername() + ": Leiter runter");
+            lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 78 - field);
         } else if (field == 89) {
-            lobbyBroadcastToPlayer(user.getUsername() + ": Leiter runter");
+            lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 68 - field);
         }
         //Cards
@@ -229,8 +226,8 @@ public class Game implements Runnable{
             String card = Cards.getCards();
             String arr[] = card.split(" ", 2);
             int positionToChange = Integer.parseInt(arr[0]);
-            String textKarten = arr[1];
-            lobbyBroadcastToPlayer(user.getUsername() + " zieht eine Ereigniskarte: " + textKarten);
+            String textCard = arr[1];
+            lobbyBroadcastToPlayer(user.getUsername() + " draws an action card: " + textCard);
             changePosition(user, positionToChange);
         }
         // Quiz
@@ -240,7 +237,7 @@ public class Game implements Runnable{
             String quiz[] = quizQuestion.split("§");
             setUserToAnswerQuiz(user);
             setAnswer(quiz[1]);
-            lobbyBroadcastToPlayer("Quizfrage an " + user.getUsername() + ". " + quiz[0]);
+            lobbyBroadcastToPlayer("Quiz for " + user.getUsername() + ". " + quiz[0]);
             for (int i = 0; i < maxTimeToAnswerQuiz; i++) {
                 if (quizAnsweredCorrect) {
                     changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]));
@@ -295,7 +292,7 @@ public class Game implements Runnable{
 
     public void closeGame() {
         lobbyBroadcastToPlayer("Best students of this game: " + highScoreGame.getTop10());
-        lobbyBroadcastToPlayer("All time leaders: " + HighScore.getTop10());
+        lobbyBroadcastToPlayer("All time leaders: " + highScore.getTop10());
         lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
         for (int i = 0; i < numPlayers; i++) {
             User user = lobby.getUsersReady().get(i);

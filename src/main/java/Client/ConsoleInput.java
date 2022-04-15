@@ -132,6 +132,10 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.PRINTONGOINGLOBBIES, msg);
         break;
 
+      case "/printHighscore":
+        sendToServer.send(CommandsToServer.PRINTHIGHSCORE, msg);
+        break;
+
       case "/changeLobby":
         sendToServer.send(CommandsToServer.CHANGELOBBY, msg);
         break;

@@ -85,6 +85,10 @@ public class SendToServer {
         sendTo("PRINTONGOINGLOBBIES--");
         break;
 
+      case PRINTHIGHSCORE:
+        sendTo("PRINTHIGHSCORE--");
+        break;
+
       case CHANGELOBBY:
         sendTo("CHANGELOBBY--" + msg);
         break;

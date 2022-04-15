@@ -112,27 +112,27 @@ public class Lobby {
         Thread LobbyWaitForMessageThread = new Thread(() -> {
             String msg;
             String[] answer;
-            while(getLobbyStatus() != -1) {
+            while(true) {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
                 answer = msg.split("§");
-                if (msg.equals("start") && getLobbyStatus() == 1) {
-                    if (usersReady.size() >= minToStart) {
-                        game = new Game(this, usersReady);
-                        Thread gameThread = new Thread(game);
-                        gameThread.start();
+                if (getLobbyStatus() != 69) {
+                    if (msg.equals("start") && getLobbyStatus() == 1) {
+                        if (usersReady.size() >= minToStart) {
+                            setLobbyStatusToOnGoing();
+                            game = new Game(this, usersReady);
+                            Thread gameThread = new Thread(game);
+                            gameThread.start();
+                        }
+                    } else if (answer[0].equals("dice")) {
+                        game.setRolledDice(answer[1], 6);
+                    } else if (answer[0].equals("dicedice")) {
+                        game.setRolledDice(answer[1], 4);
+                    } else if (answer[0].equals("quiz")) {
+                        game.quizAnswer(answer[1], answer[2]);
+                    } else if (answer[0].equals("wwcd")) {
+                        System.out.println(getLobbyStatus());
+                        game.cheat(answer[1], Integer.parseInt(answer[2]));
                     }
-                }
-                else if (answer[0].equals("dice")) {
-                    game.setRolledDice(answer[1], 6);
-                }
-                else if (answer[0].equals("dicedice")) {
-                    game.setRolledDice(answer[1], 4);
-                }
-                else if (answer[0].equals("quiz")) {
-                    game.quizAnswer(answer[1], answer[2]);
-                }
-                else if (answer[0].equals("wwcd")) {
-                    game.cheat(answer[1], Integer.parseInt(answer[2]));
                 }
             }
         });

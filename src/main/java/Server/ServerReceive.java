@@ -1,6 +1,6 @@
 package Server;
 
-import GameLogic.GameList;
+import GameLogic.HighScore;
 import utility.IO.CommandsToServer;
 import utility.IO.CommandsToClient;
 import utility.IO.SendToClient;
@@ -9,6 +9,7 @@ public class ServerReceive {
 
   private final SendToClient sendToClient = new SendToClient();
   private final ClientHandler client;
+  public static HighScore highScore = new HighScore();
 
 
   public ServerReceive(ClientHandler client) {
@@ -105,6 +106,9 @@ public class ServerReceive {
         client.lobbyhelper.printLobbiesAndSendToClient();
         break;
 
+      case PRINTHIGHSCORE:
+        sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT,"All time leaders: " + highScore.getTop10());
+        break;
 
       case CHANGELOBBY:
         if (client.user.getIsReady()) {
@@ -144,14 +148,18 @@ public class ServerReceive {
         break;
 
       case START:
-        if (client.user.getIsReady()) {
-          if (client.user.getLobby().getIsReadyToStartGame()) {
-            client.user.getLobby().receiveFromProtocol.setMessage("start");
+        if (client.user.getLobby().getLobbyStatus() == 1) {
+          if (client.user.getIsReady()) {
+            if (client.user.getLobby().getIsReadyToStartGame()) {
+              client.user.getLobby().receiveFromProtocol.setMessage("start");
+            } else {
+              sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "There are not enough people to start the game.");
+            }
           } else {
-            sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "There are not enough people to start the game.");
+            sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You need to be ready to start the game.");
           }
-        } else {
-          sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You need to be ready to start the game.");
+        } else if (client.user.getLobby().getLobbyStatus() == -1) {
+          sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "Game has already started.");
         }
         break;
 
