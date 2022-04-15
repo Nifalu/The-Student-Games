@@ -103,8 +103,6 @@ public class ClientHandler implements Runnable {
       clientHandlerIn.requestStop();
     }
 
-    requestStop();
-
     // close streams
     try {
       if (in != null) {
