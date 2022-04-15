@@ -39,6 +39,9 @@ public class Name {
       if (!desiredName.equals(clientHandler.user.getUsername())) {
         changeNameTo("", desiredName);
       }
+    } else {
+      String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
     }
 
 
