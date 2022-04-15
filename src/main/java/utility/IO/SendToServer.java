@@ -38,7 +38,7 @@ public class SendToServer {
         break;
 
       case NICK: // Changes the Nickname
-        sendTo("CHANGENAME--" + msg);
+        sendTo("NICK--" + msg);
         break;
 
       case WHISPER: // Sends a message to a single User

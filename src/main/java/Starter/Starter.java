@@ -1,24 +1,59 @@
 package Starter;
 
+import Client.ClientManager;
+import Server.GameServer;
+import utility.Exceptions;
+
 public class Starter {
 
 
   public static void main(String[] args) {
-    if (args.length == 0) {
-      System.out.println("not enough arguments");
-    } else if (args[0].equals("Server")) {
-      if (args.length == 2) {
-        Server.Main.start(args[1]);
+
+    if (args.length < 2) {
+      Exceptions.StarterArgumentError();
+      return;
+    }
+
+    switch (args[0].toLowerCase()) {
+
+      case "server":
+        if (isPortAllowed(args[1])) {
+          // Server.Main.start(Integer.parseInt(args[1]));
+          GameServer.runGameServer(Integer.parseInt(args[1]));
+        }
+        break;
+
+      case "client":
+        String[] address = args[1].split(":", 2);
+        if (address.length > 1) {
+          if (isPortAllowed(address[1])) {
+            if (args.length > 2) {
+              // Start the Client with the given username
+              ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), args[2]);
+            } else {
+              // Start the Client with the users Home Directory Name as username
+              ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), System.getProperty("user.name"));
+            }
+            // Starts the GUI
+            gui.Launcher.main(new String[0]);
+          }
+        }
+        break;
+    }
+  }
+
+  private static boolean isPortAllowed(String value) {
+    try {
+      int portValue = Integer.parseInt(value);
+      if (portValue < 65535 && portValue > 2000) {
+        return true;
       } else {
-        Server.Main.start();
+        Exceptions.StarterIllegalPortNumber(portValue);
+        return false;
       }
-    } else if (args[0].equals("Client")) {
-      String[] address = args[1].split(":", 2);
-      if (address.length == 2) {
-        Client.Main.start(address[0], address[1]);
-      } else {
-        System.out.println("not enough arguments");
-      }
+    } catch (NumberFormatException e) {
+      Exceptions.StarterCannotResolvePortNumber(e, value);
+      return false;
     }
   }
 }

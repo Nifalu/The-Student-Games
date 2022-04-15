@@ -40,7 +40,7 @@ public class ConnectionToClientMonitor implements Runnable {
     if (!stop) {
       // prints the timeout to the ServerConsole and disconnects the user
       System.out.println(clientHandler.user.getUsername() + " timed out. " + timedOut + "s");
-      requestStop();
+      stop = true;
       clientHandler.disconnectClient();
     }
   }

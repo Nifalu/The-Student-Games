@@ -1,6 +1,7 @@
 package Server;
 
 import utility.IO.CommandsToClient;
+import utility.IO.CommandsToServer;
 import utility.IO.SendToClient;
 import utility.IO.ReceiveFromProtocol;
 
@@ -30,15 +31,20 @@ public class Name {
    * if not proposes a new one.
    */
   public void askUsername() {
-    sendToClient.send(clientHandler, CommandsToClient.PRINT, "Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
+    sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
     String answer = receiveFromClient.receive();
     if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
-      sendToClient.send(clientHandler, CommandsToClient.PRINT, ("Please enter your desired name below."));
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, ("Please enter your desired name below."));
       String desiredName = receiveFromClient.receive();
       if (!desiredName.equals(clientHandler.user.getUsername())) {
         changeNameTo("", desiredName);
       }
+    } else {
+      String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
     }
+
+
     welcomeUser();
   }
 
@@ -56,9 +62,13 @@ public class Name {
       String newName;
       newName = proposeUsernameIfTaken(preferredName);
       sendToClient.send(clientHandler, CommandsToClient.PRINT, ("Sorry! This tribute already exists. Try this one: " + newName));
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Sorry! This tribute already exists. Try this one: " + newName + ". Feel free to switch to the chat now.");
+
     } else { // wenn preferredName frei ist:
       sendToClient.serverBroadcast(CommandsToClient.PRINT, (clientHandler.user.getUsername() + " is now called: " + preferredName));
       clientHandler.user.setUsername(preferredName);
+      String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
     }
   }
 
@@ -97,7 +107,9 @@ public class Name {
    */
   private void welcomeUser() {
     // Serverside
-    System.out.println(clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + " has connected");
+    String msg = clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + " has connected.";
+    System.out.println(msg);
+    sendToClient.serverBroadcast(CommandsToClient.CHAT, msg);
 
     // Clientside
     sendToClient.send(clientHandler, CommandsToClient.PRINT, "Your name was drawn at the reaping.");

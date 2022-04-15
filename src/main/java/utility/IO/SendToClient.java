@@ -72,6 +72,13 @@ public class SendToClient {
         sendTo(recipient, "CHANEGNAME--" + msg);
         break;**/
 
+      case CHAT:
+        sendTo(recipient, "CHAT--" + msg);
+        break;
+
+      case PRINTGUISTART:
+        sendTo(recipient, "PRINTGUISTART--" + msg);
+        break;
     }
   }
 

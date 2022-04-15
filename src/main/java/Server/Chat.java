@@ -27,16 +27,16 @@ public class Chat {
     for (ClientHandler clientHandler : ServerManager.getActiveClientList()) {
       if(clientHandler.user.getUsername().equalsIgnoreCase(recipient)) {
         // Send message to recipient:
-        sendToClient.send(clientHandler, CommandsToClient.PRINT, sender.user.getUsername() + " to " + recipient + ": " + msg);
+        sendToClient.send(clientHandler, CommandsToClient.CHAT, sender.user.getUsername() + " to " + recipient + ": " + msg);
         found = true;
       }
     }
     // Recipient does not exist:
     if (found) {
       // Send message also to myself:
-      sendToClient.send(sender, CommandsToClient.PRINT, sender.user.getUsername() + " to " + recipient + ": " + msg);
+      sendToClient.send(sender, CommandsToClient.CHAT, sender.user.getUsername() + " to " + recipient + ": " + msg);
     } else {
-      sendToClient.send(sender, CommandsToClient.PRINT, recipient + " is not here...");
+      sendToClient.send(sender, CommandsToClient.CHAT, recipient + " is not here...");
     }
   }
 
@@ -47,7 +47,7 @@ public class Chat {
    * @param msg String
    */
   public synchronized void broadcast(ClientHandler client, String msg) {
-    sendToClient.serverBroadcast(CommandsToClient.PRINT, client.user.getUsername() + ": " + msg);
+    sendToClient.serverBroadcast(CommandsToClient.CHAT, client.user.getUsername() + ": " + msg);
   }
 
 }
