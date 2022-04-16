@@ -9,12 +9,14 @@ import javafx.stage.Stage;
 
 import static javafx.application.Application.launch;
 
+/**
+ * this class contains the start method to launch the GUI
+ * it will be called in the Launcher class
+ */
 public class Main extends Application {
 
   /**
-   * this class contains the start method to launch the GUI
-   * the actual launch happens in the Launcher class though
-   * the first scene that will be set is the start scene (fxml_start)
+   * starts the GUI with the scene fxml_start
    * @param stage
    * @throws Exception
    */
