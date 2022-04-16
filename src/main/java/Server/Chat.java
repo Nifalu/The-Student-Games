@@ -50,6 +50,11 @@ public class Chat {
     sendToClient.serverBroadcast(CommandsToClient.CHAT, client.user.getUsername() + ": " + msg);
   }
 
+  /**
+   * prepares a chat message for a certain lobby
+   * @param client
+   * @param msg
+   */
   public synchronized void lobbyBroadcast (ClientHandler client, String msg) {
     sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(),CommandsToClient.CHAT, client.user.getUsername() + " [lobby]: " + msg);
   }

@@ -33,13 +33,16 @@ public class StartController implements Initializable {
     @FXML
     private TextField textInput;
 
-    /**
-     * used to switch to the chat scene
-     */
+
     private Stage stage;
     private Scene scene;
     private Parent root;
 
+    /**
+     * used to switch to the chat scene when pressing the "go to chat" button
+     * @param event
+     * @throws Exception
+     */
     public void switchToChat(ActionEvent event) throws Exception {
         ChatController.hasJoinedChat = true;
         root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_chat.fxml"));
