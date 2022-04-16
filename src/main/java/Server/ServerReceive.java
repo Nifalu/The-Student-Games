@@ -66,6 +66,10 @@ public class ServerReceive implements Runnable {
         client.chat.broadcast(client, msg);
         break;
 
+      case LOBBYCHAT: // broadcasts a message to everyone
+        client.chat.lobbyBroadcast(client, msg);
+        break;
+
       case WHISPER: // sends a message to a specific client
         client.chat.whisper(client, msg);
         break;

@@ -56,6 +56,11 @@ public class ClientReceive implements Runnable{
         ChatController.receiveFromProtocol.setMessage(msg);
         break;
 
+      case LOBBYCHAT: // Sends a Chat into the console and also to the chat-gui
+        System.out.println(msg);
+        ChatController.receiveFromProtocol.setMessage(msg);
+        break;
+
       case PRINTGUISTART:
         System.out.println(msg);
         StartController.receiveFromProtocol.setMessage(msg);

@@ -27,12 +27,17 @@ public enum CommandsToClient {
   PRINTFINISHEDLOBBIES,
   PRINTONGOINGLOBBIES,
   CHANGELOBBY,
-  PRINTLOBBIES
+  PRINTLOBBIES,
 
   /**
    * Sends a message to be displayed in the chat.
    */
   CHAT,
+
+  /**
+   * Sends a message to be displayed in the lobby chat.
+   */
+  LOBBYCHAT,
 
   /**
    * Sets the msg field in the StartController

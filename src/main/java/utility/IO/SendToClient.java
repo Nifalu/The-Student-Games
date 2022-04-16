@@ -27,10 +27,9 @@ public class SendToClient {
 
 
   // Send a message to a group of people ? Lobby?
-
-  public void lobbyBroadcast(HashMap<User, Integer> map, CommandsToClient cmd, String msg) {
-    for(Map.Entry<User, Integer> entry: map.entrySet()) {
-      send(entry.getKey().getClienthandler(),cmd,msg);
+  public void lobbyBroadcast(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
+    for(User user: map.values()) {
+      send(user.getClienthandler(),cmd,msg);
     }
   }
 
@@ -75,6 +74,10 @@ public class SendToClient {
       case CHAT:
         sendTo(recipient, "CHAT--" + msg);
         break;
+
+        case LOBBYCHAT:
+          sendTo(recipient, "LOBBYCHAT--" + msg);
+          break;
 
       case PRINTGUISTART:
         sendTo(recipient, "PRINTGUISTART--" + msg);

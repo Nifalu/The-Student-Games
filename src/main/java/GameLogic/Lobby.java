@@ -111,7 +111,10 @@ public class Lobby {
             clientHandler.user.setReadyToPlay(true);
             waitingToPlay(clientHandler);
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are now waiting…");
-            //lobbyBroadcastToPlayer(clientHandler.user + " is ready.");
+            lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
+                    + clientHandler.user.getLobby().getLobbyName());
+            lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
+                    clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
         } else {
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "please choose a lobby");
         }

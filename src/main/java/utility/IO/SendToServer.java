@@ -33,8 +33,13 @@ public class SendToServer {
         }
         ClientManager.disconnect();
         break;
+
       case CHAT: // Sends a chat to everyone
         sendTo("CHAT--" + msg);
+        break;
+
+      case LOBBYCHAT: // Sends a chat to lobby
+        sendTo("LOBBYCHAT--" + msg);
         break;
 
       case NICK: // Changes the Nickname

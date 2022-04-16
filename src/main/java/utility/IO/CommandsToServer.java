@@ -37,6 +37,11 @@ public enum CommandsToServer {
   CHAT,
 
   /**
+   * Sends a message to the Server to be put in the lobby chat.
+   */
+  LOBBYCHAT,
+
+  /**
    * Sends a message to the Server to be sent to a single user.
    */
   WHISPER,

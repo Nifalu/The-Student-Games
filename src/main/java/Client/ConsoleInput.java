@@ -92,6 +92,14 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.CHAT, msg);
         break;
 
+      case "/lobbychat": // sends a chat to lobby
+        if (msg.equals("-1")) {
+          System.out.println("You cannot chat nothing!");
+          break;
+        }
+        sendToServer.send(CommandsToServer.LOBBYCHAT, msg);
+        break;
+
       case "/lobby":
         if (msg.equals("-1")) {
           System.out.println("We need a message!");

@@ -239,9 +239,9 @@ public class Game implements Runnable{
             lobbyBroadcastToPlayer("Quiz for " + user.getUsername() + ". " + quiz[0]);
             for (int i = 0; i < maxTimeToAnswerQuiz; i++) {
                 if (quizAnsweredCorrect) {
+                    lobbyBroadcastToPlayer(user.getUsername() + "'s answer: " + quiz[1] +" is correct.");
                     changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]));
                     quizAnsweredCorrect = false;
-                    lobbyBroadcastToPlayer(user.getUsername() + "'s answer: " + quiz[1] +" is correct.");
                     break;
                 } else if (quizAnsweredWrong || i == 14999){
                     quizAnsweredWrong = false;

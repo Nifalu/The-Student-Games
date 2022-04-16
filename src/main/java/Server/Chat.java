@@ -50,4 +50,8 @@ public class Chat {
     sendToClient.serverBroadcast(CommandsToClient.CHAT, client.user.getUsername() + ": " + msg);
   }
 
+  public synchronized void lobbyBroadcast (ClientHandler client, String msg) {
+    sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(),CommandsToClient.CHAT, client.user.getUsername() + " [lobby]: " + msg);
+  }
+
 }
