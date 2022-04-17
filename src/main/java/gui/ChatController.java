@@ -14,6 +14,10 @@ import utility.IO.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This is the controller for fxml_chat.fxml
+ */
+
 public class ChatController implements Initializable {
   private final SendToServer sendToServer = new SendToServer();
   private static String msg;
@@ -60,13 +64,23 @@ public class ChatController implements Initializable {
     chatTextField.clear();
   }
 
+    /**
+     * method is used to print messages to the chat
+     * @param msg message which will be printed in the chat
+     */
   @FXML
   public void printChatMessage(String msg) {
     chat.appendText(msg);
     chat.appendText("\n");
   }
 
-  // This Method runs when this class is created
+    /**
+     * This method runs, when the class is created
+     * It first waits until the user has joined the chat and will then wait for incoming chat messages
+     * Incoming messages will then be printed to the chat
+     * @param location
+     * @param resources
+     */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
       // A new Thread is made that waits for incoming messages
@@ -88,10 +102,13 @@ public class ChatController implements Initializable {
       waitForChatThread.start(); // start thread
   }
 
-
+    /**
+     * Method which allows users to quit when pressing the quit button
+     * @param actionEvent
+     */
   @FXML
     public void quitGame(ActionEvent actionEvent) {
-      sendToServer.send(CommandsToServer.CHAT, "left the chat"); // not pretty, needs to be changed
+      sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
         Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
       sendToServer.send(CommandsToServer.QUIT, msg);

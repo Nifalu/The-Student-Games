@@ -61,7 +61,8 @@ public class Name {
     } else if (nameAlreadyExists(preferredName)) { // Wenn preferredName bereits exisitert:
       String newName;
       newName = proposeUsernameIfTaken(preferredName);
-      sendToClient.send(clientHandler, CommandsToClient.PRINT, ("Sorry! This tribute already exists. Try this one: " + newName));
+      clientHandler.user.setUsername(newName);
+      // sendToClient.send(clientHandler, CommandsToClient.PRINT, ("Sorry! This tribute already exists. Try this one: " + newName));
       sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Sorry! This tribute already exists. Try this one: " + newName + ". Feel free to switch to the chat now.");
 
     } else { // wenn preferredName frei ist:

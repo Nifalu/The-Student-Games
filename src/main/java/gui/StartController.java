@@ -18,6 +18,10 @@ import utility.IO.SendToServer;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * this is the controller for fxml_start.fxml
+ */
+
 public class StartController implements Initializable {
     private final SendToServer sendToServer = new SendToServer();
     public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
@@ -30,13 +34,15 @@ public class StartController implements Initializable {
     private TextField textInput;
 
 
-    /**
-     * used to switch to the chat scene
-     */
     private Stage stage;
     private Scene scene;
     private Parent root;
 
+    /**
+     * used to switch to the chat scene when pressing the "go to chat" button
+     * @param event
+     * @throws Exception
+     */
     public void switchToChat(ActionEvent event) throws Exception {
         ChatController.hasJoinedChat = true;
         root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_chat.fxml"));
@@ -57,18 +63,30 @@ public class StartController implements Initializable {
         textInput.clear();
     }
 
+    /**
+     * changes the displayed text on the stage
+     * @param msg
+     */
     public void printMsg(String msg) {
         showText.setText(msg);
     }
 
 
+    /**
+     * This method is called, when the class is created
+     * It is used to wait on incoming messages
+     * This method waits for a change in the field msg, if it's changed it will call the printMsg method, which
+     * changes the text on screen
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // A new Thread is made which waits
         Thread waitForMsgChange = new Thread(() -> {
             while(true) {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
-                Platform.runLater(() -> printMsg(msg)); // a javafx "thread" that calls the print method
+                Platform.runLater(() -> printMsg(msg)); // a javafx "thread" that calls the printMsg method
             }
         });
         waitForMsgChange.setName("GuiStartWaitForMsgChange"); // set name of thread
