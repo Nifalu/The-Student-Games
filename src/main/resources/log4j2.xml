@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" name="TheStudentGame" packages="">
+        <Appenders>
+
+            <!-- Logs into console. -->
+            <Console name="Console" target="SYSTEM_OUT">
+                <PatternLayout pattern="%style{%date{DEFAULT}}{yellow}
+            [%t] %highlight{%-5level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green} %logger{36} - %msg\n"/>
+            </Console>
+
+            <!-- Appender that logs in the same file. This File only shows the last/current run. -->
+            <File name="FileLast"
+                  fileName="Logs/GeneralLast.log" immediateFlush="true" append="false">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+            </File>
+
+            <File name="AllTraffic"
+                  fileName="Logs/NetworkAllTraffic.log" immediateFlush="true" append="false">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+            </File>
+
+            <File name="TrafficNoPing"
+                  fileName="Logs/NetworkAllNoPing.log" immediateFlush="true" append="false">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+            </File>
+
+            <!-- Appender that Logs in the same file even after a restart.
+            Lines are overwritten if a certain Filesize is reached-->
+            <RollingFile name="FileContinuous"
+                         fileName="Logs/GeneralContinuous.log"
+                         filePattern="${APP_LOG_ROOT}/appName-%d{yyyy-MM-dd}-%i.log.gz">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+                <Policies>
+                    <SizeBasedTriggeringPolicy size="19500KB"/>
+                </Policies>
+            </RollingFile>
+
+        </Appenders>
+
+    <!-- Different Loggers with different Log-Levels -->
+        <Loggers>
+            <Root level="all">
+                <AppenderRef ref="Console" level="warn"/>
+                <AppenderRef ref="FileLast" level="all"/>
+                <AppenderRef ref="FileContinuous" level="trace"/>
+            </Root>
+
+            <Logger name="Traffic" level="all">
+                <AppenderRef ref="AllTraffic" level="all"/>
+            </Logger>
+
+            <Logger name="TrafficNoPing" level="all">
+                <AppenderRef ref="TrafficNoPing" level="all"/>
+            </Logger>
+
+        </Loggers>
+
+    </Configuration>

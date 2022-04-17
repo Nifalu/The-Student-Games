@@ -1,6 +1,8 @@
 package Server;
 
-import utility.Exceptions;
+
+import org.apache.logging.log4j.*;
+import static utility.Exceptions.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -14,19 +16,22 @@ import java.net.Socket;
 public class GameServer {
 
   static ServerSocket serverSocket;
+  private static final Logger logger = LogManager.getLogger(GameServer.class);
 
   public static void runGameServer(int port) {
     try {
       serverSocket = new ServerSocket(port);
     } catch (IOException e) {
-      Exceptions.failedToCreateServer(e, port);
+      failedToCreateServer(e, port);
       return;
     }
 
     try {
       ServerManager.createMainLobby();
+      logger.info("Server is running! " + InetAddress.getLocalHost() + ":" + port);
       System.out.println("Server created: " + InetAddress.getLocalHost() + ":" + port);
       System.out.println("Server is running and waiting for a connection... ");
+
       int i = 0;
 
       while (!serverSocket.isClosed()) {
@@ -41,7 +46,8 @@ public class GameServer {
       }
 
     } catch (IOException e) {
-      e.printStackTrace();
+      failedToConnectClientHandler();
+      logger.fatal("an error occurred when connecting a new Client", e);
       closeGameServer();
     }
   }
@@ -53,9 +59,10 @@ public class GameServer {
     try {
       if (serverSocket != null) {
         serverSocket.close();
+        logger.info("Server is closed");
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.warn("unable to close ServerSocket. It might already be closed", e);
     }
   }
 

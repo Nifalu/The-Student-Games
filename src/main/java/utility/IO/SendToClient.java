@@ -86,6 +86,7 @@ public class SendToClient {
   }
 
 
+
   /**
    * Sends the Message
    *
@@ -98,7 +99,7 @@ public class SendToClient {
       recipient.getOut().newLine();
       recipient.getOut().flush();
     } catch (IOException e) {
-      System.out.println("cannot reach user");
+      System.out.println("cannot reach user" + msg);
     }
   }
 }
