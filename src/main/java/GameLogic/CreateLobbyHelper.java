@@ -4,6 +4,7 @@ import Server.ClientHandler;
 import utility.IO.CommandsToClient;
 import utility.IO.ReceiveFromProtocol;
 import utility.IO.SendToClient;
+
 import java.util.HashMap;
 
 /**
@@ -20,6 +21,7 @@ public class CreateLobbyHelper {
 
     /**
      * add createLobby
+     *
      * @param clienthandler Server.ClientHandler
      */
     public CreateLobbyHelper(Server.ClientHandler clienthandler) {
@@ -34,7 +36,6 @@ public class CreateLobbyHelper {
      * @param clienthandler sends and receives the information through the clienthandler.
      */
     public void askWhatLobbyToJoin(ClientHandler clienthandler) {
-        user.setLobby(GameList.getLobbyList().get(0));
         if (GameList.getOpenLobbies().size() == 0) {
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "There are no open Lobbies yet.");
         } else {
@@ -52,65 +53,49 @@ public class CreateLobbyHelper {
 
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "what's the number of the lobby which you " +
                 "would like to choose? ");
+
         String answer = receiveFromClient.receive();
-        int number = Integer.parseInt(answer);
-        if (checkIfLobbyExists(number)) {
-            user.setLobby(GameList.getOpenLobbies().get(number));
-            sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have been added to lobby "
-                    + user.getLobby().getLobbyName() + ".");
-        } else {
-            sendToClient.send(clienthandler, CommandsToClient.PRINT, "Oooops sorry there this Lobby doesn't exist. " +
-                    "Please try again.");
-            String answer3 = receiveFromClient.receive();
-            int number3 = Integer.parseInt(answer3);
-            if (checkIfLobbyExists(number3)) {
-                user.setLobby(GameList.getOpenLobbies().get(number3));
-                sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have been added to lobby "
-                        + user.getLobby().getLobbyName() + ".");
-            } else {
-                user.setLobby(GameList.getLobbyList().get(0));
-                sendToClient.send(clienthandler, CommandsToClient.PRINT, " Sorry, this lobby doesn't exist," +
-                        "you have been added to lobby "
-                        + user.getLobby().getLobbyName() + ".");
-            }
-        }
+        changeLobby(answer);
     }
 
     /**
      * checks if a lobby exists.
+     *
      * @param number The number of the lobby
      * @return boolean true (Lobby already exists) or false (lobby doesn't exist yet)
      */
-    public boolean checkIfLobbyExists(int number) {
-        HashMap<Integer, Lobby> lobbyList = GameList.getLobbyList();
-        if (number > lobbyList.size() || number < 0) {
+    public boolean checkIfOpenLobbyExists(String number) {
+        try {
+            int lobbyNumber = Integer.parseInt(number);
+            return lobbyNumber < GameList.getOpenLobbies().size() && lobbyNumber >= 0;
+        } catch (NumberFormatException e) {
+            sendToClient.send(clienthandler, CommandsToClient.PRINT, number + " is not a valid number!");
             return false;
-        } else {
-            return true;
         }
     }
 
     /**
      * changes the lobby of a user and checks if the lobby exists.
+     *
      * @param number The number of the new Lobby
      */
     public synchronized void changeLobby(String number) {
-        int lobbyNumber = Integer.parseInt(number);
-        if (lobbyNumber >= GameList.getLobbyList().size() || lobbyNumber < 0) {
-            sendToClient.send(clienthandler, CommandsToClient.PRINT, "Whoops that lobby does not exist. ");
-        }
-        for (int i = 0; i < GameList.getLobbyList().size(); i++) {
-            if (GameList.getLobbyList().get(i).getLobbyNumber() == lobbyNumber) {
-                user.setLobby(GameList.getLobbyList().get(i));
-                sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby : "  +
-                        GameList.getLobbyList().get(i).getLobbyName());
+            number = number.replaceAll("\\s", "");
+            if (checkIfOpenLobbyExists(number)) {
+                int lobbynumber = Integer.parseInt(number);
+                user.setLobby(GameList.getOpenLobbies().get(lobbynumber));
+                sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby : " +
+                        GameList.getOpenLobbies().get(lobbynumber).getLobbyName());
+            } else {
+                sendToClient.send(clienthandler, CommandsToClient.PRINT, "Whoops that lobby does not exist. ");
             }
-        }
+
     }
 
 
     /**
      * connects puts a newly created lobby into the lobbyList.
+     *
      * @param name name of the lobby
      */
     public synchronized void connectLobby(String name) {

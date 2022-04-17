@@ -47,7 +47,7 @@ public class Chat {
    * @param msg message
    */
   public synchronized void broadcast(ClientHandler client, String msg) {
-    sendToClient.serverBroadcast(CommandsToClient.CHAT, client.user.getUsername() + ": " + msg);
+    sendToClient.serverBroadcast(CommandsToClient.CHAT, "[GLOBAL] " + client.user.getUsername() + ": " + msg);
   }
 
   /**
@@ -56,7 +56,7 @@ public class Chat {
    * @param msg message
    */
   public synchronized void lobbyBroadcast (ClientHandler client, String msg) {
-    sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(),CommandsToClient.CHAT, client.user.getUsername() + " [lobby]: " + msg);
+    sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(),CommandsToClient.CHAT,
+            "[" + client.user.getLobby().getLobbyName() + "] " + client.user.getUsername() + ": " + msg);
   }
-
 }

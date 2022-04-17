@@ -1,6 +1,7 @@
 package Server;
 
 import GameLogic.CreateLobbyHelper;
+import GameLogic.GameList;
 import GameLogic.Lobby;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,6 +61,7 @@ public class ClientHandler implements Runnable {
       String ClientHomeDirectoryName = in.readLine();
       ClientHomeDirectoryName = nameClass.proposeUsernameIfTaken(ClientHomeDirectoryName);
       user.setUsername(ClientHomeDirectoryName);
+      user.setLobby(GameList.getLobbyList().get(0));
       this.lobbyhelper = new CreateLobbyHelper(this);
 
       // Creates a receiving Thread that receives messages in the background

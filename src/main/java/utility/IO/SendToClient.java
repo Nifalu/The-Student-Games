@@ -67,17 +67,10 @@ public class SendToClient {
         sendTo(recipient, "PRINT--" + msg);
         break;
 
-      /**case CREATELOBBY:
-        sendTo(recipient, "CHANEGNAME--" + msg);
-        break;**/
-
       case CHAT:
         sendTo(recipient, "CHAT--" + msg);
         break;
 
-        case LOBBYCHAT:
-          sendTo(recipient, "LOBBYCHAT--" + msg);
-          break;
 
       case PRINTGUISTART:
         sendTo(recipient, "PRINTGUISTART--" + msg);
