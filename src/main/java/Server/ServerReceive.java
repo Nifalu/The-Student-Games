@@ -1,10 +1,16 @@
 package Server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utility.IO.CommandsToServer;
 import utility.IO.CommandsToClient;
 import utility.IO.SendToClient;
 
 public class ServerReceive implements Runnable {
+
+  private static final Logger logger = LogManager.getLogger(ServerReceive.class);
+  private static final Logger logTraffic = LogManager.getLogger("Traffic");
+  private static final Logger logTrafficNoPing = LogManager.getLogger("TrafficNoPing");
 
   private final SendToClient sendToClient = new SendToClient();
   private final ClientHandler client;
@@ -14,6 +20,7 @@ public class ServerReceive implements Runnable {
   public ServerReceive(ClientHandler client, String line) {
     this.client = client;
     this.line = line;
+    logTraffic.trace("Received message: " + line);
   }
 
   /**
@@ -36,10 +43,16 @@ public class ServerReceive implements Runnable {
     try {
       cmd = CommandsToServer.valueOf(input[0].toUpperCase());
     } catch (IllegalArgumentException e) {
-      sendToClient.send(client, CommandsToClient.PRINT, "Unknown command: " + line);
+      // " " is sent received when the client has quit.
+      if (!input[0].equals("")) {
+        logger.warn("Received unknown command. ( " + input[0] + " )");
+      }
       return;
     }
 
+    if (cmd != CommandsToServer.PING) {
+      logTrafficNoPing.trace("Received message: " + line);
+    }
 
 
     switch (cmd) {

@@ -1,6 +1,8 @@
 package Server;
 
 import GameLogic.CreateLobbyHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utility.IO.CommandsToClient;
 import utility.IO.SendToClient;
 
@@ -18,6 +20,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class ClientHandler implements Runnable {
 
+  //Logger
+  private static final Logger logger = LogManager.getLogger(ClientHandler.class);
 
   //Connection:
   private Socket socket; // connection to the client
@@ -71,6 +75,7 @@ public class ClientHandler implements Runnable {
 
 
     } catch (IOException e) {
+      logger.error("An Error occurred when setting up the ClientHandler. ", e);
       disconnectClient();
     }
   }
@@ -89,10 +94,11 @@ public class ClientHandler implements Runnable {
    */
   public void disconnectClient() {
 
-    sendToClient.serverBroadcast(CommandsToClient.PRINT, user.getUsername() + " from district " + user.getDistrict() + " has left");
+    String tmp_name = user.getUsername();
     System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
     ServerManager.getActiveClientList().remove(this);
     ServerManager.getUserlist().remove(user.getId(), user);
+    sendToClient.serverBroadcast(CommandsToClient.PRINT, user.getUsername() + " from district " + user.getDistrict() + " has left");
 
     // close thread
     if (connectionMonitor.isAlive()) {
@@ -105,17 +111,11 @@ public class ClientHandler implements Runnable {
 
     // close streams
     try {
-      if (in != null) {
-        in.close();
-      }
-      if (out != null) {
-        out.close();
-      }
       if (socket != null) {
         socket.close();
       }
     } catch (IOException e) {
-      System.out.println("Everything closed");
+      logger.warn(tmp_name + " did not exit correctly!", e);
     }
   }
 

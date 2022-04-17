@@ -41,6 +41,11 @@ public class Exceptions {
     System.out.println("Failed to create Server ");
     System.out.println("Your port might be taken (Port: " + port + " ) . Also check your Network connection and settings");
     System.out.println("-------------------------------");
-    // e.printStackTrace();
+  }
+
+  public static void failedToConnectClientHandler() {
+    System.out.println("-------------------------------");
+    System.out.println("An Error occured when trying to connect to a new Client");
+    System.out.println("-------------------------------");
   }
 }
