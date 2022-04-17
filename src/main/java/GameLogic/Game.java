@@ -17,8 +17,8 @@ public class Game implements Runnable{
     final Lobby lobby;
     public HashMap<Integer, Server.User> playersPlaying;
     int numPlayers;
-    int maxTimeToAnswerQuiz = 30000;
-    int maxTimeToRollDice = 20000;
+    int maxTimeToAnswerQuiz = 45000;
+    int maxTimeToRollDice = 30000;
     int maxTimeWhenInactive = 5000;
     int playersEndedGame = 0;
     boolean rolledDice;
@@ -276,7 +276,7 @@ public class Game implements Runnable{
             String quiz[] = quizQuestion.split("§");
             setUserToAnswerQuiz(user);
             setAnswer(quiz[1]);
-            lobbyBroadcastToPlayer("Quiz for " + user.getUsername() + ". " + quiz[0]);
+            lobbyBroadcastToPlayer("Exam question for " + user.getUsername() + ". " + quiz[0]);
             for (int i = 0; i < maxTimeToAnswerQuiz; i++) {
                 if (quizAnsweredCorrect) {
                     lobbyBroadcastToPlayer(user.getUsername() + "'s answer: " + quiz[1] +" is correct.");

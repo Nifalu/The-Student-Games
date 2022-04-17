@@ -151,6 +151,8 @@ public class ServerReceive implements Runnable {
         if (client.user.getIsReady() && client.user.getLobby().getLobbyStatus() == 1) {
           client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
           client.user.setReadyToPlay(false);
+        } else if (!client.user.getIsReady()) {
+          sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You haven't been ready.");
         }
         break;
 

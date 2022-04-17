@@ -139,6 +139,8 @@ public class Lobby {
         sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are not waiting anymore.");
         lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is not ready.");
         usersReady.values().remove(clientHandler.user);
+        lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
+                clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
     }
 
     /**
@@ -159,14 +161,16 @@ public class Lobby {
                             Thread gameThread = new Thread(game);
                             gameThread.start();
                         }
-                    } else if (answer[0].equals("dice")) {
-                        game.setRolledDice(answer[1], 6);
-                    } else if (answer[0].equals("dicedice")) {
-                        game.setRolledDice(answer[1], 4);
-                    } else if (answer[0].equals("quiz")) {
-                        game.quizAnswer(answer[1], answer[2]);
-                    } else if (answer[0].equals("wwcd")) {
-                        game.cheat(answer[1], Integer.parseInt(answer[2]));
+                    } else if (getLobbyStatus() == 0) {
+                        if (answer[0].equals("dice")) {
+                            game.setRolledDice(answer[1], 6);
+                        } else if (answer[0].equals("dicedice")) {
+                            game.setRolledDice(answer[1], 4);
+                        } else if (answer[0].equals("quiz")) {
+                            game.quizAnswer(answer[1], answer[2]);
+                        } else if (answer[0].equals("wwcd")) {
+                            game.cheat(answer[1], Integer.parseInt(answer[2]));
+                        }
                     }
                 }
             }
