@@ -1,5 +1,7 @@
 package Server;
 
+import GameLogic.CreateLobbyHelper;
+import GameLogic.GameList;
 import GameLogic.HighScore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -132,17 +134,26 @@ public class ServerReceive implements Runnable {
         break;
 
       case CHANGELOBBY:
-        if (client.user.getIsReady()) {
-          if (client.user.getLobby().getLobbyStatus() != 0) {
-            client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
-            client.user.setReadyToPlay(false);
-            client.lobbyhelper.changeLobby(msg);
+        try {
+          int number = Integer.parseInt(msg.replaceAll("\\s", ""));
+          if (number < GameList.getOpenLobbies().size() && number >= 0) {
+            if (client.user.getIsReady()) {
+              if (client.user.getLobby().getLobbyStatus() != 0) {
+                client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
+                client.user.setReadyToPlay(false);
+                client.lobbyhelper.changeLobby(msg);
+              } else {
+                sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to finish this game.");
+              }
+            } else if (!client.user.getIsPlaying()) {
+              client.user.setReadyToPlay(false);
+              client.lobbyhelper.changeLobby(msg);
+            }
           } else {
-            sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to finish this game.");
+            sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "This lobby doesn't exist.");
           }
-        } else if (!client.user.getIsPlaying()) {
-          client.user.setReadyToPlay(false);
-          client.lobbyhelper.changeLobby(msg);
+        }catch (Exception e) {
+          sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, msg + " is not a valid number!");
         }
         break;
 

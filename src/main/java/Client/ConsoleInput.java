@@ -101,7 +101,8 @@ class ConsoleInput implements Runnable {
         break;
 
       case "/lobby":
-        if (msg.equals("-1")) {
+        msg = msg.replaceAll("\\s", "");
+        if (msg.equals("-1") || msg.equals("")) {
           System.out.println("We need a message!");
           break;
         }
@@ -109,7 +110,8 @@ class ConsoleInput implements Runnable {
         break;
 
       case "/createLobby":
-        if (msg.equals("-1")) {
+        msg = msg.replaceAll("\\s", "");
+        if (msg.equals("-1") || msg.equals("")) {
           System.out.println("We need a message!");
           break;
         }
