@@ -31,7 +31,7 @@ public class Game implements Runnable{
     public String correctAnswer;
     HighScore highScoreGame;
 
-    public Game(Lobby lobby, HashMap playersPlaying) {
+    public Game(Lobby lobby, HashMap<Integer, Server.User> playersPlaying) {
         this.lobby = lobby;
         this.playersPlaying = playersPlaying;
     }
@@ -43,9 +43,9 @@ public class Game implements Runnable{
         highScoreGame = new HighScore();
         numPlayers = lobby.getUsersReady().size();
 
-        /**
-         * Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
-         */
+
+        // Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
+
         Calendar calendar = new Calendar(2021, 9, 21);
         calendar.getCurrentDate();
         for (int u = 0; u < numPlayers; u++) {
@@ -54,9 +54,7 @@ public class Game implements Runnable{
             lobby.getUsersReady().get(u).setIsPlaying(true);
         }
 
-        /**
-         * The game will run until the second last player has ended the game
-         */
+        // The game will run until the second last player has ended the game
         while (numPlayers - playersEndedGame != 1) {
             for (int i = 0; i < numPlayers; i++) {
                 if (i == 0) {
@@ -263,7 +261,7 @@ public class Game implements Runnable{
         //Cards
         else if (field == 18 || field == 46 || field == 74) {
             String card = Cards.getCards();
-            String arr[] = card.split(" ", 2);
+            String[] arr = card.split(" ", 2);
             int positionToChange = Integer.parseInt(arr[0]);
             String textCard = arr[1];
             lobbyBroadcastToPlayer(user.getUsername() + " draws an action card: " + textCard);
@@ -273,7 +271,7 @@ public class Game implements Runnable{
         else if (field == 23 || field == 50) {
             quizOngoing = true;
             String quizQuestion = Quiz.quiz();
-            String quiz[] = quizQuestion.split("§");
+            String[] quiz = quizQuestion.split("§");
             setUserToAnswerQuiz(user);
             setAnswer(quiz[1]);
             lobbyBroadcastToPlayer("Exam question for " + user.getUsername() + ". " + quiz[0]);
@@ -295,7 +293,7 @@ public class Game implements Runnable{
                     break;
                 } else {
                     try {
-                        Thread.sleep(1);
+                        wait(1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
