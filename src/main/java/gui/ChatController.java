@@ -111,6 +111,8 @@ public class ChatController implements Initializable {
       sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
         Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
+        //Platform.exit();
+        //System.exit(0);
       sendToServer.send(CommandsToServer.QUIT, msg);
 
     }

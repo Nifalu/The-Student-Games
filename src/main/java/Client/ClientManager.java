@@ -1,5 +1,6 @@
 package Client;
 
+import javafx.application.Platform;
 import utility.Exceptions;
 
 import java.io.*;
@@ -97,6 +98,9 @@ public class ClientManager {
     } catch (IOException e) {
       System.out.println("done");
     }
+
+    Platform.exit();
+    System.exit(0);
   }
 
   // Getters And Setters:
