@@ -69,7 +69,8 @@ public class GameList {
     public synchronized static String printLobbies(HashMap<Integer, Lobby> lobbyList) {
         String s = "";
         for (int i = 0; i < lobbyList.size(); i++) {
-            s = s + " " + lobbyList.get(i).getLobbyName();
+            int j = i + 1;
+            s = s + j + ". " + lobbyList.get(i).getLobbyName() + " ";
         }
         return s;
     }

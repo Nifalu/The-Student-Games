@@ -157,6 +157,8 @@ public class ServerReceive implements Runnable {
           } else if (client.user.getLobby().getLobbyStatus() == 69) {
             sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to choose another lobby.");
           }
+        } else {
+          sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You are already ready.");
         }
         break;
 
