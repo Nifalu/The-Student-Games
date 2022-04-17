@@ -5,8 +5,6 @@ import utility.IO.CommandsToClient;
 import utility.IO.ReceiveFromProtocol;
 import utility.IO.SendToClient;
 
-import java.util.HashMap;
-
 /**
  * this class handles everything related to creating andS joining a lobby.
  */
@@ -21,7 +19,6 @@ public class CreateLobbyHelper {
 
     /**
      * add createLobby
-     *
      * @param clienthandler Server.ClientHandler
      */
     public CreateLobbyHelper(Server.ClientHandler clienthandler) {
@@ -51,16 +48,14 @@ public class CreateLobbyHelper {
             connectLobby(answer2);
         }
 
-        sendToClient.send(clienthandler, CommandsToClient.PRINT, "what's the number of the lobby which you " +
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, "What's the number of the lobby which you " +
                 "would like to choose? ");
-
         String answer = receiveFromClient.receive();
         changeLobby(answer);
     }
 
     /**
      * checks if a lobby exists.
-     *
      * @param number The number of the lobby
      * @return boolean true (Lobby already exists) or false (lobby doesn't exist yet)
      */
@@ -76,7 +71,6 @@ public class CreateLobbyHelper {
 
     /**
      * changes the lobby of a user and checks if the lobby exists.
-     *
      * @param number The number of the new Lobby
      */
     public synchronized void changeLobby(String number) {
@@ -95,7 +89,6 @@ public class CreateLobbyHelper {
 
     /**
      * connects puts a newly created lobby into the lobbyList.
-     *
      * @param name name of the lobby
      */
     public synchronized void connectLobby(String name) {

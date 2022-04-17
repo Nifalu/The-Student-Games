@@ -27,6 +27,7 @@ public class Game implements Runnable{
     boolean quizAnsweredCorrect;
     boolean quizAnsweredWrong;
     boolean quizOngoing;
+    boolean cheated;
     public User userToAnswerQuiz;
     public String correctAnswer;
     HighScore highScoreGame;
@@ -69,6 +70,7 @@ public class Game implements Runnable{
 
                         //sends the current users turn and the diced number to PlayingFields
                         changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
+                        cheated = false;
 
                         //checks if a player has ended the game and adds him to the high score
                         if (playersPlaying.get(i).getPlayingField() > 90) {
@@ -113,10 +115,10 @@ public class Game implements Runnable{
                 break;
             } else if (rolledSpecialDice) {
                 dice = Dice.specialDice();
+                break;
             } else if (i == time - 1) {
                 user.setNotActivelyRollingTheDice();
-            }
-            else {
+            } else {
                 try {
                     Thread.sleep(1);
                 } catch (Exception e) {
@@ -127,7 +129,11 @@ public class Game implements Runnable{
         user.setRolledDice(true);
         rolledDice = false;
         rolledSpecialDice = false;
-        lobbyBroadcastToPlayer(user.getUsername() + " rolled " + dice);
+        if (!cheated) {
+            lobbyBroadcastToPlayer(user.getUsername() + " rolled " + dice);
+        } else {
+            dice = 0;
+        }
         return dice;
     }
 
@@ -161,7 +167,8 @@ public class Game implements Runnable{
     public void cheat(String user, int number) {
         if (!userToRollDice.getRolledDice()) {
             if (userToRollDice.getUsername().equals(user)) {
-                lobbyBroadcastToPlayer(userToRollDice.getUsername() + " has rich parents.");
+                cheated = true;
+                lobbyBroadcastToPlayer(userToRollDice.getUsername() + " has rich parents and moved to: " + number);
                 changePosition(userToRollDice, number - userToRollDice.getPlayingField());
                 rolledDice = true;
             }
@@ -207,7 +214,7 @@ public class Game implements Runnable{
 
         //checks if the new position is already occupied and switches places if necessary.
         for (int i = 0; i < playersPlaying.size(); i++) {
-            if (playersPlaying.get(i).getPlayingField() == newPosition) {
+            if (playersPlaying.get(i).getPlayingField() == newPosition && playersPlaying.get(i).getPlayingField() != user.getPlayingField()) {
                 playersPlaying.get(i).setPlayingField(currentPosition);
                 lobbyBroadcastToPlayer(user.getUsername() + " pushed back " + playersPlaying.get(i).getUsername() + " to " + currentPosition);
             }
@@ -215,12 +222,14 @@ public class Game implements Runnable{
 
         //puts the player to the new position
         user.setPlayingField(newPosition);
-        if (newPosition <= 90) {
-            lobbyBroadcastToPlayer( user.getUsername() + " moved from: " + currentPosition + " to " + newPosition);
-        } else {
-            lobbyBroadcastToPlayer( user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
+        if (!cheated) {
+            if (newPosition <= 90) {
+                lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to " + newPosition);
+                checkField(user, newPosition);
+            } else {
+                lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
+            }
         }
-        checkField(user, newPosition);
     }
 
     /**
@@ -281,7 +290,7 @@ public class Game implements Runnable{
                     changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]));
                     quizAnsweredCorrect = false;
                     break;
-                } else if (quizAnsweredWrong || i == 14999){
+                } else if (quizAnsweredWrong || i == maxTimeToAnswerQuiz - 1){
                     quizAnsweredWrong = false;
                     lobbyBroadcastToPlayer(user.getUsername() + "'s answer is wrong.");
                     if (user.isFirstTime()) {
@@ -293,7 +302,7 @@ public class Game implements Runnable{
                     break;
                 } else {
                     try {
-                        wait(1);
+                        Thread.sleep(1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

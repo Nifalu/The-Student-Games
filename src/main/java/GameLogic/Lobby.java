@@ -52,10 +52,12 @@ public class Lobby {
         HashMap<Integer, User> usersInLobby = new HashMap<>();
         int counter = 0;
         for (int i = 0; i < GameList.getUserlist().size(); i++) {
-            if (GameList.getUserlist().get(i).getLobby().equals(this)) {
-                usersInLobby.put(counter, GameList.getUserlist().get(i));
-                counter++;
-            }
+            try {
+                if (GameList.getUserlist().get(i).getLobby().equals(this)) {
+                    usersInLobby.put(counter, GameList.getUserlist().get(i));
+                    counter++;
+                }
+            } catch (Exception e) { }
         }
         return usersInLobby;
     }
@@ -109,10 +111,10 @@ public class Lobby {
             clientHandler.user.setReadyToPlay(true);
             waitingToPlay(clientHandler);
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are now waiting…");
-            lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
-                    + clientHandler.user.getLobby().getLobbyName());
-            lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
-                    clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
+                lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
+                        + clientHandler.user.getLobby().getLobbyName());
+                lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
+                        clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
         } else {
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "please choose a lobby");
         }
@@ -162,14 +164,19 @@ public class Lobby {
                             gameThread.start();
                         }
                     } else if (getLobbyStatus() == 0) {
-                        if (answer[0].equals("dice")) {
-                            game.setRolledDice(answer[1], 6);
-                        } else if (answer[0].equals("dicedice")) {
-                            game.setRolledDice(answer[1], 4);
-                        } else if (answer[0].equals("quiz")) {
-                            game.quizAnswer(answer[1], answer[2]);
-                        } else if (answer[0].equals("wwcd")) {
-                            game.cheat(answer[1], Integer.parseInt(answer[2]));
+                        switch (answer[0]) {
+                            case "dice":
+                                game.setRolledDice(answer[1], 6);
+                                break;
+                            case "dicedice":
+                                game.setRolledDice(answer[1], 4);
+                                break;
+                            case "quiz":
+                                game.quizAnswer(answer[1], answer[2]);
+                                break;
+                            case "wwcd":
+                                game.cheat(answer[1], Integer.parseInt(answer[2]));
+                                break;
                         }
                     }
                 }
