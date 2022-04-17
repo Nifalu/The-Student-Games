@@ -5,6 +5,10 @@ import utility.IO.CommandsToClient;
 import utility.IO.ReceiveFromProtocol;
 import utility.IO.SendToClient;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 
 /**
@@ -28,7 +32,6 @@ public class Lobby {
      * contains a HashMap of all the users in the Lobby
      */
 
-    // beide werden nacher nicht mehr vorhanden sein.
     HashMap<Integer, Server.User> usersReady = new HashMap<>();
 
     public Lobby(String name) {
@@ -41,7 +44,6 @@ public class Lobby {
 
     // ------------------------ GETTERS -----------------------------------
 
-    // muss man nachher noch löschen
     public HashMap<Integer, User> getUsersReady() {
         return usersReady;
     }
@@ -97,15 +99,11 @@ public class Lobby {
         user.setLobby(null); // basic Lobby
     }
 
-
-    public void waitingToPlay(Server.ClientHandler clientHandler) {
-        if (!usersReady.containsValue(clientHandler) && getLobbyStatus() == 1) {
-            int size = usersReady.size();
-            clientHandler.user.setReadyToPlay(true);
-            usersReady.put(size, clientHandler.user);
-        }
-    }
-
+    /**
+     * Checcks if a user is in a lobby. If it is true it will set the player to the waiting list
+     * and sends a message to all users with its lobby
+     * @param clientHandler User that is ready to play
+     */
     public void readyToPlay(Server.ClientHandler clientHandler) {
         if (getLobbyStatus() == 1) {
             clientHandler.user.setReadyToPlay(true);
@@ -120,6 +118,22 @@ public class Lobby {
         }
     }
 
+    /**
+     * Sets a player to the waiting list of the lobby
+     * @param clientHandler User who is ready to play the game.
+     */
+    public void waitingToPlay(Server.ClientHandler clientHandler) {
+        if (!usersReady.containsValue(clientHandler) && getLobbyStatus() == 1) {
+            int size = usersReady.size();
+            clientHandler.user.setReadyToPlay(true);
+            usersReady.put(size, clientHandler.user);
+        }
+    }
+
+    /**
+     * Removes a user from the waiting list
+     * @param clientHandler User who is not ready to play the game anymore.
+     */
     public void removeFromWaitingList(Server.ClientHandler clientHandler) {
         clientHandler.user.setReadyToPlay(false);
         sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are not waiting anymore.");
@@ -127,6 +141,9 @@ public class Lobby {
         usersReady.values().remove(clientHandler.user);
     }
 
+    /**
+     * Receives all commands from the users of the lobby and sends it to its game.
+     */
     public void startThread() {
         Thread LobbyWaitForMessageThread = new Thread(() -> {
             String msg;
@@ -162,8 +179,13 @@ public class Lobby {
         return (usersReady.size() >= minToStart);
     }
 
+    /**
+     * Sends a message to all lobby members
+     * @param msg Message to be sent to the users
+     */
     public void lobbyBroadcastToPlayer(String msg) {
         sendToClient.lobbyBroadcastDice(getUsersInLobby(), CommandsToClient.PRINT, msg);
     }
+
 }
 

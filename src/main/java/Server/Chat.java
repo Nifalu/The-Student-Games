@@ -15,7 +15,7 @@ public class Chat {
   /**
    * sends a message to one specific client
    * used for chatting between two clients (instead of chatting with everyone)
-   * @param sender String
+   * @param sender ClientHandler
    * @param input String
    */
   public synchronized void whisper(ClientHandler sender, String input) {
@@ -42,14 +42,19 @@ public class Chat {
 
 
   /**
-   * prepares a chat message for broadcast
+   * prepares a chat message for broadcast to all user
    * @param client ClientHandler
-   * @param msg String
+   * @param msg message
    */
   public synchronized void broadcast(ClientHandler client, String msg) {
     sendToClient.serverBroadcast(CommandsToClient.CHAT, client.user.getUsername() + ": " + msg);
   }
 
+  /**
+   * prepares a chat message for broadcast to all user in the same lobby
+   * @param client ClientHandler
+   * @param msg message
+   */
   public synchronized void lobbyBroadcast (ClientHandler client, String msg) {
     sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(),CommandsToClient.CHAT, client.user.getUsername() + " [lobby]: " + msg);
   }

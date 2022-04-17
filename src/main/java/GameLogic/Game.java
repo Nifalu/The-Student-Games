@@ -6,6 +6,9 @@ import utility.IO.CommandsToClient;
 import utility.IO.SendToClient;
 import java.util.HashMap;
 
+/**
+ * This class handles everything related with the game
+ */
 public class Game implements Runnable{
 
     public static HighScore highScore = new HighScore();
@@ -33,12 +36,16 @@ public class Game implements Runnable{
         this.playersPlaying = playersPlaying;
     }
 
-    //Starts the game
+    /**
+     * Starts the game as soon as it has been initiated by its lobby
+     */
     public void run() {
         highScoreGame = new HighScore();
         numPlayers = lobby.getUsersReady().size();
 
-    //Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
+        /**
+         * Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
+         */
         Calendar calendar = new Calendar(2021, 9, 21);
         calendar.getCurrentDate();
         for (int u = 0; u < numPlayers; u++) {
@@ -47,7 +54,9 @@ public class Game implements Runnable{
             lobby.getUsersReady().get(u).setIsPlaying(true);
         }
 
-        //The game will end when the second last player has ended the game
+        /**
+         * The game will run until the second last player has ended the game
+         */
         while (numPlayers - playersEndedGame != 1) {
             for (int i = 0; i < numPlayers; i++) {
                 if (i == 0) {
@@ -83,11 +92,15 @@ public class Game implements Runnable{
             lobbyBroadcastToPlayer("");
             calendar.newRound6();
         }
-        //At the end of the game the lobby will be set to finished
+        //At the end of the game the lobby will be set to be finished
         closeGame();
     }
 
-    //Will send a message to all players of the game and tells them who's turn it is to roll the dice.
+    /**
+     * Will send a message to all players of the game and tells them who's turn it is to roll the dice.
+     * @param user To roll the dice
+     * @return The diced number
+     */
     public int sendAllDice(Server.User user) {
         setUserToRollDice(user);
         user.setRolledDice(false);
@@ -120,6 +133,12 @@ public class Game implements Runnable{
         return dice;
     }
 
+    /**
+     * Receives the command from lobby with the user who sends the command and the number of sides of the cube.
+     * Also checks if the user who sent the command is the player on the move.
+     * @param user That sent the command
+     * @param number Number of sides of the cube (4 or 6)
+     */
     public void setRolledDice(String user, int number) {
         if (!userToRollDice.getRolledDice()) {
             if (userToRollDice.getUsername().equals(user)) {
@@ -136,6 +155,11 @@ public class Game implements Runnable{
         }
     }
 
+    /**
+     * Receives the command from lobby when the correct cheat code has been entered.
+     * @param user User sending the command
+     * @param number Target field
+     */
     public void cheat(String user, int number) {
         if (!userToRollDice.getRolledDice()) {
             if (userToRollDice.getUsername().equals(user)) {
@@ -156,6 +180,12 @@ public class Game implements Runnable{
     public void setUserToAnswerQuiz(Server.User user) {
         userToAnswerQuiz = user;
     }
+
+    /**
+     * Checks if the answer comes from the right person and if it is correct
+     * @param user User sending the answer
+     * @param receivedAnswer Received answer
+     */
     public void quizAnswer(String user, String receivedAnswer) {
         if (quizOngoing) {
             if (userToAnswerQuiz.getUsername().equals(user)) {
@@ -168,6 +198,11 @@ public class Game implements Runnable{
         }
     }
 
+    /**
+     * Changes the position on the field.
+     * @param user User who is playing right now
+     * @param move Number of position to be changed
+     */
     public void changePosition(User user, int move) {
         int currentPosition = user.getPlayingField();
         int newPosition = currentPosition + move;
@@ -190,6 +225,11 @@ public class Game implements Runnable{
         checkField(user, newPosition);
     }
 
+    /**
+     * Checks if the new position of the player to play is a special field
+     * @param user User who is playing right now
+     * @param field Users new position
+     */
     public void checkField(User user, int field) {
         // 2 + 56 ladder up
         String msg = null;
@@ -263,17 +303,25 @@ public class Game implements Runnable{
             }
             quizOngoing = false;
         }
-        // This is the end
+        // This is the end of the game for a player
         else if (field > 90) {
             lobbyBroadcastToPlayer(user.getUsername() + " has successfully graduated from university");
         }
     }
 
+    /**
+     * Sends a message to all players in a game
+     * @param msg Message to be sent.
+     */
     public void lobbyBroadcastToPlayer(String msg) {
         sendToClient.lobbyBroadcastDice(lobby.usersReady,
                 CommandsToClient.PRINT, msg);
     }
 
+    /**
+     * If a player has answered two question wrong then the person will exmatriculated.
+     * @param user Player who has to stop playing the game
+     */
     public void gameOver (Server.User user) {
         lobbyBroadcastToPlayer(user.getUsername() + " has been exmatriculated.");
         user.setPlayingField(-69);
@@ -281,6 +329,10 @@ public class Game implements Runnable{
         playersEndedGame++;
     }
 
+    /**
+     * Takes a player out of the game when she or he loses connection and sends a message to all.
+     * @param user Player who lost connection with the server
+     */
     public void lostConnection (Server.User user) {
         lobbyBroadcastToPlayer(user.getUsername() + " lost connection and left the game.");
         user.setPlayingField(-69);
@@ -289,6 +341,9 @@ public class Game implements Runnable{
         playersEndedGame++;
     }
 
+    /**
+     * Closes the game and sets the lobby's status to finished
+     */
     public void closeGame() {
         lobbyBroadcastToPlayer("Best students of this game: " + highScoreGame.getTop10());
         lobbyBroadcastToPlayer("All time leaders: " + highScore.getTop10());
@@ -302,7 +357,11 @@ public class Game implements Runnable{
         }
         lobby.setLobbyStatusToFinished();
     }
-    
+
+    /**
+     * Resets a player (e.g. number of dices with only 4 sides and number of wrong answered questions).
+     * @param user Player to be reset.
+     */
     public void resetPlayer (Server.User user) {
         user.setFirstTime(true);
         user.resetSpecialDice();

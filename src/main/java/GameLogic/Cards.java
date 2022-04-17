@@ -11,6 +11,10 @@ public class Cards {
     // Der Inhalt sollte an alle versendet werden und die zu Felder die bewegt werden müssen (move),
     // wird an PlayingFields übergeben.
 
+    /**
+     *
+     * @return a random card from the list and the position to be changed.
+     */
     public static String getCards() {
         String[] playingCards = new String[]{"6 Bonusnote bei A’Campo",
                 "2 Jemand schickt die richtigen Lösungen für die Matheaufgaben dieser Woche in den Chat und du musst sie nicht selbst lösen. Gehe 2 Felder vor.",

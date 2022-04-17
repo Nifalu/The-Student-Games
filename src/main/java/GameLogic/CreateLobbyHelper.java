@@ -18,7 +18,10 @@ public class CreateLobbyHelper {
 
     Server.User user;
 
-    //add createLobby
+    /**
+     * add createLobby
+     * @param clienthandler Server.ClientHandler
+     */
     public CreateLobbyHelper(Server.ClientHandler clienthandler) {
         this.clienthandler = clienthandler;
         this.user = clienthandler.user;
@@ -73,17 +76,6 @@ public class CreateLobbyHelper {
         }
     }
 
-    public void readyToPlay(Server.ClientHandler clienthandler) {
-        if (user.getLobby().getLobbyStatus() == 1) {
-            user.setReadyToPlay(true);
-            user.getLobby().waitingToPlay(clienthandler);
-            sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now waiting…");
-        } else {
-            sendToClient.send(clienthandler, CommandsToClient.PRINT, "please choose a lobby");
-        }
-    }
-
-
     /**
      * checks if a lobby exists.
      * @param number The number of the lobby
@@ -98,6 +90,10 @@ public class CreateLobbyHelper {
         }
     }
 
+    /**
+     * changes the lobby of a user and checks if the lobby exists.
+     * @param number The number of the new Lobby
+     */
     public synchronized void changeLobby(String number) {
         int lobbyNumber = Integer.parseInt(number);
         if (lobbyNumber >= GameList.getLobbyList().size() || lobbyNumber < 0) {
@@ -115,7 +111,6 @@ public class CreateLobbyHelper {
 
     /**
      * connects puts a newly created lobby into the lobbyList.
-     *
      * @param name name of the lobby
      */
     public synchronized void connectLobby(String name) {

@@ -3,12 +3,15 @@ package GameLogic;
 /**
  * The high score is calculated in form of the time taken to reach the bachelor's degree.
  */
-
 public class HighScore {
 
     Node first = null;
 
-    //adds the players name together with his graduations date in a sorted list.
+    /**
+     * Adds the players name together with his graduations date in a sorted list.
+     * @param name Player to be added to the list
+     * @param score The date of graduation
+     */
     void add(String name, int score) {
         Node current = first;
         Node n = new Node(name, score);
@@ -24,7 +27,10 @@ public class HighScore {
         }
     }
 
-    //returns the best 10 players of the game sorted by date of graduation.
+    /**
+     *
+     * @return The best 10 players of the game sorted by date of graduation with their dates
+     */
     public String getTop10() {
         Node n = first;
         int count = 0;

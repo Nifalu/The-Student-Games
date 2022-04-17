@@ -19,20 +19,13 @@ public class GameList {
     public synchronized static HashMap<Integer, Lobby> getLobbyList() {
         return lobbyList;
     }
-    Lobby lobby = new Lobby("standard");
-
-
-    // es gibt keine UserInLobby HashMap mehr, weil jedes User Objekt eine Lobby Variable hat mit zugehöriger
-    // LobbyNumber
-    //public synchronized static HashMap<Server.User, Integer> getUserInLobby() { return userInLobby;}
-    // ist nachher eine Methode
-    //private static final HashMap<Server.User, Integer> userInLobby = new HashMap<>();
+    //Lobby lobby = new Lobby("standard");
 
 
     //macht keinen Sinn aber jetzt sind alle Lists in der GameList Klasse
-    public synchronized static ArrayList<ClientHandler> getActiveClientList() {
-        return ServerManager.getActiveClientList();
-    }
+    //public synchronized static ArrayList<ClientHandler> getActiveClientList() {
+    //    return ServerManager.getActiveClientList();
+    //}
 
     public synchronized static HashMap<Integer, User> getUserlist() {
         return ServerManager.getUserlist();
@@ -40,9 +33,8 @@ public class GameList {
 
     /**
      *
-     * @return return a String of all the open lobbies
+     * @return return a String of all open lobbies
      */
-
     public synchronized static String printUserList() {
         String s = "";
         for (int i = 0; i < getUserlist().size(); i++) {
@@ -51,7 +43,10 @@ public class GameList {
         return s;
     }
 
-
+    /**
+     *
+     * @return return a String of all users in the lobby
+     */
     public synchronized static String printLoungingList() {
         String print = "";
         for (int i = 0; i < getLobbyList().size(); i++) {
@@ -66,6 +61,11 @@ public class GameList {
         return print;
     }
 
+    /**
+     *
+     * @param lobbyList Hashmap with all lobbies
+     * @return a String of all open lobbies
+     */
     public synchronized static String printLobbies(HashMap<Integer, Lobby> lobbyList) {
         String s = "";
         for (int i = 0; i < lobbyList.size(); i++) {
@@ -75,7 +75,7 @@ public class GameList {
     }
 
 
-    /**public synchronized static HashMap<Integer, User> getUsersInLobby(Lobby lobby) {
+    /*public synchronized static HashMap<Integer, User> getUsersInLobby(Lobby lobby) {
         int size = ServerManager.getUserlist().size();
         int counter = 0;
         HashMap<Integer, User> usersInLobby = new HashMap<>();
@@ -86,7 +86,7 @@ public class GameList {
             }
         }
         return usersInLobby;
-    }**/
+    }*/
 
     /**
      *

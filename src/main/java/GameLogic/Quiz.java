@@ -2,9 +2,16 @@ package GameLogic;
 
 import java.util.Random;
 
+/**
+ * Quiz questions with its answer and the number of fields to be moved forward or backward.
+ */
 public class Quiz {
     final static int n = 3;
 
+    /**
+     * List of all quiz questions.
+     * @return A string with the question, answer and number of fields to be moved.
+     */
     public static String quiz() {
         String[][] questionList = new String[n][3];
         questionList[0][0] = "Was ist der Erwartungswert eines Würfels mit sechs Flächen? " +

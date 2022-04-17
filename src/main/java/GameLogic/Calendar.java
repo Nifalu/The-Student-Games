@@ -18,7 +18,9 @@ public class Calendar {
         this.day = day;
     }
 
-    //1 month interval
+    /**
+     * Updates the calendar in an one-month interval
+     */
     public void newRound4() {
         this.month += 1;
         if (this.month > 12) {
@@ -27,7 +29,9 @@ public class Calendar {
         }
     }
 
-    //6 weeks interval
+    /**
+     * Updates the calendar in a 6 weeks interval
+     */
     public void newRound6() {
         if (this.day == 15) {
             this.day = 1;
@@ -45,6 +49,10 @@ public class Calendar {
         }
     }
 
+    /**
+     *
+     * @return current Date
+     */
     public String getCurrentDate() {
         return String.format("%02d", this.day) + "." + String.format("%02d", this.month) + "." + this.year;
     }
