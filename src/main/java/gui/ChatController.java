@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import utility.IO.*;
 
@@ -23,6 +24,7 @@ public class ChatController implements Initializable {
   private static String msg;
   public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
   public static boolean hasJoinedChat = false;
+  boolean writeInGlobalChat = false;
 
   @FXML
   private TextField chatTextField;
@@ -32,6 +34,12 @@ public class ChatController implements Initializable {
 
   @FXML
   private Button quitButton;
+
+  @FXML
+  private ToggleButton globalToggleButton;
+
+  @FXML
+  private ToggleButton lobbyToggleButton;
 
 
     /**
@@ -58,8 +66,13 @@ public class ChatController implements Initializable {
         } else {
             chat.appendText("You cannot whisper nothing!");
         }
-    } else {
+    } else if (writeInGlobalChat) {
         sendToServer.send(CommandsToServer.CHAT, msg);
+    } else if (!writeInGlobalChat) {
+        sendToServer.send(CommandsToServer.LOBBYCHAT, msg);
+    } else {
+        chat.appendText("Please select global or lobby chat.");
+        chat.appendText("\n");
     }
     chatTextField.clear();
   }
@@ -111,10 +124,23 @@ public class ChatController implements Initializable {
       sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
         Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
-        //Platform.exit();
-        //System.exit(0);
       sendToServer.send(CommandsToServer.QUIT, msg);
 
+    }
+
+
+    /**
+     * This method is called when one of the togglebuttons is pressed
+     * The method sets the variable writeInGlobalChat, which is used to determine if
+     * a message is sent in the global chat or the lobba chat
+     * @param actionEvent
+     */
+    public void switchChat(ActionEvent actionEvent) {
+      if (actionEvent.getSource() == globalToggleButton) {
+        writeInGlobalChat = true;
+      } else {
+        writeInGlobalChat = false;
+      }
     }
 }
 
