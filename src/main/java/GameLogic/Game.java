@@ -17,7 +17,7 @@ public class Game implements Runnable{
     final Lobby lobby;
     public HashMap<Integer, Server.User> playersPlaying;
     int numPlayers;
-    int maxTimeToAnswerQuiz = 45000;
+    int maxTimeToAnswerQuiz = 60000;
     int maxTimeToRollDice = 30000;
     int maxTimeWhenInactive = 5000;
     int playersEndedGame = 0;
