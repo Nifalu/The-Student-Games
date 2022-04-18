@@ -37,16 +37,27 @@ public class ServerManager {
     return user;
   }
 
+  /**
+   * Creates the Main Lobby where everyone is in when they connect to the Server or leave a game.
+   */
   public static synchronized void createMainLobby() {
     Lobby lobby = new Lobby("StandardLobby");
     GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
     lobby.setLobbyStatusToStandard();
   }
 
+  /**
+   * returns an arraylist with all actively connected Clients
+   * @return ArrayList<ClientHandler>
+   */
   public synchronized static ArrayList<ClientHandler> getActiveClientList() {
     return activeClientList;
   }
 
+  /**
+   * Returns a Hashmap with all current Users
+   * @return HashMap<Integer, User>
+   */
   public synchronized static HashMap<Integer, User> getUserlist() {
     return userlist;
   }

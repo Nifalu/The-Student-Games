@@ -26,13 +26,24 @@ public class SendToClient {
   }
 
 
-  // Send a message to a group of people ? Lobby?
+  /**
+   * Sends a command and a message to all clients in a specified hashmap
+   * @param map hashmap<Integer, User>
+   * @param cmd commandToClient
+   * @param msg String message
+   */
   public void lobbyBroadcast(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
     for(User user: map.values()) {
       send(user.getClienthandler(),cmd,msg);
     }
   }
 
+  /**
+   * Sends a command and a message to all clients in a specified hashmap
+   * @param map hashmap<Integer, User>
+   * @param cmd commandToClient
+   * @param msg String message
+   */
   public void lobbyBroadcastDice(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
     for(User user : map.values()) {
       send(user.getClienthandler(),cmd,msg);
@@ -81,7 +92,7 @@ public class SendToClient {
 
 
   /**
-   * Sends the Message
+   * Sends the Message to the client
    *
    * @param recipient ClientHandler
    * @param msg       String

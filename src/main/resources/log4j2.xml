@@ -8,24 +8,55 @@
             [%t] %highlight{%-5level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green} %logger{36} - %msg\n"/>
             </Console>
 
-            <!-- Appender that logs in the same file. This File only shows the last/current run. -->
+            <!-- Logs the current Run into a File -->
             <File name="FileLast"
-                  fileName="Logs/GeneralLast.log" immediateFlush="true" append="false">
+                  fileName="Logs/GeneralAll.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
+            <!-- This File contains all Network Traffic-->
             <File name="AllTraffic"
                   fileName="Logs/NetworkAllTraffic.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
+            <!-- This File contains all Network Traffic excluding pings -->
             <File name="TrafficNoPing"
                   fileName="Logs/NetworkAllNoPing.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
-            <!-- Appender that Logs in the same file even after a restart.
-            Lines are overwritten if a certain Filesize is reached-->
+            <!-- This File contains all Server Traffic excluding pings -->
+            <File name="ServerTraffic"
+                  fileName="Logs/ServerTraffic.log" immediateFlush="true" append="false">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+            </File>
+
+            <!-- This File contains all Server Traffic excluding pings -->
+            <File name="ServerTrafficNoPing"
+                  fileName="Logs/ServerTrafficNoPing.log" immediateFlush="true" append="false">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+            </File>
+
+            <!-- This File contains all Client Traffic excluding pings -->
+            <File name="ClientTraffic"
+                  fileName="Logs/ClientTraffic.log" immediateFlush="true" append="false">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+            </File>
+
+            <!-- This File contains all Client Traffic excluding pings -->
+            <File name="ClientTrafficNoPing"
+                  fileName="Logs/ClientTrafficNoPing.log" immediateFlush="true" append="false">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+            </File>
+
+            <!-- This File contains game-state logs -->
+            <File name="Game"
+                  fileName="Logs/Gamelogic.log" immediateFlush="true" append="false">
+                <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
+            </File>
+
+            <!-- This File is not overwritten when the program is reset/restarted -->
             <RollingFile name="FileContinuous"
                          fileName="Logs/GeneralContinuous.log"
                          filePattern="${APP_LOG_ROOT}/appName-%d{yyyy-MM-dd}-%i.log.gz">
@@ -37,21 +68,44 @@
 
         </Appenders>
 
-    <!-- Different Loggers with different Log-Levels -->
+
         <Loggers>
+            <!-- Root Logger, it logs just everything -->
             <Root level="all">
                 <AppenderRef ref="Console" level="warn"/>
-                <AppenderRef ref="FileLast" level="all"/>
+                <AppenderRef ref="FileLast" level="trace"/>
                 <AppenderRef ref="FileContinuous" level="trace"/>
             </Root>
 
-            <Logger name="Traffic" level="all">
-                <AppenderRef ref="AllTraffic" level="all"/>
+            <!-- Traffic Logger to be used to log Server traffic -->
+            <Logger name="ServerTraffic" level="all" additivity="true">
+                <AppenderRef ref="AllTraffic" level="trace"/>
+                <AppenderRef ref="ServerTraffic" level="trace"/>
             </Logger>
 
-            <Logger name="TrafficNoPing" level="all">
-                <AppenderRef ref="TrafficNoPing" level="all"/>
+            <!-- Traffic Logger to be used to log Server traffic but without pings -->
+            <Logger name="ServerTrafficNoPing" level="all" additivity="true">
+                <AppenderRef ref="TrafficNoPing" level="trace"/>
+                <AppenderRef ref="ServerTrafficNoPing" level="trace"/>
             </Logger>
+
+            <!-- Traffic Logger to be used to log Client traffic -->
+            <Logger name="ClientTraffic" level="all" additivity="true">
+                <AppenderRef ref="AllTraffic" level="trace"/>
+                <AppenderRef ref="ClientTraffic" level="trace"/>
+            </Logger>
+
+            <!-- Traffic Logger to be used to log Client traffic but without pings -->
+            <Logger name="ClientTrafficNoPing" level="all" additivity="true">
+                <AppenderRef ref="TrafficNoPing" level="trace"/>
+                <AppenderRef ref="ClientTrafficNoPing" level="trace"/>
+            </Logger>
+
+            <!-- Gamelogic Logger that logs what is happening in the game. -->
+            <Logger name="Game" level="all" additivity="true">
+                <AppenderRef ref="Game" level="trace"/>
+            </Logger>
+
 
         </Loggers>
 

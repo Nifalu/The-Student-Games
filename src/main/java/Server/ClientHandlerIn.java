@@ -16,6 +16,9 @@ public class ClientHandlerIn implements Runnable {
     this.in = in;
   }
 
+  /**
+   * Runs this Thread and starts waiting for incoming messages to give over to the ServerReceive
+   */
   @Override
   public void run() {
     // continuously waits for incoming messages and sends them to ServerReceive for processing

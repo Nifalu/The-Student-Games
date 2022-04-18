@@ -18,6 +18,11 @@ public class GameServer {
   static ServerSocket serverSocket;
   private static final Logger logger = LogManager.getLogger(GameServer.class);
 
+
+  /**
+   * Starts the GameServer on the given Port
+   * @param port int port
+   */
   public static void runGameServer(int port) {
     try {
       serverSocket = new ServerSocket(port);

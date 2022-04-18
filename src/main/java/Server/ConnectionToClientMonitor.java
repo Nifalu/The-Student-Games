@@ -20,6 +20,10 @@ public class ConnectionToClientMonitor implements Runnable {
     this.clientHandler = clientHandler;
   }
 
+
+  /**
+   * starts this thread and starts sending pings and checks for client timeouts.
+   */
   @Override
   public synchronized void run() {
 

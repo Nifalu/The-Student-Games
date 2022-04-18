@@ -1,6 +1,8 @@
 package utility.IO;
 
 import Client.ClientManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
@@ -8,6 +10,9 @@ import java.io.IOException;
  * Sends a message to the Server while also checking if the Command is valid.
  */
 public class SendToServer {
+
+  private static final Logger clientTraffic = LogManager.getLogger("ClientTraffic");
+  private static final Logger clientTrafficNoPing = LogManager.getLogger("ClientTrafficNoPing");
 
 
   /**
@@ -17,6 +22,13 @@ public class SendToServer {
    * @param msg String
    */
   public synchronized void send(CommandsToServer cmd, String msg) {
+
+    if (cmd == CommandsToServer.PING) {
+      clientTraffic.trace(cmd + msg);
+    } else {
+      clientTraffic.trace(cmd + msg);
+      clientTrafficNoPing.trace(cmd + msg);
+    }
 
     switch (cmd) {
 

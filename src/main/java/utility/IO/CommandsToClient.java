@@ -7,27 +7,20 @@ public enum CommandsToClient {
   LOBBY,
 
   /**
-   * Prints out the message on the recipients Console
+   * Prints out the message on the recipients Console.
    */
   PRINT,
 
   /**
    * Sends an initial Ping that starts the Ping-Pong between the Connection Monitors on Server and Clientside.
+   * For more information check "ConnectionToClientMonitor"
    */
   INITIALPING,
 
   /**
-   * Sends Pings and Pongs with Timestamps so the Connection Monitors can figure out when someone has timed out.
+   * Used by the ConnectionMonitors to send Pings and Pongs with timestamps to figure out when someone has timed out.
    */
   PING,
-  CREATELOBBY,
-  PRINTUSERLIST,
-  PRINTLOUNGINGLIST,
-  PRINTOPENLOBBIES,
-  PRINTFINISHEDLOBBIES,
-  PRINTONGOINGLOBBIES,
-  CHANGELOBBY,
-  PRINTLOBBIES,
 
   /**
    * Sends a message to be displayed in the chat.

@@ -6,10 +6,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Exceptions;
 
+/**
+ * Takes commandline parameters and starts the programm.
+ */
 public class Starter {
 
   private static final Logger logger = LogManager.getLogger(Starter.class);
 
+  /**
+   * Starts either the Server or the Client with the given arguments
+   * @param args arguments
+   */
   public static void main(String[] args) {
 
 

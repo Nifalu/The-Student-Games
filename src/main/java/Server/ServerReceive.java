@@ -1,6 +1,5 @@
 package Server;
 
-import GameLogic.CreateLobbyHelper;
 import GameLogic.GameList;
 import GameLogic.HighScore;
 import org.apache.logging.log4j.LogManager;
@@ -21,10 +20,14 @@ public class ServerReceive implements Runnable {
   private final String line;
 
 
+  /**
+   * Processes a new messsage received by the Client
+   * @param client clientHandler that sent the message
+   * @param line message
+   */
   public ServerReceive(ClientHandler client, String line) {
     this.client = client;
     this.line = line;
-    logTraffic.trace("Received message: " + line);
   }
 
   /**
@@ -54,18 +57,19 @@ public class ServerReceive implements Runnable {
       return;
     }
 
-    if (cmd != CommandsToServer.PING) {
-      logTrafficNoPing.trace("Received message: " + line);
+    if (cmd == CommandsToServer.PING) {
+      logTraffic.trace(line);
+    } else {
+      logTrafficNoPing.trace(line);
     }
-
 
     switch (cmd) {
 
-      case ECHO:
+      case ECHO: //returns the message
         sendToClient.send(client, CommandsToClient.PRINT, msg);
         break;
 
-      case PRINT:
+      case PRINT: // prints the message to console
         System.out.println(msg);
         break;
 
@@ -97,43 +101,43 @@ public class ServerReceive implements Runnable {
         client.nameClass.receiveFromClient.setMessage(msg);
         break;
 
-      case CREATELOBBY:
+      case CREATELOBBY: // creates a lobby
         client.lobbyhelper.connectLobby(msg);
         break;
 
-      case LOBBY:
+      case LOBBY:  // speaks to the lobby
         client.lobbyhelper.receiveFromClient.setMessage(msg);
         break;
 
-      case PRINTUSERLIST:
+      case PRINTUSERLIST: // prints the userlist
         client.lobbyhelper.printUserListAndSendToClient();
         break;
 
-      case PRINTLOUNGINGLIST:
+      case PRINTLOUNGINGLIST: // prints the lounginglist
         client.lobbyhelper.printLoungingListAndSendToClient();
         break;
 
-      case PRINTOPENLOBBIES:
+      case PRINTOPENLOBBIES: // prints the open lobbies list
         client.lobbyhelper.printOpenLobbiesAndSendToClient();
         break;
 
-      case PRINTFINISHEDLOBBIES:
+      case PRINTFINISHEDLOBBIES: // prints the finished lobbies list
         client.lobbyhelper.printFinishedLobbiesAndSendToClient();
         break;
 
-      case PRINTONGOINGLOBBIES:
+      case PRINTONGOINGLOBBIES: // prints teh ongoing lobbies list
         client.lobbyhelper.printOnGoingLobbiesAndSendToClient();
         break;
 
-      case PRINTLOBBIES:
+      case PRINTLOBBIES: // prints all lobies list
         client.lobbyhelper.printLobbiesAndSendToClient();
         break;
 
-      case PRINTHIGHSCORE:
+      case PRINTHIGHSCORE: // prints the highscore
         sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT,"All time leaders: " + highScore.getTop10());
         break;
 
-      case CHANGELOBBY:
+      case CHANGELOBBY: // changes the lobby
         try {
           int number = Integer.parseInt(msg.replaceAll("\\s", ""));
           if (number < GameList.getOpenLobbies().size() && number >= 0) {
@@ -157,7 +161,7 @@ public class ServerReceive implements Runnable {
         }
         break;
 
-      case READY:
+      case READY: // sets user status to ready
         if (!client.user.getIsReady()) {
           if (client.user.getLobby().getLobbyStatus() == 1) {
             client.user.getLobby().readyToPlay(client.user.getClienthandler());
@@ -173,7 +177,7 @@ public class ServerReceive implements Runnable {
         }
         break;
 
-      case UNREADY:
+      case UNREADY: // sets user status to not ready
         if (client.user.getIsReady() && client.user.getLobby().getLobbyStatus() == 1) {
           client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
           client.user.setReadyToPlay(false);
@@ -182,7 +186,7 @@ public class ServerReceive implements Runnable {
         }
         break;
 
-      case START:
+      case START: // starts the game
         if (client.user.getLobby().getLobbyStatus() == 1) {
           if (client.user.getIsReady()) {
             if (client.user.getLobby().getIsReadyToStartGame()) {
@@ -198,15 +202,15 @@ public class ServerReceive implements Runnable {
         }
         break;
 
-      case ROLLDICE:
+      case ROLLDICE: // rolls the dice
         client.user.getLobby().receiveFromProtocol.setMessage("dice§" + client.user.getUsername());
         break;
 
-      case DICEDICE:
+      case DICEDICE: // rolls the special dice
         client.user.getLobby().receiveFromProtocol.setMessage("dicedice§" + client.user.getUsername());
         break;
 
-      case WWCD:
+      case WWCD: // moves player to specified position
         try {
           if (!msg.equals("-1")) {
             msg = String.valueOf(Integer.parseInt(msg));
@@ -218,7 +222,7 @@ public class ServerReceive implements Runnable {
                   msg + " is not a number");
         }
 
-      case QUIZ:
+      case QUIZ: // speaks to the quiz
         client.user.getLobby().receiveFromProtocol.setMessage("quiz§" + client.user.getUsername() + "§" + msg);
         break;
 

@@ -125,14 +125,26 @@ public class ClientHandler implements Runnable {
     }
   }
 
+  /**
+   * returns the Outputstream of this ClientHandler
+   * @return BufferedWriter
+   */
   public synchronized BufferedWriter getOut() {
     return out;
   }
 
+  /**
+   * returns the ConnectionToClientMonitor
+   * @return ConnectionToClientMonitor
+   */
   protected ConnectionToClientMonitor getConnectionToClientMonitor() {
     return connectionToClientMonitor;
   }
 
+  /**
+   * Returns true when the ClientHandlerInThread is alive. False if not.
+   * @return boolean
+   */
   public boolean getHasStopped() {
     return clientHandlerInThread.isAlive();
   }
