@@ -43,6 +43,22 @@ public class GameList {
         return s;
     }
 
+    public synchronized static String printUserInLobby (Lobby lobby) {
+        String usersInLobbyString = "";
+        int counter = 0;
+        HashMap<Integer, User> usersInLobby = new HashMap<>();
+        for (int i = 0; i < getUserlist().size(); i++) {
+            if (getUserlist().get(i).getLobby().equals(lobby)) {
+                usersInLobby.put(counter, getUserlist().get(i));
+                counter++;
+            }
+        }
+        for (int i = 0; i < usersInLobby.size(); i++) {
+            usersInLobbyString = usersInLobbyString + usersInLobby.get(i).getUsername() + ", ";
+        }
+        return usersInLobbyString;
+    }
+
     /**
      *
      * @return return a String of all users in the lobby
@@ -50,8 +66,7 @@ public class GameList {
     public synchronized static String printLoungingList() {
         String print = "";
         for (int i = 0; i < getLobbyList().size(); i++) {
-            String s = "";
-            s = getLobbyList().get(i).getLobbyName();
+            String s = getLobbyList().get(i).getLobbyName();
             HashMap<Integer, User> list = getLobbyList().get(i).getUsersInLobby();
             for (int j = 0; j < list.size(); j++) {
                 s = s + " " + list.get(j).getUsername();
@@ -69,7 +84,23 @@ public class GameList {
     public synchronized static String printLobbies(HashMap<Integer, Lobby> lobbyList) {
         String s = "";
         for (int i = 0; i < lobbyList.size(); i++) {
-            s = s + i + ". " + lobbyList.get(i).getLobbyName() + " ";
+            int lobbyStatus = lobbyList.get(i).getLobbyStatus();
+            String lobbyStatusString = "";
+            switch (lobbyStatus) {
+                case 1:
+                    lobbyStatusString  = "open";
+                    break;
+                case 0:
+                    lobbyStatusString = "on going";
+                    break;
+                case -1:
+                    lobbyStatusString = "finished";
+                    break;
+                case 69:
+                    lobbyStatusString = "standard Lobby";
+                    break;
+            }
+            s = s + i + ". " + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  ";
         }
         return s;
     }

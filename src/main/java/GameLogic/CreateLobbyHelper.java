@@ -55,7 +55,7 @@ public class CreateLobbyHelper {
     }
 
     /**
-     * checks if a lobby exists.
+     * Checks if a lobby exists.
      * @param number The number of the lobby
      * @return boolean true (Lobby already exists) or false (lobby doesn't exist yet)
      */
@@ -70,7 +70,7 @@ public class CreateLobbyHelper {
     }
 
     /**
-     * changes the lobby of a user and checks if the lobby exists.
+     * Changes the lobby of a user and checks if the lobby exists.
      * @param number The number of the new Lobby
      */
     public synchronized void changeLobby(String number) {
@@ -88,7 +88,7 @@ public class CreateLobbyHelper {
 
 
     /**
-     * connects puts a newly created lobby into the lobbyList.
+     * Connects puts a newly created lobby into the lobbyList.
      * @param name name of the lobby
      */
     public synchronized void connectLobby(String name) {
@@ -97,28 +97,54 @@ public class CreateLobbyHelper {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have created Lobby " + lobby.getLobbyName());
     }
 
+    /**
+     * Prints a list containing all the users to the client.
+     */
     public synchronized void printUserListAndSendToClient() {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "UserList: " + GameList.printUserList());
     }
 
+    /**
+     * Prints a list with all the lobbies with their status
+     * and the players in the specific lobby and sends it to the client.
+     */
     public synchronized void printLoungingListAndSendToClient() {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLoungingList());
     }
 
+    /**
+     * Prints all the lobbies with the status open.
+     */
     public synchronized void printOpenLobbiesAndSendToClient() {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getOpenLobbies()));
     }
 
+    /**
+     * Prints all the lobbies with the status finished and sends it to the client.
+     */
     public synchronized void printFinishedLobbiesAndSendToClient() {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getFinishedLobbies()));
     }
 
+    /**
+     * Prints all the lobbies with the status ongoing and sends it to the client.
+     */
     public synchronized void printOnGoingLobbiesAndSendToClient() {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getOnGoingLobbies()));
     }
 
+    /**
+     * Prints all the lobbies and indicates their status and sends it to the client.
+     */
     public synchronized void printLobbiesAndSendToClient() {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getLobbyList()));
+    }
+
+    /**
+     * Prints all the players that are in the same lobby as the client.
+     */
+    public synchronized void printPlayersInLobby () {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printUserInLobby(user.getLobby()));
     }
 
 }
