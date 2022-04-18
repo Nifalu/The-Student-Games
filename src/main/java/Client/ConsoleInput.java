@@ -150,6 +150,10 @@ class ConsoleInput implements Runnable {
         sendToServer.send(CommandsToServer.CHANGELOBBY, msg);
         break;
 
+      case "/printPlayersInLobby":
+        sendToServer.send(CommandsToServer.PRINTPLAYERSINLOBBY, "");
+        break;
+
       case "/ready":
         sendToServer.send(CommandsToServer.READY, "");
         break;

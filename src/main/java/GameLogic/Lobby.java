@@ -23,17 +23,18 @@ public class Lobby {
     private final SendToClient sendToClient = new SendToClient();
     public ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
 
-    /**
-     * Int status is -1 if the game is already finished, 0 if the game is ongoing, 1 if the game is open.
-     */
+    // Int status is -1 if the game is already finished, 0 if the game is ongoing, 1 if the game is open.
     private int status;
     final private int lobbyNumber;
-    /**
-     * contains a HashMap of all the users in the Lobby
-     */
+    // contains a HashMap of all the users in the Lobby
 
     HashMap<Integer, Server.User> usersReady = new HashMap<>();
 
+    /**
+     * creates a Lobby object with the given name
+     *
+     * @param name of the lobby
+     */
     public Lobby(String name) {
         this.name = name;
         this.status = 1; // status of lobby is automatically set to open
@@ -44,10 +45,20 @@ public class Lobby {
 
     // ------------------------ GETTERS -----------------------------------
 
+    /**
+     * Creates a HashMap with all the users that are ready.
+     *
+     * @return the HashMap with alle the users that are ready.
+     */
     public HashMap<Integer, User> getUsersReady() {
         return usersReady;
     }
 
+    /**
+     * creates a HashMap with all the users that in that lobby
+     *
+     * @return the HashMap with all the users in the lobby
+     */
     public HashMap<Integer, User> getUsersInLobby() {
         HashMap<Integer, User> usersInLobby = new HashMap<>();
         int counter = 0;
@@ -57,17 +68,32 @@ public class Lobby {
                     usersInLobby.put(counter, GameList.getUserlist().get(i));
                     counter++;
                 }
-            } catch (Exception e) { }
+            } catch (Exception e) {
+                System.out.println("Could not get users in lobby");
+            }
         }
         return usersInLobby;
     }
 
-    public int getLobbyNumber() { return lobbyNumber; }
+    /**
+     * @return the number of the lobby as int.
+     */
+    public int getLobbyNumber() {
+        return lobbyNumber;
+    }
 
+    /**
+     * @return the name of the lobby as String.
+     */
     public String getLobbyName() {
         return name;
     }
 
+    /**
+     * @return the status of the lobby as an int.
+     * 0 for all the ongoing lobbies, 1 for all the open lobbies, -1 for all the finished lobbies
+     * and 69 for the standard lobby.
+     */
     public int getLobbyStatus() {
         return status;
     }
@@ -75,35 +101,59 @@ public class Lobby {
 
     // ----------------------- SETTERS ----------------------------------------
 
+    /**
+     * sets lobby status to open (int 1), but is rarely used due to lobbies automatically being assigned open at the
+     * beginning.
+     */
     public void setLobbyStatusToOpen() {
         status = 1;
     }
 
+    /**
+     * sets lobby status to finished (int -1)
+     */
     public void setLobbyStatusToFinished() {
         status = -1;
     }
 
-    public void setLobbyStatusToOnGoing() { status = 0; }
+    /**
+     * sets lobby status to ongoing (int 0)
+     */
+    public void setLobbyStatusToOnGoing() {
+        status = 0;
+    }
 
-    public void setLobbyStatusToStandard() { status = 69; }
+    /**
+     * sets lobby status to standard (int 69)
+     */
+    public void setLobbyStatusToStandard() {
+        status = 69;
+    }
 
     // --------------------------ANDERE METHODEN-------------------------------
 
     /**
      * adds a user to the open lobby (to the list)
+     *
      * @param user the user which is added to the lobby in the method
-     * */
+     */
     public void addUserToLobby(Server.User user) {
         user.setLobby(this);
     }
 
+    /**
+     * removes a user from a lobby and puts the user into the standard lobby.
+     * Users shouldn't be in no lobby.
+     * @param user that is removed
+     */
     public void removeUserFromLobby(Server.User user) {
-        user.setLobby(null); // basic Lobby
+        user.setLobby(GameList.getLobbyList().get(0)); // basic Lobby
     }
 
     /**
      * Checcks if a user is in a lobby. If it is true it will set the player to the waiting list
      * and sends a message to all users with its lobby
+     *
      * @param clientHandler User that is ready to play
      */
     public void readyToPlay(Server.ClientHandler clientHandler) {
@@ -111,10 +161,10 @@ public class Lobby {
             clientHandler.user.setReadyToPlay(true);
             waitingToPlay(clientHandler);
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are now waiting…");
-                lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
-                        + clientHandler.user.getLobby().getLobbyName());
-                lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
-                        clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
+            lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
+                    + clientHandler.user.getLobby().getLobbyName());
+            lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
+                    clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
         } else {
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "please choose a lobby");
         }
@@ -122,6 +172,7 @@ public class Lobby {
 
     /**
      * Sets a player to the waiting list of the lobby
+     *
      * @param clientHandler User who is ready to play the game.
      */
     public void waitingToPlay(Server.ClientHandler clientHandler) {
@@ -134,6 +185,7 @@ public class Lobby {
 
     /**
      * Removes a user from the waiting list
+     *
      * @param clientHandler User who is not ready to play the game anymore.
      */
     public void removeFromWaitingList(Server.ClientHandler clientHandler) {
@@ -152,7 +204,7 @@ public class Lobby {
         Thread LobbyWaitForMessageThread = new Thread(() -> {
             String msg;
             String[] answer;
-            while(true) {
+            while (true) {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
                 answer = msg.split("§");
                 if (getLobbyStatus() != 69) {
@@ -192,6 +244,7 @@ public class Lobby {
 
     /**
      * Sends a message to all lobby members
+     *
      * @param msg Message to be sent to the users
      */
     public void lobbyBroadcastToPlayer(String msg) {

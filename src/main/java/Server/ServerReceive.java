@@ -206,6 +206,10 @@ public class ServerReceive implements Runnable {
         client.user.getLobby().receiveFromProtocol.setMessage("dice§" + client.user.getUsername());
         break;
 
+      case PRINTPLAYERSINLOBBY:
+        client.lobbyhelper.printPlayersInLobby();
+        break;
+
       case DICEDICE: // rolls the special dice
         client.user.getLobby().receiveFromProtocol.setMessage("dicedice§" + client.user.getUsername());
         break;

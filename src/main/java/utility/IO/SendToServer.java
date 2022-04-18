@@ -102,6 +102,10 @@ public class SendToServer {
         sendTo("PRINTONGOINGLOBBIES--");
         break;
 
+      case PRINTPLAYERSINLOBBY:
+        sendTo("PRINTPLAYERSINLOBBY");
+        break;
+
       case PRINTHIGHSCORE:
         sendTo("PRINTHIGHSCORE--");
         break;

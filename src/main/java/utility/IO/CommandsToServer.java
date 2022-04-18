@@ -130,4 +130,5 @@ public enum CommandsToServer {
    * prints out the highscore
    */
   PRINTHIGHSCORE,
+  PRINTPLAYERSINLOBBY
 }
