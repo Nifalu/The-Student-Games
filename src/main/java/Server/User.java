@@ -118,6 +118,8 @@ public class User {
 
     public void setNotActivelyRollingTheDice() { isNotActivelyRollingTheDice = true; }
 
+    public void setIsActivelyRollingTheDice() { isNotActivelyRollingTheDice = false; }
+
 
     //-------------OTHER METHODS------------------------------
 

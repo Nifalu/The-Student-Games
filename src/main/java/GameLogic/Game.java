@@ -112,9 +112,12 @@ public class Game implements Runnable{
         for (int i = 0; i < time; i++) {
             if (rolledDice) {
                 dice = Dice.dice();
+                user.setIsActivelyRollingTheDice();
                 break;
             } else if (rolledSpecialDice) {
                 dice = Dice.specialDice();
+                lobbyBroadcastToPlayer(userToRollDice.getUsername() + " rolled a special dice and has " + userToRollDice.getSpecialDiceLeft() + " dices left");
+                user.setIsActivelyRollingTheDice();
                 break;
             } else if (i == time - 1) {
                 user.setNotActivelyRollingTheDice();
@@ -150,7 +153,8 @@ public class Game implements Runnable{
                     if (userToRollDice.getSpecialDiceLeft() > 0) {
                         rolledSpecialDice = true;
                         userToRollDice.usedSpecialDice();
-                        lobbyBroadcastToPlayer(userToRollDice.getUsername() + " has " + userToRollDice.getSpecialDiceLeft() + " special dices left");
+                    } else {
+                        sendToClient.send(userToRollDice.getClienthandler(), CommandsToClient.PRINT, "You have no special dices left.");
                     }
                 } else {
                     rolledDice = true;
