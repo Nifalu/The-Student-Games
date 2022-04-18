@@ -57,23 +57,23 @@ public class Exceptions {
 
 
   /**
-   * When there was an error starting the Server
+   * When there was an error starting the server
    * @param e IOException
    * @param port int port
    */
   public static void failedToCreateServer(IOException e, int port) {
     System.out.println("-------------------------------");
-    System.out.println("Failed to create Server ");
+    System.out.println("Failed to create server ");
     System.out.println("Your port might be taken (Port: " + port + " ) . Also check your Network connection and settings");
     System.out.println("-------------------------------");
   }
 
   /**
-   * When there was an error connecting to the Server
+   * When there was an error connecting to the server
    */
   public static void failedToConnectClientHandler() {
     System.out.println("-------------------------------");
-    System.out.println("An Error occured when trying to connect to a new Client");
+    System.out.println("An Error occured when trying to connect to a new client");
     System.out.println("-------------------------------");
   }
 }

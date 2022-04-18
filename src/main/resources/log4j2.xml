@@ -26,25 +26,25 @@
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
-            <!-- This File contains all Server Traffic excluding pings -->
+            <!-- This File contains all server Traffic excluding pings -->
             <File name="ServerTraffic"
                   fileName="Logs/ServerTraffic.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
-            <!-- This File contains all Server Traffic excluding pings -->
+            <!-- This File contains all server Traffic excluding pings -->
             <File name="ServerTrafficNoPing"
                   fileName="Logs/ServerTrafficNoPing.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
-            <!-- This File contains all Client Traffic excluding pings -->
+            <!-- This File contains all client Traffic excluding pings -->
             <File name="ClientTraffic"
                   fileName="Logs/ClientTraffic.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
-            <!-- This File contains all Client Traffic excluding pings -->
+            <!-- This File contains all client Traffic excluding pings -->
             <File name="ClientTrafficNoPing"
                   fileName="Logs/ClientTrafficNoPing.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
@@ -77,25 +77,25 @@
                 <AppenderRef ref="FileContinuous" level="trace"/>
             </Root>
 
-            <!-- Traffic Logger to be used to log Server traffic -->
+            <!-- Traffic Logger to be used to log server traffic -->
             <Logger name="ServerTraffic" level="all" additivity="true">
                 <AppenderRef ref="AllTraffic" level="trace"/>
                 <AppenderRef ref="ServerTraffic" level="trace"/>
             </Logger>
 
-            <!-- Traffic Logger to be used to log Server traffic but without pings -->
+            <!-- Traffic Logger to be used to log server traffic but without pings -->
             <Logger name="ServerTrafficNoPing" level="all" additivity="true">
                 <AppenderRef ref="TrafficNoPing" level="trace"/>
                 <AppenderRef ref="ServerTrafficNoPing" level="trace"/>
             </Logger>
 
-            <!-- Traffic Logger to be used to log Client traffic -->
+            <!-- Traffic Logger to be used to log client traffic -->
             <Logger name="ClientTraffic" level="all" additivity="true">
                 <AppenderRef ref="AllTraffic" level="trace"/>
                 <AppenderRef ref="ClientTraffic" level="trace"/>
             </Logger>
 
-            <!-- Traffic Logger to be used to log Client traffic but without pings -->
+            <!-- Traffic Logger to be used to log client traffic but without pings -->
             <Logger name="ClientTrafficNoPing" level="all" additivity="true">
                 <AppenderRef ref="TrafficNoPing" level="trace"/>
                 <AppenderRef ref="ClientTrafficNoPing" level="trace"/>

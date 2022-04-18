@@ -11,9 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import utility.IO.CommandsToServer;
-import utility.IO.ReceiveFromProtocol;
-import utility.IO.SendToServer;
+import utility.io.CommandsToServer;
+import utility.io.ReceiveFromProtocol;
+import utility.io.SendToServer;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -54,7 +54,7 @@ public class StartController implements Initializable {
 
 
     /**
-     * This method reads the text from textInput and sends it to the Server
+     * This method reads the text from textInput and sends it to the server
      * @param actionEvent
      */
     public void sendMsg(ActionEvent actionEvent) {

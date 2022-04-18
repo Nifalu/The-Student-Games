@@ -28,7 +28,7 @@ javafx {
 
 group 'district-9'
 version 'v1'
-mainClassName = 'Starter.Starter'
+mainClassName = 'starter.starter'
 
 java {
     toolchain {
