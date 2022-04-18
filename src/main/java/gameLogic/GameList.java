@@ -64,10 +64,10 @@ public class GameList {
     public synchronized static String printLoungingList() {
         String print = "";
         for (int i = 0; i < getLobbyList().size(); i++) {
-            String s = getLobbyList().get(i).getLobbyName();
+            String s = getLobbyList().get(i).getLobbyName() + ":";
             HashMap<Integer, User> list = getLobbyList().get(i).getUsersInLobby();
             for (int j = 0; j < list.size(); j++) {
-                s = s + " " + list.get(j).getUsername();
+                s = s + " " + list.get(j).getUsername() + ", ";
             }
             print = print + " " + s;
         }
