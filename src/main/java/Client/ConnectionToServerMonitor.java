@@ -17,6 +17,10 @@ public class ConnectionToServerMonitor implements Runnable {
 
   private final SendToServer sendToServer = new SendToServer();
 
+  /**
+   * Waits for the intial Ping to be received. When no Ping is received for a given amount of time, the client disconnects.
+   * Then timeouts when the current tine and the timestamp on the last received Pong are too big.
+   */
   @Override
   public synchronized void run() {
     try {

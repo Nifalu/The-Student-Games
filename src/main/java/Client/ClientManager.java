@@ -103,7 +103,9 @@ public class ClientManager {
     System.exit(0);
   }
 
-  // Getters And Setters:
+  /**
+   * @return the output stream
+   */
   public static BufferedWriter getOut() {
     return out;
   }

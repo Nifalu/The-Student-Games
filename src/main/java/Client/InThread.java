@@ -15,6 +15,9 @@ public class InThread implements Runnable {
     this.in = in;
   }
 
+  /**
+   * Starts the thread and waits for incoming messages.
+   */
   @Override
   public synchronized void run() {
     String line;
@@ -40,7 +43,9 @@ public class InThread implements Runnable {
     }
   }
 
-  // forces this thread to end.
+  /**
+   * Forces this thread to end.
+   */
   public void requestStop() {
     stop = true;
   }

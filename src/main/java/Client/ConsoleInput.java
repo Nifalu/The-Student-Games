@@ -16,6 +16,9 @@ class ConsoleInput implements Runnable {
   private volatile boolean stop = false;
   private final SendToServer sendToServer = new SendToServer();
 
+  /**
+   * Buffered reader reads in all the console inputs while boolean stop equals false.
+   */
   @Override
   public synchronized void run() {
     try {
@@ -39,7 +42,10 @@ class ConsoleInput implements Runnable {
     }
   }
 
-  // transforms the given message to the protocol format
+  /**
+   * transform the given message to the protocol format
+   * @param line the line of code that is going to be sent
+   */
   public void send(String line) {
     String[] input;
     String msg;
@@ -188,7 +194,9 @@ class ConsoleInput implements Runnable {
     }
   }
 
-  // requests to stop the thread.
+  /**
+   * Requests to stop the thread.
+   */
   public void requestStop() {
     stop = true;
   }
