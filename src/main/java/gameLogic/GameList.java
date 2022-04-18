@@ -19,12 +19,6 @@ public class GameList {
     }
     //Lobby lobby = new Lobby("standard");
 
-
-    //macht keinen Sinn aber jetzt sind alle Lists in der GameList Klasse
-    //public synchronized static ArrayList<ClientHandler> getActiveClientList() {
-    //    return ServerManager.getActiveClientList();
-    //}
-
     public synchronized static HashMap<Integer, User> getUserlist() {
         return ServerManager.getUserlist();
     }

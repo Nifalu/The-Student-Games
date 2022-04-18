@@ -32,6 +32,7 @@ public class ServerManager {
     // new user is added
     User user = new User(clientHandler, ip, username, userlist.size());
     userlist.put(userlist.size(), user);
+    user.setUserListNumber(userlist.size());
     activeClientList.add(clientHandler);
     return user;
   }

@@ -102,9 +102,8 @@ public class ClientHandler implements Runnable {
     String tmp_name = user.getUsername();
     System.out.println(user.getUsername() + " from district " + user.getDistrict() + " has left");
     ServerManager.getActiveClientList().remove(this);
-    ServerManager.getUserlist().remove(user.getId(), user);
+    ServerManager.getUserlist().remove(user.getUserListNumber(), user);
     sendToClient.serverBroadcast(CommandsToClient.PRINT, user.getUsername() + " from district " + user.getDistrict() + " has left");
-
     // close thread
     if (connectionMonitor.isAlive()) {
       connectionToClientMonitor.requestStop();

@@ -24,6 +24,7 @@ public class User {
     private int specialDiceLeft = 3;
     private boolean isPlaying;
     private boolean isNotActivelyRollingTheDice;
+    private int userListNumber;
 
     public User(ClientHandler clientHandler, InetAddress ip, String username, int id) {
         this.clienthandler = clientHandler;
@@ -83,6 +84,8 @@ public class User {
 
     public boolean getIsNotActivelyRollingTheDice() { return isNotActivelyRollingTheDice; }
 
+    public void setUserListNumber(int userListNumber) { this.userListNumber = userListNumber; }
+
     // ----- SETTERS -----
     public synchronized void setUsername(String username) {
         this.username = username;
@@ -119,6 +122,8 @@ public class User {
     public void setNotActivelyRollingTheDice() { isNotActivelyRollingTheDice = true; }
 
     public void setIsActivelyRollingTheDice() { isNotActivelyRollingTheDice = false; }
+
+    public int getUserListNumber() { return userListNumber; }
 
 
     //-------------OTHER METHODS------------------------------

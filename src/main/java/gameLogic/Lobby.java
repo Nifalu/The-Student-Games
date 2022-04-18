@@ -1,5 +1,6 @@
 package gameLogic;
 
+import client.ClientManager;
 import server.User;
 import utility.io.CommandsToClient;
 import utility.io.ReceiveFromProtocol;
@@ -65,7 +66,7 @@ public class Lobby {
                     counter++;
                 }
             } catch (Exception e) {
-                System.out.println("Could not get users in lobby");
+                System.out.println("Could not get user in lobby");
             }
         }
         return usersInLobby;
