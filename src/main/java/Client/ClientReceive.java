@@ -12,6 +12,9 @@ public class ClientReceive implements Runnable{
 
   String line;
 
+  /**
+   * receives an incoming message
+   */
   ClientReceive(String line) {
     this.line = line;
   }

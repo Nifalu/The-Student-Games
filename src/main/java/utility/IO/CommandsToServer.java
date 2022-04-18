@@ -1,5 +1,8 @@
 package utility.IO;
 
+/**
+ * contains all the commands for the server
+ */
 public enum CommandsToServer {
   /**
    * Tells the Server to return the message.

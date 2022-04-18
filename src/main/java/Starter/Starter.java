@@ -66,6 +66,11 @@ public class Starter {
     }
   }
 
+  /**
+   * checks if the given port (string) is a valid port number (int) and returns true/false
+   * @param value port String
+   * @return boolean
+   */
   private static boolean isPortAllowed(String value) {
     try {
       int portValue = Integer.parseInt(value);

@@ -60,6 +60,9 @@ public class ConnectionToClientMonitor implements Runnable {
     this.lastReceivedPing = Long.parseLong(pingpong[1]);
   }
 
+  /**
+   * to let this thread finish and stop
+   */
   public void requestStop() {
     stop = true;
   }

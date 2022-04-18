@@ -1,5 +1,8 @@
 package utility.IO;
 
+/**
+ * contains all commands for the client
+ */
 public enum CommandsToClient {
   /**
    * used to communicate with the Lobby
