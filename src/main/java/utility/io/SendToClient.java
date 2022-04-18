@@ -38,19 +38,6 @@ public class SendToClient {
   }
 
   /**
-   * Sends a command and a message to all clients in a specified hashmap
-   * @param map hashmap<Integer, User>
-   * @param cmd commandToClient
-   * @param msg String message
-   */
-  public void lobbyBroadcastDice(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
-    for(User user : map.values()) {
-      send(user.getClienthandler(),cmd,msg);
-    }
-  }
-
-
-  /**
    * Validates the given Message and sends it to the recipient.
    *
    * @param recipient ClientHandler
@@ -102,7 +89,7 @@ public class SendToClient {
       recipient.getOut().newLine();
       recipient.getOut().flush();
     } catch (IOException e) {
-      System.out.println("cannot reach user" + msg);
+      //System.out.println("cannot reach user" + msg);
     }
   }
 }

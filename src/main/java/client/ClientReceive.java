@@ -46,12 +46,16 @@ public class ClientReceive implements Runnable{
         System.out.println(msg);
         break;
 
-      case PING: // Sends a Ping to the Connection Monitor of the client
-        ClientManager.connectionToServerMonitor.newPing(msg);
+      case PING: // Sends a Ping to the Connection Monitor of the Client
+        try {
+          ClientManager.connectionToServerMonitor.newPing(msg);
+        } catch (Exception e) { }
         break;
 
       case INITIALPING: // Sends a first initial Ping to the Connection Monitor
-        ClientManager.connectionToServerMonitor.start(msg);
+        try {
+          ClientManager.connectionToServerMonitor.start(msg);
+        } catch (Exception e){ }
         break;
 
       case CHAT: // Sends a Chat into the console and also to the chat-gui

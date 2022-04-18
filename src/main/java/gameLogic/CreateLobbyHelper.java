@@ -78,7 +78,7 @@ public class CreateLobbyHelper {
             if (checkIfOpenLobbyExists(number)) {
                 int lobbynumber = Integer.parseInt(number);
                 user.setLobby(GameList.getOpenLobbies().get(lobbynumber));
-                sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby : " +
+                sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby: " +
                         GameList.getOpenLobbies().get(lobbynumber).getLobbyName());
             } else {
                 sendToClient.send(clienthandler, CommandsToClient.PRINT, "Whoops that lobby does not exist. ");

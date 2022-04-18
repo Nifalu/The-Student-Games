@@ -59,7 +59,6 @@ public class Game implements Runnable{
         while (numPlayers - playersEndedGame != 1) {
             for (int i = 0; i < numPlayers; i++) {
                 if (i == 0) {
-
                     //Sends at the beginning of each round the current date.
                     lobbyBroadcastToPlayer(calendar.getCurrentDate());
                 }
@@ -325,7 +324,7 @@ public class Game implements Runnable{
      * @param msg Message to be sent.
      */
     public void lobbyBroadcastToPlayer(String msg) {
-        sendToClient.lobbyBroadcastDice(lobby.usersReady,
+        sendToClient.lobbyBroadcast(lobby.usersReady,
                 CommandsToClient.PRINT, msg);
     }
 

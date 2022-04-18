@@ -244,7 +244,7 @@ public class Lobby {
      * @param msg Message to be sent to the users
      */
     public void lobbyBroadcastToPlayer(String msg) {
-        sendToClient.lobbyBroadcastDice(getUsersInLobby(), CommandsToClient.PRINT, msg);
+        sendToClient.lobbyBroadcast(getUsersInLobby(), CommandsToClient.PRINT, msg);
     }
 
 }
