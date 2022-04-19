@@ -27,7 +27,7 @@ public class SendToClient {
 
   /**
    * Sends a command and a message to all clients in a specified hashmap
-   * @param map hashmap<Integer, User>
+   * @param map hashmap
    * @param cmd commandToClient
    * @param msg String message
    */

@@ -45,7 +45,7 @@ public class ChatController implements Initializable {
     /**
      * method reads input from the Textfield and checks, which command to send to the server
      * if there's no command at the start of the message, it will be sent as a chat (which is the main use for this GUI)
-     * @param event
+     * @param event event
      */
 
   @FXML
@@ -91,8 +91,8 @@ public class ChatController implements Initializable {
      * This method runs, when the class is created
      * It first waits until the user has joined the chat and will then wait for incoming chat messages
      * Incoming messages will then be printed to the chat
-     * @param location
-     * @param resources
+     * @param location resource
+     * @param resources resources
      */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -117,7 +117,7 @@ public class ChatController implements Initializable {
 
     /**
      * Method which allows users to quit when pressing the quit button
-     * @param actionEvent
+     * @param actionEvent actionEvent
      */
   @FXML
     public void quitGame(ActionEvent actionEvent) {
@@ -133,14 +133,10 @@ public class ChatController implements Initializable {
      * This method is called when one of the togglebuttons is pressed
      * The method sets the variable writeInGlobalChat, which is used to determine if
      * a message is sent in the global chat or the lobba chat
-     * @param actionEvent
+     * @param actionEvent actionEvent
      */
     public void switchChat(ActionEvent actionEvent) {
-      if (actionEvent.getSource() == globalToggleButton) {
-        writeInGlobalChat = true;
-      } else {
-        writeInGlobalChat = false;
-      }
+      writeInGlobalChat = actionEvent.getSource() == globalToggleButton;
     }
 }
 

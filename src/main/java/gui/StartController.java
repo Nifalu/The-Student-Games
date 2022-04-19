@@ -40,8 +40,8 @@ public class StartController implements Initializable {
 
     /**
      * used to switch to the chat scene when pressing the "go to chat" button
-     * @param event
-     * @throws Exception
+     * @param event event
+     * @throws Exception Exception
      */
     public void switchToChat(ActionEvent event) throws Exception {
         ChatController.hasJoinedChat = true;
@@ -55,7 +55,7 @@ public class StartController implements Initializable {
 
     /**
      * This method reads the text from textInput and sends it to the server
-     * @param actionEvent
+     * @param actionEvent actionEvent
      */
     public void sendMsg(ActionEvent actionEvent) {
         String msg = textInput.getText();
@@ -65,7 +65,7 @@ public class StartController implements Initializable {
 
     /**
      * changes the displayed text on the stage
-     * @param msg
+     * @param msg message
      */
     public void printMsg(String msg) {
         showText.setText(msg);
@@ -77,8 +77,8 @@ public class StartController implements Initializable {
      * It is used to wait on incoming messages
      * This method waits for a change in the field msg, if it's changed it will call the printMsg method, which
      * changes the text on screen
-     * @param location
-     * @param resources
+     * @param location location
+     * @param resources resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {

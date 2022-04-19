@@ -17,8 +17,8 @@ public class Main extends Application {
 
   /**
    * starts the GUI with the scene fxml_start
-   * @param stage
-   * @throws Exception
+   * @param stage Stage
+   * @throws Exception Exception
    */
   @Override
   public void start(Stage stage) throws Exception {

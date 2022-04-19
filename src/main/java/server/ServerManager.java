@@ -48,7 +48,7 @@ public class ServerManager {
 
   /**
    * returns an arraylist with all actively connected Clients
-   * @return ArrayList<ClientHandler>
+   * @return ArrayList
    */
   public synchronized static ArrayList<ClientHandler> getActiveClientList() {
     return activeClientList;
@@ -56,7 +56,7 @@ public class ServerManager {
 
   /**
    * Returns a Hashmap with all current Users
-   * @return HashMap<Integer, User>
+   * @return HashMap
    */
   public synchronized static HashMap<Integer, User> getUserlist() {
     return userlist;
