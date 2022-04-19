@@ -62,7 +62,7 @@ public class Game implements Runnable{
                     //Sends at the beginning of each round the current date.
                     lobbyBroadcastToPlayer(calendar.getCurrentDate());
                 }
-                if (playersPlaying.get(i).getClienthandler().getHasStopped()){
+                if (GameList.getUserlist().containsValue(playersPlaying.get(i))){
                     if (playersPlaying.get(i).getPlayingField() <= 90 &&
                             playersPlaying.get(i).getPlayingField() != -69) {
                         lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
