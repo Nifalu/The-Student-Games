@@ -216,10 +216,12 @@ public class Game implements Runnable{
         int newPosition = currentPosition + move;
 
         //checks if the new position is already occupied and switches places if necessary.
-        for (int i = 0; i < playersPlaying.size(); i++) {
-            if (playersPlaying.get(i).getPlayingField() == newPosition && playersPlaying.get(i).getPlayingField() != user.getPlayingField()) {
-                playersPlaying.get(i).setPlayingField(currentPosition);
-                lobbyBroadcastToPlayer(user.getUsername() + " pushed back " + playersPlaying.get(i).getUsername() + " to " + currentPosition);
+        if (newPosition <= 90) {
+            for (int i = 0; i < playersPlaying.size(); i++) {
+                if (playersPlaying.get(i).getPlayingField() == newPosition && playersPlaying.get(i).getPlayingField() != user.getPlayingField()) {
+                    playersPlaying.get(i).setPlayingField(currentPosition);
+                    lobbyBroadcastToPlayer(user.getUsername() + " pushed back " + playersPlaying.get(i).getUsername() + " to " + currentPosition);
+                }
             }
         }
 
@@ -231,6 +233,10 @@ public class Game implements Runnable{
                 checkField(user, newPosition);
             } else {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
+            }
+        } else {
+            if (newPosition > 90) {
+                lobbyBroadcastToPlayer(user.getUsername() + " has successfully graduated from university");
             }
         }
     }
