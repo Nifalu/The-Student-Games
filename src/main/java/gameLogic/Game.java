@@ -178,13 +178,26 @@ public class Game implements Runnable{
         }
     }
 
+    /**
+     * Receives the user that has to roll the dice
+     * @param user User who has to roll the dice
+     */
     public void setUserToRollDice(server.User user) {
         userToRollDice = user;
     }
 
+    /**
+     * Receives the correct answer from the server and saves is, so it can later check if the answer from the user is correct.
+     * @param answer Correct answer
+     */
     public void setAnswer(String answer) {
         correctAnswer = answer;
     }
+
+    /**
+     * Receives the user that has to answer the quiz
+     * @param user User to answer quiz
+     */
     public void setUserToAnswerQuiz(server.User user) {
         userToAnswerQuiz = user;
     }
