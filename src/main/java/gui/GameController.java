@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * This is the controller for fxml_chat.fxml
+ * This is the controller for game.fxml
  */
 
 public class GameController implements Initializable {
