@@ -35,6 +35,7 @@ public class Name {
     if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
       sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, ("Please enter your desired name below."));
       String desiredName = receiveFromClient.receive();
+      desiredName = desiredName.replaceAll(" ", "_").toLowerCase();
       if (!desiredName.equals(clientHandler.user.getUsername())) {
         changeNameTo("", desiredName);
       }
@@ -55,6 +56,7 @@ public class Name {
    * @param preferredName String
    */
   public void changeNameTo(String currentName, String preferredName) {
+    preferredName = preferredName.replaceAll(" ", "_").toLowerCase();
     if (currentName.equals(preferredName)) {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, ("This is already your name"));
     } else if (nameAlreadyExists(preferredName)) { // Wenn preferredName bereits exisitert:
