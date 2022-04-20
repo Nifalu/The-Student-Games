@@ -290,7 +290,7 @@ public class Game implements Runnable{
             changePosition(user, 68 - field);
         }
         //Cards
-        else if (field == 18 || field == 46 || field == 74) {
+        else if (field == 18 || field == 32 || field == 46 || field == 74) {
             String card = Cards.getCards();
             String[] arr = card.split(" ", 2);
             int positionToChange = Integer.parseInt(arr[0]);
@@ -299,7 +299,7 @@ public class Game implements Runnable{
             changePosition(user, positionToChange);
         }
         // Quiz
-        else if (field == 23 || field == 50) {
+        else if (field == 8 || field == 23 || field == 50 || field == 66) {
             quizOngoing = true;
             String quizQuestion = Quiz.quiz();
             String[] quiz = quizQuestion.split("§");
