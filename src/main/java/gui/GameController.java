@@ -3,7 +3,11 @@ package gui;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -12,6 +16,7 @@ import javafx.stage.Stage;
 import utility.io.*;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,6 +30,13 @@ public class GameController implements Initializable {
     public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
     public static boolean hasJoinedChat = false;
     boolean writeInGlobalChat = false;
+
+    private Stage menuStage;
+    private Scene menuScene;
+    private Parent menuRoot;
+    private Stage highscoreStage;
+    private Scene highscoreScene;
+    private Parent highscoreRoot;
 
     @FXML
     private TextField chatTextField;
@@ -137,6 +149,29 @@ public class GameController implements Initializable {
      */
     public void switchChat(ActionEvent actionEvent) {
         writeInGlobalChat = actionEvent.getSource() == globalToggleButton;
+    }
+
+
+
+    /**
+     * the following methods are used to switch between scenes
+     * they're only temporary
+     */
+    public void switchToMenu(ActionEvent event) throws Exception {
+        GameController.hasJoinedChat = true;
+        menuRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_menu.fxml"));
+        menuStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        menuScene = new Scene(menuRoot);
+        menuStage.setScene(menuScene);
+        menuStage.show();
+    }
+
+    public void switchToHighscore(ActionEvent event) throws Exception {
+        highscoreRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_highscore.fxml"));
+        highscoreStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        highscoreScene = new Scene(highscoreRoot);
+        highscoreStage.setScene(highscoreScene);
+        highscoreStage.show();
     }
 }
 

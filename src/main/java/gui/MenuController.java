@@ -9,27 +9,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HighscoreController {
-    private Stage menuStage;
-    private Scene menuScene;
-    private Parent menuRoot;
+public class MenuController {
     private Stage gameStage;
     private Scene gameScene;
     private Parent gameRoot;
+    private Stage highscoreStage;
+    private Scene highscoreScene;
+    private Parent highscoreRoot;
 
     /**
      * the following methods are used to switch between scenes
      * they're only temporary
      */
-    public void switchToMenu(ActionEvent event) throws Exception {
-        GameController.hasJoinedChat = true;
-        menuRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_menu.fxml"));
-        menuStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        menuScene = new Scene(menuRoot);
-        menuStage.setScene(menuScene);
-        menuStage.show();
-    }
-
     public void switchToGame(ActionEvent event) throws IOException {
         GameController.hasJoinedChat = true;
         gameRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_game.fxml"));
@@ -37,5 +28,13 @@ public class HighscoreController {
         gameScene = new Scene(gameRoot);
         gameStage.setScene(gameScene);
         gameStage.show();
+    }
+
+    public void switchToHighscore(ActionEvent event) throws Exception {
+        highscoreRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_highscore.fxml"));
+        highscoreStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        highscoreScene = new Scene(highscoreRoot);
+        highscoreStage.setScene(highscoreScene);
+        highscoreStage.show();
     }
 }

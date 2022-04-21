@@ -1,6 +1,7 @@
 package client;
 
 import gui.StartController;
+import gui.GameController;
 import utility.io.CommandsToClient;
 
 
@@ -63,12 +64,12 @@ public class ClientReceive implements Runnable{
 
       case CHAT: // Sends a Chat into the console and also to the chat-gui
         System.out.println(msg);
-        gui.GameController.receiveFromProtocol.setMessage(msg); // the chat field in the game receives the message
+        GameController.receiveFromProtocol.setMessage(msg); // the chat field in the game receives the message
         break;
 
       case LOBBYCHAT: // Sends a Chat into the console and also to the chat-gui
         System.out.println(msg);
-        gui.GameController.receiveFromProtocol.setMessage(msg); // the chat field in the game receives the message
+        GameController.receiveFromProtocol.setMessage(msg); // the chat field in the game receives the message
         break;
 
       case PRINTGUISTART:

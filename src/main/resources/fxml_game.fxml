@@ -78,6 +78,8 @@
          <items>
             <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
             <Button mnemonicParsing="false" text="help" />
+            <Button mnemonicParsing="false" onAction="#switchToMenu" text="Go To Menu" />
+            <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
          </items>
       </ToolBar>
    </bottom>
