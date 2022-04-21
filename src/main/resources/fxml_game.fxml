@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1108.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+   <right>
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="732.0" prefWidth="373.0" BorderPane.alignment="CENTER">
+        <items>
+            <VBox maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="730.0" prefWidth="358.0">
+               <children>
+                  <ToolBar>
+                     <items>
+                        <ToggleButton fx:id="globalToggleButton" mnemonicParsing="false" onAction="#switchChat" text="GLOBAL">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="switchGlobalLobby" />
+                           </toggleGroup></ToggleButton>
+                        <ToggleButton fx:id="lobbyToggleButton" mnemonicParsing="false" onAction="#switchChat" text="LOBBY" toggleGroup="$switchGlobalLobby" />
+                     </items>
+                  </ToolBar>
+                <AnchorPane>
+                     <children>
+                        <TextArea fx:id="chat" editable="false" />
+                     </children>
+                  </AnchorPane>
+                  <ToolBar>
+                    <items>
+                        <TextField fx:id="chatTextField" onAction="#sendChatMessage" promptText="type your message here ..." />
+                      <Button mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
+                    </items>
+                  </ToolBar>
+               </children>
+            </VBox>
+            <SplitPane dividerPositions="0.3961218836565097" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <Label layoutX="113.0" layoutY="79.0" text="ANNOUNCER oder so" />
+                     </children>
+                  </AnchorPane>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                    <items>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="102.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                        <Polygon fill="DODGERBLUE" stroke="BLACK" strokeType="INSIDE">
+                          <points>
+                            <Double fx:value="-50.0" />
+                            <Double fx:value="40.0" />
+                            <Double fx:value="50.0" />
+                            <Double fx:value="40.0" />
+                            <Double fx:value="0.0" />
+                            <Double fx:value="-60.0" />
+                          </points>
+                        </Polygon>
+                    </items>
+                  </ToolBar>
+              </items>
+            </SplitPane>
+        </items>
+      </SplitPane>
+   </right>
+   <bottom>
+      <ToolBar prefHeight="8.0" prefWidth="979.0" BorderPane.alignment="CENTER">
+         <items>
+            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
+            <Button mnemonicParsing="false" text="help" />
+         </items>
+      </ToolBar>
+   </bottom>
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </center>
+</BorderPane>

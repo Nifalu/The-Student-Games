@@ -44,8 +44,8 @@ public class StartController implements Initializable {
      * @throws Exception Exception
      */
     public void switchToChat(ActionEvent event) throws Exception {
-        ChatController.hasJoinedChat = true;
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_chat.fxml"));
+        GameController.hasJoinedChat = true;
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_game.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
