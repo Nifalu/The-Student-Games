@@ -158,7 +158,7 @@ public class GameController implements Initializable {
      * they're only temporary
      */
     public void switchToMenu(ActionEvent event) throws Exception {
-        GameController.hasJoinedChat = true;
+        MenuController.hasJoinedChat = true;
         menuRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_menu.fxml"));
         menuStage = (Stage)((Node)event.getSource()).getScene().getWindow();
         menuScene = new Scene(menuRoot);

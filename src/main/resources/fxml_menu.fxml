@@ -1,17 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="739.0" prefWidth="1119.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
    <bottom>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <Button mnemonicParsing="false" onAction="#switchToGame" text="Go To Game" />
             <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
+            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
         </items>
       </ToolBar>
    </bottom>
+   <right>
+      <VBox prefWidth="273.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+              <items>
+                  <ToggleButton fx:id="globalToggleButton" mnemonicParsing="false" onAction="#switchChat" text="GLOBAL">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="switchGlobalLobby" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="lobbyToggleButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#switchChat" selected="true" text="LOBBY" toggleGroup="$switchGlobalLobby" />
+              </items>
+            </ToolBar>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextArea fx:id="chat" editable="false" prefHeight="200.0" prefWidth="485.0" />
+               </children>
+            </AnchorPane>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+              <items>
+                  <TextField fx:id="chatTextField" onAction="#sendChatMessage" prefHeight="31.0" prefWidth="274.0" promptText="type your message here ..." />
+                <Button mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
+              </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </right>
 </BorderPane>

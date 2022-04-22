@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1108.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="1036.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <right>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="732.0" prefWidth="373.0" BorderPane.alignment="CENTER">
         <items>
@@ -30,7 +30,7 @@
                            <toggleGroup>
                               <ToggleGroup fx:id="switchGlobalLobby" />
                            </toggleGroup></ToggleButton>
-                        <ToggleButton fx:id="lobbyToggleButton" mnemonicParsing="false" onAction="#switchChat" text="LOBBY" toggleGroup="$switchGlobalLobby" />
+                        <ToggleButton fx:id="lobbyToggleButton" mnemonicParsing="false" onAction="#switchChat" selected="true" text="LOBBY" toggleGroup="$switchGlobalLobby" />
                      </items>
                   </ToolBar>
                 <AnchorPane>
@@ -40,7 +40,7 @@
                   </AnchorPane>
                   <ToolBar>
                     <items>
-                        <TextField fx:id="chatTextField" onAction="#sendChatMessage" promptText="type your message here ..." />
+                        <TextField fx:id="chatTextField" onAction="#sendChatMessage" prefHeight="31.0" prefWidth="294.0" promptText="type your message here ..." />
                       <Button mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
                     </items>
                   </ToolBar>
@@ -84,7 +84,7 @@
       </ToolBar>
    </bottom>
    <center>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane prefHeight="602.0" prefWidth="609.0" BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
