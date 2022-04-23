@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import utility.io.*;
 
@@ -30,6 +32,8 @@ public class GameController implements Initializable {
     public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
     public static boolean hasJoinedChat = false;
     boolean writeInGlobalChat = false;
+    boolean isReady = false;
+    public static boolean gameHasStarted = false;
 
     private Stage menuStage;
     private Scene menuScene;
@@ -51,7 +55,19 @@ public class GameController implements Initializable {
     private ToggleButton globalToggleButton;
 
     @FXML
-    private ToggleButton lobbyToggleButton;
+    private Polygon fourDice1;
+
+    @FXML
+    private Polygon fourDice2;
+
+    @FXML
+    private Polygon fourDice3;
+
+    @FXML
+    private Button readyButton;
+
+    @FXML
+    private Button startButton;
 
 
     /**
@@ -109,6 +125,7 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // A new Thread is made that waits for incoming messages
+        // The thread will also wait for the game to start and then "remove" the start and ready button
         Thread waitForChatThread = new Thread(() -> {
             while(!hasJoinedChat) {
                 try {
@@ -151,7 +168,71 @@ public class GameController implements Initializable {
         writeInGlobalChat = actionEvent.getSource() == globalToggleButton;
     }
 
+    /**
+     * throws a dicedice when pressing on one of the four-dices
+     * once a dice has been clicked, it will be disabled and turn transparent
+     * @param mouseEvent MouseEvent
+     */
+    public void throwFourDice(MouseEvent mouseEvent) {
+        sendToServer.send(CommandsToServer.DICEDICE, null);
 
+        // checks which fourDices are already disabled and disables one accordingly
+        if (!fourDice3.isDisabled()) {
+            fourDice3.setDisable(true);
+            fourDice3.setOpacity(0.2);
+        } else if (fourDice3.isDisabled() && !fourDice2.isDisabled()) {
+            fourDice2.setDisable(true);
+        } else if (fourDice3.isDisabled() && fourDice2.isDisabled() && !fourDice1.isDisabled()) {
+            fourDice1.setDisable(true);
+        }
+    }
+
+    /**
+     * method throws a regular dice
+     * @param mouseEvent MouseEvent
+     */
+    public void throwRegularDice(MouseEvent mouseEvent) {
+        sendToServer.send(CommandsToServer.ROLLDICE, null);
+    }
+
+    /**
+     * starts the game by pressing on the start button
+     * @param actionEvent ActionEvent
+     */
+    public void startTheGame(ActionEvent actionEvent) {
+        sendToServer.send(CommandsToServer.START, null);
+        gameHasStarted = true;
+        disableStartAndReadyButton();
+    }
+
+    /**
+     * sets the player as ready when pressing the ready button
+     * pressing it again will make the player unready
+     * @param actionEvent ActionEvent
+     */
+    public void setPlayerAsReady(ActionEvent actionEvent) {
+        if (!isReady) {
+            isReady = true;
+            sendToServer.send(CommandsToServer.READY, null);
+            readyButton.setText("UNREADY?");
+        } else {
+            sendToServer.send(CommandsToServer.UNREADY, null);
+            readyButton.setText("READY?");
+            isReady = false;
+        }
+    }
+
+    /**
+     * method is used to "remove" the start and ready button once the game has started
+     * (it doesn't remove the buttons but disables them and sets the opacity to 0)
+     */
+    public void disableStartAndReadyButton() {
+        System.out.println("S ESCH IM DISABLE Züüg DENNE");
+        startButton.setDisable(true);
+        startButton.setOpacity(0);
+        readyButton.setDisable(true);
+        readyButton.setOpacity(0);
+    }
 
     /**
      * the following methods are used to switch between scenes
