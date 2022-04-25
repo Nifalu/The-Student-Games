@@ -1,13 +1,16 @@
 package server;
 
 
-import org.apache.logging.log4j.*;
-import static utility.Exceptions.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import static utility.Exceptions.failedToConnectClientHandler;
+import static utility.Exceptions.failedToCreateServer;
 
 /**
  * GameServer is the Container in which everything takes place.

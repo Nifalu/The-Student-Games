@@ -51,7 +51,7 @@ public class ClientReceive implements Runnable{
         try {
           ClientManager.connectionToServerMonitor.newPing(msg);
         } catch (Exception e) {
-          //needs to be fixed
+          System.out.println("PING Client");
         }
         break;
 
@@ -59,7 +59,7 @@ public class ClientReceive implements Runnable{
         try {
           ClientManager.connectionToServerMonitor.start(msg);
         } catch (Exception e) {
-          //needs to be fixed
+          System.out.println("INITIALPING");
         }
         break;
 

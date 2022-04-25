@@ -1,11 +1,10 @@
 package server;
 
 import gameLogic.GameList;
-import gameLogic.HighScore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utility.io.CommandsToServer;
 import utility.io.CommandsToClient;
+import utility.io.CommandsToServer;
 import utility.io.SendToClient;
 
 public class ServerReceive implements Runnable {
@@ -16,7 +15,6 @@ public class ServerReceive implements Runnable {
 
   private final SendToClient sendToClient = new SendToClient();
   private final ClientHandler client;
-  public static HighScore highScore = new HighScore();
   private final String line;
 
 
@@ -133,8 +131,8 @@ public class ServerReceive implements Runnable {
         client.lobbyhelper.printLobbiesAndSendToClient();
         break;
 
-      case PRINTHIGHSCORE: // prints the highscore
-        sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT,"All time leaders: " + highScore.getTop10());
+      case PRINTHIGHSCORE: // prints the high score
+        client.user.getLobby().getHighScore(client.user.getClienthandler());
         break;
 
       case CHANGELOBBY: // changes the lobby

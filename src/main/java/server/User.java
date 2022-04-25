@@ -84,7 +84,7 @@ public class User {
 
     public boolean getIsNotActivelyRollingTheDice() { return isNotActivelyRollingTheDice; }
 
-    public void setUserListNumber(int userListNumber) { this.userListNumber = userListNumber; }
+    public int getUserListNumber() { return userListNumber; }
 
     // ----- SETTERS -----
     public synchronized void setUsername(String username) {
@@ -123,7 +123,8 @@ public class User {
 
     public void setIsActivelyRollingTheDice() { isNotActivelyRollingTheDice = false; }
 
-    public int getUserListNumber() { return userListNumber; }
+    public void setUserListNumber(int userListNumber) { this.userListNumber = userListNumber; }
+
 
 
     //-------------OTHER METHODS------------------------------

@@ -11,14 +11,14 @@ import java.util.HashMap;
  */
 public class Game implements Runnable{
 
-    public static HighScore highScore = new HighScore();
     private static final SendToClient sendToClient = new SendToClient();
 
     final Lobby lobby;
+    final HighScore highScore;
     public HashMap<Integer, server.User> playersPlaying;
     int numPlayers;
     int maxTimeToAnswerQuiz = 60000;
-    int maxTimeToRollDice = 30000;
+    int maxTimeToRollDice = 15000;
     int maxTimeWhenInactive = 5000;
     int playersEndedGame = 0;
     boolean rolledDice;
@@ -32,9 +32,10 @@ public class Game implements Runnable{
     public String correctAnswer;
     HighScore highScoreGame;
 
-    public Game(Lobby lobby, HashMap<Integer, server.User> playersPlaying) {
+    public Game(Lobby lobby, HashMap<Integer, server.User> playersPlaying, HighScore highScore) {
         this.lobby = lobby;
         this.playersPlaying = playersPlaying;
+        this.highScore = highScore;
     }
 
     /**
@@ -56,7 +57,7 @@ public class Game implements Runnable{
         }
 
         // The game will run until the second last player has ended the game
-        while (numPlayers - playersEndedGame != 1) {
+        while (numPlayers - playersEndedGame > 1) {
             for (int i = 0; i < numPlayers; i++) {
                 if (i == 0) {
                     //Sends at the beginning of each round the current date.
@@ -106,19 +107,22 @@ public class Game implements Runnable{
         int dice = Dice.dice();
         int time = maxTimeToRollDice;
         if (user.getIsNotActivelyRollingTheDice()) {
+            System.out.println(user.getUsername() + " was and is inactive");
+            System.out.println(time);
             time = maxTimeWhenInactive;
         }
         for (int i = 0; i < time; i++) {
             if (rolledDice) {
-                dice = Dice.dice();
                 user.setIsActivelyRollingTheDice();
+                dice = Dice.dice();
                 break;
             } else if (rolledSpecialDice) {
+                user.setIsActivelyRollingTheDice();
                 dice = Dice.specialDice();
                 lobbyBroadcastToPlayer(userToRollDice.getUsername() + " rolled a special dice and has " + userToRollDice.getSpecialDiceLeft() + " dices left");
-                user.setIsActivelyRollingTheDice();
                 break;
             } else if (i == time - 1) {
+                System.out.println(user.getUsername() + " is inactive");
                 user.setNotActivelyRollingTheDice();
             } else {
                 try {

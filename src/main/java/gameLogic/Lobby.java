@@ -1,6 +1,5 @@
 package gameLogic;
 
-import client.ClientManager;
 import server.User;
 import utility.io.CommandsToClient;
 import utility.io.ReceiveFromProtocol;
@@ -19,6 +18,7 @@ public class Lobby {
     Game game;
     private final SendToClient sendToClient = new SendToClient();
     public ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+    public static HighScore highScore = new HighScore();
 
     // Int status is -1 if the game is already finished, 0 if the game is ongoing, 1 if the game is open.
     private int status;
@@ -208,7 +208,7 @@ public class Lobby {
                     if (msg.equals("start") && getLobbyStatus() == 1) {
                         if (usersReady.size() >= minToStart) {
                             setLobbyStatusToOnGoing();
-                            game = new Game(this, usersReady);
+                            game = new Game(this, usersReady, highScore);
                             Thread gameThread = new Thread(game);
                             gameThread.start();
                         }
@@ -235,6 +235,15 @@ public class Lobby {
         LobbyWaitForMessageThread.start(); // start thread
     }
 
+    public void getHighScore(server.ClientHandler clientHandler) {
+        if (highScore.getTop10().length() == 0) {
+            sendToClient.send(clientHandler, CommandsToClient.PRINT, "empty High Score");
+        } else {
+            System.out.println(highScore.getTop10());
+            sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10());
+        }
+    }
+
     public boolean getIsReadyToStartGame() {
         return (usersReady.size() >= minToStart);
     }
@@ -247,6 +256,8 @@ public class Lobby {
     public void lobbyBroadcastToPlayer(String msg) {
         sendToClient.lobbyBroadcast(getUsersInLobby(), CommandsToClient.PRINT, msg);
     }
+
+
 
 }
 
