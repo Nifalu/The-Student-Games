@@ -72,7 +72,7 @@ public class ClientHandler implements Runnable {
       // Creates a ConnectionMonitor Thread that detects when the connection times out.
       this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
       connectionMonitor = new Thread(connectionToClientMonitor);
-      connectionMonitor.setName("connectionMonitor  Thread");
+      connectionMonitor.setName("connectionMonitor Thread");
       connectionMonitor.start();
 
 

@@ -28,7 +28,13 @@ public class ConnectionToClientMonitor implements Runnable {
   public synchronized void run() {
 
     // Sends the initial Ping to start the infinite loop on the client side
-    sendToClient.send(clientHandler, CommandsToClient.INITIALPING, String.valueOf(System.currentTimeMillis()));
+    try {
+      Thread.sleep(100);
+      sendToClient.send(clientHandler, CommandsToClient.INITIALPING, String.valueOf(System.currentTimeMillis()));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
     while (!stop && timedOut < 5000) {
 
       // timeouts a user when the difference between the current SystemTime and the
