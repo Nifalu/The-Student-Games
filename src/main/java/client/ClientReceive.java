@@ -55,7 +55,7 @@ public class ClientReceive implements Runnable{
         try {
           ClientManager.connectionToServerMonitor.start(msg);
         } catch (Exception e) {
-          e.printStackTrace();
+          System.out.println("Our Server is overloaded right now. Please try again.");
         }
         break;
 

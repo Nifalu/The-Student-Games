@@ -178,7 +178,7 @@ public class ServerReceive implements Runnable {
       case UNREADY: // sets user status to not ready
         if (client.user.getIsReady() && client.user.getLobby().getLobbyStatus() == 1) {
           client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
-          client.user.setReadyToPlay(false);
+          //client.user.setReadyToPlay(false);
         } else if (!client.user.getIsReady()) {
           sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You haven't been ready.");
         }

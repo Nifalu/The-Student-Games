@@ -109,8 +109,6 @@ public class Game implements Runnable{
         int dice = Dice.dice();
         int time = maxTimeToRollDice;
         if (user.getIsNotActivelyRollingTheDice()) {
-            System.out.println(user.getUsername() + " was and is inactive");
-            System.out.println(time);
             time = maxTimeWhenInactive;
         }
         for (int i = 0; i < time; i++) {
@@ -124,7 +122,6 @@ public class Game implements Runnable{
                 lobbyBroadcastToPlayer(userToRollDice.getUsername() + " rolled a special dice and has " + userToRollDice.getSpecialDiceLeft() + " dices left");
                 break;
             } else if (i == time - 1) {
-                System.out.println(user.getUsername() + " is inactive");
                 user.setNotActivelyRollingTheDice();
             } else {
                 try {
@@ -380,9 +377,19 @@ public class Game implements Runnable{
      * Closes the game and sets the lobby's status to finished
      */
     public void closeGame() {
-        lobbyBroadcastToPlayer("Best students of this game: " + highScoreGame.getTop10());
-        lobbyBroadcastToPlayer("All time leaders: " + highScore.getTop10());
-        lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
+        if (highScore.getTop10().length() > 0) {
+            lobbyBroadcastToPlayer("All time leaders: " + highScore.getTop10());
+        }
+        if (highScoreGame.getTop10().length() > 0) {
+            lobbyBroadcastToPlayer("Best students of this game: " + highScoreGame.getTop10());
+            if (playersEndedGame == numPlayers) {
+                lobbyBroadcastToPlayer("Congratulations! All of you have successfully graduated.");
+            } else {
+                lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
+            }
+        } else {
+            lobbyBroadcastToPlayer("None of you have graduated.");
+        }
         for (int i = 0; i < numPlayers; i++) {
             User user = lobby.getUsersReady().get(i);
             lobby.removeUserFromLobby(user);

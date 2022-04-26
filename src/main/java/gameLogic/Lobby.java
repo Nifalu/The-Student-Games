@@ -155,7 +155,6 @@ public class Lobby {
      */
     public void readyToPlay(server.ClientHandler clientHandler) {
         if (getLobbyStatus() == 1) {
-            clientHandler.user.setReadyToPlay(true);
             waitingToPlay(clientHandler);
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are now waiting...");
             lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
@@ -186,10 +185,10 @@ public class Lobby {
      * @param clientHandler User who is not ready to play the game anymore.
      */
     public void removeFromWaitingList(server.ClientHandler clientHandler) {
+        usersReady.values().remove(clientHandler.user);
         clientHandler.user.setReadyToPlay(false);
         sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are not waiting anymore.");
         lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is not ready.");
-        usersReady.values().remove(clientHandler.user);
         lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
                 clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
     }
@@ -239,7 +238,6 @@ public class Lobby {
         if (highScore.getTop10().length() == 0) {
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "empty High Score");
         } else {
-            System.out.println(highScore.getTop10());
             sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10());
         }
     }
