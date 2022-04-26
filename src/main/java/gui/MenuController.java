@@ -1,5 +1,6 @@
 package gui;
 
+import gameLogic.GameList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,10 @@ import javafx.stage.Stage;
 import utility.io.CommandsToServer;
 import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,6 +55,23 @@ public class MenuController implements Initializable {
     @FXML
     private ToggleButton lobbyToggleButton;
 
+    @FXML
+    private TitledPane lobbyContainer;
+
+    @FXML
+    private ListView lobbies;
+
+    @FXML
+    private Label chosenLobby;
+
+    //String[] allTheLobbies = lobbyList();
+    //final ObservableList<String> lobbyList = FXCollections.observableArrayList(allTheLobbies);
+
+    String[] test = {"hallo", "eins", "zwei", "drei"};
+    final ObservableList<String> test2 = FXCollections.observableArrayList(test);
+
+
+
 
     /**
      * method reads input from the Textfield and checks, which command to send to the server
@@ -59,8 +81,11 @@ public class MenuController implements Initializable {
 
     @FXML
     void sendChatMessage(ActionEvent event) {
-        String msg = (chatTextField.getText());
+        //lobbies.getItems().addAll(allTheLobbies);
+        //lobbies.getItems().addAll(test);
 
+
+        String msg = (chatTextField.getText());
         if (msg.startsWith("/nick")) {
             System.out.println("momentan msg: " + msg );
             String[] split = msg.split(" ", 2);
@@ -96,6 +121,20 @@ public class MenuController implements Initializable {
         chat.appendText("\n");
     }
 
+    @FXML
+    public String[] lobbyList() {
+        String[] lobbies = new String[GameList.getLobbyList().size()];
+        for (int i = 0; i < GameList.getLobbyList().size(); i++) {
+            lobbies[i] = GameList.getLobbyList().get(i).getLobbyName();
+        }
+        return lobbies;
+    }
+
+    @FXML
+    public void printLoungingList() {
+        GameList.printLoungingList();
+    }
+
     /**
      * This method runs, when the class is created
      * It first waits until the user has joined the chat and will then wait for incoming chat messages
@@ -105,6 +144,12 @@ public class MenuController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ListView lobbies = new ListView();
+        //lobbies.setItems(test);
+
+        lobbies.getItems().add("Item 1");
+        lobbies.getItems().add("Item 2");
+        lobbies.getItems().add("Item 3");
         // A new Thread is made that waits for incoming messages
         Thread waitForChatThread = new Thread(() -> {
             while(!hasJoinedChat) {
