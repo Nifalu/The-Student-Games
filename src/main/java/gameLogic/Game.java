@@ -75,8 +75,9 @@ public class Game implements Runnable{
                         //checks if a player has ended the game and adds him to the high score
                         if (playersPlaying.get(i).getPlayingField() > 90) {
                             playersEndedGame += 1;
-                            sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
-                                    "Graduated in " + calendar.getCurrentDate() + " Ready for Masters?");
+                            lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " graduated " + place() + " in " + calendar.getCurrentDate());
+                            //sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
+                            //        "Graduated " + place() + " in " + calendar.getCurrentDate() + " Ready for Masters?");
                             highScore.add("" + playersPlaying.get(i).getUsername(),
                                     Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
                             highScoreGame.add("" + playersPlaying.get(i).getUsername(),
@@ -399,5 +400,17 @@ public class Game implements Runnable{
         user.setFirstTime(true);
         user.resetSpecialDice();
         user.setReadyToPlay(false);
+    }
+
+    public String place() {
+        String s = "1st";
+        if (playersEndedGame == 2) {
+            s = "2nd";
+        } else if (playersEndedGame == 3) {
+            s = "3rd";
+        } else if (playersEndedGame > 3){
+            s = playersEndedGame + "th";
+        }
+        return s;
     }
 }
