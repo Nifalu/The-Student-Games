@@ -59,7 +59,7 @@ public class MenuController implements Initializable {
     private TitledPane lobbyContainer;
 
     @FXML
-    private ListView lobbies;
+    private ListView<String> lobbies;
 
     @FXML
     private Label chosenLobby;
@@ -144,7 +144,7 @@ public class MenuController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ListView lobbies = new ListView();
+        ListView<String> lobbies = new ListView<>();
         //lobbies.setItems(test);
 
         lobbies.getItems().add("Item 1");
