@@ -21,6 +21,7 @@ public class Game implements Runnable{
     int maxTimeToRollDice = 15000;
     int maxTimeWhenInactive = 5000;
     int playersEndedGame = 0;
+    int dsq = 0;
     boolean rolledDice;
     boolean rolledSpecialDice;
     public User userToRollDice;
@@ -57,7 +58,7 @@ public class Game implements Runnable{
         }
 
         // The game will run until the second last player has ended the game
-        while (numPlayers - playersEndedGame > 1) {
+        while (numPlayers - (playersEndedGame + dsq) > 1) {
             for (int i = 0; i < numPlayers; i++) {
                 if (i == 0) {
                     //Sends at the beginning of each round the current date.
@@ -360,7 +361,7 @@ public class Game implements Runnable{
         lobbyBroadcastToPlayer(user.getUsername() + " has been exmatriculated.");
         user.setPlayingField(-69);
         resetPlayer(user);
-        playersEndedGame++;
+        dsq++;
     }
 
     /**
@@ -372,7 +373,7 @@ public class Game implements Runnable{
         user.setPlayingField(-69);
         resetPlayer(user);
         user.setIsPlaying(false);
-        playersEndedGame++;
+        dsq++;
     }
 
     /**
