@@ -91,7 +91,7 @@ public class GameList {
                     lobbyStatusString = "standard Lobby";
                     break;
             }
-            s = s + i + ". " + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  ";
+            s = s + i + ". " + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  " + "§";
         }
         return s;
     }

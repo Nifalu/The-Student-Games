@@ -30,6 +30,7 @@ public class MenuController implements Initializable {
     public static boolean hasJoinedChat = false;
     public ToggleGroup switchGlobalLobby;
     boolean writeInGlobalChat = false;
+    public static ReceiveFromProtocol lobbyReceiver = new ReceiveFromProtocol();
 
     private Stage gameStage;
     private Scene gameScene;
@@ -123,20 +124,11 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    public String[] lobbyList() {
-        String[] lobbies = new String[GameList.getLobbyList().size()];
-        for (int i = 0; i < GameList.getLobbyList().size(); i++) {
-            lobbies[i] = GameList.getLobbyList().get(i).getLobbyName();
-            System.out.println("name " + GameList.getLobbyList().get(i).getLobbyName());
-            System.out.println("size " + GameList.getLobbyList().size());
-        }
-        return lobbies;
+    public void printLobbies(String[] lobbies) {
+        lobbyListView.getItems().clear();
+        lobbyListView.getItems().addAll(lobbies);
     }
 
-    @FXML
-    public void printLoungingList() {
-        GameList.printLoungingList();
-    }
 
     /**
      * This method runs, when the class is created
@@ -147,7 +139,18 @@ public class MenuController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // hier ein Thread und dann StringSplitted
 
+
+        Thread lobbyListThread = new Thread(() -> {
+            while(true) {
+
+                lobbyList = lobbyReceiver.receive();
+                lobbyList = removeNewline(lobbyList);
+                String[] splittedLobbies = splittedString(lobbyList);
+                Platform.runLater(() -> printLobbies(splittedLobbies));
+            }
+        });
 
 
         // A new Thread is made that waits for incoming messages
@@ -165,6 +168,10 @@ public class MenuController implements Initializable {
                 Platform.runLater(() -> printChatMessage(msg)); // a javafx "thread" that calls the print method
             }
         });
+
+        // starts threads
+        lobbyListThread.setName("GuiWaitForLobbyList"); // set name of thread
+        lobbyListThread.start();
         waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
         waitForChatThread.start(); // start thread
     }
@@ -179,7 +186,6 @@ public class MenuController implements Initializable {
         Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
         sendToServer.send(CommandsToServer.QUIT, msg);
-
     }
 
 
@@ -216,10 +222,18 @@ public class MenuController implements Initializable {
     }
 
     public void refreshLobbies(ActionEvent actionEvent) {
-        sendToServer.send(CommandsToServer.PRINTLOBBIES, null);
+        sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
+    }
+
+    public String[] splittedString(String s) {
+        return s.split("§");
     }
 
     public void printTest(ActionEvent actionEvent) {
         System.out.println(lobbyList);
+    }
+    private static String removeNewline(String str) {
+
+        return str.replace("\n", "").replace("\r", "");
     }
 }

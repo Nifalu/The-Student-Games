@@ -81,7 +81,7 @@ public class ClientReceive implements Runnable{
         break;
 
       case PRINTLOBBIESGUI:
-        MenuController.lobbyList = msg;
+        MenuController.lobbyReceiver.setMessage(msg);
         break;
     }
   }
