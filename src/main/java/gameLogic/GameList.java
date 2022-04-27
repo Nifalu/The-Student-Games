@@ -17,7 +17,6 @@ public class GameList {
     public synchronized static HashMap<Integer, Lobby> getLobbyList() {
         return lobbyList;
     }
-    //Lobby lobby = new Lobby("standard");
 
     public synchronized static HashMap<Integer, User> getUserlist() {
         return ServerManager.getUserlist();

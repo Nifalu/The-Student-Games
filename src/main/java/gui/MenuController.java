@@ -37,6 +37,7 @@ public class MenuController implements Initializable {
     private Stage highscoreStage;
     private Scene highscoreScene;
     private Parent highscoreRoot;
+    public static String lobbyList;
 
 
 
@@ -59,16 +60,19 @@ public class MenuController implements Initializable {
     private TitledPane lobbyContainer;
 
     @FXML
-    private ListView<String> lobbies;
+    private Button createLobbyButton;
 
     @FXML
-    private Label chosenLobby;
+    private Button selectLobbyButton;
 
-    //String[] allTheLobbies = lobbyList();
-    //final ObservableList<String> lobbyList = FXCollections.observableArrayList(allTheLobbies);
+    @FXML
+    private ListView<String> lobbyListView;
 
-    String[] test = {"hallo", "eins", "zwei", "drei"};
-    final ObservableList<String> test2 = FXCollections.observableArrayList(test);
+    @FXML
+    private Button refreshButton;
+
+    @FXML
+    private TextField createLobbyTextField;
 
 
 
@@ -81,9 +85,6 @@ public class MenuController implements Initializable {
 
     @FXML
     void sendChatMessage(ActionEvent event) {
-        //lobbies.getItems().addAll(allTheLobbies);
-        //lobbies.getItems().addAll(test);
-
 
         String msg = (chatTextField.getText());
         if (msg.startsWith("/nick")) {
@@ -126,6 +127,8 @@ public class MenuController implements Initializable {
         String[] lobbies = new String[GameList.getLobbyList().size()];
         for (int i = 0; i < GameList.getLobbyList().size(); i++) {
             lobbies[i] = GameList.getLobbyList().get(i).getLobbyName();
+            System.out.println("name " + GameList.getLobbyList().get(i).getLobbyName());
+            System.out.println("size " + GameList.getLobbyList().size());
         }
         return lobbies;
     }
@@ -144,12 +147,9 @@ public class MenuController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ListView<String> lobbies = new ListView<>();
-        //lobbies.setItems(test);
 
-        lobbies.getItems().add("Item 1");
-        lobbies.getItems().add("Item 2");
-        lobbies.getItems().add("Item 3");
+
+
         // A new Thread is made that waits for incoming messages
         Thread waitForChatThread = new Thread(() -> {
             while(!hasJoinedChat) {
@@ -213,5 +213,13 @@ public class MenuController implements Initializable {
         highscoreScene = new Scene(highscoreRoot);
         highscoreStage.setScene(highscoreScene);
         highscoreStage.show();
+    }
+
+    public void refreshLobbies(ActionEvent actionEvent) {
+        sendToServer.send(CommandsToServer.PRINTLOBBIES, null);
+    }
+
+    public void printTest(ActionEvent actionEvent) {
+        System.out.println(lobbyList);
     }
 }

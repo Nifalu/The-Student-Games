@@ -138,6 +138,7 @@ public class CreateLobbyHelper {
      */
     public synchronized void printLobbiesAndSendToClient() {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getLobbyList()));
+        sendToClient.send(clienthandler, CommandsToClient.PRINTLOBBIESGUI, GameList.printLobbies(GameList.getLobbyList()));
     }
 
     /**

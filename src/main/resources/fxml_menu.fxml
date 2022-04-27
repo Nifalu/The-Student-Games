@@ -51,12 +51,17 @@
       </VBox>
    </right>
    <left>
-      <TitledPane fx:id="lobbyContainer" animated="false" prefHeight="419.0" prefWidth="391.0" text="lobbyContainer" BorderPane.alignment="CENTER">
+      <TitledPane fx:id="lobbyContainer" animated="false" prefHeight="542.0" prefWidth="391.0" BorderPane.alignment="CENTER">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="lobbies" layoutX="57.0" layoutY="62.0" prefHeight="302.0" prefWidth="274.0" />
-                  <Label fx:id="chosenLobby" alignment="CENTER" layoutY="26.0" prefHeight="18.0" prefWidth="390.0" text="Label" />
+                  <Button fx:id="selectLobbyButton" layoutX="161.0" layoutY="338.0" mnemonicParsing="false" text="select Lobby" />
+                  <Button fx:id="createLobbyButton" layoutX="176.0" layoutY="457.0" mnemonicParsing="false" text="createLobby" />
+                  <TextField fx:id="createLobbyTextField" layoutX="120.0" layoutY="410.0" />
+                  <Label fx:id="lobbyLabel" layoutX="162.0" layoutY="296.0" text="&quot;current lobby&quot;" />
+                  <Button fx:id="refreshButton" layoutX="313.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshLobbies" text="refresh" />
+                  <ListView fx:id="lobbyListView" layoutX="102.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" />
+                  <Button fx:id="print" layoutX="40.0" layoutY="40.0" mnemonicParsing="false" onAction="#printTest" text="Button" />
                </children>
             </AnchorPane>
         </content>

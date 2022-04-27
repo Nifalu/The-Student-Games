@@ -78,6 +78,11 @@ public class ClientReceive implements Runnable{
       case PRINTGUISTART:
         System.out.println(msg);
         StartController.receiveFromProtocol.setMessage(msg);
+        break;
+
+      case PRINTLOBBIESGUI:
+        MenuController.lobbyList = msg;
+        break;
     }
   }
 }
