@@ -156,7 +156,7 @@ public class Lobby {
     public void readyToPlay(server.ClientHandler clientHandler) {
         if (getLobbyStatus() == 1) {
             waitingToPlay(clientHandler);
-            sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are now waiting...");
+            sendToClient.send(clientHandler, CommandsToClient.PRINTGUIGAMETRACKER, "You are now waiting...");
             lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
                     + clientHandler.user.getLobby().getLobbyName());
             lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +

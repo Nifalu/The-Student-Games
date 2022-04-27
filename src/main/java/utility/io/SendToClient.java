@@ -72,6 +72,10 @@ public class SendToClient {
       case PRINTGUISTART:
         sendTo(recipient, "PRINTGUISTART--" + msg);
         break;
+
+      case PRINTGUIGAMETRACKER:
+        sendTo(recipient, "PRINTGUIGAMETRACKER--" + msg);
+        break;
     }
   }
 

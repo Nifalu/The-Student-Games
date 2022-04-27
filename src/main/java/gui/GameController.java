@@ -28,12 +28,16 @@ import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
     private final SendToServer sendToServer = new SendToServer();
-    private static String msg;
+    private static String msg; // used to update the chat
     public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+    public static ReceiveFromProtocol receiveFromProtocolGameUpdate = new ReceiveFromProtocol();
     public static boolean hasJoinedChat = false;
     boolean writeInGlobalChat = false;
     boolean isReady = false;
     public static boolean gameHasStarted = false;
+
+    public static String gameMove = "hello!"; // used to update the Game Tracker
+    private static String lastGameMove = "hello!"; // used to compare to gameMove
 
     private Stage menuStage;
     private Scene menuScene;
@@ -68,6 +72,9 @@ public class GameController implements Initializable {
 
     @FXML
     private Button startButton;
+
+    @FXML
+    private TextArea gameTracker;
 
 
     /**
@@ -124,6 +131,8 @@ public class GameController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // THREAD 1 : receive chat messages
         // A new Thread is made that waits for incoming messages
         // The thread will also wait for the game to start and then "remove" the start and ready button
         Thread waitForChatThread = new Thread(() -> {
@@ -140,8 +149,31 @@ public class GameController implements Initializable {
                 Platform.runLater(() -> printChatMessage(msg)); // a javafx "thread" that calls the print method
             }
         });
+
+
+        // THREAD 2 :
+        Thread waitForGameUpdatesThread = new Thread(() -> {
+            while(true) {
+                gameMove = receiveFromProtocolGameUpdate.receive(); // blocks until a message is received
+                Platform.runLater(() -> printGameUpdate(gameMove)); // a javafx "thread" that calls the print method
+            }
+        });
+
+
+        // start threads
         waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
         waitForChatThread.start(); // start thread
+        waitForGameUpdatesThread.setName("GuiWaitForGameUpdates");
+        waitForGameUpdatesThread.start();
+    }
+
+    /**
+     * this method is used to print game updates to the game tracker in the GUI
+     * @param gameMove String
+     */
+    private void printGameUpdate(String gameMove) {
+        gameTracker.appendText(gameMove);
+        gameTracker.appendText(".\n");
     }
 
     /**

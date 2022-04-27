@@ -74,6 +74,12 @@ public class ClientReceive implements Runnable{
       case PRINTGUISTART:
         System.out.println(msg);
         StartController.receiveFromProtocol.setMessage(msg);
+        break;
+
+      case PRINTGUIGAMETRACKER:
+        GameController.receiveFromProtocolGameUpdate.setMessage(msg);
+        System.out.println(msg);
+        break;
     }
   }
 }

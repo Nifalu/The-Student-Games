@@ -347,7 +347,7 @@ public class Game implements Runnable{
      */
     public void lobbyBroadcastToPlayer(String msg) {
         sendToClient.lobbyBroadcast(lobby.usersReady,
-                CommandsToClient.PRINT, msg);
+                CommandsToClient.PRINTGUIGAMETRACKER, msg);
     }
 
     /**

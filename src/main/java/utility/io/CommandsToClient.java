@@ -41,4 +41,10 @@ public enum CommandsToClient {
    */
   PRINTGUISTART,
 
+  /**
+   * used to print out messages to the game tracker in the
+   * Game GUI
+   */
+  PRINTGUIGAMETRACKER,
+
 }
