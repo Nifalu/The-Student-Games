@@ -182,8 +182,10 @@ public class GameController implements Initializable {
             fourDice3.setOpacity(0.2);
         } else if (fourDice3.isDisabled() && !fourDice2.isDisabled()) {
             fourDice2.setDisable(true);
+            fourDice2.setOpacity(0.2);
         } else if (fourDice3.isDisabled() && fourDice2.isDisabled() && !fourDice1.isDisabled()) {
             fourDice1.setDisable(true);
+            fourDice1.setOpacity(0.2);
         }
     }
 
