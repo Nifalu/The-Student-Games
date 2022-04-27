@@ -288,5 +288,21 @@ public class GameController implements Initializable {
         highscoreStage.setScene(highscoreScene);
         highscoreStage.show();
     }
+
+    public void answerQuizA(ActionEvent actionEvent) {
+        sendToServer.send(CommandsToServer.QUIZ, "A");
+    }
+
+    public void answerQuizB(ActionEvent actionEvent) {
+        sendToServer.send(CommandsToServer.QUIZ, "B");
+    }
+
+    public void answerQuizC(ActionEvent actionEvent) {
+        sendToServer.send(CommandsToServer.QUIZ, "C");
+    }
+
+    public void answerQuizD(ActionEvent actionEvent) {
+        sendToServer.send(CommandsToServer.QUIZ, "D");
+    }
 }
 
