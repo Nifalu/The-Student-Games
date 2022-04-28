@@ -181,12 +181,13 @@ public class GameController implements Initializable {
         //playerRed.setTranslateX(starterPaneRed.getTranslateX());
         //playerRed.setTranslateY(starterPaneRed.getTranslateY());
 
-        playerBlue.setTranslateY(525);
-        playerRed.setTranslateY(525);
-        playerRed.setTranslateX(40);
-        playerYellow.setTranslateY(550);
-        playerGreen.setTranslateY(550);
-        playerGreen.setTranslateX(40);
+        playerBlue.setTranslateY(594);
+        playerBlue.setTranslateX(80);
+        playerRed.setTranslateY(594);
+        playerRed.setTranslateX(120);
+        playerYellow.setTranslateY(594);
+        playerYellow.setTranslateX(40);
+        playerGreen.setTranslateY(594);
 
         // creates the Hashmap which saves the row and column of each field
         int counter = 1;

@@ -61,10 +61,10 @@
                   </ToolBar>
                   <ToolBar prefHeight="40.0" prefWidth="200.0">
                     <items>
-                        <Rectangle fx:id="regularDice" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="75.0" onMouseClicked="#throwRegularDice" stroke="BLACK" strokeType="INSIDE" width="77.0" />
-                        <Polygon fx:id="fourDice1" fill="DODGERBLUE" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon fx:id="fourDice2" fill="DODGERBLUE" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon fx:id="fourDice3" fill="DODGERBLUE" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Rectangle fx:id="regularDice" arcHeight="5.0" arcWidth="5.0" fill="#b8caf5" height="75.0" onMouseClicked="#throwRegularDice" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                        <Polygon fx:id="fourDice1" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="fourDice2" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="fourDice3" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
                     </items>
                   </ToolBar>
               </items>
@@ -81,7 +81,6 @@
             <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
             <Button fx:id="readyButton" mnemonicParsing="false" onAction="#setPlayerAsReady" prefHeight="27.0" prefWidth="93.0" text="READY" />
             <Button fx:id="startButton" mnemonicParsing="false" onAction="#startTheGame" prefHeight="0.0" prefWidth="96.0" text="START" />
-            <Button mnemonicParsing="false" text="TEST" />
          </items>
       </ToolBar>
    </bottom>
@@ -121,7 +120,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="90" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="0">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="8" GridPane.rowIndex="0">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="89" />
                      </children>
@@ -164,7 +163,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="82" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="81" />
                      </children>
@@ -184,7 +183,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="73" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="6" GridPane.rowIndex="1">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="74" />
                      </children>
@@ -279,7 +278,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="52" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="7" GridPane.rowIndex="3">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="53" />
                      </children>
@@ -294,7 +293,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="55" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: palegreen palegreen;" GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="56" />
                      </children>
@@ -304,7 +303,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="57" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="58" />
                      </children>
@@ -319,7 +318,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="60" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="4">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="9" GridPane.rowIndex="4">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="50" />
                      </children>
@@ -339,7 +338,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="47" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="5" GridPane.rowIndex="4">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="46" />
                      </children>
@@ -434,7 +433,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="28" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="6" GridPane.rowIndex="6">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="27" />
                      </children>
@@ -454,7 +453,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="24" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="2" GridPane.rowIndex="6">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="23" />
                      </children>
@@ -464,7 +463,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="22" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.rowIndex="6">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="21" />
                      </children>
@@ -504,7 +503,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="17" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="2" GridPane.rowIndex="7">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="18" />
                      </children>
@@ -559,7 +558,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="3" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: palegreen;" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <children>
                         <Label layoutX="16.0" layoutY="19.0" text="2" />
                      </children>
@@ -569,7 +568,7 @@
                         <Label layoutX="16.0" layoutY="19.0" text="1" />
                      </children>
                   </Pane>
-                  <Circle fx:id="playerGreen" fill="#1fff31" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="playerGreen" fill="#61f26b" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                   <Circle fx:id="playerBlue" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                   <Circle fx:id="playerYellow" fill="#e3ff1f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                   <Circle fx:id="playerRed" fill="#ff441f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
