@@ -8,12 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
@@ -57,6 +55,15 @@ public class GameController implements Initializable {
     public static int diceDiceLeft = 3;
 
     public static HashMap<Integer, Integer[]> fields = new HashMap<Integer, Integer[]>();
+
+
+    @FXML
+    private ToolBar testToolBar;
+    @FXML
+    private Pane starterPaneBlue;
+
+    @FXML
+    private Pane starterPaneRed;
 
     @FXML
     private TextField chatTextField;
@@ -115,10 +122,8 @@ public class GameController implements Initializable {
         String msg = (chatTextField.getText());
 
         if (msg.startsWith("/nick")) {
-            System.out.println("momentan msg: " + msg );
             String[] split = msg.split(" ", 2);
             String newName = split[1];
-            System.out.println("neui dengs: " + newName );
             sendToServer.send(CommandsToServer.NICK, newName);
         } else if (msg.startsWith("/winnerwinnerchickendinner")) {
             String[] input = msg.split(" ", 2);
@@ -161,6 +166,27 @@ public class GameController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // sets the player figures to the start-field
+        /*System.out.println("Y: parent center: " + testToolBar.getTranslateY());
+        System.out.println("Y: starterPane parents max " + starterPaneBlue.getBoundsInParent().getMaxY());
+        System.out.println("Y: starterPane translate " + starterPaneBlue.getTranslateY());
+        playerBlue.setTranslateX(starterPaneBlue.getBoundsInParent().getCenterX());
+        playerBlue.setTranslateY(starterPaneBlue.getBoundsInParent().getCenterY());
+        System.out.println("normal translate: " + playerBlue.getTranslateY());
+        System.out.println("normal getCenter: " + playerBlue.getCenterY());
+        System.out.println("parent getCenter: " + playerBlue.getBoundsInParent().getCenterY());
+        playerBlue.setTranslateY(testToolBar.getTranslateY());*/
+
+        //playerRed.setTranslateX(starterPaneRed.getTranslateX());
+        //playerRed.setTranslateY(starterPaneRed.getTranslateY());
+
+        playerBlue.setTranslateY(525);
+        playerRed.setTranslateY(525);
+        playerRed.setTranslateX(40);
+        playerYellow.setTranslateY(550);
+        playerGreen.setTranslateY(550);
+        playerGreen.setTranslateX(40);
 
         // creates the Hashmap which saves the row and column of each field
         int counter = 1;
@@ -216,8 +242,6 @@ public class GameController implements Initializable {
         Thread waitForCharacterMovement = new Thread(() -> {
             while(true) {
                 moveToField = (receiveNewPlayerPosition.receive());
-                System.out.println("s esch im Thread receive player position denne met " + moveToField);
-                System.out.println(moveToField);
                 Platform.runLater(() -> movePlayer(moveToField)); // a javafx "thread" that calls the print method
             }
         });
@@ -348,7 +372,6 @@ public class GameController implements Initializable {
      * (it doesn't remove the buttons but disables them and sets the opacity to 0)
      */
     public void disableStartAndReadyButton() {
-        System.out.println("S ESCH IM DISABLE Züüg DENNE");
         startButton.setDisable(true);
         startButton.setOpacity(0);
         readyButton.setDisable(true);
@@ -409,12 +432,12 @@ public class GameController implements Initializable {
                 if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
                     xPos = node.getBoundsInParent().getCenterX();
                     yPos = node.getBoundsInParent().getCenterY();
+
                     break;
                 }
             }
         }
 
-        // System.out.println("NEUE KOORDINATEN: " + xPos +", " + yPos);
         return new double[]{xPos, yPos};
 
     }
@@ -431,8 +454,9 @@ public class GameController implements Initializable {
 
 
         // moves the player to the new coordinates
-        playerToMove.setTranslateX(newPos[0]);
-        playerToMove.setTranslateY(newPos[1]);
+        playerToMove.setTranslateX(newPos[0] - 25);
+        playerToMove.setTranslateY(newPos[1] - 25);
+
     }
 }
 
