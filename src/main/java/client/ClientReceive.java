@@ -1,5 +1,6 @@
 package client;
 
+import gui.HighscoreController;
 import gui.StartController;
 import gui.GameController;
 import utility.io.CommandsToClient;
@@ -87,6 +88,10 @@ public class ClientReceive implements Runnable{
 
       case PRINTLOBBIESGUI:
         MenuController.lobbyReceiver.setMessage(msg);
+        break;
+
+      case PRINTWINNERSGUI:
+        HighscoreController.winnerReceiver.setMessage(msg);
         break;
     }
   }

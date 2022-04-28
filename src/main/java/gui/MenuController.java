@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 import static java.lang.Thread.sleep;
 
 public class MenuController implements Initializable {
+
     private final SendToServer sendToServer = new SendToServer();
     private static String msg;
     public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
