@@ -46,8 +46,8 @@ public class ClientReceive implements Runnable{
       case PRINT: // prints the msg
         String[] msgs;
         msgs = msg.split("§");
-        for (int i = 0; i < msgs.length; i++) {
-          System.out.println(msgs[i]);
+        for (String s : msgs) {
+          System.out.println(s);
         }
         break;
 
@@ -83,7 +83,6 @@ public class ClientReceive implements Runnable{
       case PRINTGUIGAMETRACKER:
         GameController.receiveFromProtocolGameUpdate.setMessage(msg);
         System.out.println(msg);
-        break;
         break;
 
       case PRINTLOBBIESGUI:
