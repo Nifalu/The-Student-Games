@@ -15,6 +15,7 @@ import utility.io.CommandsToServer;
 import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +25,7 @@ import java.util.ResourceBundle;
  */
 
 public class StartController implements Initializable {
+
     private final SendToServer sendToServer = new SendToServer();
     public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
     String msg;
@@ -33,19 +35,6 @@ public class StartController implements Initializable {
 
     @FXML
     private TextField textInput;
-
-
-    private Stage menuStage;
-    private Scene menuScene;
-    private Parent menuRoot;
-    private Stage gameStage;
-    private Scene gameScene;
-    private Parent gameRoot;
-    private Stage highscoreStage;
-    private Scene highscoreScene;
-    private Parent highscoreRoot;
-
-
 
 
     /**
@@ -93,29 +82,15 @@ public class StartController implements Initializable {
      * the following methods are used to switch between scenes
      * they're only temporary
      */
-    public void switchToMenu(ActionEvent event) throws Exception {
-        MenuController.hasJoinedChat = true;
-        menuRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_menu.fxml"));
-        menuStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        menuScene = new Scene(menuRoot);
-        menuStage.setScene(menuScene);
-        menuStage.show();
+    public void switchToMenu() {
+        Main.displayMenu();
     }
 
-    public void switchToGame(ActionEvent event) throws IOException {
-        GameController.hasJoinedChat = true;
-        gameRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_game.fxml"));
-        gameStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        gameScene = new Scene(gameRoot);
-        gameStage.setScene(gameScene);
-        gameStage.show();
+    public void switchToGame() {
+        Main.displayGame();
     }
 
-    public void switchToHighscore(ActionEvent event) throws Exception {
-        highscoreRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_highscore.fxml"));
-        highscoreStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        highscoreScene = new Scene(highscoreRoot);
-        highscoreStage.setScene(highscoreScene);
-        highscoreStage.show();
+    public void switchToHighscore() {
+        Main.displayHighscore();
     }
 }

@@ -1,6 +1,7 @@
 package gameLogic;
 
 
+import server.ServerManager;
 import server.User;
 import utility.io.CommandsToClient;
 import utility.io.SendToClient;
@@ -33,7 +34,7 @@ public class Game implements Runnable{
     public String correctAnswer;
     HighScore highScoreGame;
 
-    public Game(Lobby lobby, HashMap<Integer, server.User> playersPlaying, HighScore highScore) {
+    public Game(Lobby lobby, HashMap<Integer, User> playersPlaying, HighScore highScore) {
         this.lobby = lobby;
         this.playersPlaying = playersPlaying;
         this.highScore = highScore;
@@ -48,7 +49,6 @@ public class Game implements Runnable{
 
 
         // Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
-
         Calendar calendar = new Calendar(2021, 9, 21);
         calendar.getCurrentDate();
         for (int u = 0; u < numPlayers; u++) {
@@ -64,7 +64,7 @@ public class Game implements Runnable{
                     //Sends at the beginning of each round the current date.
                     lobbyBroadcastToPlayer(calendar.getCurrentDate());
                 }
-                if (GameList.getUserlist().containsValue(playersPlaying.get(i))){
+                if (ServerManager.getActiveClientList().contains(playersPlaying.get(i).getClienthandler())){
                     if (playersPlaying.get(i).getPlayingField() <= 90 &&
                             playersPlaying.get(i).getPlayingField() != -69) {
                         lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
@@ -245,7 +245,6 @@ public class Game implements Runnable{
                 if (playersPlaying.get(i).getPlayingField() == newPosition && playersPlaying.get(i).getPlayingField() != user.getPlayingField()) {
                     playersPlaying.get(i).setPlayingField(currentPosition);
                     lobbyBroadcastToPlayer(user.getUsername() + " pushed back " + playersPlaying.get(i).getUsername() + " to " + currentPosition);
-                    //sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER,  playersPlaying.get(i).characterColor + "--" + currentPosition);
                 }
             }
         }
@@ -259,15 +258,15 @@ public class Game implements Runnable{
                 checkField(user, newPosition);
             } else {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
+                user.setIsPlaying(false);
             }
+            checkField(user, newPosition);
         } else {
             if (newPosition > 90) {
-                lobbyBroadcastToPlayer(user.getUsername() + " has successfully graduated from university");
+                checkField(user, newPosition);
+                user.setIsPlaying(false);
             }
         }
-
-        // sends the new position of the player to everyone in the lobby
-        //sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, user.characterColor + "--" + newPosition);
     }
 
     /**
@@ -276,17 +275,15 @@ public class Game implements Runnable{
      * @param field Users new position
      */
     public void checkField(User user, int field) {
-        // 2 + 56 ladder up
         String msg = null;
-        if (field == 2) {
+        if (field == 2) { // 2 + 56 ladder up
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
             changePosition(user, 15 - field);
         } else if (field == 56) {
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
             changePosition(user, 59 - field);
         }
-        // 21 - 89 ladder down
-        else if (field == 21) {
+        else if (field == 21) { // 21 - 89 ladder down
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 14 - field);
         } else if (field == 27) {
@@ -305,8 +302,7 @@ public class Game implements Runnable{
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 68 - field);
         }
-        //Cards
-        else if (field == 18 || field == 32 || field == 46 || field == 74) {
+        else if (field == 18 || field == 32 || field == 46 || field == 74) { // Action Cards
             String card = Cards.getCards();
             String[] arr = card.split(" ", 2);
             int positionToChange = Integer.parseInt(arr[0]);
@@ -314,8 +310,7 @@ public class Game implements Runnable{
             lobbyBroadcastToPlayer(user.getUsername() + " draws an action card: " + textCard);
             changePosition(user, positionToChange);
         }
-        // Quiz
-        else if (field == 8 || field == 23 || field == 50 || field == 66) {
+        else if (field == 8 || field == 23 || field == 50 || field == 66) { // Quiz
             quizOngoing = true;
             String quizQuestion = Quiz.quiz();
             String[] quiz = quizQuestion.split("§");
@@ -348,8 +343,7 @@ public class Game implements Runnable{
             }
             quizOngoing = false;
         }
-        // This is the end of the game for a player
-        else if (field > 90) {
+        else if (field > 90) { // This is the end of the game for a player
             lobbyBroadcastToPlayer(user.getUsername() + " has successfully graduated from university");
         }
     }
@@ -391,17 +385,22 @@ public class Game implements Runnable{
      */
     public void closeGame() {
         if (highScore.getTop10().length() > 0) {
-            lobbyBroadcastToPlayer("All time leaders: " + highScore.getTop10());
+            lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10());
+            sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
         }
         if (highScoreGame.getTop10().length() > 0) {
-            lobbyBroadcastToPlayer("Best students of this game: " + highScoreGame.getTop10());
+            lobbyBroadcastToPlayer("Best students of this game:§" + highScoreGame.getTop10());
+            sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             if (playersEndedGame == numPlayers) {
                 lobbyBroadcastToPlayer("Congratulations! All of you have successfully graduated.");
+                sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             } else {
                 lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
+                sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             }
         } else {
             lobbyBroadcastToPlayer("None of you have graduated.");
+            sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
         }
         for (int i = 0; i < numPlayers; i++) {
             User user = lobby.getUsersReady().get(i);
@@ -423,6 +422,10 @@ public class Game implements Runnable{
         user.setReadyToPlay(false);
     }
 
+    /**
+     * Returns the correct placement of the user of the game after finishing it.
+     * @return String with the correct placement.
+     */
     public String place() {
         String s = "1st";
         if (playersEndedGame == 2) {

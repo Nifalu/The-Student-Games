@@ -1,41 +1,88 @@
 package gui;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
+import javafx.fxml.Initializable;
+import utility.io.CommandsToServer;
+import utility.io.ReceiveFromProtocol;
+import utility.io.SendToServer;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class HighscoreController {
-    private Stage menuStage;
-    private Scene menuScene;
-    private Parent menuRoot;
-    private Stage gameStage;
-    private Scene gameScene;
-    private Parent gameRoot;
+
+
+
+public class HighscoreController implements Initializable{
+
+    public static ReceiveFromProtocol winnerReceiver = new ReceiveFromProtocol();
+
+    public static String winnerList;
+
+    private final SendToServer sendToServer = new SendToServer();
+
+
+    @FXML
+    private ListView<String> winnerListView;
+
+    @FXML
+    private TitledPane winnerpane;
+
+
+    @FXML
+    public void printLobbies(String[] winners) {
+        winnerListView.getItems().clear();
+        winnerListView.getItems().addAll(winners);
+    }
 
     /**
      * the following methods are used to switch between scenes
      * they're only temporary
      */
-    public void switchToMenu(ActionEvent event) throws Exception {
-        MenuController.hasJoinedChat = true;
-        menuRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_menu.fxml"));
-        menuStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        menuScene = new Scene(menuRoot);
-        menuStage.setScene(menuScene);
-        menuStage.show();
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Thread winnerListThread = new Thread(() -> {
+            while(true) {
+
+                winnerList = winnerReceiver.receive();
+                winnerList = removeNewline(winnerList);
+                String[] splittedWinners = splittedString(winnerList);
+                Platform.runLater(() -> printLobbies(splittedWinners));
+            }
+        });
+        winnerListThread.setName("winnerListThread");
+        winnerListThread.start();
+
+    }
+    public void switchToMenu() {
+        Main.displayMenu();
     }
 
-    public void switchToGame(ActionEvent event) throws IOException {
-        GameController.hasJoinedChat = true;
-        gameRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_game.fxml"));
-        gameStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        gameScene = new Scene(gameRoot);
-        gameStage.setScene(gameScene);
-        gameStage.show();
+    public void switchToGame() {
+        Main.displayGame();
+    }
+
+    private static String removeNewline(String str) {
+
+        return str.replace("\n", "").replace("\r", "");
+    }
+
+    public String[] splittedString(String s) {
+        return s.split("§");
+    }
+
+    public void refreshWinners(ActionEvent actionEvent) {
+        sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
     }
 }

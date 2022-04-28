@@ -12,6 +12,12 @@ public class Calendar {
     int month;
     int day;
 
+    /**
+     * Sets a new calendar
+     * @param year year of the start
+     * @param month month of the start
+     * @param day day of the start
+     */
     public Calendar(int year, int month, int day) {
         this.year = year;
         this.month = month;
@@ -50,7 +56,7 @@ public class Calendar {
     }
 
     /**
-     *
+     * Returns the date (dd.mm.yyyy) as a String
      * @return current Date
      */
     public String getCurrentDate() {

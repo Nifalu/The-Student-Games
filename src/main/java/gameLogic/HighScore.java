@@ -40,7 +40,7 @@ public class HighScore {
             int year = Integer.parseInt(date.substring(0, 4));
             int month = Integer.parseInt(date.substring(4, 6));
             int day = Integer.parseInt(date.substring(6, 8));
-            top10 += (count + 1 + ". Platz: " + n.name + " Abschluss: " + day + "." + month + "." + year + " ");
+            top10 += (count + 1 + ". Platz: " + n.name + " Abschluss: " + day + "." + month + "." + year + "§");
             n = n.next;
             count++;
         }

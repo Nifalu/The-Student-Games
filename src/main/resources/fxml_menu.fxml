@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="739.0" prefWidth="1119.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="739.0" prefWidth="1119.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
    <bottom>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -47,4 +51,28 @@
          </children>
       </VBox>
    </right>
+   <left>
+      <TitledPane fx:id="lobbyContainer" alignment="CENTER" animated="false" contentDisplay="CENTER" prefHeight="702.0" prefWidth="391.0" text="L O B B Y   L I S T" textAlignment="CENTER" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="503.0" prefWidth="390.0">
+               <children>
+                  <Button fx:id="selectLobbyButton" layoutX="147.0" layoutY="536.0" mnemonicParsing="false" onAction="#joinSelectedLobby" text="select Lobby" />
+                  <Button fx:id="createLobbyButton" layoutX="289.0" layoutY="600.0" mnemonicParsing="false" onAction="#createLobby" text="createLobby" />
+                  <TextField fx:id="createLobbyTextField" layoutX="14.0" layoutY="600.0" onAction="#createLobby" prefHeight="26.0" prefWidth="263.0" promptText="Please enter new lobby..." />
+                  <Label fx:id="lobbyLabel" layoutX="162.0" layoutY="296.0" />
+                  <Button fx:id="refreshButton" layoutX="282.0" layoutY="76.0" mnemonicParsing="false" onAction="#refreshLobbies" prefHeight="30.0" prefWidth="95.0" text="refresh" />
+                  <ListView fx:id="lobbyListView" layoutX="7.0" layoutY="108.0" onMouseClicked="#listViewSelectedLobby" prefHeight="420.0" prefWidth="375.0" />
+                  <Label fx:id="selectedLobbyLabel" alignment="CENTER" layoutX="65.0" layoutY="14.0" prefHeight="62.0" prefWidth="258.0" text="SelectedLobby" textFill="#ef0d0d">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </content>
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TitledPane>
+   </left>
 </BorderPane>

@@ -52,8 +52,8 @@ public class Name {
    * Changes the Username to the preferred Name if available. If not it suggests the User a new Name.
    * There cannot be two Players with the same Name (case independent).
    *
-   * @param currentName   String
-   * @param preferredName String
+   * @param currentName   String current name
+   * @param preferredName String name to want to have
    */
   public void changeNameTo(String currentName, String preferredName) {
     preferredName = preferredName.replaceAll(" ", "_").toLowerCase();

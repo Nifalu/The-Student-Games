@@ -1,5 +1,6 @@
 package client;
 
+import gui.HighscoreController;
 import gui.StartController;
 import gui.GameController;
 import utility.io.CommandsToClient;
@@ -44,7 +45,11 @@ public class ClientReceive implements Runnable{
     switch (cmd) {
 
       case PRINT: // prints the msg
-        System.out.println(msg);
+        String[] msgs;
+        msgs = msg.split("§");
+        for (String s : msgs) {
+          System.out.println(s);
+        }
         break;
 
       case PING: // Sends a Ping to the Connection Monitor of the Client
@@ -83,6 +88,14 @@ public class ClientReceive implements Runnable{
 
       case GUIMOVECHARACTER:
         GameController.receiveNewPlayerPosition.setMessage(msg);
+        break;
+
+      case PRINTLOBBIESGUI:
+        MenuController.lobbyReceiver.setMessage(msg);
+        break;
+
+      case PRINTWINNERSGUI:
+        HighscoreController.winnerReceiver.setMessage(msg);
         break;
     }
   }

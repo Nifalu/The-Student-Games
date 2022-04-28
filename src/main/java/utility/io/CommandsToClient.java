@@ -42,12 +42,14 @@ public enum CommandsToClient {
    * StartController will decide, when and how to display it
    */
   PRINTGUISTART,
+  PRINTLOBBIESGUI,
 
   /**
    * used to print out messages to the game tracker in the
    * Game GUI
    */
   PRINTGUIGAMETRACKER,
+  PRINTWINNERSGUI,
 
   /**
    * moves the player-figures on the GUI

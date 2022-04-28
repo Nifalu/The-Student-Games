@@ -27,6 +27,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import static java.lang.Thread.sleep;
+
 /**
  * This is the controller for game.fxml
  */
@@ -181,11 +183,13 @@ public class GameController implements Initializable {
         Thread waitForChatThread = new Thread(() -> {
             while(!hasJoinedChat) {
                 try {
-                    wait(2000);
+                    sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+
+
             receiveFromProtocol.setMessage("You have joined the chat.");
             while(true) {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
@@ -328,21 +332,12 @@ public class GameController implements Initializable {
      * the following methods are used to switch between scenes
      * they're only temporary
      */
-    public void switchToMenu(ActionEvent event) throws Exception {
-        MenuController.hasJoinedChat = true;
-        menuRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_menu.fxml"));
-        menuStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        menuScene = new Scene(menuRoot);
-        menuStage.setScene(menuScene);
-        menuStage.show();
+    public void switchToMenu() {
+        Main.displayMenu();
     }
 
-    public void switchToHighscore(ActionEvent event) throws Exception {
-        highscoreRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_highscore.fxml"));
-        highscoreStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        highscoreScene = new Scene(highscoreRoot);
-        highscoreStage.setScene(highscoreScene);
-        highscoreStage.show();
+    public void switchToHighscore() {
+        Main.displayHighscore();
     }
 
     public void answerQuizA(ActionEvent actionEvent) {

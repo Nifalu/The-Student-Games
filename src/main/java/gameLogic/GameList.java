@@ -17,7 +17,6 @@ public class GameList {
     public synchronized static HashMap<Integer, Lobby> getLobbyList() {
         return lobbyList;
     }
-    //Lobby lobby = new Lobby("standard");
 
     public synchronized static HashMap<Integer, User> getUserlist() {
         return ServerManager.getUserlist();
@@ -25,7 +24,7 @@ public class GameList {
 
     /**
      *
-     * @return return a String of all open lobbies
+     * @return return a String of all User
      */
     public synchronized static String printUserList() {
         String s = "";
@@ -75,6 +74,7 @@ public class GameList {
      */
     public synchronized static String printLobbies(HashMap<Integer, Lobby> lobbyList) {
         String s = "";
+        int counter = 0;
         for (int i = 0; i < lobbyList.size(); i++) {
             int lobbyStatus = lobbyList.get(i).getLobbyStatus();
             String lobbyStatusString = "";
@@ -92,7 +92,12 @@ public class GameList {
                     lobbyStatusString = "standard Lobby";
                     break;
             }
-            s = s + i + ". " + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  ";
+            if (lobbyStatusString.equals("open")) {
+                s = s + counter + ". " + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  " + "§";
+                counter++;
+            } else {
+                s = s + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  " + "§";
+            }
         }
         return s;
     }
