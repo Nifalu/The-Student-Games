@@ -133,5 +133,9 @@ public enum CommandsToServer {
    * prints out the highscore
    */
   PRINTHIGHSCORE,
+
+  /**
+   * prints out players in lobby
+   */
   PRINTPLAYERSINLOBBY
 }

@@ -25,7 +25,7 @@ public class GameList {
 
     /**
      *
-     * @return return a String of all open lobbies
+     * @return return a String of all User
      */
     public synchronized static String printUserList() {
         String s = "";

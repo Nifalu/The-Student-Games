@@ -204,7 +204,7 @@ public class Lobby {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
                 answer = msg.split("§");
                 if (getLobbyStatus() != 69) {
-                    if (msg.equals("start") && getLobbyStatus() == 1) {
+                    if (msg.equals("start") && getLobbyStatus() == 1) { // starts the game
                         if (usersReady.size() >= minToStart) {
                             setLobbyStatusToOnGoing();
                             game = new Game(this, usersReady, highScore);
@@ -213,16 +213,16 @@ public class Lobby {
                         }
                     } else if (getLobbyStatus() == 0) {
                         switch (answer[0]) {
-                            case "dice":
+                            case "dice": // roll normal dice
                                 game.setRolledDice(answer[1], 6);
                                 break;
-                            case "dicedice":
+                            case "dicedice": // roll special dice
                                 game.setRolledDice(answer[1], 4);
                                 break;
-                            case "quiz":
+                            case "quiz": // quiz answer
                                 game.quizAnswer(answer[1], answer[2]);
                                 break;
-                            case "wwcd":
+                            case "wwcd": // cheat code
                                 game.cheat(answer[1], Integer.parseInt(answer[2]));
                                 break;
                         }
@@ -234,6 +234,10 @@ public class Lobby {
         LobbyWaitForMessageThread.start(); // start thread
     }
 
+    /**
+     * Returns a String with the highscore of the top 10 players or "empty High Score" if high score is empty.
+     * @param clientHandler User asking for the high score
+     */
     public void getHighScore(server.ClientHandler clientHandler) {
         if (highScore.getTop10().length() == 0) {
             sendToClient.send(clientHandler, CommandsToClient.PRINT, "empty High Score");

@@ -44,7 +44,11 @@ public class ClientReceive implements Runnable{
     switch (cmd) {
 
       case PRINT: // prints the msg
-        System.out.println(msg);
+        String[] msgs;
+        msgs = msg.split("§");
+        for (int i = 0; i < msgs.length; i++) {
+          System.out.println(msgs[i]);
+        }
         break;
 
       case PING: // Sends a Ping to the Connection Monitor of the Client

@@ -204,7 +204,7 @@ public class ServerReceive implements Runnable {
         client.user.getLobby().receiveFromProtocol.setMessage("dice§" + client.user.getUsername());
         break;
 
-      case PRINTPLAYERSINLOBBY:
+      case PRINTPLAYERSINLOBBY: // prints players in lobby
         client.lobbyhelper.printPlayersInLobby();
         break;
 

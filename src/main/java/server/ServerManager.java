@@ -37,9 +37,14 @@ public class ServerManager {
     return user;
   }
 
-  /**
-   * Creates the Main Lobby where everyone is in when they connect to the server or leave a game.
-   */
+  public synchronized static void disconnect(User user) {
+    userlist.remove(user.getUserListNumber() - 1, user);
+  }
+
+
+    /**
+     * Creates the Main Lobby where everyone is in when they connect to the server or leave a game.
+     */
   public static synchronized void createMainLobby() {
     Lobby lobby = new Lobby("StandardLobby");
     GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
