@@ -77,7 +77,6 @@ public class ClientReceive implements Runnable{
         break;
 
       case PRINTGUIGAMETRACKER:
-        System.out.println(msg);
         GameController.receiveFromProtocolGameUpdate.setMessage(msg);
         outPrint(msg);
         break;

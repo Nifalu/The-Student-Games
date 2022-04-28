@@ -17,7 +17,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
-import utility.io.*;
 import utility.io.CommandsToServer;
 import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
@@ -25,6 +24,7 @@ import utility.io.SendToServer;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
 import static java.lang.Thread.sleep;
 
 /**
@@ -238,7 +238,7 @@ public class GameController implements Initializable {
         String[] splitted = gameMove.split("§");
         for (String s: splitted) {
             gameTracker.appendText(s);
-            gameTracker.appendText(".\n");
+            gameTracker.appendText("\n");
         }
     }
 
