@@ -142,9 +142,7 @@ public class MenuController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        selectedLobbyLabel.setText(lobbyListView.getSelectionModel().getSelectedItem());
-
-
+        selectedLobbyLabel.setText("Please create or choose a lobby.");
 
         Thread lobbyListThread = new Thread(() -> {
             while(true) {
@@ -253,7 +251,7 @@ public class MenuController implements Initializable {
             try {
                 Integer.parseInt(lobbyNumber);
                 sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
-                selectedLobbyLabel.setText("You are now member of Lobby: " + selectedLobby);
+                selectedLobbyLabel.setText("You are now member of Lobby: " + selectedLobby.substring(0,1));
             } catch (Exception e) {
                 selectedLobbyLabel.setText("Lobby needs to be open.");
             }
