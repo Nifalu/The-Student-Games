@@ -76,6 +76,7 @@ public class Main extends Application {
 
   public static void displayStart() {
     setup(start, startRoot);
+    stage.centerOnScreen();
   }
 
   public static void displayGame() {
@@ -95,7 +96,6 @@ public class Main extends Application {
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
     stage.setResizable(true);
-    stage.centerOnScreen();
     stage.show();
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
