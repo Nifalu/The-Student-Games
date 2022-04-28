@@ -74,7 +74,7 @@ public class Game implements Runnable{
 
                         // moves the player characters in the GUI
                         for (int j = 0; j < numPlayers; j++) {
-                            if (playersPlaying.get(j).getPlayingField() != 0) {
+                            if (playersPlaying.get(j).getPlayingField() > 0 && playersPlaying.get(j).getPlayingField() <= 90) {
                                 sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
                             }
                         }
@@ -254,13 +254,12 @@ public class Game implements Runnable{
         if (!cheated) {
             if (newPosition <= 90) {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to " + newPosition);
-                //sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, user.characterColor + "--" + newPosition);
                 checkField(user, newPosition);
             } else {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
                 user.setIsPlaying(false);
             }
-            checkField(user, newPosition);
+            //checkField(user, newPosition);
         } else {
             if (newPosition > 90) {
                 checkField(user, newPosition);

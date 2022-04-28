@@ -15,18 +15,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import utility.io.*;
-
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-
 import static java.lang.Thread.sleep;
 
 /**
@@ -44,7 +39,8 @@ public class GameController implements Initializable {
     boolean isReady = false;
     public static boolean gameHasStarted = false;
 
-    public static String gameMove = "hello!"; // used to update the Game Tracker
+    public static String gameMove = "Hi! This is the game tracker."; // used to update the Game Tracker
+    private static String gameMoveTmp = "hello!";
 
     private String moveToField = "";
 
@@ -160,7 +156,6 @@ public class GameController implements Initializable {
 
         // creates the Hashmap
         int counter = 1;
-
         for (int y = 8; y >= 0; y--) {
             if (y % 2 == 0) {
                 for (int x = 0; x <= 9; x++) {
@@ -189,7 +184,6 @@ public class GameController implements Initializable {
                 }
             }
 
-
             receiveFromProtocol.setMessage("You have joined the chat.");
             while(true) {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
@@ -202,7 +196,10 @@ public class GameController implements Initializable {
         Thread waitForGameUpdatesThread = new Thread(() -> {
             while(true) {
                 gameMove = receiveFromProtocolGameUpdate.receive(); // blocks until a message is received
-                Platform.runLater(() -> printGameUpdate(gameMove)); // a javafx "thread" that calls the print method
+                if (!gameMove.equals(gameMoveTmp)) {
+                    Platform.runLater(() -> printGameUpdate(gameMove)); // a javafx "thread" that calls the print method
+                }
+                gameMoveTmp = gameMove;
             }
         });
 
@@ -387,7 +384,7 @@ public class GameController implements Initializable {
             }
         }
 
-        System.out.println("NEUE KOORDINATEN: " + xPos +", " + yPos);
+        // System.out.println("NEUE KOORDINATEN: " + xPos +", " + yPos);
         return new double[]{xPos, yPos};
 
     }
