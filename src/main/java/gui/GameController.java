@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -15,14 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
-import utility.io.*;
+import utility.io.CommandsToServer;
+import utility.io.ReceiveFromProtocol;
+import utility.io.SendToServer;
 
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -119,6 +117,9 @@ public class GameController implements Initializable {
             String newName = split[1];
             System.out.println("neui dengs: " + newName );
             sendToServer.send(CommandsToServer.NICK, newName);
+        } else if (msg.startsWith("/winnerwinnerchickendinner")) {
+            String[] input = msg.split(" ", 2);
+            sendToServer.send(CommandsToServer.WWCD, input[1]);
         } else if (msg.startsWith("/whisper")) {
             String[] split = msg.split(" ", 3);
             if (split.length > 1) {
@@ -232,8 +233,11 @@ public class GameController implements Initializable {
      * @param gameMove String
      */
     private void printGameUpdate(String gameMove) {
-        gameTracker.appendText(gameMove);
-        gameTracker.appendText(".\n");
+        String[] splitted = gameMove.split("§");
+        for (String s: splitted) {
+            gameTracker.appendText(s);
+            gameTracker.appendText(".\n");
+        }
     }
 
     /**
