@@ -55,7 +55,7 @@ public enum CommandsToClient {
   /**
    * moves the player-figures on the GUI
    */
-  GUIMOVECHARACTER,
+  GUIMOVECHARACTER, DICEDICELEFT,
 
 
 }
