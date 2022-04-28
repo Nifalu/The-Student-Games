@@ -392,10 +392,8 @@ public class Game implements Runnable{
             sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             if (playersEndedGame == numPlayers) {
                 lobbyBroadcastToPlayer("Congratulations! All of you have successfully graduated.");
-                sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             } else {
                 lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
-                sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             }
         } else {
             lobbyBroadcastToPlayer("None of you have graduated.");
