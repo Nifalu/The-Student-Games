@@ -73,7 +73,7 @@ public class ClientHandler implements Runnable {
       this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
       connectionMonitor = new Thread(connectionToClientMonitor);
       connectionMonitor.setName("connectionMonitor  Thread");
-      connectionMonitor.start();
+
 
 
     } catch (IOException e) {
@@ -88,6 +88,8 @@ public class ClientHandler implements Runnable {
    */
   @Override
   public void run() {
+
+    connectionMonitor.start();
     nameClass.askUsername(); // Asks the User if he's fine with his name or wants to change
     lobbyhelper.askWhatLobbyToJoin(this);
   }

@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static java.lang.Thread.sleep;
+
 public class MenuController implements Initializable {
     private final SendToServer sendToServer = new SendToServer();
     private static String msg;
@@ -32,12 +34,6 @@ public class MenuController implements Initializable {
     boolean writeInGlobalChat = false;
     public static ReceiveFromProtocol lobbyReceiver = new ReceiveFromProtocol();
 
-    private Stage gameStage;
-    private Scene gameScene;
-    private Parent gameRoot;
-    private Stage highscoreStage;
-    private Scene highscoreScene;
-    private Parent highscoreRoot;
     public static String lobbyList;
 
 
@@ -155,13 +151,16 @@ public class MenuController implements Initializable {
 
         // A new Thread is made that waits for incoming messages
         Thread waitForChatThread = new Thread(() -> {
+
             while(!hasJoinedChat) {
                 try {
-                    wait(2000);
+                    sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+
+
             receiveFromProtocol.setMessage("You have joined the chat.");
             while(true) {
                 msg = receiveFromProtocol.receive(); // blocks until a message is received
@@ -204,22 +203,16 @@ public class MenuController implements Initializable {
      * the following methods are used to switch between scenes
      * they're only temporary
      */
-    public void switchToGame(ActionEvent event) throws IOException {
-        GameController.hasJoinedChat = true;
-        gameRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_game.fxml"));
-        gameStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        gameScene = new Scene(gameRoot);
-        gameStage.setScene(gameScene);
-        gameStage.show();
+
+    public void switchToGame() {
+        Main.displayGame();
     }
 
-    public void switchToHighscore(ActionEvent event) throws Exception {
-        highscoreRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml_highscore.fxml"));
-        highscoreStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        highscoreScene = new Scene(highscoreRoot);
-        highscoreStage.setScene(highscoreScene);
-        highscoreStage.show();
+    public void switchToHighscore() {
+        Main.displayHighscore();
     }
+
+
 
     public void refreshLobbies(ActionEvent actionEvent) {
         sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
