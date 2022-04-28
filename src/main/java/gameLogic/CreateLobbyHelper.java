@@ -112,6 +112,7 @@ public class CreateLobbyHelper {
      */
     public synchronized void printLoungingListAndSendToClient() {
         sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLoungingList());
+        sendToClient.send(clienthandler, CommandsToClient.PRINTFRIENDSGUI, GameList.printLoungingList());
     }
 
     /**

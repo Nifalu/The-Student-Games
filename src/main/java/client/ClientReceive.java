@@ -93,6 +93,10 @@ public class ClientReceive implements Runnable{
       case PRINTWINNERSGUI:
         HighscoreController.winnerReceiver.setMessage(msg);
         break;
+
+      case PRINTFRIENDSGUI:
+        MenuController.friendsReceiver.setMessage(msg);
+        break;
     }
   }
 }

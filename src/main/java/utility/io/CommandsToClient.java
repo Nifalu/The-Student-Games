@@ -48,5 +48,6 @@ public enum CommandsToClient {
    */
   PRINTGUIGAMETRACKER,
   PRINTWINNERSGUI,
+  PRINTFRIENDSGUI,
 
 }

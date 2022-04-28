@@ -25,7 +25,7 @@
       </ToolBar>
    </bottom>
    <right>
-      <VBox prefWidth="273.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="699.0" prefWidth="232.0" BorderPane.alignment="CENTER">
          <children>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
@@ -39,7 +39,7 @@
             </ToolBar>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TextArea fx:id="chat" editable="false" prefHeight="200.0" prefWidth="485.0" />
+                  <TextArea fx:id="chat" editable="false" prefHeight="200.0" prefWidth="389.0" />
                </children>
             </AnchorPane>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
@@ -52,16 +52,16 @@
       </VBox>
    </right>
    <left>
-      <TitledPane fx:id="lobbyContainer" alignment="CENTER" animated="false" contentDisplay="CENTER" prefHeight="702.0" prefWidth="391.0" text="L O B B Y   L I S T" textAlignment="CENTER" BorderPane.alignment="CENTER">
+      <TitledPane fx:id="lobbyContainer" alignment="CENTER" animated="false" contentDisplay="CENTER" prefHeight="730.0" prefWidth="391.0" text="L O B B Y   L I S T" textAlignment="CENTER" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="503.0" prefWidth="390.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="390.0">
                <children>
                   <Button fx:id="selectLobbyButton" layoutX="147.0" layoutY="536.0" mnemonicParsing="false" onAction="#joinSelectedLobby" text="select Lobby" />
                   <Button fx:id="createLobbyButton" layoutX="289.0" layoutY="600.0" mnemonicParsing="false" onAction="#createLobby" text="createLobby" />
                   <TextField fx:id="createLobbyTextField" layoutX="14.0" layoutY="600.0" onAction="#createLobby" prefHeight="26.0" prefWidth="263.0" promptText="Please enter new lobby..." />
                   <Label fx:id="lobbyLabel" layoutX="162.0" layoutY="296.0" />
-                  <Button fx:id="refreshButton" layoutX="282.0" layoutY="76.0" mnemonicParsing="false" onAction="#refreshLobbies" prefHeight="30.0" prefWidth="95.0" text="refresh" />
-                  <ListView fx:id="lobbyListView" layoutX="7.0" layoutY="108.0" onMouseClicked="#listViewSelectedLobby" prefHeight="420.0" prefWidth="375.0" />
+                  <Button fx:id="refreshButton" layoutX="275.0" layoutY="76.0" mnemonicParsing="false" onAction="#refreshLobbies" prefHeight="30.0" prefWidth="95.0" text="refresh" />
+                  <ListView fx:id="lobbyListView" layoutX="23.0" layoutY="108.0" onMouseClicked="#listViewSelectedLobby" prefHeight="420.0" prefWidth="347.0" />
                   <Label fx:id="selectedLobbyLabel" alignment="CENTER" layoutX="65.0" layoutY="14.0" prefHeight="62.0" prefWidth="258.0" text="SelectedLobby" textFill="#ef0d0d">
                      <font>
                         <Font size="16.0" />
@@ -75,4 +75,12 @@
          </font>
       </TitledPane>
    </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ListView fx:id="friendListView" layoutX="27.0" layoutY="150.0" prefHeight="534.0" prefWidth="283.0" />
+            <Button fx:id="refreshButtonFriends" layoutX="258.0" layoutY="115.0" mnemonicParsing="false" onAction="#refreshFriends" text="refresh" />
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>
