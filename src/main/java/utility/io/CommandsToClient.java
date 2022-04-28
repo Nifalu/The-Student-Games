@@ -39,7 +39,7 @@ public enum CommandsToClient {
    * Sets the msg field in the StartController
    * StartController will decide, when and how to display it
    */
-  PRINTGUISTART,
+  PRINTGUISTART, PRINTLOBBIESGUI,
 
   /**
    * used to print out messages to the game tracker in the

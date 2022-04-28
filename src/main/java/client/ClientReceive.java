@@ -84,6 +84,11 @@ public class ClientReceive implements Runnable{
         GameController.receiveFromProtocolGameUpdate.setMessage(msg);
         System.out.println(msg);
         break;
+        break;
+
+      case PRINTLOBBIESGUI:
+        MenuController.lobbyReceiver.setMessage(msg);
+        break;
     }
   }
 }
