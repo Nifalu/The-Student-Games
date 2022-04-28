@@ -1,21 +1,14 @@
 package gui;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
 
-
-import java.awt.*;
-
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 
 /**

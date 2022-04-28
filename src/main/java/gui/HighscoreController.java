@@ -36,8 +36,6 @@ public class HighscoreController implements Initializable{
     @FXML
     private ListView<String> winnerListView;
 
-    @FXML
-    private TitledPane winnerpane;
 
     @FXML
     public void printLobbies(String[] winners) {

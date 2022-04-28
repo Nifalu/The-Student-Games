@@ -3,16 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
@@ -20,561 +19,578 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="1036.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
-   <right>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="732.0" prefWidth="373.0" BorderPane.alignment="CENTER">
-        <items>
-            <VBox maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="730.0" prefWidth="358.0">
+
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0">
+         <bottom>
+            <ToolBar BorderPane.alignment="CENTER">
+               <items>
+                  <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
+                  <Button mnemonicParsing="false" text="help" />
+                  <Button mnemonicParsing="false" onAction="#switchToMenu" text="Go To Menu" />
+                  <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
+                  <Button fx:id="readyButton" mnemonicParsing="false" onAction="#setPlayerAsReady" prefHeight="27.0" prefWidth="93.0" text="READY" />
+                  <Button fx:id="startButton" mnemonicParsing="false" onAction="#startTheGame" prefHeight="0.0" prefWidth="96.0" text="START" />
+               </items>
+            </ToolBar>
+         </bottom>
+         <center>
+            <VBox BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
                <children>
-                  <ToolBar>
-                     <items>
+                  <GridPane fx:id="board" gridLinesVisible="true" VBox.vgrow="ALWAYS">
+                    <columnConstraints>
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="90" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="8" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="89" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="18.0" layoutY="19.0" text="88" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="87" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="86" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="85" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="84" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="83" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="82" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="81" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="71" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="72" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="73" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="74" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="75" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="76" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="77" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="78" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="79" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="80" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="70" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="69" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="68" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="67" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="66" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="65" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="64" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="63" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="62" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="61" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="51" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="52" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="53" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="54" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="55" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: palegreen palegreen;" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="56" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="57" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="58" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="59" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="60" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="9" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="50" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="49" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="48" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="47" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="46" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="45" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="44" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="43" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="42" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="41" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="31" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="32" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="33" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="34" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="35" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="36" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="37" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="38" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="39" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="40" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="30" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="29" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="28" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="27" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="26" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="25" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="24" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="23" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="22" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.rowIndex="6">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="21" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="11" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="12" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="18.0" layoutY="19.0" text="13" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="14" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="15" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="16" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="17" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="18" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="19" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="7">
+                           <children>
+                              <Label layoutX="17.0" layoutY="19.0" text="20" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="10" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="14.0" layoutY="19.0" text="9" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="8" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="7" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="6" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="5" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="4" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="3" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: palegreen;" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="2" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="starterPaneBlue" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="8">
+                           <children>
+                              <Label layoutX="16.0" layoutY="19.0" text="1" />
+                           </children>
+                        </Pane>
+                        <Circle fx:id="playerGreen" fill="#61f26b" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="playerBlue" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="playerYellow" fill="#e3ff1f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="playerRed" fill="#ff441f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                     </children>
+                  </GridPane>
+                  <HBox minHeight="100.0" />
+               </children>
+            </VBox>
+         </center>
+         <right>
+            <VBox maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="730.0" prefWidth="358.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox spacing="5.0">
+                     <children>
                         <ToggleButton fx:id="globalToggleButton" mnemonicParsing="false" onAction="#switchChat" text="GLOBAL">
                            <toggleGroup>
                               <ToggleGroup fx:id="switchGlobalLobby" />
-                           </toggleGroup></ToggleButton>
+                           </toggleGroup>
+                        </ToggleButton>
                         <ToggleButton fx:id="lobbyToggleButton" mnemonicParsing="false" onAction="#switchChat" selected="true" text="LOBBY" toggleGroup="$switchGlobalLobby" />
-                     </items>
-                  </ToolBar>
-                <AnchorPane>
-                     <children>
-                        <TextArea fx:id="chat" editable="false" prefHeight="227.0" prefWidth="371.0" />
                      </children>
-                  </AnchorPane>
-                  <ToolBar>
-                    <items>
-                        <TextField fx:id="chatTextField" onAction="#sendChatMessage" prefHeight="31.0" prefWidth="294.0" promptText="type your message here ..." />
+                     <padding>
+                        <Insets bottom="5.0" />
+                     </padding>
+                  </HBox>
+                  <TextArea fx:id="chat" editable="false" VBox.vgrow="ALWAYS" />
+                  <HBox spacing="5.0">
+                     <children>
+                        <TextField fx:id="chatTextField" onAction="#sendChatMessage" promptText="type your message here ..." HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
                       <Button mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
-                    </items>
-                  </ToolBar>
-               </children>
-            </VBox>
-            <SplitPane dividerPositions="0.5, 0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
-              <items>
-                  <TextArea fx:id="gameTracker" editable="false" prefHeight="200.0" prefWidth="200.0" />
-                  <ToolBar prefHeight="40.0" prefWidth="200.0">
-                    <items>
-                      <Button mnemonicParsing="false" onAction="#answerQuizA" text="A" />
-                        <Button mnemonicParsing="false" onAction="#answerQuizB" text="B" />
-                        <Button mnemonicParsing="false" onAction="#answerQuizC" text="C" />
-                        <Button mnemonicParsing="false" onAction="#answerQuizD" text="D" />
-                    </items>
-                  </ToolBar>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0">
-                    <items>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" top="2.0" />
+                     </padding>
+                  </HBox>
+                  <TextArea fx:id="gameTracker" editable="false" VBox.vgrow="SOMETIMES" />
+                  <HBox alignment="CENTER" spacing="2.0">
+                     <children>
+                      <Button minWidth="50.0" mnemonicParsing="false" onAction="#answerQuizA" text="A" />
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#answerQuizB" text="B" />
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#answerQuizC" text="C" />
+                        <Button minWidth="50.0" mnemonicParsing="false" onAction="#answerQuizD" text="D" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="2.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
                         <Rectangle fx:id="regularDice" arcHeight="5.0" arcWidth="5.0" fill="#b8caf5" height="75.0" onMouseClicked="#throwRegularDice" stroke="BLACK" strokeType="INSIDE" width="77.0" />
                         <Polygon fx:id="fourDice1" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
                         <Polygon fx:id="fourDice2" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
                         <Polygon fx:id="fourDice3" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
-                    </items>
-                  </ToolBar>
-              </items>
-            </SplitPane>
-        </items>
-      </SplitPane>
-   </right>
-   <bottom>
-      <ToolBar prefHeight="8.0" prefWidth="979.0" BorderPane.alignment="CENTER">
-         <items>
-            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
-            <Button mnemonicParsing="false" text="help" />
-            <Button mnemonicParsing="false" onAction="#switchToMenu" text="Go To Menu" />
-            <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
-            <Button fx:id="readyButton" mnemonicParsing="false" onAction="#setPlayerAsReady" prefHeight="27.0" prefWidth="93.0" text="READY" />
-            <Button fx:id="startButton" mnemonicParsing="false" onAction="#startTheGame" prefHeight="0.0" prefWidth="96.0" text="START" />
-         </items>
-      </ToolBar>
-   </bottom>
-   <center>
-      <VBox BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-         <children>
-            <GridPane fx:id="board" gridLinesVisible="true" prefHeight="602.0" prefWidth="609.0">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="90" />
                      </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="8" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="89" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="18.0" layoutY="19.0" text="88" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="87" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="86" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="85" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="84" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="83" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="82" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="81" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="71" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="72" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="73" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="74" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="75" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="76" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="77" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="78" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="79" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="80" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="70" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="69" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="68" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="67" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="66" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="65" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="64" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="63" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="62" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="61" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="51" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="52" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="7" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="53" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="54" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="55" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: palegreen palegreen;" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="56" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="57" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="58" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="59" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="60" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="9" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="50" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="49" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="48" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="47" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="46" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="45" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="44" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="43" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="42" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="41" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="31" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="32" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="33" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="34" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="35" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="36" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="37" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="38" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="39" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="5">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="40" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="30" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="29" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="28" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="6" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="27" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="26" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="25" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="24" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="23" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="22" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.rowIndex="6">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="21" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="11" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="12" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="18.0" layoutY="19.0" text="13" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="14" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="15" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="16" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="17" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="18" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="19" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="7">
-                     <children>
-                        <Label layoutX="17.0" layoutY="19.0" text="20" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="10" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="14.0" layoutY="19.0" text="9" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="8" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="7" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="6" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="5" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="4" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="3" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: palegreen;" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="2" />
-                     </children>
-                  </Pane>
-                  <Pane fx:id="starterPaneBlue" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="8">
-                     <children>
-                        <Label layoutX="16.0" layoutY="19.0" text="1" />
-                     </children>
-                  </Pane>
-                  <Circle fx:id="playerGreen" fill="#61f26b" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Circle fx:id="playerBlue" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Circle fx:id="playerYellow" fill="#e3ff1f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Circle fx:id="playerRed" fill="#ff441f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                     <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
                </children>
-            </GridPane>
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+            </VBox>
+         </right>
+      </BorderPane>
+   </children>
+</Pane>
