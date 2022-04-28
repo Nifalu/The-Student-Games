@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import utility.io.*;
@@ -20,6 +24,7 @@ import utility.io.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -31,13 +36,15 @@ public class GameController implements Initializable {
     private static String msg; // used to update the chat
     public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
     public static ReceiveFromProtocol receiveFromProtocolGameUpdate = new ReceiveFromProtocol();
+    public static ReceiveFromProtocol receiveNewPlayerPosition = new ReceiveFromProtocol();
     public static boolean hasJoinedChat = false;
     boolean writeInGlobalChat = false;
     boolean isReady = false;
     public static boolean gameHasStarted = false;
 
     public static String gameMove = "hello!"; // used to update the Game Tracker
-    private static String lastGameMove = "hello!"; // used to compare to gameMove
+
+    private String moveToField = "";
 
     private Stage menuStage;
     private Scene menuScene;
@@ -45,6 +52,8 @@ public class GameController implements Initializable {
     private Stage highscoreStage;
     private Scene highscoreScene;
     private Parent highscoreRoot;
+
+    public static HashMap<Integer, Integer[]> fields = new HashMap<Integer, Integer[]>();
 
     @FXML
     private TextField chatTextField;
@@ -75,6 +84,21 @@ public class GameController implements Initializable {
 
     @FXML
     private TextArea gameTracker;
+
+    @FXML
+    private Circle playerBlue;
+
+    @FXML
+    private Circle playerRed;
+
+    @FXML
+    private Circle playerYellow;
+
+    @FXML
+    private Circle playerGreen;
+
+    @FXML
+    private GridPane board;
 
 
     /**
@@ -132,6 +156,25 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        // creates the Hashmap
+        int counter = 1;
+
+        for (int y = 8; y >= 0; y--) {
+            if (y % 2 == 0) {
+                for (int x = 0; x <= 9; x++) {
+                    fields.put(counter, new Integer[]{x, y});
+                    counter += 1;
+                }
+            }
+            else {
+                for (int x = 9; x >= 0; x--) {
+                    fields.put(counter, new Integer[]{x, y});
+                    counter += 1;
+                }
+            }
+        }
+
+
         // THREAD 1 : receive chat messages
         // A new Thread is made that waits for incoming messages
         // The thread will also wait for the game to start and then "remove" the start and ready button
@@ -151,11 +194,22 @@ public class GameController implements Initializable {
         });
 
 
-        // THREAD 2 :
+        // THREAD 2 : waits for game moves to update the game tracker
         Thread waitForGameUpdatesThread = new Thread(() -> {
             while(true) {
                 gameMove = receiveFromProtocolGameUpdate.receive(); // blocks until a message is received
                 Platform.runLater(() -> printGameUpdate(gameMove)); // a javafx "thread" that calls the print method
+            }
+        });
+
+
+        // THREAD 3 : waits for characters to move
+        Thread waitForCharacterMovement = new Thread(() -> {
+            while(true) {
+                moveToField = (receiveNewPlayerPosition.receive());
+                System.out.println("s esch im Thread receive player position denne met " + moveToField);
+                System.out.println(moveToField);
+                Platform.runLater(() -> movePlayer(moveToField)); // a javafx "thread" that calls the print method
             }
         });
 
@@ -165,6 +219,8 @@ public class GameController implements Initializable {
         waitForChatThread.start(); // start thread
         waitForGameUpdatesThread.setName("GuiWaitForGameUpdates");
         waitForGameUpdatesThread.start();
+        waitForCharacterMovement.setName("GuiWaitForCharacterMovements");
+        waitForCharacterMovement.start();
     }
 
     /**
@@ -303,6 +359,60 @@ public class GameController implements Initializable {
 
     public void answerQuizD(ActionEvent actionEvent) {
         sendToServer.send(CommandsToServer.QUIZ, "D");
+    }
+
+
+    public Circle chooseCorrectPlayerToMove(String moveToField) {
+        String[] playerAndNewField = moveToField.split("--"); // splits the String into the nr of the new field and the player color
+        String playerColorToMove = playerAndNewField[0];
+
+        if (playerColorToMove.equals("blue")) {
+            return playerBlue;
+        } else if (playerColorToMove.equals("red")) {
+            return playerRed;
+        } else if (playerColorToMove.equals("yellow")) {
+            return playerYellow;
+        } else {
+            return playerGreen;
+        }
+    }
+
+
+    private double[] getPosFromGridPane(GridPane board, int col, int row) {
+        double xPos = 0.0;
+        double yPos = 0.0;
+        ObservableList<Node> children = board.getChildren();
+        for (Node node : children) {
+            if(GridPane.getColumnIndex(node) != null && GridPane.getRowIndex(node) != null) {
+                if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+                    xPos = node.getBoundsInParent().getCenterX();
+                    yPos = node.getBoundsInParent().getCenterY();
+                    break;
+                }
+            }
+        }
+
+        System.out.println("NEUE KOORDINATEN: " + xPos +", " + yPos);
+        return new double[]{xPos, yPos};
+
+    }
+
+    public void movePlayer(String moveToField) {
+
+        Circle playerToMove = chooseCorrectPlayerToMove(moveToField);
+
+        // get the coordinates of the new field
+        String[] playerAndNewField = moveToField.split("--");
+        int newFieldToMoveTo = Integer.parseInt(playerAndNewField[1]);
+        Integer[] columnAndRow = fields.get(newFieldToMoveTo);
+        double[] newPos = getPosFromGridPane(board, columnAndRow[0], columnAndRow[1]);
+
+
+        // moves the player to the new coordinates
+        playerToMove.setTranslateX(newPos[0]);
+        playerToMove.setTranslateY(newPos[1]);
+
+
     }
 }
 

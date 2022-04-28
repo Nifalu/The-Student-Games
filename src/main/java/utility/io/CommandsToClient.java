@@ -1,5 +1,7 @@
 package utility.io;
 
+import server.ClientHandler;
+
 /**
  * contains all commands for the client
  */
@@ -46,5 +48,11 @@ public enum CommandsToClient {
    * Game GUI
    */
   PRINTGUIGAMETRACKER,
+
+  /**
+   * moves the player-figures on the GUI
+   */
+  GUIMOVECHARACTER,
+
 
 }

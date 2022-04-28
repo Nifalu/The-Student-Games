@@ -80,6 +80,10 @@ public class ClientReceive implements Runnable{
         GameController.receiveFromProtocolGameUpdate.setMessage(msg);
         System.out.println(msg);
         break;
+
+      case GUIMOVECHARACTER:
+        GameController.receiveNewPlayerPosition.setMessage(msg);
+        break;
     }
   }
 }

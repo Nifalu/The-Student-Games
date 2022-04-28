@@ -71,6 +71,14 @@ public class Game implements Runnable{
 
                         //sends the current users turn and the diced number to PlayingFields
                         changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
+
+                        // moves the player characters in the GUI
+                        for (int j = 0; j < numPlayers; j++) {
+                            if (playersPlaying.get(j).getPlayingField() != 0) {
+                                sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
+                            }
+                        }
+
                         cheated = false;
 
                         //checks if a player has ended the game and adds him to the high score
@@ -237,6 +245,7 @@ public class Game implements Runnable{
                 if (playersPlaying.get(i).getPlayingField() == newPosition && playersPlaying.get(i).getPlayingField() != user.getPlayingField()) {
                     playersPlaying.get(i).setPlayingField(currentPosition);
                     lobbyBroadcastToPlayer(user.getUsername() + " pushed back " + playersPlaying.get(i).getUsername() + " to " + currentPosition);
+                    //sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER,  playersPlaying.get(i).characterColor + "--" + currentPosition);
                 }
             }
         }
@@ -246,6 +255,7 @@ public class Game implements Runnable{
         if (!cheated) {
             if (newPosition <= 90) {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to " + newPosition);
+                //sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, user.characterColor + "--" + newPosition);
                 checkField(user, newPosition);
             } else {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
@@ -255,6 +265,9 @@ public class Game implements Runnable{
                 lobbyBroadcastToPlayer(user.getUsername() + " has successfully graduated from university");
             }
         }
+
+        // sends the new position of the player to everyone in the lobby
+        //sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, user.characterColor + "--" + newPosition);
     }
 
     /**
