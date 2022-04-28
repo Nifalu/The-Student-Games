@@ -71,6 +71,9 @@ public class MenuController implements Initializable {
     @FXML
     private TextField createLobbyTextField;
 
+    @FXML
+    private Label selectedLobbyLabel;
+
 
 
 
@@ -135,8 +138,7 @@ public class MenuController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // hier ein Thread und dann StringSplitted
-
+        selectedLobbyLabel.setText("Please create or choose a lobby.");
 
         Thread lobbyListThread = new Thread(() -> {
             while(true) {
@@ -228,5 +230,33 @@ public class MenuController implements Initializable {
     private static String removeNewline(String str) {
 
         return str.replace("\n", "").replace("\r", "");
+    }
+    public String listViewSelectedLobby() {
+        return lobbyListView.getSelectionModel().getSelectedItem();
+    }
+
+    public void joinSelectedLobby(ActionEvent actionEvent) {
+        String selectedLobby = listViewSelectedLobby();
+        if (selectedLobby == null) {
+            selectedLobbyLabel.setText("Please select a lobby.");
+        } else {
+            String lobbyNumber = selectedLobby.substring(0, 1);
+            try {
+                Integer.parseInt(lobbyNumber);
+                sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
+                selectedLobbyLabel.setText("You are now member of Lobby: " + selectedLobby.substring(0,1));
+            } catch (Exception e) {
+                selectedLobbyLabel.setText("Lobby needs to be open.");
+            }
+        }
+    }
+
+    public void createLobby(ActionEvent actionEvent) {
+        refreshLobbies(actionEvent);
+        String lobbyName = createLobbyTextField.getText();
+        sendToServer.send(CommandsToServer.CREATELOBBY, lobbyName);
+        sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
+        refreshLobbies(actionEvent);
+        createLobbyTextField.clear();
     }
 }

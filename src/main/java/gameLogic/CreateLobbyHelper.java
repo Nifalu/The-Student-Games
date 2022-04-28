@@ -45,6 +45,7 @@ public class CreateLobbyHelper {
         if (answer1.equalsIgnoreCase("YES")) {
             sendToClient.send(clienthandler, CommandsToClient.PRINT, "Enter Name of the lobby below:");
             String answer2 = receiveFromClient.receive();
+            answer2 = answer2.replaceAll(" ", "_").toLowerCase();
             connectLobby(answer2);
         }
 
@@ -92,6 +93,7 @@ public class CreateLobbyHelper {
      * @param name name of the lobby
      */
     public synchronized void connectLobby(String name) {
+        name = name.replaceAll(" ", "_").toLowerCase();
         Lobby lobby = new Lobby(name);
         GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have created Lobby " + lobby.getLobbyName());
