@@ -1,9 +1,11 @@
 package gameLogic;
 
+import server.ClientHandler;
 import server.ServerManager;
 import server.User;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * GameList class the contains all the list which are relevant in the game.
@@ -35,19 +37,14 @@ public class GameList {
     }
 
     public synchronized static String printUserInLobby (Lobby lobby) {
-        String usersInLobbyString = "";
-        int counter = 0;
-        HashMap<Integer, User> usersInLobby = new HashMap<>();
-        for (int i = 0; i < getUserlist().size(); i++) {
-            if (getUserlist().get(i).getLobby().equals(lobby)) {
-                usersInLobby.put(counter, getUserlist().get(i));
-                counter++;
+        ArrayList<ClientHandler> userList = ServerManager.getActiveClientList();
+        String s = "";
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).user.getLobby().equals(lobby)) {
+                s = s + "      -" + userList.get(i).user.getUsername() + "%";
             }
         }
-        for (int i = 0; i < usersInLobby.size(); i++) {
-            usersInLobbyString = usersInLobbyString + usersInLobby.get(i).getUsername() + ", ";
-        }
-        return usersInLobbyString;
+        return s;
     }
 
     /**
@@ -57,12 +54,7 @@ public class GameList {
     public synchronized static String printLoungingList() {
         String print = "";
         for (int i = 0; i < getLobbyList().size(); i++) {
-            String s = getLobbyList().get(i).getLobbyName() + ":";
-            HashMap<Integer, User> list = getLobbyList().get(i).getUsersInLobby();
-            for (int j = 0; j < list.size(); j++) {
-                s = s + " " + list.get(j).getUsername() + ", ";
-            }
-            print = print + " " + s;
+            print = print + getLobbyList().get(i).getLobbyName() + "%" + printUserInLobby(getLobbyList().get(i));
         }
         return print;
     }

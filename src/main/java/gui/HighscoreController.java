@@ -16,6 +16,7 @@ import utility.io.CommandsToServer;
 import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,7 +38,6 @@ public class HighscoreController implements Initializable{
 
     @FXML
     private TitledPane winnerpane;
-
 
     @FXML
     public void printLobbies(String[] winners) {

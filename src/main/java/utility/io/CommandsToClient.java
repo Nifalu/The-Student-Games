@@ -50,6 +50,7 @@ public enum CommandsToClient {
    */
   PRINTGUIGAMETRACKER,
   PRINTWINNERSGUI,
+  PRINTFRIENDSGUI,
 
   /**
    * moves the player-figures on the GUI

@@ -87,6 +87,10 @@ public class SendToClient {
       case PRINTWINNERSGUI:
         sendTo(recipient, "PRINTWINNERSGUI--" + msg);
         break;
+
+      case PRINTFRIENDSGUI:
+        sendTo(recipient, "PRINTFRIENDSGUI--" + msg);
+        break;
     }
   }
 
