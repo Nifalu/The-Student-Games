@@ -71,6 +71,14 @@ public class Game implements Runnable{
 
                         //sends the current users turn and the diced number to PlayingFields
                         changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
+
+                        // moves the player characters in the GUI
+                        for (int j = 0; j < numPlayers; j++) {
+                            if (playersPlaying.get(j).getPlayingField() > 0 && playersPlaying.get(j).getPlayingField() <= 90) {
+                                sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
+                            }
+                        }
+
                         cheated = false;
 
                         //checks if a player has ended the game and adds him to the high score
@@ -246,11 +254,12 @@ public class Game implements Runnable{
         if (!cheated) {
             if (newPosition <= 90) {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to " + newPosition);
+                checkField(user, newPosition);
             } else {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
                 user.setIsPlaying(false);
             }
-            checkField(user, newPosition);
+            //checkField(user, newPosition);
         } else {
             if (newPosition > 90) {
                 checkField(user, newPosition);
@@ -383,10 +392,8 @@ public class Game implements Runnable{
             sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             if (playersEndedGame == numPlayers) {
                 lobbyBroadcastToPlayer("Congratulations! All of you have successfully graduated.");
-                sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             } else {
                 lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
-                sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
             }
         } else {
             lobbyBroadcastToPlayer("None of you have graduated.");

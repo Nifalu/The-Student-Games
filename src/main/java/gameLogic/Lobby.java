@@ -27,6 +27,9 @@ public class Lobby {
 
     HashMap<Integer, server.User> usersReady = new HashMap<>();
 
+    private int characterColorCounter = 0; // used to give each player joining the lobby a different character
+    private String[] characterColors = new String[] {"red", "blue", "yellow", "green"};
+
     /**
      * creates a Lobby object with the given name
      *
@@ -157,6 +160,8 @@ public class Lobby {
         if (getLobbyStatus() == 1) {
             waitingToPlay(clientHandler);
             sendToClient.send(clientHandler, CommandsToClient.PRINTGUIGAMETRACKER, "You are now waiting...");
+            clientHandler.user.characterColor = characterColors[characterColorCounter]; // gives the player a color
+            characterColorCounter += 1;
             lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
                     + clientHandler.user.getLobby().getLobbyName());
             lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
@@ -188,6 +193,8 @@ public class Lobby {
         usersReady.values().remove(clientHandler.user);
         clientHandler.user.setReadyToPlay(false);
         sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are not waiting anymore.");
+        clientHandler.user.characterColor = ""; // removes the players color
+        characterColorCounter -= 1;
         lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is not ready.");
         lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
                 clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
@@ -210,6 +217,8 @@ public class Lobby {
                             game = new Game(this, usersReady, highScore);
                             Thread gameThread = new Thread(game);
                             gameThread.start();
+
+                            // GAME STARTS HERE
                         }
                     } else if (getLobbyStatus() == 0) {
                         switch (answer[0]) {

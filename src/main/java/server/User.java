@@ -25,6 +25,7 @@ public class User {
     private boolean isPlaying;
     private boolean isNotActivelyRollingTheDice;
     private int userListNumber;
+    public String characterColor;
 
     public User(ClientHandler clientHandler, InetAddress ip, String username, int id) {
         this.clienthandler = clientHandler;

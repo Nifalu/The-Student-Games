@@ -76,6 +76,10 @@ public class SendToClient {
         sendTo(recipient, "PRINTGUIGAMETRACKER--" + msg);
         break;
 
+      case GUIMOVECHARACTER:
+        sendTo(recipient, "GUIMOVECHARACTER--" + msg);
+        break;
+
       case PRINTLOBBIESGUI:
         sendTo(recipient, "PRINTLOBBIESGUI--" + msg);
         break;

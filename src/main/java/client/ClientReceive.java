@@ -45,11 +45,7 @@ public class ClientReceive implements Runnable{
     switch (cmd) {
 
       case PRINT: // prints the msg
-        String[] msgs;
-        msgs = msg.split("§");
-        for (String s : msgs) {
-          System.out.println(s);
-        }
+        outPrint(msg);
         break;
 
       case PING: // Sends a Ping to the Connection Monitor of the Client
@@ -68,7 +64,6 @@ public class ClientReceive implements Runnable{
         System.out.println(msg);
         GameController.receiveFromProtocol.setMessage(msg); // the chat field in the game receives the message
         MenuController.receiveFromProtocol.setMessage(msg);
-
         break;
 
       case LOBBYCHAT: // Sends a Chat into the console and also to the chat-gui
@@ -82,8 +77,13 @@ public class ClientReceive implements Runnable{
         break;
 
       case PRINTGUIGAMETRACKER:
-        GameController.receiveFromProtocolGameUpdate.setMessage(msg);
         System.out.println(msg);
+        GameController.receiveFromProtocolGameUpdate.setMessage(msg);
+        outPrint(msg);
+        break;
+
+      case GUIMOVECHARACTER:
+        GameController.receiveNewPlayerPosition.setMessage(msg);
         break;
 
       case PRINTLOBBIESGUI:
@@ -97,6 +97,12 @@ public class ClientReceive implements Runnable{
       case PRINTFRIENDSGUI:
         MenuController.friendsReceiver.setMessage(msg);
         break;
+      }
+    }
+  public void outPrint (String msg) {
+    String[] msgs = msg.split("§");
+    for (String s : msgs) {
+      System.out.println(s);
     }
   }
 }
