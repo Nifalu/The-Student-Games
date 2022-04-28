@@ -54,6 +54,8 @@ public class GameController implements Initializable {
     private Scene highscoreScene;
     private Parent highscoreRoot;
 
+    public static int diceDiceLeft = 3;
+
     public static HashMap<Integer, Integer[]> fields = new HashMap<Integer, Integer[]>();
 
     @FXML
@@ -160,7 +162,7 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // creates the Hashmap
+        // creates the Hashmap which saves the row and column of each field
         int counter = 1;
         for (int y = 8; y >= 0; y--) {
             if (y % 2 == 0) {
@@ -272,18 +274,38 @@ public class GameController implements Initializable {
      * @param mouseEvent MouseEvent
      */
     public void throwFourDice(MouseEvent mouseEvent) {
-        sendToServer.send(CommandsToServer.DICEDICE, null);
+        sendToServer.send(CommandsToServer.DICEDICE, ""); // throws dicedice
+        sendToServer.send(CommandsToServer.DICEDICELEFT, ""); // checks how many dicedice are left
 
-        // checks which fourDices are already disabled and disables one accordingly
-        if (!fourDice3.isDisabled()) {
+        // disables already used dicedices
+        if (diceDiceLeft == 3) {
+            fourDice1.setDisable(false);
+            fourDice1.setOpacity(1);
+            fourDice2.setDisable(false);
+            fourDice2.setOpacity(1);
+            fourDice3.setDisable(false);
+            fourDice3.setOpacity(1);
+        } else if (diceDiceLeft == 2) {
+            fourDice1.setDisable(false);
+            fourDice1.setOpacity(1);
+            fourDice2.setDisable(false);
+            fourDice2.setOpacity(1);
             fourDice3.setDisable(true);
             fourDice3.setOpacity(0.2);
-        } else if (fourDice3.isDisabled() && !fourDice2.isDisabled()) {
+        } else if (diceDiceLeft == 1) {
+            fourDice1.setDisable(false);
+            fourDice1.setOpacity(1);
             fourDice2.setDisable(true);
             fourDice2.setOpacity(0.2);
-        } else if (fourDice3.isDisabled() && fourDice2.isDisabled() && !fourDice1.isDisabled()) {
+            fourDice3.setDisable(true);
+            fourDice3.setOpacity(0.2);
+        } else {
             fourDice1.setDisable(true);
             fourDice1.setOpacity(0.2);
+            fourDice2.setDisable(true);
+            fourDice2.setOpacity(0.2);
+            fourDice3.setDisable(true);
+            fourDice3.setOpacity(0.2);
         }
     }
 
@@ -302,7 +324,6 @@ public class GameController implements Initializable {
     public void startTheGame(ActionEvent actionEvent) {
         sendToServer.send(CommandsToServer.START, null);
         gameHasStarted = true;
-        disableStartAndReadyButton();
     }
 
     /**
@@ -412,8 +433,6 @@ public class GameController implements Initializable {
         // moves the player to the new coordinates
         playerToMove.setTranslateX(newPos[0]);
         playerToMove.setTranslateY(newPos[1]);
-
-
     }
 }
 

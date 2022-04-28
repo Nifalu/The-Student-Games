@@ -145,6 +145,11 @@ public class SendToServer {
       case ECHO: // Sends a message to be echoed by the server
         sendTo("ECHO--" + msg);
         break;
+
+      case
+          DICEDICELEFT:
+        sendTo("DICEDICELEFT--" + msg);
+      break;
     }
   }
 

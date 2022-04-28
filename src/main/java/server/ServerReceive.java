@@ -228,6 +228,10 @@ public class ServerReceive implements Runnable {
         client.user.getLobby().receiveFromProtocol.setMessage("quiz§" + client.user.getUsername() + "§" + msg);
         break;
 
+      case DICEDICELEFT:
+        sendToClient.send(client.user.getClienthandler(), CommandsToClient.DICEDICELEFT, Integer.toString(client.user.getSpecialDiceLeft()));
+        break;
+
     }
   }
 }

@@ -134,7 +134,8 @@ public enum CommandsToServer {
    */
   PRINTHIGHSCORE,
 
-  /**
+    DICEDICELEFT,
+    /**
    * prints out players in lobby
    */
   PRINTPLAYERSINLOBBY

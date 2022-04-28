@@ -91,6 +91,10 @@ public class SendToClient {
       case PRINTFRIENDSGUI:
         sendTo(recipient, "PRINTFRIENDSGUI--" + msg);
         break;
+
+      case DICEDICELEFT:
+        sendTo(recipient, "DICEDICELEFT--" + msg);
+        break;
     }
   }
 

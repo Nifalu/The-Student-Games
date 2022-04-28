@@ -96,6 +96,10 @@ public class ClientReceive implements Runnable{
       case PRINTFRIENDSGUI:
         MenuController.friendsReceiver.setMessage(msg);
         break;
+
+      case DICEDICELEFT:
+        GameController.diceDiceLeft = Integer.parseInt(msg);
+        break;
       }
     }
   public void outPrint (String msg) {
