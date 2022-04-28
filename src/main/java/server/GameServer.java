@@ -73,6 +73,4 @@ public class GameServer {
       logger.warn("unable to close ServerSocket. It might already be closed", e);
     }
   }
-
-
 }

@@ -12,8 +12,6 @@ import java.util.Random;
 public class User {
 
     private final ClientHandler clienthandler;
-    private final int id;
-    private final InetAddress ip;
     private String username;
     private boolean firstTime = true;
     private final int district;
@@ -27,10 +25,8 @@ public class User {
     private int userListNumber;
     public String characterColor;
 
-    public User(ClientHandler clientHandler, InetAddress ip, String username, int id) {
+    public User(ClientHandler clientHandler, String username) {
         this.clienthandler = clientHandler;
-        this.id = id;
-        this.ip = ip;
         this.username = username;
         this.district = assignDistrict();
     }
@@ -43,14 +39,6 @@ public class User {
 
     public synchronized int getDistrict() {
         return district;
-    }
-
-    public synchronized int getId() {
-        return id;
-    }
-
-    public synchronized InetAddress getIp() {
-        return ip;
     }
 
     public synchronized boolean isFirstTime() {

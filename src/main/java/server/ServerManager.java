@@ -22,15 +22,13 @@ public class ServerManager {
 
   /**
    * Creates a new User, Adds the User to the Lists.
-   *
-   * @param ip            InetAddress
    * @param clientHandler ClientHandler
    * @param username      String
    * @return User
    */
-  public synchronized static User connect(InetAddress ip, ClientHandler clientHandler, String username) {
+  public synchronized static User connect(ClientHandler clientHandler, String username) {
     // new user is added
-    User user = new User(clientHandler, ip, username, userlist.size());
+    User user = new User(clientHandler, username);
     userlist.put(userlist.size(), user);
     user.setUserListNumber(userlist.size());
     activeClientList.add(clientHandler);

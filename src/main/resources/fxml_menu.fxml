@@ -1,86 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="739.0" prefWidth="1119.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
-   <bottom>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
-          <Button mnemonicParsing="false" onAction="#switchToGame" text="Go To Game" />
-            <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
-            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
-        </items>
-      </ToolBar>
-   </bottom>
-   <right>
-      <VBox prefHeight="699.0" prefWidth="232.0" BorderPane.alignment="CENTER">
-         <children>
-            <ToolBar prefHeight="40.0" prefWidth="200.0">
-              <items>
-                  <ToggleButton fx:id="globalToggleButton" mnemonicParsing="false" onAction="#switchChat" text="GLOBAL">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="switchGlobalLobby" />
-                     </toggleGroup>
-                  </ToggleButton>
-                  <ToggleButton fx:id="lobbyToggleButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#switchChat" selected="true" text="LOBBY" toggleGroup="$switchGlobalLobby" />
-              </items>
-            </ToolBar>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+   <children>
+      <BorderPane minHeight="720.0" minWidth="1080.0">
+         <center>
+            <VBox alignment="CENTER" minHeight="600.0" minWidth="900.0" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextArea fx:id="chat" editable="false" prefHeight="200.0" prefWidth="389.0" />
+                  <HBox alignment="CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Lobby Selection" />
+                              <Label fx:id="selectedLobbyLabel" alignment="CENTER" text="SelectedLobby" textFill="#ef0d0d">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER" spacing="5.0">
+                                 <children>
+                                    <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshLobbies" text="refresh" />
+                                    <Button fx:id="selectLobbyButton" mnemonicParsing="false" onAction="#joinSelectedLobby" text="select Lobby" />
+                                 </children>
+                              </HBox>
+                              <ListView fx:id="lobbyListView" onMouseClicked="#listViewSelectedLobby" VBox.vgrow="ALWAYS" />
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="createLobbyTextField" onAction="#createLobby" promptText="Please enter new lobby..." HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="createLobbyButton" mnemonicParsing="false" onAction="#createLobby" text="createLobby" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Chat" />
+                              <HBox alignment="TOP_CENTER">
+                                 <children>
+                                    <ToggleButton fx:id="lobbyToggleButton" mnemonicParsing="false" onAction="#switchChat" selected="true" text="LOBBY">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="switchGlobalLobby" />
+                                       </toggleGroup>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="globalToggleButton" mnemonicParsing="false" onAction="#switchChat" text="GLOBAL" toggleGroup="$switchGlobalLobby" />
+                                 </children>
+                              </HBox>
+                              <TextArea fx:id="chat" editable="false" VBox.vgrow="ALWAYS" />
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <TextField fx:id="chatTextField" onAction="#sendChatMessage" promptText="type your message here ..." HBox.hgrow="ALWAYS">
+                                       <cursor>
+                                          <Cursor fx:constant="NONE" />
+                                       </cursor>
+                                    </TextField>
+                                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Online:" />
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="refreshButtonFriends" mnemonicParsing="false" onAction="#refreshFriends" text="refresh" />
+                                 </children>
+                              </HBox>
+                              <ListView fx:id="friendListView" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <ToolBar VBox.vgrow="ALWAYS">
+                    <items>
+                        <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
+                        <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
+                      <Button mnemonicParsing="false" onAction="#switchToGame" text="Go To Game" />
+                    </items>
+                  </ToolBar>
                </children>
-            </AnchorPane>
-            <ToolBar prefHeight="40.0" prefWidth="200.0">
-              <items>
-                  <TextField fx:id="chatTextField" onAction="#sendChatMessage" prefHeight="31.0" prefWidth="274.0" promptText="type your message here ..." />
-                <Button mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
-              </items>
-            </ToolBar>
-         </children>
-      </VBox>
-   </right>
-   <left>
-      <TitledPane fx:id="lobbyContainer" alignment="CENTER" animated="false" contentDisplay="CENTER" prefHeight="730.0" prefWidth="391.0" text="L O B B Y   L I S T" textAlignment="CENTER" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="579.0" prefWidth="390.0">
-               <children>
-                  <Button fx:id="selectLobbyButton" layoutX="147.0" layoutY="536.0" mnemonicParsing="false" onAction="#joinSelectedLobby" text="select Lobby" />
-                  <Button fx:id="createLobbyButton" layoutX="289.0" layoutY="600.0" mnemonicParsing="false" onAction="#createLobby" text="createLobby" />
-                  <TextField fx:id="createLobbyTextField" layoutX="14.0" layoutY="600.0" onAction="#createLobby" prefHeight="26.0" prefWidth="263.0" promptText="Please enter new lobby..." />
-                  <Label fx:id="lobbyLabel" layoutX="162.0" layoutY="296.0" />
-                  <Button fx:id="refreshButton" layoutX="275.0" layoutY="76.0" mnemonicParsing="false" onAction="#refreshLobbies" prefHeight="30.0" prefWidth="95.0" text="refresh" />
-                  <ListView fx:id="lobbyListView" layoutX="23.0" layoutY="108.0" onMouseClicked="#listViewSelectedLobby" prefHeight="420.0" prefWidth="347.0" />
-                  <Label fx:id="selectedLobbyLabel" alignment="CENTER" layoutX="65.0" layoutY="14.0" prefHeight="62.0" prefWidth="258.0" text="SelectedLobby" textFill="#ef0d0d">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-        </content>
-         <font>
-            <Font size="20.0" />
-         </font>
-      </TitledPane>
-   </left>
-   <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <ListView fx:id="friendListView" layoutX="27.0" layoutY="150.0" prefHeight="534.0" prefWidth="283.0" />
-            <Button fx:id="refreshButtonFriends" layoutX="258.0" layoutY="115.0" mnemonicParsing="false" onAction="#refreshFriends" text="refresh" />
-         </children>
-      </AnchorPane>
-   </center>
-</BorderPane>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</Pane>
