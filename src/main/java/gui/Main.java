@@ -1,13 +1,17 @@
 package gui;
 
+import gameLogic.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import starter.Starter;
 import utility.io.CommandsToServer;
+import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
 
 import java.io.IOException;
@@ -23,15 +27,19 @@ public class Main extends Application {
   // Stage or "Window" where everything takes place
   private static Stage stage;
 
-  // Different Scenes that can be shown on the Stage and their corresponding root Panes.
+  // Different Scenes that can be shown on the Stage and their corresponding root Panes and controllers.
   private static Scene start;
   private static Pane startRoot;
+  private static StartController startController;
   private static Scene menu;
   private static Pane menuRoot;
+  private static MenuController menuController;
   private static Pane gameRoot;
   private static Scene game;
+  private static GameController gameController;
   private static Scene highscore;
   private static Pane highscoreRoot;
+  private static HighscoreController highscoreController;
 
   // Logger
   private static final Logger logger = LogManager.getLogger();
@@ -47,21 +55,36 @@ public class Main extends Application {
    */
   @Override
   public void start(Stage stage) {
-    stage.setTitle("Welcome to the Student Games");
-    stage.setOnCloseRequest(e -> exit());
-    Main.stage = stage;
+    try {
+      stage.setTitle("Welcome to the Student Games");
+      stage.setOnCloseRequest(e -> exit());
+      Main.stage = stage;
 
-    startRoot = getRoot("fxml_start.fxml");
-    start = createScene(startRoot);
+      startRoot = getLoader("fxml_start.fxml").load();
+      // startController = getLoader("fxml_start.fxml").getController();
+      start = createScene(startRoot);
 
-    menuRoot = getRoot("fxml_menu.fxml");
-    menu = createScene(menuRoot);
+      menuRoot = getLoader("fxml_menu.fxml").load();
+      // menuController = getLoader("fxml_menu.fxml").getController();
+      menu = createScene(menuRoot);
 
-    highscoreRoot = getRoot("fxml_highscore.fxml");
-    highscore = createScene(highscoreRoot);
+      highscoreRoot = getLoader("fxml_highscore.fxml").load();
+      // highscoreController = getLoader("fxml_highscore.fxml").getController();
+      highscore = createScene(highscoreRoot);
 
-    displayStart(); // Display the first Scene.
-    stage.centerOnScreen();
+      gameRoot = getLoader("fxml_game.fxml").load();
+      //gameController = getLoader("fxml_game.fxml").getController();
+      game = createScene(gameRoot);
+
+      displayStart(); // Display the first Scene.
+      stage.centerOnScreen();
+
+      Starter.connect(); // Tells the Starter that the gui is ready and the client can connect to the server
+
+    } catch (Exception e) {
+      logger.error("Failed to load scenes",e);
+      exit();
+    }
   }
 
   /**
@@ -80,30 +103,12 @@ public class Main extends Application {
   }
 
   /**
-   * Creates a new GameScene and Displays it on the Screen.
-   * Note: This will overwrite any visual changes to any previous Game scenes!
-   * Use this method when a new game is created.
-   */
-  public static void displayNewGame() {
-    gameRoot = getRoot("fxml_game.fxml");
-    game = createScene(gameRoot);
-    showScene(game, gameRoot);
-    GameController.hasJoinedChat = true;
-  }
-
-  /**
    * Displays the Game scene on stage.
-   * Note: This Method will not overwrite any visual changes to previously shown Game scenes!
-   * Use this method to switch scenes while a game is ongoing.
-   * If this method is called and no Game scene has yet been created, this method will create a new game scene.
    */
   public static void displayGame() {
-    if (game != null && gameRoot != null) {
-      showScene(game, gameRoot);
-    } else {
-      displayNewGame();
-      logger.warn("Tried to display 'Game' Scene but it was 'null' -> created new scene instead");
-    }
+    showScene(game, gameRoot);
+    gameController.printChatMessage("I AM A CONTROLLER");
+    System.out.println("done");
   }
 
   /**
@@ -150,16 +155,9 @@ public class Main extends Application {
    * @param fxml String with the name of the fxml file
    * @return the root pane of the given fxml file
    */
-  private static Pane getRoot(String fxml) {
-    try {
-      return new FXMLLoader(Objects.requireNonNull(Main.class.getClassLoader().getResource(fxml))).load();
-    } catch (IOException e) {
-      logger.error("Failed to load: " + fxml, e);
-      exit();
-    }
-    return null;
+  private static FXMLLoader getLoader(String fxml) throws NullPointerException {
+    return new FXMLLoader(Objects.requireNonNull(Main.class.getClassLoader().getResource(fxml)));
   }
-
 
   /**
    * Controls the boundaries of the content in a scene. Ensures that nothing moves outside the window when resizing
@@ -181,9 +179,42 @@ public class Main extends Application {
   /**
    * Sends a quit command to the server. This will close the Program!
    */
-  private static void exit() {
+  public static void exit() {
     SendToServer sendToServer = new SendToServer();
     sendToServer.send(CommandsToServer.QUIT, "");
   }
 
+
+  // --------------------------- GETTERS AND SETTERS -------------------------------------- //
+  public static StartController getStartController() {
+    return startController;
+  }
+
+  public static MenuController getMenuController() {
+    return menuController;
+  }
+
+  public static GameController getGameController() {
+    return gameController;
+  }
+
+  public static HighscoreController getHighscoreController() {
+    return highscoreController;
+  }
+
+  public static void setGameController(GameController gameController) {
+    Main.gameController = gameController;
+  }
+
+  public static void setStartController(StartController startController) {
+    Main.startController = startController;
+  }
+
+  public static void setMenuController(MenuController menuController) {
+    Main.menuController = menuController;
+  }
+
+  public static void setHighscoreController(HighscoreController highscoreController) {
+    Main.highscoreController = highscoreController;
+  }
 }

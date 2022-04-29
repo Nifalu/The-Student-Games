@@ -157,7 +157,7 @@ public class SendToServer {
    * Sends the message to the server
    * @param msg String
    */
-  private void sendTo(String msg) {
+  private synchronized void sendTo(String msg) {
     try {
       ClientManager.getOut().write(msg);
       ClientManager.getOut().newLine();

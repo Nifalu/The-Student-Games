@@ -10,6 +10,7 @@ public class Launcher {
 
   /**
    * launches the GUI
+   *
    * @param args args
    */
   public static void main(String[] args) {

@@ -33,6 +33,10 @@ public class ServerReceive implements Runnable {
    */
   @Override
   public void run() {
+    process();
+  }
+
+  private synchronized void process() {
     // Incoming message is split into command (cmd) and message (msg)
     String[] input;
     String msg;
@@ -221,7 +225,7 @@ public class ServerReceive implements Runnable {
           }
         } catch (Exception e) {
           sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT,
-                  msg + " is not a number");
+              msg + " is not a number");
         }
 
       case QUIZ: // speaks to the quiz

@@ -1,16 +1,15 @@
 package client;
 
-import gui.HighscoreController;
-import gui.StartController;
-import gui.GameController;
+import gui.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utility.io.CommandsToClient;
-import gui.MenuController;
 
 
 /**
  * ClientReceive processes and validates incoming Messages.
  */
-public class ClientReceive implements Runnable{
+public class ClientReceive implements Runnable {
 
   String line;
 
@@ -20,12 +19,18 @@ public class ClientReceive implements Runnable{
   ClientReceive(String line) {
     this.line = line;
   }
+  Logger logger = LogManager.getLogger();
+
   /**
    * Takes a String and splits it at the first "--". The first part is the command and is validated
    * with the command enum before it's processed in a switch-case.
    */
   @Override
   public void run() {
+    process();
+  }
+
+  private synchronized void process() {
     // splits the line:
     String msg;
     String[] input;
@@ -35,7 +40,8 @@ public class ClientReceive implements Runnable{
     if (input.length > 0) {
       msg = input[1];
     } else {
-      msg = line;
+      logger.warn("received command with no message");
+      return;
     }
 
     // validates the Command
@@ -62,47 +68,53 @@ public class ClientReceive implements Runnable{
 
       case CHAT: // Sends a Chat into the console and also to the chat-gui
         System.out.println(msg);
-        GameController.receiveFromProtocol.setMessage(msg); // the chat field in the game receives the message
-        MenuController.receiveFromProtocol.setMessage(msg);
-        break;
+        //GameController.receiveFromProtocol.setMessage(msg); // the chat field in the game receives the message
+        //MenuController.receiveFromProtocol.setMessage(msg);
 
-      case LOBBYCHAT: // Sends a Chat into the console and also to the chat-gui
-        System.out.println(msg);
-        GameController.receiveFromProtocol.setMessage(msg); // the chat field in the game receives the message
+        Main.getGameController().printChatMessage(msg);
+        Main.getMenuController().printChatMessage(msg);
+
         break;
 
       case PRINTGUISTART:
         System.out.println(msg);
-        StartController.receiveFromProtocol.setMessage(msg);
+        //StartController.receiveFromProtocol.setMessage(msg);
+        Main.getStartController().printMsg(msg);
         break;
 
       case PRINTGUIGAMETRACKER:
-        GameController.receiveFromProtocolGameUpdate.setMessage(msg);
+        //GameController.receiveFromProtocolGameUpdate.setMessage(msg);
+        Main.getGameController().printGameUpdate(msg);
         outPrint(msg);
         break;
 
       case GUIMOVECHARACTER:
-        GameController.receiveNewPlayerPosition.setMessage(msg);
+        //GameController.receiveNewPlayerPosition.setMessage(msg);
+        Main.getGameController().movePlayer(msg);
         break;
 
       case PRINTLOBBIESGUI:
-        MenuController.lobbyReceiver.setMessage(msg);
+        //MenuController.lobbyReceiver.setMessage("split " + msg);
+        Main.getMenuController().printLobbies(msg);
         break;
 
       case PRINTWINNERSGUI:
-        HighscoreController.winnerReceiver.setMessage(msg);
+        //HighscoreController.winnerReceiver.setMessage(msg);
+        Main.getHighscoreController().printLobbies(msg);
         break;
 
       case PRINTFRIENDSGUI:
-        MenuController.friendsReceiver.setMessage(msg);
+        //MenuController.friendsReceiver.setMessage(msg);
+        Main.getMenuController().printFriends(msg);
         break;
 
       case DICEDICELEFT:
         GameController.diceDiceLeft = Integer.parseInt(msg);
         break;
-      }
     }
-  public void outPrint (String msg) {
+  }
+
+  public void outPrint(String msg) {
     String[] msgs = msg.split("§");
     for (String s : msgs) {
       System.out.println(s);

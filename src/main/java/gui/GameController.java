@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.stage.Stage;
 import utility.io.CommandsToServer;
 import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
@@ -19,7 +18,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import static java.lang.Thread.sleep;
 
 /**
  * This is the controller for game.fxml
@@ -27,19 +25,12 @@ import static java.lang.Thread.sleep;
 
 public class GameController implements Initializable {
   private final SendToServer sendToServer = new SendToServer();
-  private static String msg; // used to update the chat
   public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
   public static ReceiveFromProtocol receiveFromProtocolGameUpdate = new ReceiveFromProtocol();
   public static ReceiveFromProtocol receiveNewPlayerPosition = new ReceiveFromProtocol();
-  public static boolean hasJoinedChat = false;
   boolean writeInGlobalChat = false;
   boolean isReady = false;
   public static boolean gameHasStarted = false;
-
-  public static String gameMove = "Hi! This is the game tracker."; // used to update the Game Tracker
-  private static String gameMoveTmp = "hello!";
-
-  private String moveToField = "";
 
   public static int diceDiceLeft = 3;
 
@@ -51,9 +42,6 @@ public class GameController implements Initializable {
 
   @FXML
   private TextArea chat;
-
-  @FXML
-  private Button quitButton;
 
   @FXML
   private ToggleButton globalToggleButton;
@@ -124,6 +112,7 @@ public class GameController implements Initializable {
     chatTextField.clear();
   }
 
+
   /**
    * method is used to print messages to the chat
    *
@@ -146,7 +135,11 @@ public class GameController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
-        // sets the player figures to the start-field
+    resetGame();
+    createPlayingField();
+    Main.setGameController(this);
+
+    // sets the player figures to the start-field
         /*System.out.println("Y: parent center: " + testToolBar.getTranslateY());
         System.out.println("Y: starterPane parents max " + starterPaneBlue.getBoundsInParent().getMaxY());
         System.out.println("Y: starterPane translate " + starterPaneBlue.getTranslateY());
@@ -157,47 +150,26 @@ public class GameController implements Initializable {
         System.out.println("parent getCenter: " + playerBlue.getBoundsInParent().getCenterY());
         playerBlue.setTranslateY(testToolBar.getTranslateY());*/
 
-        //playerRed.setTranslateX(starterPaneRed.getTranslateX());
-        //playerRed.setTranslateY(starterPaneRed.getTranslateY());
-
-    playerBlue.setTranslateY(594);
-    playerBlue.setTranslateX(80);
-    playerRed.setTranslateY(594);
-    playerRed.setTranslateX(120);
-    playerYellow.setTranslateY(594);
-    playerYellow.setTranslateX(40);
-    playerGreen.setTranslateY(594);
-
-    // creates the Hashmap which saves the row and column of each field
-    int counter = 1;
-    for (int y = 8; y >= 0; y--) {
-      if (y % 2 == 0) {
-        for (int x = 0; x <= 9; x++) {
-          fields.put(counter, new Integer[]{x, y});
-          counter += 1;
-        }
-      } else {
-        for (int x = 9; x >= 0; x--) {
-          fields.put(counter, new Integer[]{x, y});
-          counter += 1;
-        }
-      }
-    }
+    //playerRed.setTranslateX(starterPaneRed.getTranslateX());
+    //playerRed.setTranslateY(starterPaneRed.getTranslateY());
 
 
+    /*
     // THREAD 1 : receive chat messages
     // A new Thread is made that waits for incoming messages
     // The thread will also wait for the game to start and then "remove" the start and ready button
     Thread waitForChatThread = new Thread(() -> {
-      while (!hasJoinedChat) {
+      /*while (!hasJoinedChat) {
         try {
           sleep(10);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
       }
+      // Main.receiveChat.setMessage("You have joined the chat.");
 
-      receiveFromProtocol.setMessage("You have joined the chat.");
+
+
       while (true) {
         msg = receiveFromProtocol.receive(); // blocks until a message is received
         Platform.runLater(() -> printChatMessage(msg)); // a javafx "thread" that calls the print method
@@ -225,7 +197,6 @@ public class GameController implements Initializable {
       }
     });
 
-
     // start threads
     waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
     waitForChatThread.start(); // start thread
@@ -233,19 +204,56 @@ public class GameController implements Initializable {
     waitForGameUpdatesThread.start();
     waitForCharacterMovement.setName("GuiWaitForCharacterMovements");
     waitForCharacterMovement.start();
+
+     */
   }
+
+  private void createPlayingField() {
+    // creates the Hashmap which saves the row and column of each field
+    Platform.runLater(() -> {
+      int counter = 1;
+      for (int y = 8; y >= 0; y--) {
+        if (y % 2 == 0) {
+          for (int x = 0; x <= 9; x++) {
+            fields.put(counter, new Integer[]{x, y});
+            counter += 1;
+          }
+        } else {
+          for (int x = 9; x >= 0; x--) {
+            fields.put(counter, new Integer[]{x, y});
+            counter += 1;
+          }
+        }
+      }
+    });
+  }
+
+  public void resetGame() {
+    Platform.runLater(() -> {
+      playerBlue.setTranslateY(594);
+      playerBlue.setTranslateX(80);
+      playerRed.setTranslateY(594);
+      playerRed.setTranslateX(120);
+      playerYellow.setTranslateY(594);
+      playerYellow.setTranslateX(40);
+      playerGreen.setTranslateY(594);
+    });
+  }
+
 
   /**
    * this method is used to print game updates to the game tracker in the GUI
    *
    * @param gameMove String
    */
-  private void printGameUpdate(String gameMove) {
+  public void printGameUpdate(String gameMove) {
     String[] splitted = gameMove.split("§");
-    for (String s : splitted) {
-      gameTracker.appendText(s);
-      gameTracker.appendText("\n");
-    }
+    Platform.runLater(() -> {
+      for (String s : splitted) {
+        gameTracker.appendText(s);
+        gameTracker.appendText("\n");
+      }
+    });
   }
 
   /**
@@ -253,11 +261,7 @@ public class GameController implements Initializable {
    */
   @FXML
   public void quitGame() {
-    sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
-    Stage stage = (Stage) quitButton.getScene().getWindow();
-    stage.close();
-    sendToServer.send(CommandsToServer.QUIT, msg);
-
+    Main.exit();
   }
 
 
@@ -280,36 +284,38 @@ public class GameController implements Initializable {
     sendToServer.send(CommandsToServer.DICEDICE, ""); // throws dicedice
     sendToServer.send(CommandsToServer.DICEDICELEFT, ""); // checks how many dicedice are left
 
-    // disables already used dicedices
-    if (diceDiceLeft == 3) {
-      fourDice1.setDisable(false);
-      fourDice1.setOpacity(1);
-      fourDice2.setDisable(false);
-      fourDice2.setOpacity(1);
-      fourDice3.setDisable(false);
-      fourDice3.setOpacity(1);
-    } else if (diceDiceLeft == 2) {
-      fourDice1.setDisable(false);
-      fourDice1.setOpacity(1);
-      fourDice2.setDisable(false);
-      fourDice2.setOpacity(1);
-      fourDice3.setDisable(true);
-      fourDice3.setOpacity(0.2);
-    } else if (diceDiceLeft == 1) {
-      fourDice1.setDisable(false);
-      fourDice1.setOpacity(1);
-      fourDice2.setDisable(true);
-      fourDice2.setOpacity(0.2);
-      fourDice3.setDisable(true);
-      fourDice3.setOpacity(0.2);
-    } else {
-      fourDice1.setDisable(true);
-      fourDice1.setOpacity(0.2);
-      fourDice2.setDisable(true);
-      fourDice2.setOpacity(0.2);
-      fourDice3.setDisable(true);
-      fourDice3.setOpacity(0.2);
-    }
+    Platform.runLater(() -> {
+      // disables already used dicedices
+      if (diceDiceLeft == 3) {
+        fourDice1.setDisable(false);
+        fourDice1.setOpacity(1);
+        fourDice2.setDisable(false);
+        fourDice2.setOpacity(1);
+        fourDice3.setDisable(false);
+        fourDice3.setOpacity(1);
+      } else if (diceDiceLeft == 2) {
+        fourDice1.setDisable(false);
+        fourDice1.setOpacity(1);
+        fourDice2.setDisable(false);
+        fourDice2.setOpacity(1);
+        fourDice3.setDisable(true);
+        fourDice3.setOpacity(0.2);
+      } else if (diceDiceLeft == 1) {
+        fourDice1.setDisable(false);
+        fourDice1.setOpacity(1);
+        fourDice2.setDisable(true);
+        fourDice2.setOpacity(0.2);
+        fourDice3.setDisable(true);
+        fourDice3.setOpacity(0.2);
+      } else {
+        fourDice1.setDisable(true);
+        fourDice1.setOpacity(0.2);
+        fourDice2.setDisable(true);
+        fourDice2.setOpacity(0.2);
+        fourDice3.setDisable(true);
+        fourDice3.setOpacity(0.2);
+      }
+    });
   }
 
   /**
@@ -323,6 +329,7 @@ public class GameController implements Initializable {
    * starts the game by pressing on the start button
    */
   public void startTheGame() {
+    resetGame();
     sendToServer.send(CommandsToServer.START, null);
     gameHasStarted = true;
   }
@@ -335,10 +342,10 @@ public class GameController implements Initializable {
     if (!isReady) {
       isReady = true;
       sendToServer.send(CommandsToServer.READY, null);
-      readyButton.setText("UNREADY?");
+      Platform.runLater(() -> readyButton.setText("UNREADY?"));
     } else {
       sendToServer.send(CommandsToServer.UNREADY, null);
-      readyButton.setText("READY?");
+      Platform.runLater(() -> readyButton.setText("READY?"));
       isReady = false;
     }
   }
@@ -348,10 +355,12 @@ public class GameController implements Initializable {
    * (it doesn't remove the buttons but disables them and sets the opacity to 0)
    */
   public void disableStartAndReadyButton() {
-    startButton.setDisable(true);
-    startButton.setOpacity(0);
-    readyButton.setDisable(true);
-    readyButton.setOpacity(0);
+    Platform.runLater(() -> {
+      startButton.setDisable(true);
+      startButton.setOpacity(0);
+      readyButton.setDisable(true);
+      readyButton.setOpacity(0);
+    });
   }
 
   /**
@@ -431,9 +440,10 @@ public class GameController implements Initializable {
 
 
     // moves the player to the new coordinates
-    playerToMove.setTranslateX(newPos[0] - 11);
-    playerToMove.setTranslateY(newPos[1] - 34);
-
+    Platform.runLater(() -> {
+      playerToMove.setTranslateX(newPos[0] - 11);
+      playerToMove.setTranslateY(newPos[1] - 34);
+    });
   }
 }
 

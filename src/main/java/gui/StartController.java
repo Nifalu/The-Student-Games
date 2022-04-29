@@ -43,8 +43,10 @@ public class StartController implements Initializable {
    *
    * @param msg message
    */
+  @FXML
   public void printMsg(String msg) {
-    showText.setText(msg);
+    Platform.runLater(() -> showText.setText(msg));
+    // showText.setText(msg);
   }
 
 
@@ -59,6 +61,10 @@ public class StartController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
+    Main.setStartController(this);
+
+    /*
     // A new Thread is made which waits
     Thread waitForMsgChange = new Thread(() -> {
       while (true) {
@@ -68,6 +74,8 @@ public class StartController implements Initializable {
     });
     waitForMsgChange.setName("GuiStartWaitForMsgChange"); // set name of thread
     waitForMsgChange.start(); // start thread
+
+     */
   }
 
 
@@ -80,7 +88,7 @@ public class StartController implements Initializable {
   }
 
   public void switchToGame() {
-    Main.displayNewGame();
+    Main.displayGame();
   }
 
   public void switchToHighscore() {

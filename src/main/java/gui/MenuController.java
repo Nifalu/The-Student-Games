@@ -29,12 +29,12 @@ public class MenuController implements Initializable {
 
   private final SendToServer sendToServer = new SendToServer();
   private static String msg;
-  public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
   public static boolean hasJoinedChat = false;
   public ToggleGroup switchGlobalLobby;
   boolean writeInGlobalChat = false;
-  public static ReceiveFromProtocol lobbyReceiver = new ReceiveFromProtocol();
-  public static ReceiveFromProtocol friendsReceiver = new ReceiveFromProtocol();
+  // public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+  // public static ReceiveFromProtocol lobbyReceiver = new ReceiveFromProtocol();
+  // public static ReceiveFromProtocol friendsReceiver = new ReceiveFromProtocol();
 
   public static String lobbyList;
 
@@ -104,20 +104,28 @@ public class MenuController implements Initializable {
    */
   @FXML
   public void printChatMessage(String msg) {
-    chat.appendText(msg);
-    chat.appendText("\n");
+    Platform.runLater(() -> {
+      chat.appendText(msg);
+      chat.appendText("\n");
+    });
   }
 
   @FXML
-  public void printLobbies(String[] lobbies) {
-    lobbyListView.getItems().clear();
-    lobbyListView.getItems().addAll(lobbies);
+  public void printLobbies(String lobbies) {
+    String[] splittedLobbies = splittedString(lobbies);
+    Platform.runLater(() -> {
+      lobbyListView.getItems().clear();
+      lobbyListView.getItems().addAll(splittedLobbies);
+    });
   }
 
   @FXML
-  public void printFriends(String[] friends) {
-    friendListView.getItems().clear();
-    friendListView.getItems().addAll(friends);
+  public void printFriends(String friends) {
+    String[] splittedFriends = splittedLobbies(friends);
+    Platform.runLater(() -> {
+      friendListView.getItems().clear();
+      friendListView.getItems().addAll(splittedFriends);
+    });
   }
 
 
@@ -131,8 +139,13 @@ public class MenuController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
+    Main.setMenuController(this);
+
+
     selectedLobbyLabel.setText("Please create or choose a lobby.");
 
+    /*
     Thread lobbyListThread = new Thread(() -> {
       while (true) {
 
@@ -157,13 +170,15 @@ public class MenuController implements Initializable {
     // A new Thread is made that waits for incoming messages
     Thread waitForChatThread = new Thread(() -> {
 
-      while (!hasJoinedChat) {
+      /*while (!hasJoinedChat) {
         try {
           sleep(10);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
       }
+
+
 
 
       receiveFromProtocol.setMessage("You have joined the chat.");
@@ -180,6 +195,8 @@ public class MenuController implements Initializable {
     lobbyListThread.start();
     waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
     waitForChatThread.start(); // start thread
+
+     */
   }
 
   /**
@@ -192,6 +209,8 @@ public class MenuController implements Initializable {
     stage.close();
     sendToServer.send(CommandsToServer.QUIT, msg);
   }
+
+
 
 
   /**
@@ -212,7 +231,7 @@ public class MenuController implements Initializable {
    */
 
   public void switchToGame() {
-    Main.displayNewGame();
+    Main.displayGame();
   }
 
   public void switchToHighscore() {
@@ -251,15 +270,15 @@ public class MenuController implements Initializable {
   public void joinSelectedLobby() {
     String selectedLobby = listViewSelectedLobby();
     if (selectedLobby == null) {
-      selectedLobbyLabel.setText("Please select a lobby.");
+      Platform.runLater(() -> selectedLobbyLabel.setText("Please select a lobby."));
     } else {
       String lobbyNumber = selectedLobby.substring(0, 1);
       try {
         Integer.parseInt(lobbyNumber);
         sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
-        selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber);
+        Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
       } catch (Exception e) {
-        selectedLobbyLabel.setText("Lobby needs to be open.");
+        Platform.runLater(() -> selectedLobbyLabel.setText("Lobby needs to be open."));
       }
     }
   }
@@ -270,6 +289,6 @@ public class MenuController implements Initializable {
     sendToServer.send(CommandsToServer.CREATELOBBY, lobbyName);
     sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
     refreshLobbies(actionEvent);
-    createLobbyTextField.clear();
+    Platform.runLater(() -> createLobbyTextField.clear());
   }
 }

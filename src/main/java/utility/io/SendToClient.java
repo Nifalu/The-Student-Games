@@ -106,7 +106,7 @@ public class SendToClient {
    * @param recipient ClientHandler
    * @param msg       String
    */
-  private void sendTo(ClientHandler recipient, String msg) {
+  private synchronized void sendTo(ClientHandler recipient, String msg) {
     try {
       recipient.getOut().write(msg);
       recipient.getOut().newLine();

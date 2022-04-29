@@ -12,13 +12,14 @@ import utility.Exceptions;
 public class Starter {
 
   private static final Logger logger = LogManager.getLogger(Starter.class);
+  private static String[] args;
 
   /**
    * Starts either the server or the client with the given arguments
    * @param args arguments
    */
   public static void main(String[] args) {
-
+    Starter.args = args;
 
     if (args.length < 2) {
       Exceptions.StarterArgumentError();
@@ -45,26 +46,35 @@ public class Starter {
         logger.info("------------------------Starting client---------------------------");
         logger.info("------------------------------------------------------------------");
 
-        String[] address = args[1].split(":", 2);
-        if (address.length > 1) {
-          if (isPortAllowed(address[1])) {
-            if (args.length > 2) {
-              // Start the client with the given username
-              logger.info("connecting client to: " + address[0] + ":" + Integer.parseInt(address[1]) + "with username: " + args[2]);
-              ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), args[2]);
-            } else {
-              // Start the client with the users Home Directory Name as username
-              logger.info("connecting client to: " + address[0] + ":" + Integer.parseInt(address[1]) + "with username: user.name" );
-              ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), System.getProperty("user.name"));
-            }
-            // Starts the GUI
-            logger.info("launching gui");
-            gui.Launcher.main(new String[0]);
-          }
-        }
-        break;
+        // Starts the GUI
+        Thread guiStarter = new Thread(() -> gui.Launcher.main(new String[0]));
+        guiStarter.start();
+        guiStarter.setName("guiStarterThread");
+
+
     }
   }
+
+  public static void connect() {
+    String[] address = args[1].split(":", 2);
+    if (address.length > 1) {
+      if (isPortAllowed(address[1])) {
+        if (args.length > 2) {
+          // Start the client with the given username
+          logger.info("connecting client to: " + address[0] + ":" + Integer.parseInt(address[1]) + "with username: " + args[2]);
+          ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), args[2]);
+        } else {
+          // Start the client with the users Home Directory Name as username
+          logger.info("connecting client to: " + address[0] + ":" + Integer.parseInt(address[1]) + "with username: user.name" );
+          ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), System.getProperty("user.name"));
+        }
+      }
+    }
+  }
+
+
+
+
 
   /**
    * checks if the given port (string) is a valid port number (int) and returns true/false

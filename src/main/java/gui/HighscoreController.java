@@ -25,9 +25,12 @@ public class HighscoreController implements Initializable {
 
 
   @FXML
-  public void printLobbies(String[] winners) {
-    winnerListView.getItems().clear();
-    winnerListView.getItems().addAll(winners);
+  public void printLobbies(String winners) {
+    String[] splittedWinners = splittedString(winners);
+    Platform.runLater(() -> {
+      winnerListView.getItems().clear();
+      winnerListView.getItems().addAll(splittedWinners);
+    });
   }
 
   /**
@@ -37,6 +40,10 @@ public class HighscoreController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
+    Main.setHighscoreController(this);
+
+    /*
     Thread winnerListThread = new Thread(() -> {
       while (true) {
 
@@ -49,6 +56,8 @@ public class HighscoreController implements Initializable {
     winnerListThread.setName("winnerListThread");
     winnerListThread.start();
 
+
+     */
   }
 
   public void switchToMenu() {
@@ -56,7 +65,7 @@ public class HighscoreController implements Initializable {
   }
 
   public void switchToGame() {
-    Main.displayNewGame();
+    Main.displayGame();
   }
 
   private static String removeNewline(String str) {
