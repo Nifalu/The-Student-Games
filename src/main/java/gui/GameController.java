@@ -146,9 +146,8 @@ public class GameController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
-    // sets the player figures to the start-field
-        /*
-        System.out.println("Y: parent center: " + testToolBar.getTranslateY());
+        // sets the player figures to the start-field
+        /*System.out.println("Y: parent center: " + testToolBar.getTranslateY());
         System.out.println("Y: starterPane parents max " + starterPaneBlue.getBoundsInParent().getMaxY());
         System.out.println("Y: starterPane translate " + starterPaneBlue.getTranslateY());
         playerBlue.setTranslateX(starterPaneBlue.getBoundsInParent().getCenterX());
@@ -156,11 +155,10 @@ public class GameController implements Initializable {
         System.out.println("normal translate: " + playerBlue.getTranslateY());
         System.out.println("normal getCenter: " + playerBlue.getCenterY());
         System.out.println("parent getCenter: " + playerBlue.getBoundsInParent().getCenterY());
-        playerBlue.setTranslateY(testToolBar.getTranslateY());
-        */
+        playerBlue.setTranslateY(testToolBar.getTranslateY());*/
 
-    //playerRed.setTranslateX(starterPaneRed.getTranslateX());
-    //playerRed.setTranslateY(starterPaneRed.getTranslateY());
+        //playerRed.setTranslateX(starterPaneRed.getTranslateX());
+        //playerRed.setTranslateY(starterPaneRed.getTranslateY());
 
     playerBlue.setTranslateY(594);
     playerBlue.setTranslateX(80);
@@ -433,8 +431,8 @@ public class GameController implements Initializable {
 
 
     // moves the player to the new coordinates
-    playerToMove.setTranslateX(newPos[0] - 25);
-    playerToMove.setTranslateY(newPos[1] - 25);
+    playerToMove.setTranslateX(newPos[0] - 11);
+    playerToMove.setTranslateY(newPos[1] - 34);
 
   }
 }
