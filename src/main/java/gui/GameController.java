@@ -455,8 +455,8 @@ public class GameController implements Initializable {
 
 
         // moves the player to the new coordinates
-        playerToMove.setTranslateX(newPos[0] - 25);
-        playerToMove.setTranslateY(newPos[1] - 25);
+        playerToMove.setTranslateX(newPos[0] - 11);
+        playerToMove.setTranslateY(newPos[1] - 34);
 
     }
 }
