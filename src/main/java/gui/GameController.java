@@ -7,7 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import utility.io.CommandsToServer;
@@ -139,6 +142,23 @@ public class GameController implements Initializable {
     createPlayingField();
     Main.setGameController(this);
 
+    playerBlue.setStroke(Color.BLACK);
+    Image blue = new Image("charBlueHead.png", false);
+    playerBlue.setFill(new ImagePattern(blue));
+
+    playerRed.setStroke(Color.BLACK);
+    Image red = new Image("charRedHead.png", false);
+    playerRed.setFill(new ImagePattern(red));
+
+    playerGreen.setStroke(Color.BLACK);
+    Image green = new Image("charGreenHead.png", false);
+    playerGreen.setFill(new ImagePattern(green));
+
+    playerYellow.setStroke(Color.BLACK);
+    Image yellow = new Image("charYellowHead.png", false);
+    playerYellow.setFill(new ImagePattern(yellow));
+
+
     // sets the player figures to the start-field
         /*System.out.println("Y: parent center: " + testToolBar.getTranslateY());
         System.out.println("Y: starterPane parents max " + starterPaneBlue.getBoundsInParent().getMaxY());
@@ -231,11 +251,11 @@ public class GameController implements Initializable {
   public void resetGame() {
     Platform.runLater(() -> {
       playerBlue.setTranslateY(594);
-      playerBlue.setTranslateX(80);
+      playerBlue.setTranslateX(160);
       playerRed.setTranslateY(594);
-      playerRed.setTranslateX(120);
+      playerRed.setTranslateX(240);
       playerYellow.setTranslateY(594);
-      playerYellow.setTranslateX(40);
+      playerYellow.setTranslateX(80);
       playerGreen.setTranslateY(594);
     });
   }
@@ -441,8 +461,8 @@ public class GameController implements Initializable {
 
     // moves the player to the new coordinates
     Platform.runLater(() -> {
-      playerToMove.setTranslateX(newPos[0] - 11);
-      playerToMove.setTranslateY(newPos[1] - 34);
+      playerToMove.setTranslateX(newPos[0] - 25);
+      playerToMove.setTranslateY(newPos[1] - 30);
     });
   }
 }

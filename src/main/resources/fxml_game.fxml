@@ -19,8 +19,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-
-<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0">
          <bottom>
@@ -519,10 +518,10 @@
                               <Label layoutX="16.0" layoutY="19.0" text="1" />
                            </children>
                         </Pane>
-                        <Circle fx:id="playerGreen" fill="#61f26b" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="playerBlue" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="playerYellow" fill="#e3ff1f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="playerRed" fill="#ff441f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="playerGreen" fill="#61f26b" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="playerBlue" fill="DODGERBLUE" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="playerYellow" fill="#e3ff1f" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="playerRed" fill="#ff441f" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </GridPane>
                   <HBox minHeight="100.0" />
