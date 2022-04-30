@@ -1,6 +1,7 @@
 package gameLogic;
 
 
+import gui.GameController;
 import server.ServerManager;
 import server.User;
 import utility.io.CommandsToClient;
@@ -128,6 +129,7 @@ public class Game implements Runnable{
                 user.setIsActivelyRollingTheDice();
                 dice = Dice.specialDice();
                 lobbyBroadcastToPlayer(userToRollDice.getUsername() + " rolled a special dice and has " + userToRollDice.getSpecialDiceLeft() + " dices left");
+                sendToClient.send(userToRollDice.getClienthandler(), CommandsToClient.DICEDICELEFT, Integer.toString(userToRollDice.getSpecialDiceLeft()));
                 break;
             } else if (i == time - 1) {
                 user.setNotActivelyRollingTheDice();

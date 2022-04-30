@@ -109,7 +109,7 @@ public class ClientReceive implements Runnable {
         break;
 
       case DICEDICELEFT:
-        GameController.diceDiceLeft = Integer.parseInt(msg);
+        Main.getGameController().checkFourDiceLeft(msg);
         break;
     }
   }

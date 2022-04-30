@@ -32,7 +32,7 @@ public class GameController implements Initializable {
   boolean isReady = false;
   public static boolean gameHasStarted = false;
 
-  public static int diceDiceLeft = 3;
+  public int diceDiceLeft = 3;
 
   public static HashMap<Integer, Integer[]> fields = new HashMap<>();
 
@@ -281,26 +281,27 @@ public class GameController implements Initializable {
    * once a dice has been clicked, it will be disabled and turn transparent
    */
   public void throwFourDice() {
-    sendToServer.send(CommandsToServer.DICEDICE, ""); // throws dicedice
-    sendToServer.send(CommandsToServer.DICEDICELEFT, ""); // checks how many dicedice are left
+    sendToServer.send(CommandsToServer.DICEDICE, "");
+  }
 
-    Platform.runLater(() -> {
+  public void checkFourDiceLeft(String diceLeft) {
+    //Platform.runLater(() -> {
       // disables already used dicedices
-      if (diceDiceLeft == 3) {
+      if (diceLeft.equals("3")) {
         fourDice1.setDisable(false);
         fourDice1.setOpacity(1);
         fourDice2.setDisable(false);
         fourDice2.setOpacity(1);
         fourDice3.setDisable(false);
         fourDice3.setOpacity(1);
-      } else if (diceDiceLeft == 2) {
+      } else if (diceLeft.equals("2")) {
         fourDice1.setDisable(false);
         fourDice1.setOpacity(1);
         fourDice2.setDisable(false);
         fourDice2.setOpacity(1);
         fourDice3.setDisable(true);
         fourDice3.setOpacity(0.2);
-      } else if (diceDiceLeft == 1) {
+      } else if (diceLeft.equals("1")) {
         fourDice1.setDisable(false);
         fourDice1.setOpacity(1);
         fourDice2.setDisable(true);
@@ -315,8 +316,7 @@ public class GameController implements Initializable {
         fourDice3.setDisable(true);
         fourDice3.setOpacity(0.2);
       }
-    });
-  }
+    }//);
 
   /**
    * method throws a regular dice
