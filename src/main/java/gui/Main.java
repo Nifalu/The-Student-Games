@@ -109,6 +109,7 @@ public class Main extends Application {
     showScene(game, gameRoot);
     gameController.printChatMessage("I AM A CONTROLLER");
     System.out.println("done");
+    gameController.resetGame();
   }
 
   /**

@@ -257,6 +257,14 @@ public class GameController implements Initializable {
       playerYellow.setTranslateY(594);
       playerYellow.setTranslateX(80);
       playerGreen.setTranslateY(594);
+
+      // resets the dicedice
+      fourDice1.setDisable(false);
+      fourDice2.setDisable(false);
+      fourDice3.setDisable(false);
+      fourDice1.setOpacity(1);
+      fourDice2.setOpacity(1);
+      fourDice3.setOpacity(1);
     });
   }
 
