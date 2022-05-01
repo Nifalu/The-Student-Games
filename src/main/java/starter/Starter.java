@@ -11,7 +11,14 @@ import utility.Exceptions;
  */
 public class Starter {
 
+  /**
+   * the logger
+   */
   private static final Logger logger = LogManager.getLogger(Starter.class);
+
+  /**
+   * saves arguments in a string array
+   */
   private static String[] args;
 
   /**

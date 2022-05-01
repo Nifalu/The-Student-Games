@@ -12,12 +12,34 @@ import utility.io.SendToClient;
  */
 public class ServerReceive implements Runnable {
 
+  /**
+   * the logger
+   */
   private static final Logger logger = LogManager.getLogger(ServerReceive.class);
+
+  /**
+   * traffic logger
+   */
   private static final Logger logTraffic = LogManager.getLogger("Traffic");
+
+  /**
+   * no ping logger
+   */
   private static final Logger logTrafficNoPing = LogManager.getLogger("TrafficNoPing");
 
+  /**
+   * SendToClient object used to communicate with the client
+   */
   private final SendToClient sendToClient = new SendToClient();
+
+  /**
+   * the clients clienthandler
+   */
   private final ClientHandler client;
+
+  /**
+   * saves a line of a message
+   */
   private final String line;
 
 

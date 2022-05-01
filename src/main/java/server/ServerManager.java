@@ -14,9 +14,14 @@ import java.util.HashMap;
  */
 public class ServerManager {
 
-  // List with all Users
+  /**
+   * a list with all users
+   */
   final static HashMap<Integer, User> userlist = new HashMap<>();
-  // List with all currently Active Clients (connected ClientHandlers)
+
+  /**
+   * a list with all currently active clients (connected ClientHandlers)
+   */
   final static ArrayList<server.ClientHandler> activeClientList = new ArrayList<>();
 
 

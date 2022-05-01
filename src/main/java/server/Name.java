@@ -9,8 +9,20 @@ import utility.io.ReceiveFromProtocol;
  * if a certain name is available and if not propose an alternative.
  */
 public class Name {
+
+  /**
+   * knows the clienthandler
+   */
   private final ClientHandler clientHandler;
+
+  /**
+   * SendToClient object used to communicate with the client
+   */
   private final SendToClient sendToClient = new SendToClient();
+
+  /**
+   * ReceiveFromProtocol object used to communicate with the protocol
+   */
   protected final ReceiveFromProtocol receiveFromClient = new ReceiveFromProtocol();
 
   /**

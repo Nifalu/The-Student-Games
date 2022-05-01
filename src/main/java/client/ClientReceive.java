@@ -22,6 +22,10 @@ public class ClientReceive implements Runnable {
   ClientReceive(String line) {
     this.line = line;
   }
+
+  /**
+   * the logger
+   */
   Logger logger = LogManager.getLogger(ClientReceive.class);
 
   /**

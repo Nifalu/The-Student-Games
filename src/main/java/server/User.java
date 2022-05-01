@@ -10,19 +10,74 @@ import java.util.Random;
  */
 public class User {
 
+    /**
+     * the users clienthandler
+     */
     private final ClientHandler clienthandler;
+
+    /**
+     * the users username
+     */
     private String username;
+
+    /**
+     * notes whether the user has connected before
+     */
     private boolean firstTime = true;
+
+    /**
+     * the users district
+     */
     private final int district;
+
+    /**
+     * notes whether the user is ready to play or not
+     */
     private boolean isReady;
+
+    /**
+     * the users current lobby
+     */
     private gameLogic.Lobby lobby;
+
+    /**
+     * the field on the board
+     */
     private int playingField;
+
+    /**
+     * notes whether the dice has been rolled or not
+     */
     private boolean rolledDice;
+
+    /**
+     * notes how many dicedice are left
+     */
     private int specialDiceLeft = 3;
+
+    /**
+     * notes whether the user is playing
+     */
     private boolean isPlaying;
+
+    /**
+     * notes whether the user is actively rolling the dice or not
+     */
     private boolean isNotActivelyRollingTheDice;
+
+    /**
+     * the clients number on the userlist
+     */
     private int userListNumber;
+
+    /**
+     * the color of the users player character
+     */
     public String characterColor;
+
+    /**
+     * notes whether it's game over for the user or not
+     */
     public boolean gameOver;
 
     /**
