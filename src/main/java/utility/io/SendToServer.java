@@ -86,7 +86,7 @@ public class SendToServer {
         break;
 
       case PRINTUSERLIST:
-          sendTo("PRINTUSERLIST--");
+        sendTo("PRINTUSERLIST--");
         break;
 
       case PRINTLOBBIES:
@@ -153,15 +153,15 @@ public class SendToServer {
         sendTo("ECHO--" + msg);
         break;
 
-      case
-          DICEDICELEFT:
+      case DICEDICELEFT:
         sendTo("DICEDICELEFT--" + msg);
-      break;
+        break;
     }
   }
 
   /**
    * Sends the message to the server
+   *
    * @param msg String
    */
   private synchronized void sendTo(String msg) {

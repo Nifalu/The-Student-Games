@@ -38,10 +38,11 @@ public class SceneSizeChangeListener implements ChangeListener<Number> {
 
   /**
    * creates a new SceneSizeChangeListener object
-   * @param scene Scene
-   * @param ratio double
-   * @param initHeight double
-   * @param initWidth double
+   *
+   * @param scene       Scene
+   * @param ratio       double
+   * @param initHeight  double
+   * @param initWidth   double
    * @param contentPane Pane
    */
   public SceneSizeChangeListener(Scene scene, double ratio, double initHeight, double initWidth, Pane contentPane) {
@@ -53,15 +54,11 @@ public class SceneSizeChangeListener implements ChangeListener<Number> {
   }
 
   /**
+   * waits for changes in the scene size
    *
-   *  waits for changes in the scene size
-   *
-   * @param observableValue
-   *            The {@code ObservableValue} which value changed
-   * @param oldValue
-   *            The old value
-   * @param newValue
-   *            The new value
+   * @param observableValue The {@code ObservableValue} which value changed
+   * @param oldValue        The old value
+   * @param newValue        The new value
    */
   @Override
   public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {

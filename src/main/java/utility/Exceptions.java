@@ -9,8 +9,9 @@ public class Exceptions {
 
   /**
    * When the given server address is not valid
+   *
    * @param address serveraddress
-   * @param port port
+   * @param port    port
    */
   public static void invalidServerAddress(String address, int port) {
     System.out.println("-----------------------------");
@@ -33,6 +34,7 @@ public class Exceptions {
 
   /**
    * When given the port number is not allowed
+   *
    * @param port int port
    */
   public static void StarterIllegalPortNumber(int port) {
@@ -44,7 +46,8 @@ public class Exceptions {
 
   /**
    * When the given port number is not a number.
-   * @param e NumberFormatException
+   *
+   * @param e    NumberFormatException
    * @param port int port
    */
   public static void StarterCannotResolvePortNumber(NumberFormatException e, String port) {
@@ -58,7 +61,8 @@ public class Exceptions {
 
   /**
    * When there was an error starting the server
-   * @param e IOException
+   *
+   * @param e    IOException
    * @param port int port
    */
   public static void failedToCreateServer(IOException e, int port) {

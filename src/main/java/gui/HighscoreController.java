@@ -37,6 +37,7 @@ public class HighscoreController implements Initializable {
 
   /**
    * prints out the lobbies winners
+   *
    * @param winners String
    */
   @FXML
@@ -90,6 +91,7 @@ public class HighscoreController implements Initializable {
 
   /**
    * removes the new line attached to a string
+   *
    * @param str String
    * @return String without a new line attached
    */
@@ -99,6 +101,7 @@ public class HighscoreController implements Initializable {
 
   /**
    * splits the string at §
+   *
    * @param s String
    * @return String[] containing the splitted string
    */

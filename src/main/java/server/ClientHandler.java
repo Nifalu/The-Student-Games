@@ -32,12 +32,6 @@ public class ClientHandler implements Runnable {
   private Socket socket; // connection to the client
 
   /**
-   * the input stream
-   * sends data
-   */
-  private BufferedReader in; // send data
-
-  /**
    * the output stream
    * receives data
    */
@@ -94,14 +88,15 @@ public class ClientHandler implements Runnable {
 
   /**
    * creates a new ClientHandler
+   *
    * @param socket Socket
    */
   public ClientHandler(Socket socket) {
     try {
       this.socket = socket;
 
-      // creating Streams
-      this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+      // send data
+      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
       this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
 
       // Gets the Home-directory name of the client and creates a User
@@ -123,7 +118,6 @@ public class ClientHandler implements Runnable {
       this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
       connectionMonitor = new Thread(connectionToClientMonitor);
       connectionMonitor.setName("connectionMonitor  Thread");
-
 
 
     } catch (IOException e) {
@@ -186,6 +180,7 @@ public class ClientHandler implements Runnable {
 
   /**
    * sets the bw (BufferedWriter)
+   *
    * @param bw BufferedWriter
    */
   public void setBufferedWriter(BufferedWriter bw) {
@@ -213,7 +208,7 @@ public class ClientHandler implements Runnable {
   // THIS CONSTRUCTOR CREATES A FAKE CLIENTHANDLER FOR UNIT TESTING
   // IT CANNOT RECEIVE AND DOES PRINT TO CONSOLE INSTEAD OF SENDING TO A CLIENT
   public ClientHandler(String username) {
-    this.user = ServerManager.connect(this,username);
+    this.user = ServerManager.connect(this, username);
     this.out = new BufferedWriter(new OutputStreamWriter(new PrintStream(System.out)));
   }
 

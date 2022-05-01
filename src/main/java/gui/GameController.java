@@ -375,202 +375,213 @@ public class GameController implements Initializable {
   /**
    * checks how many dicedice the player has left and adjust how the GUI shows them
    * used up dicedice have a lower opacity and are disabled
+   *
    * @param diceLeft String
    */
   public void checkFourDiceLeft(String diceLeft) {
-    //Platform.runLater(() -> {
-      // disables already used dicedices
-      if (diceLeft.equals("3")) {
-        fourDice1.setDisable(false);
-        fourDice1.setOpacity(1);
-        fourDice2.setDisable(false);
-        fourDice2.setOpacity(1);
-        fourDice3.setDisable(false);
-        fourDice3.setOpacity(1);
-      } else if (diceLeft.equals("2")) {
-        fourDice1.setDisable(false);
-        fourDice1.setOpacity(1);
-        fourDice2.setDisable(false);
-        fourDice2.setOpacity(1);
-        fourDice3.setDisable(true);
-        fourDice3.setOpacity(0.2);
-      } else if (diceLeft.equals("1")) {
-        fourDice1.setDisable(false);
-        fourDice1.setOpacity(1);
-        fourDice2.setDisable(true);
-        fourDice2.setOpacity(0.2);
-        fourDice3.setDisable(true);
-        fourDice3.setOpacity(0.2);
-      } else {
-        fourDice1.setDisable(true);
-        fourDice1.setOpacity(0.2);
-        fourDice2.setDisable(true);
-        fourDice2.setOpacity(0.2);
-        fourDice3.setDisable(true);
-        fourDice3.setOpacity(0.2);
-      }
-    }//);
-
-  /**
-   * method throws a regular dice
-   */
-  public void throwRegularDice() {
-    sendToServer.send(CommandsToServer.ROLLDICE, null);
-  }
-
-  /**
-   * starts the game by pressing on the start button
-   */
-  public void startTheGame() {
-    resetGame();
-    sendToServer.send(CommandsToServer.START, null);
-    gameHasStarted = true;
-  }
-
-  /**
-   * sets the player as ready when pressing the ready button
-   * pressing it again will make the player unready
-   */
-  public void setPlayerAsReady() {
-    if (!isReady) {
-      isReady = true;
-      sendToServer.send(CommandsToServer.READY, null);
-      Platform.runLater(() -> readyButton.setText("UNREADY?"));
-    } else {
-      sendToServer.send(CommandsToServer.UNREADY, null);
-      Platform.runLater(() -> readyButton.setText("READY?"));
-      isReady = false;
-    }
-  }
-
-  /**
-   * method is used to "remove" the start and ready button once the game has started
-   * (it doesn't remove the buttons but disables them and sets the opacity to 0)
-   */
-  public void disableStartAndReadyButton() {
     Platform.runLater(() -> {
-      startButton.setDisable(true);
-      startButton.setOpacity(0);
-      readyButton.setDisable(true);
-      readyButton.setOpacity(0);
+      // disables already used dicedices
+      switch (diceLeft) {
+        case "3":
+          fourDice1.setDisable(false);
+          fourDice1.setOpacity(1);
+          fourDice2.setDisable(false);
+          fourDice2.setOpacity(1);
+          fourDice3.setDisable(false);
+          fourDice3.setOpacity(1);
+          break;
+        case "2":
+          fourDice1.setDisable(false);
+          fourDice1.setOpacity(1);
+          fourDice2.setDisable(false);
+          fourDice2.setOpacity(1);
+          fourDice3.setDisable(true);
+          fourDice3.setOpacity(0.2);
+          break;
+        case "1":
+          fourDice1.setDisable(false);
+          fourDice1.setOpacity(1);
+          fourDice2.setDisable(true);
+          fourDice2.setOpacity(0.2);
+          fourDice3.setDisable(true);
+          fourDice3.setOpacity(0.2);
+          break;
+        default:
+          fourDice1.setDisable(true);
+          fourDice1.setOpacity(0.2);
+          fourDice2.setDisable(true);
+          fourDice2.setOpacity(0.2);
+          fourDice3.setDisable(true);
+          fourDice3.setOpacity(0.2);
+          break;
+
+      }
     });
   }
 
-  /**
-   * used to switch to the Menu scene
-   */
-  public void switchToMenu() {
-    Main.displayMenu();
-  }
-
-  /**
-   * used to switch to the Highscore scene
-   */
-  public void switchToHighscore() {
-    Main.displayHighscore();
-  }
-
-  /**
-   * answers a quiz question with A when pressing the button
-   */
-  public void answerQuizA() {
-    sendToServer.send(CommandsToServer.QUIZ, "A");
-  }
-
-  /**
-   * answers a quiz question with B when pressing the button
-   */
-  public void answerQuizB() {
-    sendToServer.send(CommandsToServer.QUIZ, "B");
-  }
-
-  /**
-   * answers a quiz question with C when pressing the button
-   */
-  public void answerQuizC() {
-    sendToServer.send(CommandsToServer.QUIZ, "C");
-  }
-
-  /**
-   * answers a quiz question with D when pressing the button
-   */
-  public void answerQuizD() {
-    sendToServer.send(CommandsToServer.QUIZ, "D");
-  }
-
-  /**
-   * This method determines which player needs to be moved on the GUI and on which field they now belong
-   * @param moveToField String which contains the color of the player and the field they move to
-   * @return returns the correct player character to move around (which are circles)
-   */
-  public Circle chooseCorrectPlayerToMove(String moveToField) {
-    String[] playerAndNewField = moveToField.split("--"); // splits the String into the nr of the new field and the player color
-    String playerColorToMove = playerAndNewField[0];
-
-    switch (playerColorToMove) {
-      case "blue":
-        return playerBlue;
-      case "red":
-        return playerRed;
-      case "yellow":
-        return playerYellow;
-      default:
-        return playerGreen;
+    /**
+     * method throws a regular dice
+     */
+    public void throwRegularDice() {
+      sendToServer.send(CommandsToServer.ROLLDICE, null);
     }
-  }
+
+    /**
+     * starts the game by pressing on the start button
+     */
+    public void startTheGame () {
+      resetGame();
+      sendToServer.send(CommandsToServer.START, null);
+      gameHasStarted = true;
+    }
+
+    /**
+     * sets the player as ready when pressing the ready button
+     * pressing it again will make the player unready
+     */
+    public void setPlayerAsReady () {
+      if (!isReady) {
+        isReady = true;
+        sendToServer.send(CommandsToServer.READY, null);
+        Platform.runLater(() -> readyButton.setText("UNREADY?"));
+      } else {
+        sendToServer.send(CommandsToServer.UNREADY, null);
+        Platform.runLater(() -> readyButton.setText("READY?"));
+        isReady = false;
+      }
+    }
+
+    /**
+     * method is used to "remove" the start and ready button once the game has started
+     * (it doesn't remove the buttons but disables them and sets the opacity to 0)
+     */
+    public void disableStartAndReadyButton () {
+      Platform.runLater(() -> {
+        startButton.setDisable(true);
+        startButton.setOpacity(0);
+        readyButton.setDisable(true);
+        readyButton.setOpacity(0);
+      });
+    }
+
+    /**
+     * used to switch to the Menu scene
+     */
+    public void switchToMenu () {
+      Main.displayMenu();
+    }
+
+    /**
+     * used to switch to the Highscore scene
+     */
+    public void switchToHighscore () {
+      Main.displayHighscore();
+    }
+
+    /**
+     * answers a quiz question with A when pressing the button
+     */
+    public void answerQuizA () {
+      sendToServer.send(CommandsToServer.QUIZ, "A");
+    }
+
+    /**
+     * answers a quiz question with B when pressing the button
+     */
+    public void answerQuizB () {
+      sendToServer.send(CommandsToServer.QUIZ, "B");
+    }
+
+    /**
+     * answers a quiz question with C when pressing the button
+     */
+    public void answerQuizC () {
+      sendToServer.send(CommandsToServer.QUIZ, "C");
+    }
+
+    /**
+     * answers a quiz question with D when pressing the button
+     */
+    public void answerQuizD () {
+      sendToServer.send(CommandsToServer.QUIZ, "D");
+    }
+
+    /**
+     * This method determines which player needs to be moved on the GUI and on which field they now belong
+     *
+     * @param moveToField String which contains the color of the player and the field they move to
+     * @return returns the correct player character to move around (which are circles)
+     */
+    public Circle chooseCorrectPlayerToMove (String moveToField){
+      String[] playerAndNewField = moveToField.split("--"); // splits the String into the nr of the new field and the player color
+      String playerColorToMove = playerAndNewField[0];
+
+      switch (playerColorToMove) {
+        case "blue":
+          return playerBlue;
+        case "red":
+          return playerRed;
+        case "yellow":
+          return playerYellow;
+        default:
+          return playerGreen;
+      }
+    }
 
 
-  /**
-   * This method is used to get the x- and y-coordinate of a field on the board
-   * To find a field you need to know the row and column number
-   * @param board GridPane: represents the board over which the player characters move
-   * @param col int: column of the field you want to search
-   * @param row int: row of the field you want to search
-   * @return double[] containing the x- and y-coordinate of the field in
-   */
-  private double[] getPosFromGridPane(GridPane board, int col, int row) {
-    double xPos = 0.0;
-    double yPos = 0.0;
-    ObservableList<Node> children = board.getChildren();
-    for (Node node : children) {
-      if (GridPane.getColumnIndex(node) != null && GridPane.getRowIndex(node) != null) {
-        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-          xPos = node.getBoundsInParent().getCenterX();
-          yPos = node.getBoundsInParent().getCenterY();
+    /**
+     * This method is used to get the x- and y-coordinate of a field on the board
+     * To find a field you need to know the row and column number
+     *
+     * @param board GridPane: represents the board over which the player characters move
+     * @param col   int: column of the field you want to search
+     * @param row   int: row of the field you want to search
+     * @return double[] containing the x- and y-coordinate of the field in
+     */
+    private double[] getPosFromGridPane (GridPane board,int col, int row){
+      double xPos = 0.0;
+      double yPos = 0.0;
+      ObservableList<Node> children = board.getChildren();
+      for (Node node : children) {
+        if (GridPane.getColumnIndex(node) != null && GridPane.getRowIndex(node) != null) {
+          if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+            xPos = node.getBoundsInParent().getCenterX();
+            yPos = node.getBoundsInParent().getCenterY();
 
-          break;
+            break;
+          }
         }
       }
+
+      return new double[]{xPos, yPos};
+
     }
 
-    return new double[]{xPos, yPos};
+    /**
+     * Moves a character to a different field
+     * This is done in three steps:
+     * 1. find the correct player to move
+     * 2. get the coordinates of the new field
+     * 3. moves the player to the new coordinates
+     *
+     * @param moveToField String: contains the color of the character to move and on which field he belongs
+     */
+    public void movePlayer (String moveToField){
 
+      Circle playerToMove = chooseCorrectPlayerToMove(moveToField);
+
+      // get the coordinates of the new field
+      String[] playerAndNewField = moveToField.split("--");
+      int newFieldToMoveTo = Integer.parseInt(playerAndNewField[1]);
+      Integer[] columnAndRow = fields.get(newFieldToMoveTo);
+      double[] newPos = getPosFromGridPane(board, columnAndRow[0], columnAndRow[1]);
+
+
+      // moves the player to the new coordinates
+      Platform.runLater(() -> {
+        playerToMove.setTranslateX(newPos[0] - 25);
+        playerToMove.setTranslateY(newPos[1] - 30);
+      });
+    }
   }
-
-  /**
-   * Moves a character to a different field
-   * This is done in three steps:
-   * 1. find the correct player to move
-   * 2. get the coordinates of the new field
-   * 3. moves the player to the new coordinates
-   * @param moveToField String: contains the color of the character to move and on which field he belongs
-   */
-  public void movePlayer(String moveToField) {
-
-    Circle playerToMove = chooseCorrectPlayerToMove(moveToField);
-
-    // get the coordinates of the new field
-    String[] playerAndNewField = moveToField.split("--");
-    int newFieldToMoveTo = Integer.parseInt(playerAndNewField[1]);
-    Integer[] columnAndRow = fields.get(newFieldToMoveTo);
-    double[] newPos = getPosFromGridPane(board, columnAndRow[0], columnAndRow[1]);
-
-
-    // moves the player to the new coordinates
-    Platform.runLater(() -> {
-      playerToMove.setTranslateX(newPos[0] - 25);
-      playerToMove.setTranslateY(newPos[1] - 30);
-    });
-  }
-}
 

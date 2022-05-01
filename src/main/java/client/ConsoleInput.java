@@ -51,6 +51,7 @@ class ConsoleInput implements Runnable {
 
   /**
    * transform the given message to the protocol format
+   *
    * @param line the line of code that is going to be sent
    */
   public void send(String line) {
@@ -91,9 +92,9 @@ class ConsoleInput implements Runnable {
         if (split.length > 1) {
           msg = split[0] + "-" + split[1];
         } else {
-            System.out.println("You cannot whisper nothing!");
-            break;
-          }
+          System.out.println("You cannot whisper nothing!");
+          break;
+        }
         sendToServer.send(CommandsToServer.WHISPER, msg);
         break;
 

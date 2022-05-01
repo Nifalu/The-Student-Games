@@ -61,9 +61,10 @@ public class ClientManager {
 
   /**
    * starts the ClientManager
+   *
    * @param serverAddress String
-   * @param serverPort int
-   * @param username String
+   * @param serverPort    int
+   * @param username      String
    */
   public static void runClientManager(String serverAddress, int serverPort, String username) {
 
@@ -71,7 +72,7 @@ public class ClientManager {
     try {
       socket = new Socket(serverAddress, serverPort);
     } catch (IOException e) {
-      Exceptions.invalidServerAddress(serverAddress,serverPort);
+      Exceptions.invalidServerAddress(serverAddress, serverPort);
       return;
     }
     try {
@@ -101,7 +102,7 @@ public class ClientManager {
       pingpong.start();
 
     } catch (IOException e) {
-      Exceptions.invalidServerAddress(serverAddress,serverPort);
+      Exceptions.invalidServerAddress(serverAddress, serverPort);
       disconnect();
     }
 

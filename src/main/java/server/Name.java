@@ -29,6 +29,7 @@ public class Name {
    * This method first calls the proposeUsernameBasedOnSystemName Method and asks the client if he wants the name
    * proposed to be his username. If the user doesn't agree, he is then asked to type in his own username. A new user is created
    * and connected to the serverManager. If the username already exists in the serverManager he will get a new username assigned.
+   *
    * @param clientHandler ClientHandler
    **/
   public Name(ClientHandler clientHandler) {
@@ -88,6 +89,7 @@ public class Name {
 
   /**
    * In case a username is already taken this method proposes a new username.
+   *
    * @param preferredName String of the preferred Name
    * @return String proposedName
    */

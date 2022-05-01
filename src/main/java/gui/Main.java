@@ -136,7 +136,7 @@ public class Main extends Application {
       Starter.connect(); // Tells the Starter that the gui is ready and the client can connect to the server
 
     } catch (Exception e) {
-      logger.error("Failed to load scenes",e);
+      logger.error("Failed to load scenes", e);
       exit();
     }
   }
@@ -242,6 +242,7 @@ public class Main extends Application {
 
   /**
    * returns the clients StartController
+   *
    * @return StartController
    */
   public static StartController getStartController() {
@@ -250,6 +251,7 @@ public class Main extends Application {
 
   /**
    * returns the clients MenuController
+   *
    * @return MenuController
    */
   public static MenuController getMenuController() {
@@ -258,6 +260,7 @@ public class Main extends Application {
 
   /**
    * returns the clients GameController
+   *
    * @return GameController
    */
   public static GameController getGameController() {
@@ -266,6 +269,7 @@ public class Main extends Application {
 
   /**
    * returns the clients HighscoreController
+   *
    * @return HighscoreController
    */
   public static HighscoreController getHighscoreController() {
@@ -274,6 +278,7 @@ public class Main extends Application {
 
   /**
    * setts the clients GameController
+   *
    * @param gameController GameController
    */
   public static void setGameController(GameController gameController) {
@@ -282,6 +287,7 @@ public class Main extends Application {
 
   /**
    * sets the clients StartController
+   *
    * @param startController StartController
    */
   public static void setStartController(StartController startController) {
@@ -290,6 +296,7 @@ public class Main extends Application {
 
   /**
    * sets the clients MenuController
+   *
    * @param menuController MenuController
    */
   public static void setMenuController(MenuController menuController) {
@@ -298,6 +305,7 @@ public class Main extends Application {
 
   /**
    * sets the clients HighscoreController
+   *
    * @param highscoreController HighscoreController
    */
   public static void setHighscoreController(HighscoreController highscoreController) {

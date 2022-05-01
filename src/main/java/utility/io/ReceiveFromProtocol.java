@@ -15,6 +15,7 @@ public class ReceiveFromProtocol {
 
   /**
    * Waits until a message is Received then returns it as String.
+   *
    * @return String
    */
   public synchronized String receive() {
@@ -33,6 +34,7 @@ public class ReceiveFromProtocol {
 
   /**
    * Use this method in the protocol (SendToServer class) to forward a message from the client to this instance.
+   *
    * @param msg String
    */
   public synchronized void setMessage(String msg) {

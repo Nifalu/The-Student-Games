@@ -20,6 +20,7 @@ public class InThread implements Runnable {
 
   /**
    * sets the InThread
+   *
    * @param in InThread
    */
   public InThread(BufferedReader in) {

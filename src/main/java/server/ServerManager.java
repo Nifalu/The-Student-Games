@@ -27,6 +27,7 @@ public class ServerManager {
 
   /**
    * Creates a new User, Adds the User to the Lists.
+   *
    * @param clientHandler ClientHandler
    * @param username      String
    * @return User
@@ -42,6 +43,7 @@ public class ServerManager {
 
   /**
    * removes a user from the userlist
+   *
    * @param user User
    */
   public synchronized static void disconnect(User user) {
@@ -60,6 +62,7 @@ public class ServerManager {
 
   /**
    * returns an arraylist with all actively connected Clients
+   *
    * @return ArrayList
    */
   public synchronized static ArrayList<ClientHandler> getActiveClientList() {
@@ -68,6 +71,7 @@ public class ServerManager {
 
   /**
    * Returns a Hashmap with all current Users
+   *
    * @return HashMap
    */
   public synchronized static HashMap<Integer, User> getUserlist() {

@@ -19,8 +19,9 @@ public class Chat {
   /**
    * sends a message to one specific client
    * used for chatting between two clients (instead of chatting with everyone)
+   *
    * @param sender ClientHandler
-   * @param input String
+   * @param input  String
    */
   public synchronized void whisper(ClientHandler sender, String input) {
     String[] splitUserAndMsg = input.split("-", 2);
@@ -29,7 +30,7 @@ public class Chat {
     boolean found = false;
 
     for (ClientHandler clientHandler : ServerManager.getActiveClientList()) {
-      if(clientHandler.user.getUsername().equalsIgnoreCase(recipient)) {
+      if (clientHandler.user.getUsername().equalsIgnoreCase(recipient)) {
         // Send message to recipient:
         sendToClient.send(clientHandler, CommandsToClient.CHAT, sender.user.getUsername() + " to " + recipient + ": " + msg);
         found = true;
@@ -47,8 +48,9 @@ public class Chat {
 
   /**
    * prepares a chat message for broadcast to all user
+   *
    * @param client ClientHandler
-   * @param msg message
+   * @param msg    message
    */
   public synchronized void broadcast(ClientHandler client, String msg) {
     sendToClient.serverBroadcast(CommandsToClient.CHAT, "[GLOBAL] " + client.user.getUsername() + ": " + msg);
@@ -56,11 +58,12 @@ public class Chat {
 
   /**
    * prepares a chat message for broadcast to all user in the same lobby
+   *
    * @param client ClientHandler
-   * @param msg message
+   * @param msg    message
    */
-  public synchronized void lobbyBroadcast (ClientHandler client, String msg) {
-    sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(),CommandsToClient.CHAT,
-            "[" + client.user.getLobby().getLobbyName() + "] " + client.user.getUsername() + ": " + msg);
+  public synchronized void lobbyBroadcast(ClientHandler client, String msg) {
+    sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.CHAT,
+        "[" + client.user.getLobby().getLobbyName() + "] " + client.user.getUsername() + ": " + msg);
   }
 }

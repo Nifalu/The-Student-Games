@@ -41,6 +41,7 @@ public class ConnectionToClientMonitor implements Runnable {
 
   /**
    * creates a new ConnectionToClientMonitor object for a clienthandler
+   *
    * @param clientHandler ClientHandler
    */
   public ConnectionToClientMonitor(ClientHandler clientHandler) {

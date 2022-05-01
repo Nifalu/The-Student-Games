@@ -160,6 +160,7 @@ public class MenuController implements Initializable {
 
   /**
    * print all Lobbies into the GUI (ListView)
+   *
    * @param lobbies String containing all the lobbies
    */
   @FXML
@@ -173,6 +174,7 @@ public class MenuController implements Initializable {
 
   /**
    * prints a String into the GUI (ListView) containing all Lobbie and users in the lobby.
+   *
    * @param friends all the users in the lobby + the lobby
    */
   @FXML
@@ -267,8 +269,6 @@ public class MenuController implements Initializable {
   }
 
 
-
-
   /**
    * This method is called when one of the togglebuttons is pressed
    * The method sets the variable writeInGlobalChat, which is used to determine if
@@ -298,6 +298,7 @@ public class MenuController implements Initializable {
 
   /**
    * asks to print out the lobbies when clicking on the button
+   *
    * @param ActionEvent ActionEvent
    */
   public void refreshLobbies(ActionEvent ActionEvent) {
@@ -306,6 +307,7 @@ public class MenuController implements Initializable {
 
   /**
    * returns the string split at §
+   *
    * @param s String
    * @return String[] containing the splitted string
    */
@@ -315,6 +317,7 @@ public class MenuController implements Initializable {
 
   /**
    * returns the lobbies split at %
+   *
    * @param s String containing all lobbies
    * @return String[] containing all lobbies
    */
@@ -338,6 +341,7 @@ public class MenuController implements Initializable {
 
   /**
    * removes the new line attached to a string
+   *
    * @param str String
    * @return String without the new line attached
    */
@@ -347,6 +351,7 @@ public class MenuController implements Initializable {
 
   /**
    * shows the selected lobby
+   *
    * @return String
    */
   public String listViewSelectedLobby() {
@@ -374,6 +379,7 @@ public class MenuController implements Initializable {
 
   /**
    * creates a new lobby
+   *
    * @param actionEvent ActionEvent
    */
   public void createLobby(ActionEvent actionEvent) {

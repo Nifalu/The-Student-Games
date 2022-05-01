@@ -127,6 +127,7 @@ public class ClientReceive implements Runnable {
 
   /**
    * splits the String at §
+   *
    * @param msg String
    */
   public void outPrint(String msg) {

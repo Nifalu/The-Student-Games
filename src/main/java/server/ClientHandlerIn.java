@@ -25,8 +25,9 @@ public class ClientHandlerIn implements Runnable {
 
   /**
    * creates a new ClientHandlerIn
+   *
    * @param clientHandler ClientHandler
-   * @param in BufferedReader
+   * @param in            BufferedReader
    */
   ClientHandlerIn(ClientHandler clientHandler, BufferedReader in) {
     this.clientHandler = clientHandler;

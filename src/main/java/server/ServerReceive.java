@@ -45,8 +45,9 @@ public class ServerReceive implements Runnable {
 
   /**
    * Processes a new messsage received by the client
+   *
    * @param client clientHandler that sent the message
-   * @param line message
+   * @param line   message
    */
   public ServerReceive(ClientHandler client, String line) {
     this.client = client;
@@ -186,7 +187,7 @@ public class ServerReceive implements Runnable {
           } else {
             sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "This lobby doesn't exist.");
           }
-        }catch (Exception e) {
+        } catch (Exception e) {
           sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, msg + " is not a valid number!");
         }
         break;

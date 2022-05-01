@@ -27,13 +27,14 @@ public class SendToClient {
 
   /**
    * Sends a command and a message to all clients in a specified hashmap
+   *
    * @param map hashmap
    * @param cmd commandToClient
    * @param msg String message
    */
   public void lobbyBroadcast(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
-    for(User user: map.values()) {
-      send(user.getClienthandler(),cmd,msg);
+    for (User user : map.values()) {
+      send(user.getClienthandler(), cmd, msg);
     }
   }
 
@@ -97,7 +98,6 @@ public class SendToClient {
         break;
     }
   }
-
 
 
   /**

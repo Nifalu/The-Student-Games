@@ -23,6 +23,7 @@ public class Starter {
 
   /**
    * Starts either the server or the client with the given arguments
+   *
    * @param args arguments
    */
   public static void main(String[] args) {
@@ -75,7 +76,7 @@ public class Starter {
           ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), args[2]);
         } else {
           // Start the client with the users Home Directory Name as username
-          logger.info("connecting client to: " + address[0] + ":" + Integer.parseInt(address[1]) + "with username: user.name" );
+          logger.info("connecting client to: " + address[0] + ":" + Integer.parseInt(address[1]) + "with username: user.name");
           ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), System.getProperty("user.name"));
         }
       }
@@ -83,11 +84,9 @@ public class Starter {
   }
 
 
-
-
-
   /**
    * checks if the given port (string) is a valid port number (int) and returns true/false
+   *
    * @param value port String
    * @return boolean
    */
