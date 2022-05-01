@@ -45,16 +45,13 @@ public class ClientHandler implements Runnable {
   private ConnectionToClientMonitor connectionToClientMonitor;
   private Thread connectionMonitor;
 
-
   public ClientHandler(Socket socket) {
     try {
-      this.socket = socket;
-
       // creating Streams
+      this.socket = socket;
       this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
       this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
 
-      // Gets the Home-directory name of the client and creates a User
       this.nameClass = new Name(this);
       user = ServerManager.connect(this, "Player_" + ServerManager.userlist.size());
       String ClientHomeDirectoryName = in.readLine();
@@ -73,7 +70,7 @@ public class ClientHandler implements Runnable {
       this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
       connectionMonitor = new Thread(connectionToClientMonitor);
       connectionMonitor.setName("connectionMonitor  Thread");
-
+      // Gets the Home-directory name of the client and creates a User
 
 
     } catch (IOException e) {
@@ -127,18 +124,17 @@ public class ClientHandler implements Runnable {
 
   /**
    * returns the Outputstream of this ClientHandler
+   *
    * @return BufferedWriter
    */
   public synchronized BufferedWriter getOut() {
     return out;
   }
 
-  public void setBufferedWriter(BufferedWriter bw) {
-    this.out = bw;
-  }
 
   /**
    * returns the ConnectionToClientMonitor
+   *
    * @return ConnectionToClientMonitor
    */
   protected ConnectionToClientMonitor getConnectionToClientMonitor() {
@@ -147,9 +143,18 @@ public class ClientHandler implements Runnable {
 
   /**
    * Returns true when the ClientHandlerInThread is alive. False if not.
+   *
    * @return boolean
    */
   public boolean getHasStopped() {
     return clientHandlerInThread.isAlive();
   }
+
+  // THIS CONSTRUCTOR CREATES A FAKE CLIENTHANDLER FOR UNIT TESTING
+  // IT CANNOT RECEIVE AND DOES PRINT TO CONSOLE INSTEAD OF SENDING TO A CLIENT
+  public ClientHandler(String username) {
+    this.user = ServerManager.connect(this,username);
+    this.out = new BufferedWriter(new OutputStreamWriter(new PrintStream(System.out)));
+  }
+
 }

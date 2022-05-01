@@ -1,5 +1,6 @@
 package gameLogic;
 
+import server.ClientHandler;
 import server.User;
 import utility.io.CommandsToClient;
 import utility.io.ReceiveFromProtocol;
@@ -25,7 +26,7 @@ public class Lobby {
     final private int lobbyNumber;
     // contains a HashMap of all the users in the Lobby
 
-    HashMap<Integer, server.User> usersReady = new HashMap<>();
+    HashMap<Integer, User> usersReady = new HashMap<>();
 
     private int characterColorCounter = 0; // used to give each player joining the lobby a different character
     private String[] characterColors = new String[] {"red", "blue", "yellow", "green"};
@@ -137,7 +138,7 @@ public class Lobby {
      *
      * @param user the user which is added to the lobby in the method
      */
-    public void addUserToLobby(server.User user) {
+    public void addUserToLobby(User user) {
         user.setLobby(this);
     }
 
@@ -146,7 +147,7 @@ public class Lobby {
      * Users shouldn't be in no lobby.
      * @param user that is removed
      */
-    public void removeUserFromLobby(server.User user) {
+    public void removeUserFromLobby(User user) {
         user.setLobby(GameList.getLobbyList().get(0)); // basic Lobby
     }
 
@@ -156,7 +157,7 @@ public class Lobby {
      *
      * @param clientHandler User that is ready to play
      */
-    public void readyToPlay(server.ClientHandler clientHandler) {
+    public void readyToPlay(ClientHandler clientHandler) {
         if (getLobbyStatus() == 1) {
             waitingToPlay(clientHandler);
             sendToClient.send(clientHandler, CommandsToClient.PRINTGUIGAMETRACKER, "You are now waiting...");
@@ -176,7 +177,7 @@ public class Lobby {
      *
      * @param clientHandler User who is ready to play the game.
      */
-    public void waitingToPlay(server.ClientHandler clientHandler) {
+    public void waitingToPlay(ClientHandler clientHandler) {
         if (!usersReady.containsValue(clientHandler.user) && getLobbyStatus() == 1) {
             int size = usersReady.size();
             clientHandler.user.setReadyToPlay(true);
@@ -189,7 +190,7 @@ public class Lobby {
      *
      * @param clientHandler User who is not ready to play the game anymore.
      */
-    public void removeFromWaitingList(server.ClientHandler clientHandler) {
+    public void removeFromWaitingList(ClientHandler clientHandler) {
         usersReady.values().remove(clientHandler.user);
         clientHandler.user.setReadyToPlay(false);
         sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are not waiting anymore.");
@@ -257,6 +258,10 @@ public class Lobby {
 
     public boolean getIsReadyToStartGame() {
         return (usersReady.size() >= minToStart);
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     /**

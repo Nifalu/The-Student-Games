@@ -14,16 +14,12 @@ public class CreateLobbyHelper {
     public final ReceiveFromProtocol receiveFromClient = new ReceiveFromProtocol();
     private final ClientHandler clienthandler;
 
-
-    server.User user;
-
     /**
      * add createLobby
      * @param clienthandler server.ClientHandler
      */
-    public CreateLobbyHelper(server.ClientHandler clienthandler) {
+    public CreateLobbyHelper(ClientHandler clienthandler) {
         this.clienthandler = clienthandler;
-        this.user = clienthandler.user;
     }
 
     /**
@@ -78,7 +74,7 @@ public class CreateLobbyHelper {
             number = number.replaceAll("\\s", "");
             if (checkIfOpenLobbyExists(number)) {
                 int lobbynumber = Integer.parseInt(number);
-                user.setLobby(GameList.getOpenLobbies().get(lobbynumber));
+                clienthandler.user.setLobby(GameList.getOpenLobbies().get(lobbynumber));
                 sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby: " +
                         GameList.getOpenLobbies().get(lobbynumber).getLobbyName());
             } else {
@@ -148,7 +144,7 @@ public class CreateLobbyHelper {
      * Prints all the players that are in the same lobby as the client.
      */
     public synchronized void printPlayersInLobby () {
-        sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printUserInLobby(user.getLobby()));
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printUserInLobby(clienthandler.user.getLobby()));
     }
 
 }
