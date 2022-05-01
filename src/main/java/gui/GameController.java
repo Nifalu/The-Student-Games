@@ -27,58 +27,114 @@ import java.util.ResourceBundle;
  */
 
 public class GameController implements Initializable {
+
+  /**
+   * SendToServer object to communicate with the server
+   */
   private final SendToServer sendToServer = new SendToServer();
-  public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
-  public static ReceiveFromProtocol receiveFromProtocolGameUpdate = new ReceiveFromProtocol();
-  public static ReceiveFromProtocol receiveNewPlayerPosition = new ReceiveFromProtocol();
+
+  /**
+   * marks whether a player wants to write in the global chat or not
+   */
   boolean writeInGlobalChat = false;
+
+  /**
+   * marks whether a player is ready or not
+   */
   boolean isReady = false;
+
+  /**
+   * marks whether the game has started or not
+   */
   public static boolean gameHasStarted = false;
 
-  public int diceDiceLeft = 3;
-
+  /**
+   * all fields of the board in a HashMap
+   */
   public static HashMap<Integer, Integer[]> fields = new HashMap<>();
 
 
+  /**
+   * a TextField to enter chat messages
+   */
   @FXML
   private TextField chatTextField;
 
+  /**
+   * a TextArea which displays sent chat messages
+   */
   @FXML
   private TextArea chat;
 
+  /**
+   * a toggle button used to switch between global and lobby chat
+   */
   @FXML
   private ToggleButton globalToggleButton;
 
+  /**
+   * Polygon which represents the first dicedice
+   */
   @FXML
   private Polygon fourDice1;
 
+  /**
+   * Polygon which represents the second dicedice
+   */
   @FXML
   private Polygon fourDice2;
 
+  /**
+   * Polygon which represents the third dicedice
+   */
   @FXML
   private Polygon fourDice3;
 
+  /**
+   * button used for setting the player as ready or unready
+   */
   @FXML
   private Button readyButton;
 
+  /**
+   * button used to start the game
+   */
   @FXML
   private Button startButton;
 
+  /**
+   * TextArea used to display what happens in the game
+   */
   @FXML
   private TextArea gameTracker;
 
+  /**
+   * a blue circle which represents a player character
+   */
   @FXML
   private Circle playerBlue;
 
+  /**
+   * a red circle which represents a player character
+   */
   @FXML
   private Circle playerRed;
 
+  /**
+   * a yellow circle which represents a player character
+   */
   @FXML
   private Circle playerYellow;
 
+  /**
+   * a green circle which represents a player character
+   */
   @FXML
   private Circle playerGreen;
 
+  /**
+   * GridPane which is used as the board of the game
+   */
   @FXML
   private GridPane board;
 

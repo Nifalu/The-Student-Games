@@ -60,7 +60,7 @@ public enum CommandsToClient {
   PRINTWINNERSGUI,
 
   /**
-   *
+   * prints a String into the GUI (ListView) containing all Lobbie and users in the lobby.
    */
   PRINTFRIENDSGUI,
 

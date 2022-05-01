@@ -7,6 +7,9 @@ import utility.io.CommandsToClient;
 import utility.io.CommandsToServer;
 import utility.io.SendToClient;
 
+/**
+ * receives commands on the server side
+ */
 public class ServerReceive implements Runnable {
 
   private static final Logger logger = LogManager.getLogger(ServerReceive.class);
@@ -36,6 +39,9 @@ public class ServerReceive implements Runnable {
     process();
   }
 
+  /**
+   * splits incoming messages and then processes them
+   */
   private synchronized void process() {
     // Incoming message is split into command (cmd) and message (msg)
     String[] input;

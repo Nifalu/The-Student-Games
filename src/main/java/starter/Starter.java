@@ -55,6 +55,9 @@ public class Starter {
     }
   }
 
+  /**
+   * connect a new user to the server
+   */
   public static void connect() {
     String[] address = args[1].split(":", 2);
     if (address.length > 1) {

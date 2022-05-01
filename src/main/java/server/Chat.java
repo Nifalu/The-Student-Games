@@ -10,7 +10,11 @@ import utility.io.SendToClient;
  * This class only needs to do the formatting and/or defining which user or group is the recipient.
  */
 public class Chat {
-   SendToClient sendToClient = new SendToClient();
+
+  /**
+   * SendToClient object used to communicate with the client
+   */
+  SendToClient sendToClient = new SendToClient();
 
   /**
    * sends a message to one specific client

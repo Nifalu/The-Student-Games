@@ -6,6 +6,10 @@ import java.util.Random;
  * Quiz questions with its answer and the number of fields to be moved forward or backward.
  */
 public class Quiz {
+
+    /**
+     * amount of answers to a quiz question
+     */
     final static int n = 4;
 
     /**

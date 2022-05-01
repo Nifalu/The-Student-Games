@@ -24,27 +24,81 @@ import java.util.Objects;
  */
 public class Main extends Application {
 
-  // Stage or "Window" where everything takes place
+  /**
+   * Stage or "Window" where everything takes place
+   */
   private static Stage stage;
 
+
   // Different Scenes that can be shown on the Stage and their corresponding root Panes and controllers.
+  /**
+   * Scene for the start
+   */
   private static Scene start;
+
+  /**
+   * root corresponding to the start scene
+   */
   private static Pane startRoot;
+
+  /**
+   * the startcontroller
+   */
   private static StartController startController;
+
+  /**
+   * Scene for the menu
+   */
   private static Scene menu;
+
+  /**
+   * corresponding root to the menu scene
+   */
   private static Pane menuRoot;
+
+  /**
+   * the menucontroller
+   */
   private static MenuController menuController;
+
+  /**
+   * the corresponding root to the game scene
+   */
   private static Pane gameRoot;
+
+  /**
+   * Scene for the game
+   */
   private static Scene game;
+
+  /**
+   * the gamecontroller
+   */
   private static GameController gameController;
+
+  /**
+   * Scene for the highscore
+   */
   private static Scene highscore;
+
+  /**
+   * corresponding root for the highscore scene
+   */
   private static Pane highscoreRoot;
+
+  /**
+   * the highscorecontroller
+   */
   private static HighscoreController highscoreController;
 
-  // Logger
+  /**
+   * the logger
+   */
   private static final Logger logger = LogManager.getLogger(Main.class);
 
-  // Sets the .css file to be used for the scenes.
+  /**
+   * sets the .css file to be used for the scenes
+   */
   private static final String CSS = "TheStudentGameLook.css";
 
 
@@ -187,34 +241,67 @@ public class Main extends Application {
 
 
   // --------------------------- GETTERS AND SETTERS -------------------------------------- //
+
+  /**
+   * returns the clients StartController
+   * @return StartController
+   */
   public static StartController getStartController() {
     return startController;
   }
 
+  /**
+   * returns the clients MenuController
+   * @return MenuController
+   */
   public static MenuController getMenuController() {
     return menuController;
   }
 
+  /**
+   * returns the clients GameController
+   * @return GameController
+   */
   public static GameController getGameController() {
     return gameController;
   }
 
+  /**
+   * returns the clients HighscoreController
+   * @return HighscoreController
+   */
   public static HighscoreController getHighscoreController() {
     return highscoreController;
   }
 
+  /**
+   * setts the clients GameController
+   * @param gameController GameController
+   */
   public static void setGameController(GameController gameController) {
     Main.gameController = gameController;
   }
 
+  /**
+   * sets the clients StartController
+   * @param startController StartController
+   */
   public static void setStartController(StartController startController) {
     Main.startController = startController;
   }
 
+  /**
+   * sets the clients MenuController
+   * @param menuController MenuController
+   */
   public static void setMenuController(MenuController menuController) {
     Main.menuController = menuController;
   }
 
+  /**
+   * sets the clients HighscoreController
+   * @param highscoreController HighscoreController
+   */
   public static void setHighscoreController(HighscoreController highscoreController) {
     Main.highscoreController = highscoreController;
   }

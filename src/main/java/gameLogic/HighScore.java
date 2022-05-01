@@ -5,6 +5,9 @@ package gameLogic;
  */
 public class HighScore {
 
+    /**
+     * head node
+     */
     Node first = null;
 
     /**

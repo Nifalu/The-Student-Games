@@ -25,6 +25,11 @@ public class User {
     public String characterColor;
     public boolean gameOver;
 
+    /**
+     * creates a new user object
+     * @param clientHandler ClientHandler
+     * @param username String
+     */
     public User(ClientHandler clientHandler, String username) {
         this.clienthandler = clientHandler;
         this.username = username;

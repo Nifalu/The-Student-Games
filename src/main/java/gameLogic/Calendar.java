@@ -8,8 +8,19 @@ package gameLogic;
 
 public class Calendar {
 
+    /**
+     * saves the year
+     */
     int year;
+
+    /**
+     * saves the month
+     */
     int month;
+
+    /**
+     * saves the day
+     */
     int day;
 
     /**

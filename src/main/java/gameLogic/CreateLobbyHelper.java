@@ -10,11 +10,24 @@ import utility.io.SendToClient;
  */
 public class CreateLobbyHelper {
 
+    /**
+     * sendToClient object to communicate with the client
+     */
     private final SendToClient sendToClient = new SendToClient();
+
+    /**
+     * receiveFromProtocol object to receive messages from the client
+     */
     public final ReceiveFromProtocol receiveFromClient = new ReceiveFromProtocol();
+
+    /**
+     * knows the clientHands
+     */
     private final ClientHandler clienthandler;
 
-
+    /**
+     * knows the user
+     */
     server.User user;
 
     /**

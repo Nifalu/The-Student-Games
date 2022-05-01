@@ -13,7 +13,14 @@ import java.nio.charset.StandardCharsets;
  */
 class ConsoleInput implements Runnable {
 
+  /**
+   * notes if stopped
+   */
   private volatile boolean stop = false;
+
+  /**
+   * sendToServer object to communicate with the server
+   */
   private final SendToServer sendToServer = new SendToServer();
 
   /**

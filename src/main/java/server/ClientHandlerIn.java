@@ -7,10 +7,27 @@ import java.io.IOException;
  * Receives incoming messages from the client and sends them to ServerReceive for processing
  */
 public class ClientHandlerIn implements Runnable {
+
+  /**
+   * the input stream
+   */
   private final BufferedReader in;
+
+  /**
+   * the corresponding clienthandler
+   */
   private final ClientHandler clientHandler;
+
+  /**
+   * notes whether stopped
+   */
   private volatile boolean stop = false;
 
+  /**
+   * creates a new ClientHandlerIn
+   * @param clientHandler ClientHandler
+   * @param in BufferedReader
+   */
   ClientHandlerIn(ClientHandler clientHandler, BufferedReader in) {
     this.clientHandler = clientHandler;
     this.in = in;
@@ -33,7 +50,7 @@ public class ClientHandlerIn implements Runnable {
   }
 
   /**
-   * Wait until a message is received from the client, return that message
+   * Waits until a message is received from the client, returns that message
    *
    * @return String received Message
    */

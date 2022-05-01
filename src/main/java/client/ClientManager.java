@@ -14,20 +14,57 @@ import java.nio.charset.StandardCharsets;
 public class ClientManager {
 
   // connection
+  /**
+   * socket used to connect to the server
+   */
   private static Socket socket;
 
-  //streams
+  /**
+   * the in stream
+   */
   private static BufferedReader in;
+
+  /**
+   * the out stream
+   */
   private static BufferedWriter out;
 
-  // threads
+  /**
+   * the input thread
+   */
   private static InThread inThread;
+
+  /**
+   * thread for client input
+   */
   private static Thread clientIn;
+
+  /**
+   * the console input
+   */
   private static ConsoleInput consoleInput;
+
+  /**
+   * thread for console input
+   */
   private static Thread conin;
+
+  /**
+   * monitors the connection to the server
+   */
   protected static ConnectionToServerMonitor connectionToServerMonitor;
+
+  /**
+   * the thread used for the pingpong
+   */
   private static Thread pingpong;
 
+  /**
+   * starts the ClientManager
+   * @param serverAddress String
+   * @param serverPort int
+   * @param username String
+   */
   public static void runClientManager(String serverAddress, int serverPort, String username) {
 
     // Connection to the server is made and in/out streams are created:

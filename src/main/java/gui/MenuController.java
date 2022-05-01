@@ -28,41 +28,89 @@ import static java.lang.Thread.sleep;
 
 public class MenuController implements Initializable {
 
+  /**
+   * SendToServer object used to communicate with the server
+   */
   private final SendToServer sendToServer = new SendToServer();
+
+  /**
+   * String which saves a message
+   */
   private static String msg;
+
+  /**
+   * notes whether the user has joined the chat or not
+   */
   public static boolean hasJoinedChat = false;
+
+  /**
+   * ToggleGroup used for the ToggleButton in the chat
+   */
   public ToggleGroup switchGlobalLobby;
+
+  /**
+   * notes whether the user wants to write in global chat
+   */
   boolean writeInGlobalChat = false;
   // public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
   // public static ReceiveFromProtocol lobbyReceiver = new ReceiveFromProtocol();
   // public static ReceiveFromProtocol friendsReceiver = new ReceiveFromProtocol();
 
-  public static String lobbyList; // String containing all the lobbies
+  /**
+   * String containing all the lobbies
+   */
+  public static String lobbyList;
 
-  public static String friendList; // String containing all the Lobbies and their users
+  /**
+   * String containing all the lobbies and their users
+   */
+  public static String friendList;
 
-
+  /**
+   * a TextField used to write chat messages
+   */
   @FXML
   private TextField chatTextField;
 
+  /**
+   * a TextArea used to display sent chat messages
+   */
   @FXML
   private TextArea chat;
 
+  /**
+   * a quit button
+   */
   @FXML
   private Button quitButton;
 
+  /**
+   * a ToggleButton used to switch to global chat
+   */
   @FXML
   private ToggleButton globalToggleButton;
 
+  /**
+   * a ListView showing lobbies
+   */
   @FXML
   private ListView<String> lobbyListView;
 
+  /**
+   * a TextField used to enter names for new lobbies
+   */
   @FXML
   private TextField createLobbyTextField;
 
+  /**
+   * a label which displays the selected lobby
+   */
   @FXML
   private Label selectedLobbyLabel;
 
+  /**
+   * a ListView showing players
+   */
   @FXML
   private ListView<String> friendListView;
 
@@ -71,7 +119,6 @@ public class MenuController implements Initializable {
    * method reads input from the Textfield and checks, which command to send to the server
    * if there's no command at the start of the message, it will be sent as a chat (which is the main use for this GUI)
    */
-
   @FXML
   void sendChatMessage() {
 

@@ -11,6 +11,9 @@ import utility.io.CommandsToClient;
  */
 public class ClientReceive implements Runnable {
 
+  /**
+   * a line of input
+   */
   String line;
 
   /**
@@ -30,6 +33,10 @@ public class ClientReceive implements Runnable {
     process();
   }
 
+  /**
+   * handles the incoming commands
+   * descriptions of each command can be found in the corresponding enum
+   */
   private synchronized void process() {
     // splits the line:
     String msg;
@@ -114,6 +121,10 @@ public class ClientReceive implements Runnable {
     }
   }
 
+  /**
+   * splits the String at §
+   * @param msg String
+   */
   public void outPrint(String msg) {
     String[] msgs = msg.split("§");
     for (String s : msgs) {

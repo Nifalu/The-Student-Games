@@ -13,28 +13,112 @@ import java.util.HashMap;
  */
 public class Game implements Runnable{
 
+    /**
+     * sendToClient object to communicate with the client
+     */
     private static final SendToClient sendToClient = new SendToClient();
 
+    /**
+     * the games lobby
+     */
     final Lobby lobby;
+
+    /**
+     * the games highscore
+     */
     final HighScore highScore;
+
+    /**
+     * the player in the game
+     */
     public HashMap<Integer, server.User> playersPlaying;
+
+    /**
+     * the number of players
+     */
     int numPlayers;
+
+    /**
+     * how much time a player has to answer a quiz question
+     */
     int maxTimeToAnswerQuiz = 60000;
+
+    /**
+     * how much time a player has to roll a dice
+     */
     int maxTimeToRollDice = 15000;
+
+    /**
+     * how much time a player has to do something when they're inactive
+     */
     int maxTimeWhenInactive = 5000;
+
+    /**
+     * how many player have finished
+     */
     int playersEndedGame = 0;
+
+    /**
+     * saves the dsq
+     */
     int dsq = 0;
+
+    /**
+     * notes whether the regular dice has been rolled or not
+     */
     boolean rolledDice;
+
+    /**
+     * notes whether the special dice has been rolled or not
+     */
     boolean rolledSpecialDice;
+
+    /**
+     * marks the user whose turn it is to roll the dice
+     */
     public User userToRollDice;
+
+    /**
+     * notes whether a quiz question has been answered correctly
+     */
     boolean quizAnsweredCorrect;
+
+    /**
+     * marks whether a quiz question has been answered wrong
+     */
     boolean quizAnsweredWrong;
+
+    /**
+     * marks whether a quiz is ongoing or not
+     */
     boolean quizOngoing;
+
+    /**
+     * marks whether a player has cheated or not
+     */
     boolean cheated;
+
+    /**
+     * marks the user to answer a quiz question
+     */
     public User userToAnswerQuiz;
+
+    /**
+     * notes the correct answer to a quiz question
+     */
     public String correctAnswer;
+
+    /**
+     * the highscore of the game
+     */
     HighScore highScoreGame;
 
+    /**
+     * creates a new game
+     * @param lobby Lobby
+     * @param playersPlaying HashMap
+     * @param highScore HighScore
+     */
     public Game(Lobby lobby, HashMap<Integer, User> playersPlaying, HighScore highScore) {
         this.lobby = lobby;
         this.playersPlaying = playersPlaying;
