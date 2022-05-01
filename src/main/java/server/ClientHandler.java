@@ -133,6 +133,10 @@ public class ClientHandler implements Runnable {
     return out;
   }
 
+  public void setBufferedWriter(BufferedWriter bw) {
+    this.out = bw;
+  }
+
   /**
    * returns the ConnectionToClientMonitor
    * @return ConnectionToClientMonitor

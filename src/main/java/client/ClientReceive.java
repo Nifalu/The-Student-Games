@@ -19,7 +19,7 @@ public class ClientReceive implements Runnable {
   ClientReceive(String line) {
     this.line = line;
   }
-  Logger logger = LogManager.getLogger();
+  Logger logger = LogManager.getLogger(ClientReceive.class);
 
   /**
    * Takes a String and splits it at the first "--". The first part is the command and is validated

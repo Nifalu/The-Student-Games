@@ -42,7 +42,7 @@ public class Main extends Application {
   private static HighscoreController highscoreController;
 
   // Logger
-  private static final Logger logger = LogManager.getLogger();
+  private static final Logger logger = LogManager.getLogger(Main.class);
 
   // Sets the .css file to be used for the scenes.
   private static final String CSS = "TheStudentGameLook.css";
