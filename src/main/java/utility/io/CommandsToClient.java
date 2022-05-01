@@ -42,6 +42,10 @@ public enum CommandsToClient {
    * StartController will decide, when and how to display it
    */
   PRINTGUISTART,
+
+  /**
+   * used to print out the lobbies in the GUI
+   */
   PRINTLOBBIESGUI,
 
   /**
@@ -49,13 +53,26 @@ public enum CommandsToClient {
    * Game GUI
    */
   PRINTGUIGAMETRACKER,
+
+  /**
+   * used to print out the winners of a game in the GUI
+   */
   PRINTWINNERSGUI,
+
+  /**
+   *
+   */
   PRINTFRIENDSGUI,
 
   /**
    * moves the player-figures on the GUI
    */
-  GUIMOVECHARACTER, DICEDICELEFT,
+  GUIMOVECHARACTER,
+
+  /**
+   * tells the client how many dicedice he has left
+   */
+  DICEDICELEFT,
 
 
 }

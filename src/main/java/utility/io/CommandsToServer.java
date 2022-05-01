@@ -134,8 +134,12 @@ public enum CommandsToServer {
    */
   PRINTHIGHSCORE,
 
-    DICEDICELEFT,
-    /**
+  /**
+   * checks how many dicedice the player has left
+   */
+  DICEDICELEFT,
+
+  /**
    * prints out players in lobby
    */
   PRINTPLAYERSINLOBBY

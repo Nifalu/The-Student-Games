@@ -33,95 +33,199 @@ public class User {
 
 
     // ----- GETTERS -----
+
+    /**
+     * returns the clients username
+     * @return String: username
+     */
     public synchronized String getUsername() {
         return username;
     }
 
+    /**
+     * returns the clients district
+     * @return int: district
+     */
     public synchronized int getDistrict() {
         return district;
     }
 
+    /**
+     * returns whether the client has been online before or not
+     * @return boolean
+     */
     public synchronized boolean isFirstTime() {
         return firstTime;
     }
 
+    /**
+     * returns the clients clienthandler
+     * @return ClientHandler
+     */
     public synchronized ClientHandler getClienthandler() {
         return clienthandler;
     }
 
+    /**
+     * returns the clients lobby
+     * @return Lobby
+     */
     public synchronized gameLogic.Lobby getLobby() {
         return lobby;
     }
 
+    /**
+     * returns whether the client is ready to play or not
+     * @return boolean
+     */
     public synchronized boolean getIsReady() {
         return isReady;
     }
 
+    /**
+     * returns the clients current position (which field) on the board
+     * @return int: field number
+     */
     public synchronized int getPlayingField() {
         return playingField;
     }
 
+    /**
+     * returns whether the client has rolled a dice or not
+     * @return boolean
+     */
     public synchronized boolean getRolledDice() {
         return rolledDice;
     }
 
+    /**
+     * returns how many dicedice (dice with max. 4) the player has left
+     * @return int
+     */
     public int getSpecialDiceLeft() {
         return specialDiceLeft;
     }
 
+    /**
+     * returns whether the client is playing a game or not
+     * @return boolean
+     */
     public boolean getIsPlaying() { return isPlaying; }
 
+    /**
+     * returns whether the client is acrively rolling the dice or not
+     * @return boolean
+     */
     public boolean getIsNotActivelyRollingTheDice() { return isNotActivelyRollingTheDice; }
 
+    /**
+     * returns the clients userlist number
+     * @return int
+     */
     public int getUserListNumber() { return userListNumber; }
 
+    /**
+     * returns whether the game is over or not
+     * @return boolean
+     */
     public boolean getGameOver() { return gameOver; }
 
+
+
     // ----- SETTERS -----
+
+    /**
+     * changes the clients username
+     * @param username String
+     */
     public synchronized void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * reduces the amount of special dice the player has left
+     */
     public void usedSpecialDice() {
         specialDiceLeft--;
     }
 
+    /**
+     * resets the amount of special dice the player has left
+     */
     public void resetSpecialDice() { specialDiceLeft = 3; }
 
+    /**
+     * sets whether the client has connected for the first time or not
+     * @param firstTime boolean
+     */
     public synchronized void setFirstTime(boolean firstTime) {
         this.firstTime = firstTime;
     }
 
+    /**
+     * sets the clients current lobby
+     * @param newLobby Lobby
+     */
     public synchronized void setLobby(gameLogic.Lobby newLobby) {
         lobby = newLobby;
     }
 
+    /**
+     * marks the client as ready to play
+     * @param isReady boolean
+     */
     public void setReadyToPlay(boolean isReady) {
         this.isReady = isReady;
     }
 
+    /**
+     * sets the current playing field
+     * @param newPlayingField int
+     */
     public synchronized void setPlayingField(int newPlayingField) {
         playingField = newPlayingField;
     }
 
+    /**
+     * sets the number the dice has rolled
+     * @param rolledDice boolean
+     */
     public void setRolledDice(boolean rolledDice) {
         this.rolledDice = rolledDice;
     }
 
+    /**
+     * sets whether the client is currently playing or not
+     * @param playing boolean
+     */
     public void setIsPlaying(boolean playing) { isPlaying = playing; }
 
+    /**
+     * sets that the client is not actively rolling the dice
+     */
     public void setNotActivelyRollingTheDice() { isNotActivelyRollingTheDice = true; }
 
+    /**
+     * sets that the client is actively rolling the dice
+     */
     public void setIsActivelyRollingTheDice() { isNotActivelyRollingTheDice = false; }
 
+    /**
+     * sets the clients userlist number
+     * @param userListNumber int
+     */
     public void setUserListNumber(int userListNumber) { this.userListNumber = userListNumber; }
 
+    /**
+     * sets the game status to over
+     */
     public void setGameOver() { gameOver = true; }
 
     //-------------OTHER METHODS------------------------------
 
     /**
-     * @return randomInt or 1
+     * assigns a district to the client
+     * @return int between 1 and 12
      */
     public synchronized static int assignDistrict() {
         Random random = new Random();

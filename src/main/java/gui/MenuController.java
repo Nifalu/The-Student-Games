@@ -227,47 +227,80 @@ public class MenuController implements Initializable {
 
 
   /**
-   * the following methods are used to switch between scenes
-   * they're only temporary
+   * switches to the Game scene when pressing the button
    */
-
   public void switchToGame() {
     Main.displayGame();
   }
 
+  /**
+   * switches to the Highscore scene when pressing the button
+   */
   public void switchToHighscore() {
     Main.displayHighscore();
   }
 
 
+  /**
+   * asks to print out the lobbies when clicking on the button
+   * @param ActionEvent ActionEvent
+   */
   public void refreshLobbies(ActionEvent ActionEvent) {
     sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
   }
 
+  /**
+   * returns the string split at §
+   * @param s String
+   * @return String[] containing the splitted string
+   */
   public String[] splittedString(String s) {
     return s.split("§");
   }
 
+  /**
+   * returns the lobbies split at %
+   * @param s String containing all lobbies
+   * @return String[] containing all lobbies
+   */
   public String[] splittedLobbies(String s) {
     return s.split("%");
   }
 
+  /**
+   * prints out the lounging list
+   */
   public void refreshFriends() {
     sendToServer.send(CommandsToServer.PRINTLOUNGINGLIST, "");
   }
 
+  /**
+   * test method
+   */
   public void printTest() {
     System.out.println(lobbyList);
   }
 
+  /**
+   * removes the new line attached to a string
+   * @param str String
+   * @return String without the new line attached
+   */
   private static String removeNewline(String str) {
     return str.replace("\n", "").replace("\r", "");
   }
 
+  /**
+   * shows the selected lobby
+   * @return String
+   */
   public String listViewSelectedLobby() {
     return lobbyListView.getSelectionModel().getSelectedItem();
   }
 
+  /**
+   * joins the lobby selected in the listview
+   */
   public void joinSelectedLobby() {
     String selectedLobby = listViewSelectedLobby();
     if (selectedLobby == null) {
@@ -284,6 +317,10 @@ public class MenuController implements Initializable {
     }
   }
 
+  /**
+   * creates a new lobby
+   * @param actionEvent ActionEvent
+   */
   public void createLobby(ActionEvent actionEvent) {
     refreshLobbies(actionEvent);
     String lobbyName = createLobbyTextField.getText();

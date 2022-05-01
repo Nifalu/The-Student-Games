@@ -24,6 +24,10 @@ public class HighscoreController implements Initializable {
   private ListView<String> winnerListView;
 
 
+  /**
+   * prints out the lobbies winners
+   * @param winners String
+   */
   @FXML
   public void printLobbies(String winners) {
     String[] splittedWinners = splittedString(winners);
@@ -34,10 +38,9 @@ public class HighscoreController implements Initializable {
   }
 
   /**
-   * the following methods are used to switch between scenes
-   * they're only temporary
+   * method is called when the scene is opened
+   * atm it's only used to set the HigscoreController
    */
-
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
@@ -60,22 +63,41 @@ public class HighscoreController implements Initializable {
      */
   }
 
+  /**
+   * switches to the Menu scene when pressing the button
+   */
   public void switchToMenu() {
     Main.displayMenu();
   }
 
+  /**
+   * switches to the Game scene when pressing the button
+   */
   public void switchToGame() {
     Main.displayGame();
   }
 
+  /**
+   * removes the new line attached to a string
+   * @param str String
+   * @return String without a new line attached
+   */
   private static String removeNewline(String str) {
     return str.replace("\n", "").replace("\r", "");
   }
 
+  /**
+   * splits the string at §
+   * @param s String
+   * @return String[] containing the splitted string
+   */
   public String[] splittedString(String s) {
     return s.split("§");
   }
 
+  /**
+   * refreshes the winners of the lobbies by calling PRINTLOBBIES
+   */
   public void refreshWinners() {
     sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
   }
