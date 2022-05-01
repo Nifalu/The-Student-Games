@@ -413,7 +413,7 @@
                               <Label layoutX="16.0" layoutY="19.0" text="21" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.rowIndex="6">
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="0" GridPane.rowIndex="6">
                            <children>
                               <Label layoutX="16.0" layoutY="19.0" text="20" />
                            </children>
