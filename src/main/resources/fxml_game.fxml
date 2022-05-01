@@ -70,7 +70,7 @@
                               <Label layoutX="16.0" layoutY="19.0" text="Finish" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="8" GridPane.rowIndex="0">
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="0">
                            <children>
                               <Label layoutX="16.0" layoutY="19.0" text="88" />
                            </children>
@@ -78,7 +78,7 @@
                               <Insets />
                            </opaqueInsets>
                         </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="0">
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="7" GridPane.rowIndex="0">
                            <children>
                               <Label layoutX="18.0" layoutY="19.0" text="87" />
                            </children>
