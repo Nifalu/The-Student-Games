@@ -37,9 +37,9 @@ public class MenuController implements Initializable {
   // public static ReceiveFromProtocol lobbyReceiver = new ReceiveFromProtocol();
   // public static ReceiveFromProtocol friendsReceiver = new ReceiveFromProtocol();
 
-  public static String lobbyList;
+  public static String lobbyList; // String containing all the lobbies
 
-  public static String friendList;
+  public static String friendList; // String containing all the Lobbies and their users
 
 
   @FXML
@@ -111,6 +111,10 @@ public class MenuController implements Initializable {
     });
   }
 
+  /**
+   * print all Lobbies into the GUI (ListView)
+   * @param lobbies String containing all the lobbies
+   */
   @FXML
   public void printLobbies(String lobbies) {
     String[] splittedLobbies = splittedString(lobbies);
@@ -120,6 +124,10 @@ public class MenuController implements Initializable {
     });
   }
 
+  /**
+   * prints a String into the GUI (ListView) containing all Lobbie and users in the lobby.
+   * @param friends all the users in the lobby + the lobby
+   */
   @FXML
   public void printFriends(String friends) {
     String[] splittedFriends = splittedLobbies(friends);

@@ -13,11 +13,11 @@ import java.util.ResourceBundle;
 
 public class HighscoreController implements Initializable {
 
-  public static ReceiveFromProtocol winnerReceiver = new ReceiveFromProtocol();
+  public static ReceiveFromProtocol winnerReceiver = new ReceiveFromProtocol(); // receives from protocoll
 
-  public static String winnerList;
+  public static String winnerList; // String containing all the winners
 
-  private final SendToServer sendToServer = new SendToServer();
+  private final SendToServer sendToServer = new SendToServer(); // sends to server
 
 
   @FXML
