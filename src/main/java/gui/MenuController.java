@@ -28,41 +28,89 @@ import static java.lang.Thread.sleep;
 
 public class MenuController implements Initializable {
 
+  /**
+   * SendToServer object used to communicate with the server
+   */
   private final SendToServer sendToServer = new SendToServer();
+
+  /**
+   * String which saves a message
+   */
   private static String msg;
+
+  /**
+   * notes whether the user has joined the chat or not
+   */
   public static boolean hasJoinedChat = false;
+
+  /**
+   * ToggleGroup used for the ToggleButton in the chat
+   */
   public ToggleGroup switchGlobalLobby;
+
+  /**
+   * notes whether the user wants to write in global chat
+   */
   boolean writeInGlobalChat = false;
   // public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
   // public static ReceiveFromProtocol lobbyReceiver = new ReceiveFromProtocol();
   // public static ReceiveFromProtocol friendsReceiver = new ReceiveFromProtocol();
 
+  /**
+   * String containing all the lobbies
+   */
   public static String lobbyList;
 
+  /**
+   * String containing all the lobbies and their users
+   */
   public static String friendList;
 
-
+  /**
+   * a TextField used to write chat messages
+   */
   @FXML
   private TextField chatTextField;
 
+  /**
+   * a TextArea used to display sent chat messages
+   */
   @FXML
   private TextArea chat;
 
+  /**
+   * a quit button
+   */
   @FXML
   private Button quitButton;
 
+  /**
+   * a ToggleButton used to switch to global chat
+   */
   @FXML
   private ToggleButton globalToggleButton;
 
+  /**
+   * a ListView showing lobbies
+   */
   @FXML
   private ListView<String> lobbyListView;
 
+  /**
+   * a TextField used to enter names for new lobbies
+   */
   @FXML
   private TextField createLobbyTextField;
 
+  /**
+   * a label which displays the selected lobby
+   */
   @FXML
   private Label selectedLobbyLabel;
 
+  /**
+   * a ListView showing players
+   */
   @FXML
   private ListView<String> friendListView;
 
@@ -71,7 +119,6 @@ public class MenuController implements Initializable {
    * method reads input from the Textfield and checks, which command to send to the server
    * if there's no command at the start of the message, it will be sent as a chat (which is the main use for this GUI)
    */
-
   @FXML
   void sendChatMessage() {
 
@@ -111,6 +158,10 @@ public class MenuController implements Initializable {
     });
   }
 
+  /**
+   * print all Lobbies into the GUI (ListView)
+   * @param lobbies String containing all the lobbies
+   */
   @FXML
   public void printLobbies(String lobbies) {
     String[] splittedLobbies = splittedString(lobbies);
@@ -120,6 +171,10 @@ public class MenuController implements Initializable {
     });
   }
 
+  /**
+   * prints a String into the GUI (ListView) containing all Lobbie and users in the lobby.
+   * @param friends all the users in the lobby + the lobby
+   */
   @FXML
   public void printFriends(String friends) {
     String[] splittedFriends = splittedLobbies(friends);
@@ -227,47 +282,80 @@ public class MenuController implements Initializable {
 
 
   /**
-   * the following methods are used to switch between scenes
-   * they're only temporary
+   * switches to the Game scene when pressing the button
    */
-
   public void switchToGame() {
     Main.displayGame();
   }
 
+  /**
+   * switches to the Highscore scene when pressing the button
+   */
   public void switchToHighscore() {
     Main.displayHighscore();
   }
 
 
+  /**
+   * asks to print out the lobbies when clicking on the button
+   * @param ActionEvent ActionEvent
+   */
   public void refreshLobbies(ActionEvent ActionEvent) {
     sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
   }
 
+  /**
+   * returns the string split at §
+   * @param s String
+   * @return String[] containing the splitted string
+   */
   public String[] splittedString(String s) {
     return s.split("§");
   }
 
+  /**
+   * returns the lobbies split at %
+   * @param s String containing all lobbies
+   * @return String[] containing all lobbies
+   */
   public String[] splittedLobbies(String s) {
     return s.split("%");
   }
 
+  /**
+   * prints out the lounging list
+   */
   public void refreshFriends() {
     sendToServer.send(CommandsToServer.PRINTLOUNGINGLIST, "");
   }
 
+  /**
+   * test method
+   */
   public void printTest() {
     System.out.println(lobbyList);
   }
 
+  /**
+   * removes the new line attached to a string
+   * @param str String
+   * @return String without the new line attached
+   */
   private static String removeNewline(String str) {
     return str.replace("\n", "").replace("\r", "");
   }
 
+  /**
+   * shows the selected lobby
+   * @return String
+   */
   public String listViewSelectedLobby() {
     return lobbyListView.getSelectionModel().getSelectedItem();
   }
 
+  /**
+   * joins the lobby selected in the listview
+   */
   public void joinSelectedLobby() {
     String selectedLobby = listViewSelectedLobby();
     if (selectedLobby == null) {
@@ -284,6 +372,10 @@ public class MenuController implements Initializable {
     }
   }
 
+  /**
+   * creates a new lobby
+   * @param actionEvent ActionEvent
+   */
   public void createLobby(ActionEvent actionEvent) {
     refreshLobbies(actionEvent);
     String lobbyName = createLobbyTextField.getText();

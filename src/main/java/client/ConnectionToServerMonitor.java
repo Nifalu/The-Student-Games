@@ -10,11 +10,29 @@ import utility.io.SendToServer;
  */
 public class ConnectionToServerMonitor implements Runnable {
 
+  /**
+   * notes if stopped
+   */
   private volatile boolean stop = false;
+
+  /**
+   * saves the time of the last received pong
+   */
   private volatile long lastReceivedPong = System.currentTimeMillis();
+
+  /**
+   * marks whether the initial ping has happened or not
+   */
   private boolean initialPing = false;
+
+  /**
+   * timed out
+   */
   private long timedOut;
 
+  /**
+   * send to server object used to communicate with the server
+   */
   private final SendToServer sendToServer = new SendToServer();
 
   /**

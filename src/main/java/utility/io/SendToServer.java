@@ -11,7 +11,14 @@ import java.io.IOException;
  */
 public class SendToServer {
 
+  /**
+   * client traffic logger
+   */
   private static final Logger clientTraffic = LogManager.getLogger("ClientTraffic");
+
+  /**
+   * no ping logger
+   */
   private static final Logger clientTrafficNoPing = LogManager.getLogger("ClientTrafficNoPing");
 
 

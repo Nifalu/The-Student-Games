@@ -11,25 +11,65 @@ import java.util.HashMap;
 /**
  * creates a Lobby Object
  */
-
 public class Lobby {
 
+    /**
+     * amount of players needed to start a game
+     */
     final int minToStart = 2;
+
+    /**
+     * the name of the lobby
+     */
     String name;
+
+    /**
+     * the corresponding game to the lobby
+     */
     Game game;
+
+    /**
+     * SendToClient object to communicate with the client
+     */
     private final SendToClient sendToClient = new SendToClient();
+
+    /**
+     * ReceiveFromProtocol object to communicate with the protocol
+     */
     public ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+
+    /**
+     * the highscore of the lobby
+     */
     public static HighScore highScore = new HighScore();
 
-    // Int status is -1 if the game is already finished, 0 if the game is ongoing, 1 if the game is open.
+    /**
+     * the game status
+     * Int status is -1 if the game is already finished, 0 if the game is ongoing, 1 if the game is open.
+     */
     private int status;
-    final private int lobbyNumber;
-    // contains a HashMap of all the users in the Lobby
 
+    /**
+     * the number of the lobby
+     */
+    final private int lobbyNumber;
+
+    /**
+     * contains a HashMap of all the users in the Lobby
+     */
     HashMap<Integer, User> usersReady = new HashMap<>();
 
-    private int characterColorCounter = 0; // used to give each player joining the lobby a different character
-    private String[] characterColors = new String[] {"red", "blue", "yellow", "green"};
+    /**
+     * used to give each player joining the lobby a different character
+     * +1 when a color has been given away
+     * characterColorCounter is used as an index to the characterColors array
+     */
+    private int characterColorCounter = 0;
+
+    /**
+     * the possible colors for a player character
+     */
+    private String[] characterColors = new String[]{"red", "blue", "yellow", "green"};
 
     /**
      * creates a Lobby object with the given name
@@ -77,6 +117,8 @@ public class Lobby {
     }
 
     /**
+     * returns the number of the lobby
+     *
      * @return the number of the lobby as int.
      */
     public int getLobbyNumber() {
@@ -84,6 +126,8 @@ public class Lobby {
     }
 
     /**
+     * returns the name of the lobby
+     *
      * @return the name of the lobby as String.
      */
     public String getLobbyName() {
@@ -91,9 +135,11 @@ public class Lobby {
     }
 
     /**
-     * @return the status of the lobby as an int.
+     * returns the status of the lobba as an int
      * 0 for all the ongoing lobbies, 1 for all the open lobbies, -1 for all the finished lobbies
      * and 69 for the standard lobby.
+     *
+     * @return int: lobbystatus
      */
     public int getLobbyStatus() {
         return status;
@@ -145,6 +191,7 @@ public class Lobby {
     /**
      * removes a user from a lobby and puts the user into the standard lobby.
      * Users shouldn't be in no lobby.
+     *
      * @param user that is removed
      */
     public void removeUserFromLobby(User user) {
@@ -246,6 +293,7 @@ public class Lobby {
 
     /**
      * Returns a String with the highscore of the top 10 players or "empty High Score" if high score is empty.
+     *
      * @param clientHandler User asking for the high score
      */
     public void getHighScore(server.ClientHandler clientHandler) {
@@ -256,10 +304,19 @@ public class Lobby {
         }
     }
 
+    /**
+     * returns whether enough people have joined a game to start it or not
+     *
+     * @return boolean
+     */
     public boolean getIsReadyToStartGame() {
         return (usersReady.size() >= minToStart);
     }
 
+    /**
+     * returns the game of this lobby
+     * @return the game of this lobby
+     */
     public Game getGame() {
         return game;
     }
@@ -272,8 +329,4 @@ public class Lobby {
     public void lobbyBroadcastToPlayer(String msg) {
         sendToClient.lobbyBroadcast(getUsersInLobby(), CommandsToClient.PRINT, msg);
     }
-
-
-
 }
-

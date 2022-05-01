@@ -18,7 +18,14 @@ import static utility.Exceptions.failedToCreateServer;
  */
 public class GameServer {
 
+  /**
+   * the server connection
+   */
   static ServerSocket serverSocket;
+
+  /**
+   * the logger
+   */
   private static final Logger logger = LogManager.getLogger(GameServer.class);
 
 

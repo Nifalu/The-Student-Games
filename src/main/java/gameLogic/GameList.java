@@ -16,17 +16,26 @@ public class GameList {
      * HashMap with all the Lobbies, can be accessed via the lobby number.
      */
     private static final HashMap<Integer, Lobby> lobbyList = new HashMap<>();
+
+    /**
+     * returns the lobbylist
+     * @return LobbyList
+     */
     public synchronized static HashMap<Integer, Lobby> getLobbyList() {
         return lobbyList;
     }
 
+    /**
+     * returns the userlist
+     * @return userlist
+     */
     public synchronized static HashMap<Integer, User> getUserlist() {
         return ServerManager.getUserlist();
     }
 
     /**
-     *
-     * @return return a String of all User
+     * returns a String of all users
+     * @return String
      */
     public synchronized static String printUserList() {
         String s = "";
@@ -36,6 +45,11 @@ public class GameList {
         return s;
     }
 
+    /**
+     * prints out users in lobby
+     * @param lobby Lobby
+     * @return String
+     */
     public synchronized static String printUserInLobby (Lobby lobby) {
         ArrayList<ClientHandler> userList = ServerManager.getActiveClientList();
         String s = "";
@@ -48,8 +62,8 @@ public class GameList {
     }
 
     /**
-     *
-     * @return return a String of all users in the lobby
+     * prints out all users in a lobby
+     * @return String
      */
     public synchronized static String printLoungingList() {
         String print = "";
@@ -60,7 +74,7 @@ public class GameList {
     }
 
     /**
-     *
+     * prints out all open lobbies
      * @param lobbyList Hashmap with all lobbies
      * @return a String of all open lobbies
      */

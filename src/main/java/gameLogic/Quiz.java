@@ -6,6 +6,10 @@ import java.util.Random;
  * Quiz questions with its answer and the number of fields to be moved forward or backward.
  */
 public class Quiz {
+
+    /**
+     * amount of answers to a quiz question
+     */
     final static int n = 4;
 
     /**
@@ -30,8 +34,6 @@ public class Quiz {
                 "A: Excel B: Photoshop C: Paint D: GIMP";
         questionList[3][1] = "A";
         questionList[3][2] = "4";
-//        questionList[4][0] = ;
-
 
         Random random = new Random();
         int randomInt = random.nextInt(n);

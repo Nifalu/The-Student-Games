@@ -27,58 +27,114 @@ import java.util.ResourceBundle;
  */
 
 public class GameController implements Initializable {
+
+  /**
+   * SendToServer object to communicate with the server
+   */
   private final SendToServer sendToServer = new SendToServer();
-  public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
-  public static ReceiveFromProtocol receiveFromProtocolGameUpdate = new ReceiveFromProtocol();
-  public static ReceiveFromProtocol receiveNewPlayerPosition = new ReceiveFromProtocol();
+
+  /**
+   * marks whether a player wants to write in the global chat or not
+   */
   boolean writeInGlobalChat = false;
+
+  /**
+   * marks whether a player is ready or not
+   */
   boolean isReady = false;
+
+  /**
+   * marks whether the game has started or not
+   */
   public static boolean gameHasStarted = false;
 
-  public int diceDiceLeft = 3;
-
+  /**
+   * all fields of the board in a HashMap
+   */
   public static HashMap<Integer, Integer[]> fields = new HashMap<>();
 
 
+  /**
+   * a TextField to enter chat messages
+   */
   @FXML
   private TextField chatTextField;
 
+  /**
+   * a TextArea which displays sent chat messages
+   */
   @FXML
   private TextArea chat;
 
+  /**
+   * a toggle button used to switch between global and lobby chat
+   */
   @FXML
   private ToggleButton globalToggleButton;
 
+  /**
+   * Polygon which represents the first dicedice
+   */
   @FXML
   private Polygon fourDice1;
 
+  /**
+   * Polygon which represents the second dicedice
+   */
   @FXML
   private Polygon fourDice2;
 
+  /**
+   * Polygon which represents the third dicedice
+   */
   @FXML
   private Polygon fourDice3;
 
+  /**
+   * button used for setting the player as ready or unready
+   */
   @FXML
   private Button readyButton;
 
+  /**
+   * button used to start the game
+   */
   @FXML
   private Button startButton;
 
+  /**
+   * TextArea used to display what happens in the game
+   */
   @FXML
   private TextArea gameTracker;
 
+  /**
+   * a blue circle which represents a player character
+   */
   @FXML
   private Circle playerBlue;
 
+  /**
+   * a red circle which represents a player character
+   */
   @FXML
   private Circle playerRed;
 
+  /**
+   * a yellow circle which represents a player character
+   */
   @FXML
   private Circle playerYellow;
 
+  /**
+   * a green circle which represents a player character
+   */
   @FXML
   private Circle playerGreen;
 
+  /**
+   * GridPane which is used as the board of the game
+   */
   @FXML
   private GridPane board;
 
@@ -87,7 +143,6 @@ public class GameController implements Initializable {
    * method reads input from the Textfield and checks, which command to send to the server
    * if there's no command at the start of the message, it will be sent as a chat (which is the main use for this GUI)
    */
-
   @FXML
   void sendChatMessage() {
     String msg = (chatTextField.getText());
@@ -129,11 +184,10 @@ public class GameController implements Initializable {
 
   /**
    * This method runs, when the class is created
-   * It first waits until the user has joined the chat and will then wait for incoming chat messages
-   * Incoming messages will then be printed to the chat
+   * The scene resets, the "board" is created and the images are added to the playing characters
    *
-   * @param location  resource
-   * @param resources resources
+   * @param location  URL
+   * @param resources ResourceBundle
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -228,10 +282,12 @@ public class GameController implements Initializable {
      */
   }
 
+  /**
+   * creates the Hashmap which contains the row and column of each field on the board
+   */
   private void createPlayingField() {
-    // creates the Hashmap which saves the row and column of each field
     Platform.runLater(() -> {
-      int counter = 1;
+      int counter = 0;
       for (int y = 8; y >= 0; y--) {
         if (y % 2 == 0) {
           for (int x = 0; x <= 9; x++) {
@@ -248,6 +304,10 @@ public class GameController implements Initializable {
     });
   }
 
+  /**
+   * This method is used to reset the game at the start of it
+   * the player characters are moved to the starting position and all dicedice are given back to the player
+   */
   public void resetGame() {
     Platform.runLater(() -> {
       playerBlue.setTranslateY(594);
@@ -305,13 +365,18 @@ public class GameController implements Initializable {
   }
 
   /**
-   * throws a dicedice when pressing on one of the four-dices
-   * once a dice has been clicked, it will be disabled and turn transparent
+   * throws a dicedice when clicking on one of the four-dices
    */
   public void throwFourDice() {
     sendToServer.send(CommandsToServer.DICEDICE, "");
   }
 
+
+  /**
+   * checks how many dicedice the player has left and adjust how the GUI shows them
+   * used up dicedice have a lower opacity and are disabled
+   * @param diceLeft String
+   */
   public void checkFourDiceLeft(String diceLeft) {
     //Platform.runLater(() -> {
       // disables already used dicedices
@@ -392,34 +457,52 @@ public class GameController implements Initializable {
   }
 
   /**
-   * the following methods are used to switch between scenes
-   * they're only temporary
+   * used to switch to the Menu scene
    */
   public void switchToMenu() {
     Main.displayMenu();
   }
 
+  /**
+   * used to switch to the Highscore scene
+   */
   public void switchToHighscore() {
     Main.displayHighscore();
   }
 
+  /**
+   * answers a quiz question with A when pressing the button
+   */
   public void answerQuizA() {
     sendToServer.send(CommandsToServer.QUIZ, "A");
   }
 
+  /**
+   * answers a quiz question with B when pressing the button
+   */
   public void answerQuizB() {
     sendToServer.send(CommandsToServer.QUIZ, "B");
   }
 
+  /**
+   * answers a quiz question with C when pressing the button
+   */
   public void answerQuizC() {
     sendToServer.send(CommandsToServer.QUIZ, "C");
   }
 
+  /**
+   * answers a quiz question with D when pressing the button
+   */
   public void answerQuizD() {
     sendToServer.send(CommandsToServer.QUIZ, "D");
   }
 
-
+  /**
+   * This method determines which player needs to be moved on the GUI and on which field they now belong
+   * @param moveToField String which contains the color of the player and the field they move to
+   * @return returns the correct player character to move around (which are circles)
+   */
   public Circle chooseCorrectPlayerToMove(String moveToField) {
     String[] playerAndNewField = moveToField.split("--"); // splits the String into the nr of the new field and the player color
     String playerColorToMove = playerAndNewField[0];
@@ -437,6 +520,14 @@ public class GameController implements Initializable {
   }
 
 
+  /**
+   * This method is used to get the x- and y-coordinate of a field on the board
+   * To find a field you need to know the row and column number
+   * @param board GridPane: represents the board over which the player characters move
+   * @param col int: column of the field you want to search
+   * @param row int: row of the field you want to search
+   * @return double[] containing the x- and y-coordinate of the field in
+   */
   private double[] getPosFromGridPane(GridPane board, int col, int row) {
     double xPos = 0.0;
     double yPos = 0.0;
@@ -456,6 +547,14 @@ public class GameController implements Initializable {
 
   }
 
+  /**
+   * Moves a character to a different field
+   * This is done in three steps:
+   * 1. find the correct player to move
+   * 2. get the coordinates of the new field
+   * 3. moves the player to the new coordinates
+   * @param moveToField String: contains the color of the character to move and on which field he belongs
+   */
   public void movePlayer(String moveToField) {
 
     Circle playerToMove = chooseCorrectPlayerToMove(moveToField);

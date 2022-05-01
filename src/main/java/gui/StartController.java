@@ -15,16 +15,32 @@ import java.util.ResourceBundle;
 /**
  * this is the controller for fxml_start.fxml
  */
-
 public class StartController implements Initializable {
 
+  /**
+   * SendToServer object used to communicate with the server
+   */
   private final SendToServer sendToServer = new SendToServer();
+
+  /**
+   * ReceiveFromProtocol object used to communicate with the protocol
+   */
   public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+
+  /**
+   * a String which can save a message
+   */
   String msg;
 
+  /**
+   * a label which is used to ask for the clients username
+   */
   @FXML
   private Label showText;
 
+  /**
+   * a TextField used to enter answers to question
+   */
   @FXML
   private TextField textInput;
 
@@ -80,17 +96,22 @@ public class StartController implements Initializable {
 
 
   /**
-   * the following methods are used to switch between scenes
-   * they're only temporary
+   * switches to the Menu scene when clicking the button
    */
   public void switchToMenu() {
     Main.displayMenu();
   }
 
+  /**
+   * switches to the Game scene when clicking the button
+   */
   public void switchToGame() {
     Main.displayGame();
   }
 
+  /**
+   * switches to the Highscore scene when clicking the button
+   */
   public void switchToHighscore() {
     Main.displayHighscore();
   }

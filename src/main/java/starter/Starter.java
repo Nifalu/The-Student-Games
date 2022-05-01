@@ -11,7 +11,14 @@ import utility.Exceptions;
  */
 public class Starter {
 
+  /**
+   * the logger
+   */
   private static final Logger logger = LogManager.getLogger(Starter.class);
+
+  /**
+   * saves arguments in a string array
+   */
   private static String[] args;
 
   /**
@@ -55,6 +62,9 @@ public class Starter {
     }
   }
 
+  /**
+   * connect a new user to the server
+   */
   public static void connect() {
     String[] address = args[1].split(":", 2);
     if (address.length > 1) {

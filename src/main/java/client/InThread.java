@@ -7,9 +7,21 @@ import java.io.*;
  * This Thread receives and processes inputs from the server
  */
 public class InThread implements Runnable {
+
+  /**
+   * the in stream
+   */
   private final BufferedReader in;
+
+  /**
+   * notes if stopped
+   */
   private volatile boolean stop = false;
 
+  /**
+   * sets the InThread
+   * @param in InThread
+   */
   public InThread(BufferedReader in) {
     this.in = in;
   }

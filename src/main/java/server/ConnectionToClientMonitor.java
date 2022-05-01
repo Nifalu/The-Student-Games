@@ -9,13 +9,40 @@ import utility.io.SendToClient;
  */
 public class ConnectionToClientMonitor implements Runnable {
 
+  /**
+   * the corresponding clienthandler
+   */
   private final ClientHandler clientHandler;
+
+  /**
+   * notes whether stopped
+   */
   private volatile boolean stop = false;
+
+  /**
+   * saves the time of the last received pong
+   */
   private volatile long lastReceivedPong = System.currentTimeMillis();
+
+  /**
+   * saves the time of the last received ping
+   */
   private long lastReceivedPing = System.currentTimeMillis();
+
+  /**
+   * the time out
+   */
   private long timedOut;
+
+  /**
+   * SendToClient object used to communicate with the client
+   */
   private final SendToClient sendToClient = new SendToClient();
 
+  /**
+   * creates a new ConnectionToClientMonitor object for a clienthandler
+   * @param clientHandler ClientHandler
+   */
   public ConnectionToClientMonitor(ClientHandler clientHandler) {
     this.clientHandler = clientHandler;
   }

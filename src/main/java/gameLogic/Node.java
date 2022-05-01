@@ -5,8 +5,19 @@ package gameLogic;
  */
 class Node {
 
+    /**
+     * the next node
+     */
     Node next;
+
+    /**
+     * the score
+     */
     int score;
+
+    /**
+     * the name
+     */
     String name;
 
     /**

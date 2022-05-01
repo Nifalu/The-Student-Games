@@ -21,37 +21,90 @@ import java.nio.charset.StandardCharsets;
  */
 public class ClientHandler implements Runnable {
 
-  //Logger
+  /**
+   * the logger
+   */
   private static final Logger logger = LogManager.getLogger(ClientHandler.class);
 
-  //Connection:
+  /**
+   * the connection to the client
+   */
   private Socket socket; // connection to the client
 
-  //Streams:
+  /**
+   * the input stream
+   * sends data
+   */
   private BufferedReader in; // send data
+
+  /**
+   * the output stream
+   * receives data
+   */
   private BufferedWriter out; // receive data
 
   //Objects:
+  /**
+   * the user
+   * the ClientHandler knows which user the client belongs to
+   */
   public User user; // ClientHandler knows which User the client belongs to
+
+  /**
+   * Name object used to communicate with the Name class
+   */
   public Name nameClass = new Name(this);
+
+  /**
+   * a chat
+   */
   public Chat chat = new Chat();
+
+  /**
+   * SendToClien object used to communicate with the client
+   */
   private final SendToClient sendToClient = new SendToClient();
+
+  /**
+   * the clients lobbyhelper object
+   */
   public gameLogic.CreateLobbyHelper lobbyhelper = new CreateLobbyHelper(this);
 
   //Threads:
+  /**
+   * the clienthandler input
+   */
   private ClientHandlerIn clientHandlerIn;
+
+  /**
+   * the clienthandler input thread
+   */
   private Thread clientHandlerInThread;
 
+  /**
+   * monitors the connection to the client
+   */
   private ConnectionToClientMonitor connectionToClientMonitor;
+
+  /**
+   * the thread for the ConnectionToClientMonitor object
+   */
   private Thread connectionMonitor;
 
+
+  /**
+   * creates a new ClientHandler
+   * @param socket Socket
+   */
   public ClientHandler(Socket socket) {
     try {
-      // creating Streams
       this.socket = socket;
+
+      // creating Streams
       this.in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
       this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
 
+      // Gets the Home-directory name of the client and creates a User
       this.nameClass = new Name(this);
       user = ServerManager.connect(this, "Player_" + ServerManager.userlist.size());
       String ClientHomeDirectoryName = in.readLine();
@@ -70,7 +123,7 @@ public class ClientHandler implements Runnable {
       this.connectionToClientMonitor = new ConnectionToClientMonitor(this);
       connectionMonitor = new Thread(connectionToClientMonitor);
       connectionMonitor.setName("connectionMonitor  Thread");
-      // Gets the Home-directory name of the client and creates a User
+
 
 
     } catch (IOException e) {
@@ -131,6 +184,13 @@ public class ClientHandler implements Runnable {
     return out;
   }
 
+  /**
+   * sets the bw (BufferedWriter)
+   * @param bw BufferedWriter
+   */
+  public void setBufferedWriter(BufferedWriter bw) {
+    this.out = bw;
+  }
 
   /**
    * returns the ConnectionToClientMonitor

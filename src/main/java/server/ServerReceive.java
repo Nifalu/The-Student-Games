@@ -7,14 +7,39 @@ import utility.io.CommandsToClient;
 import utility.io.CommandsToServer;
 import utility.io.SendToClient;
 
+/**
+ * receives commands on the server side
+ */
 public class ServerReceive implements Runnable {
 
+  /**
+   * the logger
+   */
   private static final Logger logger = LogManager.getLogger(ServerReceive.class);
+
+  /**
+   * traffic logger
+   */
   private static final Logger logTraffic = LogManager.getLogger("Traffic");
+
+  /**
+   * no ping logger
+   */
   private static final Logger logTrafficNoPing = LogManager.getLogger("TrafficNoPing");
 
+  /**
+   * SendToClient object used to communicate with the client
+   */
   private final SendToClient sendToClient = new SendToClient();
+
+  /**
+   * the clients clienthandler
+   */
   private final ClientHandler client;
+
+  /**
+   * saves a line of a message
+   */
   private final String line;
 
 
@@ -36,6 +61,9 @@ public class ServerReceive implements Runnable {
     process();
   }
 
+  /**
+   * splits incoming messages and then processes them
+   */
   private synchronized void process() {
     // Incoming message is split into command (cmd) and message (msg)
     String[] input;

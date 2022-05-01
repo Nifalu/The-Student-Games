@@ -6,6 +6,10 @@ package utility.io;
  * wait for incoming messages in the background
  */
 public class ReceiveFromProtocol {
+
+  /**
+   * the received message
+   */
   String receivedMessage;
 
 
