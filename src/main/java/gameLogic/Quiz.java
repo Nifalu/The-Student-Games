@@ -30,8 +30,6 @@ public class Quiz {
                 "A: Excel B: Photoshop C: Paint D: GIMP";
         questionList[3][1] = "A";
         questionList[3][2] = "4";
-//        questionList[4][0] = ;
-
 
         Random random = new Random();
         int randomInt = random.nextInt(n);
