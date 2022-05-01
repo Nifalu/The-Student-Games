@@ -1,11 +1,11 @@
 package gameLogic;
 
 
-import gui.GameController;
 import server.ServerManager;
 import server.User;
 import utility.io.CommandsToClient;
 import utility.io.SendToClient;
+
 import java.util.HashMap;
 
 /**
@@ -66,8 +66,8 @@ public class Game implements Runnable{
                     lobbyBroadcastToPlayer(calendar.getCurrentDate());
                 }
                 if (ServerManager.getActiveClientList().contains(playersPlaying.get(i).getClienthandler())){
-                    if (playersPlaying.get(i).getPlayingField() <= 90 &&
-                            playersPlaying.get(i).getPlayingField() != -69) {
+                    if (playersPlaying.get(i).getPlayingField() <= 88 &&
+                            !playersPlaying.get(i).getGameOver()) {
                         lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
 
                         //sends the current users turn and the diced number to PlayingFields
@@ -75,7 +75,7 @@ public class Game implements Runnable{
 
                         // moves the player characters in the GUI
                         for (int j = 0; j < numPlayers; j++) {
-                            if (playersPlaying.get(j).getPlayingField() > 0 && playersPlaying.get(j).getPlayingField() <= 90) {
+                            if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 88) {
                                 sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
                             }
                         }
@@ -83,7 +83,7 @@ public class Game implements Runnable{
                         cheated = false;
 
                         //checks if a player has ended the game and adds him to the high score
-                        if (playersPlaying.get(i).getPlayingField() > 90) {
+                        if (playersPlaying.get(i).getPlayingField() > 88) {
                             playersEndedGame += 1;
                             lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " graduated " + place() + " in " + calendar.getCurrentDate());
                             //sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
@@ -94,8 +94,14 @@ public class Game implements Runnable{
                                     Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
                         }
                     }
+                    // moves the player characters in the GUI
+                    for (int j = 0; j < numPlayers; j++) {
+                        if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 88) {
+                            sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
+                        }
+                    }
                 } else {
-                    if (playersPlaying.get(i).getPlayingField() != -69) {
+                    if (playersPlaying.get(i).getPlayingField() != 0) {
                         lostConnection(playersPlaying.get(i));
                     }
                 }
@@ -242,7 +248,7 @@ public class Game implements Runnable{
         int newPosition = currentPosition + move;
 
         //checks if the new position is already occupied and switches places if necessary.
-        if (newPosition <= 90) {
+        if (newPosition <= 88 && newPosition != 0) {
             for (int i = 0; i < playersPlaying.size(); i++) {
                 if (playersPlaying.get(i).getPlayingField() == newPosition && playersPlaying.get(i).getPlayingField() != user.getPlayingField()) {
                     playersPlaying.get(i).setPlayingField(currentPosition);
@@ -254,7 +260,7 @@ public class Game implements Runnable{
         //puts the player to the new position
         user.setPlayingField(newPosition);
         if (!cheated) {
-            if (newPosition <= 90) {
+            if (newPosition <= 88) {
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to " + newPosition);
                 checkField(user, newPosition);
             } else {
@@ -263,7 +269,8 @@ public class Game implements Runnable{
             }
             //checkField(user, newPosition);
         } else {
-            if (newPosition > 90) {
+            if (newPosition > 88) {
+                user.setPlayingField(89);
                 checkField(user, newPosition);
                 user.setIsPlaying(false);
             }
@@ -277,33 +284,33 @@ public class Game implements Runnable{
      */
     public void checkField(User user, int field) {
         String msg = null;
-        if (field == 2) { // 2 + 56 ladder up
+        if (field == 1) { // 1 + 55 ladder up
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
             changePosition(user, 15 - field);
-        } else if (field == 56) {
+        } else if (field == 55) {
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
             changePosition(user, 59 - field);
         }
-        else if (field == 21) { // 21 - 89 ladder down
+        else if (field == 20) { // 20 - 87 ladder down
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 14 - field);
-        } else if (field == 27) {
+        } else if (field == 26) {
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 10 - field);
-        } else if (field == 53) {
+        } else if (field == 52) {
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 36 - field);
-        } else if (field == 58) {
+        } else if (field == 57) {
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 40 - field);
-        } else if (field == 81) {
+        } else if (field == 80) {
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 78 - field);
-        } else if (field == 89) {
+        } else if (field == 87) {
             lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
             changePosition(user, 68 - field);
         }
-        else if (field == 18 || field == 32 || field == 46 || field == 74) { // Action Cards
+        else if (field == 17 || field == 31 || field == 45 || field == 73) { // Action Cards
             String card = Cards.getCards();
             String[] arr = card.split(" ", 2);
             int positionToChange = Integer.parseInt(arr[0]);
@@ -311,7 +318,7 @@ public class Game implements Runnable{
             lobbyBroadcastToPlayer(user.getUsername() + " draws an action card: " + textCard);
             changePosition(user, positionToChange);
         }
-        else if (field == 8 || field == 23 || field == 50 || field == 66) { // Quiz
+        else if (field == 7 || field == 22 || field == 49 || field == 65) { // Quiz
             quizOngoing = true;
             String quizQuestion = Quiz.quiz();
             String[] quiz = quizQuestion.split("§");
@@ -344,7 +351,7 @@ public class Game implements Runnable{
             }
             quizOngoing = false;
         }
-        else if (field > 90) { // This is the end of the game for a player
+        else if (field > 88) { // This is the end of the game for a player
             lobbyBroadcastToPlayer(user.getUsername() + " has successfully graduated from university");
         }
     }
@@ -364,7 +371,8 @@ public class Game implements Runnable{
      */
     public void gameOver (server.User user) {
         lobbyBroadcastToPlayer(user.getUsername() + " has been exmatriculated.");
-        user.setPlayingField(-69);
+        user.setPlayingField(0);
+        user.setGameOver();
         resetPlayer(user);
         dsq++;
     }
@@ -375,7 +383,8 @@ public class Game implements Runnable{
      */
     public void lostConnection (server.User user) {
         lobbyBroadcastToPlayer(user.getUsername() + " lost connection and left the game.");
-        user.setPlayingField(-69);
+        user.setPlayingField(0);
+        user.setGameOver();
         resetPlayer(user);
         user.setIsPlaying(false);
         dsq++;
@@ -398,7 +407,7 @@ public class Game implements Runnable{
                 lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
             }
         } else {
-            lobbyBroadcastToPlayer("None of you have graduated.");
+            lobbyBroadcastToPlayer("None of you has graduated.");
             sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
         }
         for (int i = 0; i < numPlayers; i++) {

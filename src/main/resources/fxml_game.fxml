@@ -67,12 +67,12 @@
                      <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="90" />
+                              <Label layoutX="16.0" layoutY="19.0" text="Finish" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="8" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="89" />
+                              <Label layoutX="16.0" layoutY="19.0" text="88" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -80,442 +80,442 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="18.0" layoutY="19.0" text="88" />
+                              <Label layoutX="18.0" layoutY="19.0" text="87" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="87" />
+                              <Label layoutX="16.0" layoutY="19.0" text="86" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="86" />
+                              <Label layoutX="16.0" layoutY="19.0" text="85" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="85" />
+                              <Label layoutX="16.0" layoutY="19.0" text="84" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="84" />
+                              <Label layoutX="16.0" layoutY="19.0" text="83" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="83" />
+                              <Label layoutX="16.0" layoutY="19.0" text="82" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="82" />
+                              <Label layoutX="16.0" layoutY="19.0" text="81" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="81" />
+                              <Label layoutX="16.0" layoutY="19.0" text="80" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="71" />
+                              <Label layoutX="16.0" layoutY="19.0" text="70" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="72" />
+                              <Label layoutX="16.0" layoutY="19.0" text="71" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="73" />
+                              <Label layoutX="16.0" layoutY="19.0" text="72" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="6" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="74" />
+                              <Label layoutX="16.0" layoutY="19.0" text="73" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="75" />
+                              <Label layoutX="16.0" layoutY="19.0" text="74" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="76" />
+                              <Label layoutX="16.0" layoutY="19.0" text="75" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="77" />
+                              <Label layoutX="16.0" layoutY="19.0" text="76" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="78" />
+                              <Label layoutX="16.0" layoutY="19.0" text="77" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="79" />
+                              <Label layoutX="16.0" layoutY="19.0" text="78" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="80" />
+                              <Label layoutX="16.0" layoutY="19.0" text="79" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="70" />
+                              <Label layoutX="16.0" layoutY="19.0" text="69" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="69" />
+                              <Label layoutX="16.0" layoutY="19.0" text="68" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="68" />
+                              <Label layoutX="16.0" layoutY="19.0" text="67" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="67" />
+                              <Label layoutX="16.0" layoutY="19.0" text="66" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="5" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="66" />
+                              <Label layoutX="16.0" layoutY="19.0" text="65" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="65" />
+                              <Label layoutX="16.0" layoutY="19.0" text="64" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="64" />
+                              <Label layoutX="16.0" layoutY="19.0" text="63" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="63" />
+                              <Label layoutX="16.0" layoutY="19.0" text="62" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="62" />
+                              <Label layoutX="16.0" layoutY="19.0" text="61" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="61" />
+                              <Label layoutX="16.0" layoutY="19.0" text="60" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="51" />
+                              <Label layoutX="16.0" layoutY="19.0" text="50" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="52" />
+                              <Label layoutX="16.0" layoutY="19.0" text="51" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="7" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="53" />
+                              <Label layoutX="16.0" layoutY="19.0" text="52" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="54" />
+                              <Label layoutX="16.0" layoutY="19.0" text="53" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="55" />
+                              <Label layoutX="16.0" layoutY="19.0" text="54" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: palegreen palegreen;" GridPane.columnIndex="4" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="56" />
+                              <Label layoutX="16.0" layoutY="19.0" text="55" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="57" />
+                              <Label layoutX="16.0" layoutY="19.0" text="56" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="58" />
+                              <Label layoutX="16.0" layoutY="19.0" text="57" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="59" />
+                              <Label layoutX="16.0" layoutY="19.0" text="58" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="60" />
+                              <Label layoutX="16.0" layoutY="19.0" text="59" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="9" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="50" />
+                              <Label layoutX="16.0" layoutY="19.0" text="49" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="49" />
+                              <Label layoutX="16.0" layoutY="19.0" text="48" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="48" />
+                              <Label layoutX="16.0" layoutY="19.0" text="47" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="47" />
+                              <Label layoutX="16.0" layoutY="19.0" text="46" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="5" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="46" />
+                              <Label layoutX="16.0" layoutY="19.0" text="45" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="45" />
+                              <Label layoutX="16.0" layoutY="19.0" text="44" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="44" />
+                              <Label layoutX="16.0" layoutY="19.0" text="43" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="43" />
+                              <Label layoutX="16.0" layoutY="19.0" text="42" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="42" />
+                              <Label layoutX="16.0" layoutY="19.0" text="41" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="41" />
+                              <Label layoutX="16.0" layoutY="19.0" text="40" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="31" />
+                              <Label layoutX="16.0" layoutY="19.0" text="30" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="32" />
+                              <Label layoutX="16.0" layoutY="19.0" text="31" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="33" />
+                              <Label layoutX="16.0" layoutY="19.0" text="32" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="34" />
+                              <Label layoutX="16.0" layoutY="19.0" text="33" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="35" />
+                              <Label layoutX="16.0" layoutY="19.0" text="34" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="36" />
+                              <Label layoutX="16.0" layoutY="19.0" text="35" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="37" />
+                              <Label layoutX="16.0" layoutY="19.0" text="36" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="38" />
+                              <Label layoutX="16.0" layoutY="19.0" text="37" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="39" />
+                              <Label layoutX="16.0" layoutY="19.0" text="38" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="5">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="40" />
+                              <Label layoutX="16.0" layoutY="19.0" text="39" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="30" />
+                              <Label layoutX="16.0" layoutY="19.0" text="29" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="29" />
+                              <Label layoutX="16.0" layoutY="19.0" text="28" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="28" />
+                              <Label layoutX="16.0" layoutY="19.0" text="27" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="6" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="27" />
+                              <Label layoutX="16.0" layoutY="19.0" text="26" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="26" />
+                              <Label layoutX="16.0" layoutY="19.0" text="25" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="25" />
+                              <Label layoutX="16.0" layoutY="19.0" text="24" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="24" />
+                              <Label layoutX="16.0" layoutY="19.0" text="23" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="2" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="23" />
+                              <Label layoutX="16.0" layoutY="19.0" text="22" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="22" />
+                              <Label layoutX="16.0" layoutY="19.0" text="21" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.rowIndex="6">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="21" />
+                              <Label layoutX="16.0" layoutY="19.0" text="20" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="11" />
+                              <Label layoutX="16.0" layoutY="19.0" text="10" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="12" />
+                              <Label layoutX="16.0" layoutY="19.0" text="11" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="18.0" layoutY="19.0" text="13" />
+                              <Label layoutX="18.0" layoutY="19.0" text="12" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="14" />
+                              <Label layoutX="16.0" layoutY="19.0" text="13" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="15" />
+                              <Label layoutX="16.0" layoutY="19.0" text="14" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="16" />
+                              <Label layoutX="16.0" layoutY="19.0" text="15" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="17" />
+                              <Label layoutX="16.0" layoutY="19.0" text="16" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="2" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="18" />
+                              <Label layoutX="16.0" layoutY="19.0" text="17" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="19" />
+                              <Label layoutX="16.0" layoutY="19.0" text="18" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="7">
                            <children>
-                              <Label layoutX="17.0" layoutY="19.0" text="20" />
+                              <Label layoutX="17.0" layoutY="19.0" text="19" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="9" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="10" />
+                              <Label layoutX="16.0" layoutY="19.0" text="9" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="14.0" layoutY="19.0" text="9" />
+                              <Label layoutX="14.0" layoutY="19.0" text="8" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue;" GridPane.columnIndex="7" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="8" />
+                              <Label layoutX="16.0" layoutY="19.0" text="7" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="7" />
+                              <Label layoutX="16.0" layoutY="19.0" text="6" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="6" />
+                              <Label layoutX="16.0" layoutY="19.0" text="5" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="5" />
+                              <Label layoutX="16.0" layoutY="19.0" text="4" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="4" />
+                              <Label layoutX="16.0" layoutY="19.0" text="3" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="3" />
+                              <Label layoutX="16.0" layoutY="19.0" text="2" />
                            </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: palegreen;" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="2" />
+                              <Label layoutX="16.0" layoutY="19.0" text="1" />
                            </children>
                         </Pane>
                         <Pane fx:id="starterPaneBlue" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="8">
                            <children>
-                              <Label layoutX="16.0" layoutY="19.0" text="1" />
+                              <Label layoutX="16.0" layoutY="19.0" text="Start" />
                            </children>
                         </Pane>
                         <Circle fx:id="playerGreen" fill="#61f26b" radius="25.0" stroke="BLACK" strokeType="INSIDE" />

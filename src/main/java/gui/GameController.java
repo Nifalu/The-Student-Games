@@ -231,7 +231,7 @@ public class GameController implements Initializable {
   private void createPlayingField() {
     // creates the Hashmap which saves the row and column of each field
     Platform.runLater(() -> {
-      int counter = 1;
+      int counter = 0;
       for (int y = 8; y >= 0; y--) {
         if (y % 2 == 0) {
           for (int x = 0; x <= 9; x++) {

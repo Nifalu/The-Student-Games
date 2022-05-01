@@ -1,6 +1,5 @@
 package server;
 
-import java.net.InetAddress;
 import java.util.Random;
 
 
@@ -24,6 +23,7 @@ public class User {
     private boolean isNotActivelyRollingTheDice;
     private int userListNumber;
     public String characterColor;
+    public boolean gameOver;
 
     public User(ClientHandler clientHandler, String username) {
         this.clienthandler = clientHandler;
@@ -75,6 +75,8 @@ public class User {
 
     public int getUserListNumber() { return userListNumber; }
 
+    public boolean getGameOver() { return gameOver; }
+
     // ----- SETTERS -----
     public synchronized void setUsername(String username) {
         this.username = username;
@@ -114,7 +116,7 @@ public class User {
 
     public void setUserListNumber(int userListNumber) { this.userListNumber = userListNumber; }
 
-
+    public void setGameOver() { gameOver = true; }
 
     //-------------OTHER METHODS------------------------------
 
