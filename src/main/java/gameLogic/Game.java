@@ -75,7 +75,7 @@ public class Game implements Runnable{
 
                         // moves the player characters in the GUI
                         for (int j = 0; j < numPlayers; j++) {
-                            if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 88) {
+                            if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 89) {
                                 sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
                             }
                         }
@@ -96,7 +96,7 @@ public class Game implements Runnable{
                     }
                     // moves the player characters in the GUI
                     for (int j = 0; j < numPlayers; j++) {
-                        if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 88) {
+                        if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 89) {
                             sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
                         }
                     }
@@ -264,6 +264,7 @@ public class Game implements Runnable{
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to " + newPosition);
                 checkField(user, newPosition);
             } else {
+                user.setPlayingField(89);
                 lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
                 user.setIsPlaying(false);
             }
