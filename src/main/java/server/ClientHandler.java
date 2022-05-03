@@ -136,6 +136,7 @@ public class ClientHandler implements Runnable {
     connectionMonitor.start();
     nameClass.askUsername(); // Asks the User if he's fine with his name or wants to change
     lobbyhelper.askWhatLobbyToJoin(this);
+    System.out.println(user + " has connected to the Server");
   }
 
 
