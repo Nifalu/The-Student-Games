@@ -140,6 +140,11 @@ public enum CommandsToServer {
   DICEDICELEFT,
 
   /**
+   * changes the players character
+   */
+  CHANGECHARACTER,
+
+  /**
    * prints out players in lobby
    */
   PRINTPLAYERSINLOBBY

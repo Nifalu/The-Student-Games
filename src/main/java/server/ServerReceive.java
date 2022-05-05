@@ -1,11 +1,15 @@
 package server;
 
 import gameLogic.GameList;
+import gameLogic.Lobby;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.io.CommandsToClient;
 import utility.io.CommandsToServer;
 import utility.io.SendToClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * receives commands on the server side
@@ -265,6 +269,10 @@ public class ServerReceive implements Runnable {
         sendToClient.send(client.user.getClienthandler(), CommandsToClient.DICEDICELEFT, Integer.toString(client.user.getSpecialDiceLeft()));
         break;
 
+      case CHANGECHARACTER:
+        client.user.setCharacter(Integer.parseInt(msg));
+        System.out.println("NEW CHARACTER NR: " + msg);
+        break;
     }
   }
 }

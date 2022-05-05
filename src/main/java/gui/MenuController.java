@@ -295,6 +295,11 @@ public class MenuController implements Initializable {
     Main.displayHighscore();
   }
 
+  /**
+   * switches to the Char Selection scene when pressing the button
+   */
+  public void switchToCharSelection() { Main.displayCharSelection(); }
+
 
   /**
    * asks to print out the lobbies when clicking on the button

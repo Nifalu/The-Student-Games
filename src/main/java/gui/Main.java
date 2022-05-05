@@ -92,6 +92,21 @@ public class Main extends Application {
   private static HighscoreController highscoreController;
 
   /**
+   * the char selection controller
+   */
+  private static CharSelectionController charSelectionController;
+
+  /**
+   * corresponding root for the char selection scene
+   */
+  private static Pane charSelectionRoot;
+
+  /**
+   * the char selection scene
+   */
+  public static Scene charSelection;
+
+  /**
    * the logger
    */
   private static final Logger logger = LogManager.getLogger(Main.class);
@@ -100,6 +115,8 @@ public class Main extends Application {
    * sets the .css file to be used for the scenes
    */
   private static final String CSS = "TheStudentGameLook.css";
+
+  static SendToServer sendToServer = new SendToServer();
 
 
   /**
@@ -129,6 +146,10 @@ public class Main extends Application {
       gameRoot = getLoader("fxml_game.fxml").load();
       //gameController = getLoader("fxml_game.fxml").getController();
       game = createScene(gameRoot);
+
+      charSelectionRoot = getLoader("fxml_charSelection.fxml").load();
+      charSelection = createScene(charSelectionRoot);
+
 
       displayStart(); // Display the first Scene.
       stage.centerOnScreen();
@@ -163,6 +184,11 @@ public class Main extends Application {
     showScene(game, gameRoot);
     gameController.resetGame();
   }
+
+  /**
+   * Displays the charselection scene on stage
+   */
+  public static void displayCharSelection() { showScene(charSelection, charSelectionRoot); }
 
   /**
    * Display the Highscore scene on stage.
@@ -250,6 +276,13 @@ public class Main extends Application {
   }
 
   /**
+   * returns the clients CharSelectionController
+   *
+   * @return CharSelectionController
+   */
+  public static CharSelectionController getCharSelectionController() { return charSelectionController; }
+
+  /**
    * returns the clients MenuController
    *
    * @return MenuController
@@ -310,5 +343,14 @@ public class Main extends Application {
    */
   public static void setHighscoreController(HighscoreController highscoreController) {
     Main.highscoreController = highscoreController;
+  }
+
+  /**
+   * sets the clients CharSelectionController
+   *
+   * @param charSelectionController CharSelectionController
+   */
+  public static void setCharSelectionController(CharSelectionController charSelectionController) {
+    Main.charSelectionController = charSelectionController;
   }
 }

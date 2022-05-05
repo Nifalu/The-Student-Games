@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
+import server.User;
 import utility.io.CommandsToServer;
 import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
@@ -52,6 +53,11 @@ public class GameController implements Initializable {
    * all fields of the board in a HashMap
    */
   public static HashMap<Integer, Integer[]> fields = new HashMap<>();
+
+  public int blueCharNr = 1;
+  public int redCharNr = 1;
+  public int yellowCharNr = 1;
+  public int greenCharNr = 1;
 
 
   /**
@@ -582,6 +588,11 @@ public class GameController implements Initializable {
         playerToMove.setTranslateX(newPos[0] - 25);
         playerToMove.setTranslateY(newPos[1] - 30);
       });
+    }
+
+    public void setCharNr(String color, int nr) {
+      if (color == "blue") {
+      }
     }
   }
 

@@ -72,7 +72,7 @@ public enum CommandsToClient {
   /**
    * tells the client how many dicedice he has left
    */
-  DICEDICELEFT,
+  DICEDICELEFT, SETGUICHARACTER, CHANGECHARACTER, SETBLUECHARNR,
 
 
 }
