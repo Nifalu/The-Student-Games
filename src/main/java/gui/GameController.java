@@ -202,6 +202,7 @@ public class GameController implements Initializable {
     createPlayingField();
     Main.setGameController(this);
 
+    /*
     playerBlue.setStroke(Color.BLACK);
     Image blue = new Image("charBlueHead.png", false);
     playerBlue.setFill(new ImagePattern(blue));
@@ -588,11 +589,6 @@ public class GameController implements Initializable {
         playerToMove.setTranslateX(newPos[0] - 25);
         playerToMove.setTranslateY(newPos[1] - 30);
       });
-    }
-
-    public void setCharNr(String color, int nr) {
-      if (color == "blue") {
-      }
     }
   }
 

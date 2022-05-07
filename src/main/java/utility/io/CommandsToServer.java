@@ -145,7 +145,12 @@ public enum CommandsToServer {
   CHANGECHARACTER,
 
   /**
+   * disables a character in the char selection screen
+   */
+  DISABLECHARACTERGUI,
+
+  /**
    * prints out players in lobby
    */
-  PRINTPLAYERSINLOBBY
+  PRINTPLAYERSINLOBBY, CHECKIFCHARSTAKEN,
 }

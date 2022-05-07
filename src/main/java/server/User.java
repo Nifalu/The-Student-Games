@@ -77,14 +77,15 @@ public class User {
 
   /**
    * the character the player chose
-   * standard character is nr. 1
    */
-  public int characterNr = 1;
+  public int characterNr = 0;
 
   /**
    * notes whether it's game over for the user or not
    */
   public boolean gameOver;
+
+  public int playerNrInLobby;
 
   /**
    * creates a new user object

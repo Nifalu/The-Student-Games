@@ -122,6 +122,14 @@ public class ClientReceive implements Runnable {
       case DICEDICELEFT:
         Main.getGameController().checkFourDiceLeft(msg);
         break;
+
+      case DISABLECHARGUI:
+        Main.getCharSelectionController().disableCharOnScreen(msg);
+        break;
+
+      case ENABLECHARGUI:
+        Main.getCharSelectionController().enableCharOnScreen(msg);
+        break;
     }
   }
 

@@ -9,6 +9,11 @@ public class NotInLobbyController {
 
     @FXML
     private Button button;
+
+    /**
+     * closes the window
+     * @param actionEvent ActionEvent
+     */
     public void closeWindow(ActionEvent actionEvent) {
         Stage stage = (Stage) button.getScene().getWindow();
         stage.close();

@@ -160,6 +160,14 @@ public class SendToServer {
       case CHANGECHARACTER:
         sendTo("CHANGECHARACTER--" + msg);
         break;
+
+      case DISABLECHARACTERGUI:
+        sendTo("DISABLECHARACTERGUI--" + msg);
+        break;
+
+      case CHECKIFCHARSTAKEN:
+        sendTo("CHECKIFCHARSTAKEN--" + msg);
+        break;
     }
   }
 

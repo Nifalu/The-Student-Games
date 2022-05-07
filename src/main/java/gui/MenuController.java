@@ -114,6 +114,8 @@ public class MenuController implements Initializable {
   @FXML
   private ListView<String> friendListView;
 
+  public boolean clientIsInLobby = false;
+
 
   /**
    * method reads input from the Textfield and checks, which command to send to the server
@@ -300,7 +302,11 @@ public class MenuController implements Initializable {
    */
   public void switchToCharSelection() {
     // Main.displayCharSelection();
-    Main.displayNotInLobbyPopUp();
+    if (clientIsInLobby) {
+      Main.displayCharSelection();
+    } else {
+      Main.displayNotInLobbyPopUp();
+    }
   }
 
 
@@ -379,6 +385,8 @@ public class MenuController implements Initializable {
         Integer.parseInt(lobbyNumber);
         sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
         Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
+        clientIsInLobby = true;
+        sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
       } catch (Exception e) {
         Platform.runLater(() -> selectedLobbyLabel.setText("Lobby needs to be open."));
       }

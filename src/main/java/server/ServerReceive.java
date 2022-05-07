@@ -181,6 +181,7 @@ public class ServerReceive implements Runnable {
                 client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
                 client.user.setReadyToPlay(false);
                 client.lobbyhelper.changeLobby(msg);
+                client.user.getLobby().checkIfCharsTaken();
               } else {
                 sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to finish this game.");
               }
@@ -270,9 +271,35 @@ public class ServerReceive implements Runnable {
         break;
 
       case CHANGECHARACTER:
-        client.user.setCharacter(Integer.parseInt(msg));
-        System.out.println("NEW CHARACTER NR: " + msg);
+        System.out.println("OLD CHAR NR: " + client.user.characterNr);
+        // checks if player already selected a characte -> enables it again if necessary
+        int oldCharNr = client.user.characterNr;
+        if (oldCharNr != 0) {
+          sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, Integer.toString(client.user.characterNr));
+          client.user.getLobby().charactersTaken.put(client.user.characterNr, false);
+        }
+
+        if (client.user.getLobby().charactersTaken.containsKey(Integer.parseInt(msg))) {
+          if (!client.user.getLobby().charactersTaken.get(Integer.parseInt(msg))) {
+            client.user.getLobby().charactersTaken.put(Integer.parseInt(msg), true);
+            client.user.setCharacter(Integer.parseInt(msg));
+            System.out.println("NEW CHARACTER NR: " + msg);
+          }
+        } else {
+          client.user.getLobby().charactersTaken.put(Integer.parseInt(msg), true);
+          client.user.setCharacter(Integer.parseInt(msg));
+          System.out.println("NEW CHARACTER NR: " + msg);
+        }
+        sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.DISABLECHARGUI, msg);
         break;
+
+      case DISABLECHARACTERGUI:
+        sendToClient.send(client.user.getClienthandler(), CommandsToClient.DISABLECHARGUI, msg);
+        break;
+
+      case CHECKIFCHARSTAKEN:
+        client.user.getLobby().checkIfCharsTaken();
+      break;
     }
   }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -28,12 +29,30 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Circle fx:id="charOneSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharOne" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="charTwoSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharTwo" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" />
-            <Circle fx:id="charThreeSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharThree" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
-            <Circle fx:id="charFourSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharFour" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Circle fx:id="charFiveSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharFive" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2" />
-            <Circle fx:id="charSixselectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharSix" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Circle fx:id="charOneSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharOne" radius="100.0" stroke="BLACK" strokeType="INSIDE">
+               <GridPane.margin>
+                  <Insets left="45.0" />
+               </GridPane.margin></Circle>
+            <Circle fx:id="charTwoSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharTwo" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="45.0" />
+               </GridPane.margin></Circle>
+            <Circle fx:id="charThreeSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharThree" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="45.0" />
+               </GridPane.margin></Circle>
+            <Circle fx:id="charFourSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharFour" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="45.0" />
+               </GridPane.margin></Circle>
+            <Circle fx:id="charFiveSelectionCircle" disable="true" fill="DODGERBLUE" onMouseClicked="#selectCharFive" opacity="0.33" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="45.0" />
+               </GridPane.margin></Circle>
+            <Circle fx:id="charSixselectionCircle" disable="true" fill="DODGERBLUE" onMouseClicked="#selectCharSix" opacity="0.33" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="45.0" />
+               </GridPane.margin></Circle>
          </children>
       </GridPane>
    </center>

@@ -14,6 +14,6 @@
          </font>
       </Label>
       <Button fx:id="button" layoutX="170.0" layoutY="233.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="59.0" prefWidth="92.0" text="ok" />
-      <Button layoutX="300.0" layoutY="233.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="59.0" prefWidth="92.0" text="&gt;:(" />
+      <Button fx:id="button" layoutX="300.0" layoutY="233.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="59.0" prefWidth="92.0" text="&gt;:(" />
    </children>
 </AnchorPane>

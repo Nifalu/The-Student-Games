@@ -2,11 +2,10 @@ package gameLogic;
 
 import server.ClientHandler;
 import server.User;
-import utility.io.CommandsToClient;
-import utility.io.ReceiveFromProtocol;
-import utility.io.SendToClient;
+import utility.io.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * creates a Lobby Object
@@ -33,6 +32,8 @@ public class Lobby {
    */
   private final SendToClient sendToClient = new SendToClient();
 
+  private final SendToServer sendToServer = new SendToServer();
+
   /**
    * ReceiveFromProtocol object to communicate with the protocol
    */
@@ -58,6 +59,9 @@ public class Lobby {
    * contains a HashMap of all the users in the Lobby
    */
   HashMap<Integer, User> usersReady = new HashMap<>();
+
+  public HashMap<Integer, Boolean> charactersTaken = new HashMap<>();
+
 
   /**
    * used to give each player joining the lobby a different character
@@ -216,6 +220,19 @@ public class Lobby {
           clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
     } else {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, "please choose a lobby");
+    }
+  }
+
+  /**
+   * disables characters in the character selection GUI if they're already taken
+   */
+  public void checkIfCharsTaken() {
+    for (int i = 0; i < 4; i++) {
+      if (charactersTaken.containsKey(i)) {
+        if (charactersTaken.get(i)) {
+          sendToServer.send(CommandsToServer.DISABLECHARACTERGUI, Integer.toString(i));
+        }
+      }
     }
   }
 

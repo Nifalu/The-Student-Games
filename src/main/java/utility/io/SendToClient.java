@@ -96,6 +96,15 @@ public class SendToClient {
       case DICEDICELEFT:
         sendTo(recipient, "DICEDICELEFT--" + msg);
         break;
+
+      case DISABLECHARGUI:
+        sendTo(recipient, "DISABLECHARGUI--" + msg);
+        break;
+
+      case ENABLECHARGUI:
+        sendTo(recipient, "ENABLECHARGUI--" + msg);
+        break;
+
     }
   }
 
