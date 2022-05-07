@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -106,6 +107,10 @@ public class Main extends Application {
    */
   public static Scene charSelection;
 
+  private static Pane notInLobbyRoot;
+  public static Scene notInLobby;
+  private static NotInLobbyController notInLobbyController;
+
   /**
    * the logger
    */
@@ -149,6 +154,9 @@ public class Main extends Application {
 
       charSelectionRoot = getLoader("fxml_charSelection.fxml").load();
       charSelection = createScene(charSelectionRoot);
+
+      notInLobbyRoot = getLoader("fxml_notInLobby.fxml").load();
+      notInLobby = createScene(notInLobbyRoot);
 
 
       displayStart(); // Display the first Scene.
@@ -197,6 +205,8 @@ public class Main extends Application {
     showScene(highscore, highscoreRoot);
   }
 
+  public static void displayNotInLobbyPopUp() { showPopUp(notInLobby); }
+
   /**
    * Creates a new scene from the given root pane and adds css
    *
@@ -225,6 +235,13 @@ public class Main extends Application {
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
     letterbox(scene, pane);
+  }
+
+  private static void showPopUp(Scene scene) {
+    Stage popupWindow = new Stage();
+    popupWindow.initModality(Modality.APPLICATION_MODAL);
+    popupWindow.setScene(scene);
+    popupWindow.showAndWait();
   }
 
   /**
@@ -309,6 +326,8 @@ public class Main extends Application {
     return highscoreController;
   }
 
+  public static NotInLobbyController GetnotInLobbyController() { return notInLobbyController; }
+
   /**
    * setts the clients GameController
    *
@@ -352,5 +371,9 @@ public class Main extends Application {
    */
   public static void setCharSelectionController(CharSelectionController charSelectionController) {
     Main.charSelectionController = charSelectionController;
+  }
+
+  public static void setNotInLobbyController(NotInLobbyController notInLobbyController) {
+    Main.notInLobbyController = notInLobbyController;
   }
 }

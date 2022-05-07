@@ -298,7 +298,10 @@ public class MenuController implements Initializable {
   /**
    * switches to the Char Selection scene when pressing the button
    */
-  public void switchToCharSelection() { Main.displayCharSelection(); }
+  public void switchToCharSelection() {
+    // Main.displayCharSelection();
+    Main.displayNotInLobbyPopUp();
+  }
 
 
   /**
