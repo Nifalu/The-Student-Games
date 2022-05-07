@@ -297,11 +297,11 @@ public class Lobby {
    * @param clientHandler User asking for the high score
    */
   public void getHighScore(server.ClientHandler clientHandler) {
-    if (highScore.getTop10().length() == 0) {
+    /*if (highScore.getTop10().length() == 0) {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, "empty High Score");
-    } else {
-      sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10());
-    }
+    } else {*/
+    sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10());
+    //}
   }
 
   /**

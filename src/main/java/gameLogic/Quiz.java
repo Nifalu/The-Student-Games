@@ -27,12 +27,12 @@ public class Quiz {
         "A: 1420, B: 1450, C: 1460, D: 1470";
     questionList[1][1] = "C";
     questionList[1][2] = "5";
-    questionList[2][0] = "Welches hat die schlechtere \"Worst Case Luafzeit\"?: " +
+    questionList[2][0] = "Welches hat die schlechtere \"Worst Case Laufzeit\"?: " +
         "A: Quicksort B: MergeSort";
     questionList[2][1] = "A";
     questionList[2][2] = "3";
     questionList[3][0] = "Mit welchem Programm wurde das MockUp designed?" +
-        "A: Excel B: Photoshop C: Paint D: GIMP";
+            "A: Excel B: Photoshop C: Paint D: GIMP";
     questionList[3][1] = "A";
     questionList[3][2] = "4";
 
