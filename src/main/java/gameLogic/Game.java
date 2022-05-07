@@ -408,15 +408,15 @@ public class Game implements Runnable {
       String[] arr = card.split(" ", 2);
       int positionToChange = Integer.parseInt(arr[0]);
       String textCard = arr[1];
-      lobbyBroadcastToPlayer(user.getUsername() + " draws an action card: " + textCard);
+      lobbyBroadcastToPlayer("§" + user.getUsername() + " draws an action card:" + "§" + textCard + "§");
       changePosition(user, positionToChange);
     } else if (field == 7 || field == 22 || field == 49 || field == 65) { // Quiz
       quizOngoing = true;
       String quizQuestion = Quiz.quiz();
-      String[] quiz = quizQuestion.split("§");
+      String[] quiz = quizQuestion.split("Ç");
       setUserToAnswerQuiz(user);
       setAnswer(quiz[1]);
-      lobbyBroadcastToPlayer("Exam question for " + user.getUsername() + ". " + quiz[0]);
+      lobbyBroadcastToPlayer("§" + "Exam question for " + user.getUsername() + "." + "§" + quiz[0]);
       for (int i = 0; i < maxTimeToAnswerQuiz; i++) {
         if (quizAnsweredCorrect) {
           lobbyBroadcastToPlayer(user.getUsername() + "'s answer: " + quiz[1] + " is correct.");
