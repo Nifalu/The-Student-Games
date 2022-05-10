@@ -69,7 +69,7 @@ public class Name {
    * @param preferredName String name to want to have
    */
   public void changeNameTo(String currentName, String preferredName) {
-    preferredName = preferredName.replaceAll(" ", "_").toLowerCase();
+    preferredName = preferredName.replaceAll(" ", "_");
     if (currentName.equals(preferredName)) {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, ("This is already your name"));
     } else if (nameAlreadyExists(preferredName)) { // Wenn preferredName bereits exisitert:

@@ -10,8 +10,8 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class LiveTest {
-/*
+public class NameTest {
+
   @Test
   @Order(1)
   public void connectClientHandlers() {
@@ -24,62 +24,69 @@ public class LiveTest {
 
   @Test
   @Order(2)
-  public void createLobbies() {
-    UserCreatesLobby(0, "yo");
-    UserCreatesLobby(0, "ya");
-    UserCreatesLobby(1, "ye");
-    UserCreatesLobby(2, "yi");
-    UserCreatesLobby(3, "yu");
-    UserCreatesLobby(4, "yeet");
-    assertEquals(6, getLobbies().size());
+  public void uppercaseName() {
+    getClient(0).nameClass.changeNameTo(getUsername(0), "ABCD");
+    assertEquals("ABCD",getUsername(0),"uppercase allowed");
   }
 
   @Test
   @Order(3)
-  public void joinLobbies() {
-    UserJoinsLobby(0, 1);
-    UserJoinsLobby(1, 1);
-    UserJoinsLobby(2, 1);
-    UserJoinsLobby(3, 1);
-    UserJoinsLobby(4, 2);
-    UserJoinsLobby(5, 2);
-    assertAll("usersInLobby",
-        () -> assertEquals(4, getLobby(1).getUsersInLobby().size()),
-        () -> assertEquals(2, getLobby(2).getUsersInLobby().size()),
-        () -> assertEquals(0, getLobby(3).getUsersInLobby().size()),
-        () -> assertEquals(0, getLobby(4).getUsersInLobby().size())
-    );
+  public void lowercaseName() {
+    getClient(0).nameClass.changeNameTo(getUsername(0), "abcd");
+    assertEquals("abcd",getUsername(0),"lowercase allowed");
   }
-
 
   @Test
   @Order(4)
-  public void getReady() {
-    getLobby(1).readyToPlay(getClient(0));
-    getLobby(1).readyToPlay(getClient(1));
-    getLobby(1).readyToPlay(getClient(2));
-    getLobby(1).readyToPlay(getClient(3));
-    getLobby(2).readyToPlay(getClient(4));
-    getLobby(2).readyToPlay(getClient(5));
-    assertAll("UsersAreReady",
-        () -> assertEquals(4, getLobby(1).getUsersReady().size()),
-        () -> assertEquals(2, getLobby(2).getUsersReady().size())
-    );
+  public void numberName() {
+    getClient(0).nameClass.changeNameTo(getUsername(0), "1234");
+    assertEquals("1234",getUsername(0),"numbers allowed");
   }
-
 
   @Test
   @Order(5)
-  public void startGame() {
-    getLobby(1).startThread();
-    getLobby(1).receiveFromProtocol.setMessage("start");
+  public void nameAlreadyExists() {
+    getClient(0).nameClass.changeNameTo(getUsername(0), "firstname");
+    getClient(1).nameClass.changeNameTo(getUsername(1), "secondname");
+    getClient(1).nameClass.changeNameTo(getUsername(1), "firstname");
+    assertEquals("firstname",getUsername(0),"keeps first name");
+    assertEquals("firstname1",getUsername(1),"gets new first name");
   }
+
+  @Test
+  @Order(6)
+  public void specialChars() {
+    getClient(0).nameClass.changeNameTo(getUsername(0), "%£•@🥰");
+    assertEquals("%£•@🥰",getUsername(0),"special chars allowed");
+  }
+
+  @Test
+  @Order(7)
+  public void emptyName() {
+    getClient(0).nameClass.changeNameTo(getUsername(0), "");
+    assertEquals("",getUsername(0),"empty name allowed");
+  }
+
+  @Test
+  @Order(8)
+  public void verylongname() {
+    getClient(0).nameClass.changeNameTo(getUsername(0), String.valueOf(Double.MAX_VALUE));
+    assertEquals(String.valueOf(Double.MAX_VALUE),getUsername(0),"very long name allowed");
+  }
+
+
+
+
+
+
+
+
 
 
   private void addClientHandlers(int amount) {
     ClientHandler client;
     for (int i = 0; i < amount; i++) {
-      client = new ClientHandler(String.valueOf(i));
+      client = new ClientHandler("Player_" + String.valueOf(i));
     }
   }
 
@@ -118,7 +125,5 @@ public class LiveTest {
   private String getUsername(int num) {
     return GameList.getUserlist().get(num).getUsername();
   }
-
- */
 
 }
