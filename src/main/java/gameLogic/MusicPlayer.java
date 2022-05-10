@@ -30,13 +30,10 @@ public class MusicPlayer
     {
         try {
             playerVorbereiten(dateiname);
-            player.play(500);
+            player.play(5000);
         }
         catch(JavaLayerException e) {
             meldeProblem(dateiname);
-        }
-        finally {
-            killPlayer();
         }
     }
 
@@ -49,14 +46,10 @@ public class MusicPlayer
                 public void run()
                 {
                     try {
-                        System.out.println("player.play " + dateiname);
                         player.play(5000);
                     }
                     catch(JavaLayerException e) {
                         meldeProblem(dateiname);
-                    }
-                    finally {
-                        killPlayer();
                     }
                 }
             };

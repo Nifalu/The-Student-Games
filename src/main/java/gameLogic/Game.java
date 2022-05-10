@@ -174,8 +174,8 @@ public class Game implements Runnable {
             if (playersPlaying.get(i).getPlayingField() > 88) {
               playersEndedGame += 1;
               lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " graduated " + place() + " in " + calendar.getCurrentDate());
-              //sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
-              //        "Graduated " + place() + " in " + calendar.getCurrentDate() + " Ready for Masters?");
+              MusicPlayer jiggleJiggle = new MusicPlayer();
+              jiggleJiggle.dateiAnspielen("audio/jiggleJiggle.mp3");
               highScore.add("" + playersPlaying.get(i).getUsername(),
                   Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)), "global");
               highScoreGame.add("" + playersPlaying.get(i).getUsername(),

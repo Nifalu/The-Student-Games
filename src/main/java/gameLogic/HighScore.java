@@ -74,7 +74,6 @@ public class HighScore {
         for (int i = highscore.length - 1; i != -1; i--) {
           String[] nameScore = highscore[i].split("Ç");
           Node n = new Node(nameScore[0], Integer.parseInt(nameScore[1]));
-          System.out.println(highscore[i]);
           if (current == null) {
             n.next = first;
             first = n;
