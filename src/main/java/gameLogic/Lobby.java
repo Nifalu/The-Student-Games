@@ -346,6 +346,7 @@ public class Lobby {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, "empty High Score");
     } else {*/
     sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10("global"));
+    sendToClient.send(clientHandler, CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
     //}
   }
 

@@ -1,6 +1,7 @@
 package server;
 
 import gameLogic.GameList;
+import gameLogic.HighScore;
 import gameLogic.Lobby;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

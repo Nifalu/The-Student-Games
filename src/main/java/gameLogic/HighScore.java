@@ -70,9 +70,9 @@ public class HighScore {
         line = "";
       }
       if (line != null) {
-        String[] highscore = line.split("§");
+        String[] highscore = line.split(",");
         for (int i = highscore.length - 1; i != -1; i--) {
-          String[] nameScore = highscore[i].split("Ç");
+          String[] nameScore = highscore[i].split("!");
           Node n = new Node(nameScore[0], Integer.parseInt(nameScore[1]));
           if (current == null) {
             n.next = first;
@@ -94,7 +94,7 @@ public class HighScore {
     String save = "";
     Node current = first;
     while (current != null) {
-      save += current.name + "Ç" + current.score + "§";
+      save += current.name + "!" + current.score + ",";
       current = current.next;
     }
     try {

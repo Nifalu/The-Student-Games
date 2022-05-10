@@ -112,7 +112,7 @@ public class ClientReceive implements Runnable {
 
       case PRINTWINNERSGUI:
         //HighscoreController.winnerReceiver.setMessage(msg);
-        Main.getHighscoreController().printLobbies(msg);
+        Main.getHighscoreController().printWinners(msg);
         break;
 
       case PRINTFRIENDSGUI:

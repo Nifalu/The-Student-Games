@@ -48,7 +48,9 @@ public class Name {
     if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
       sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, ("Please enter your desired name below."));
       String desiredName = receiveFromClient.receive();
-      desiredName = desiredName.replaceAll(" ", "_").toLowerCase();
+      desiredName = desiredName.replaceAll(" ", "_");
+      desiredName = desiredName.replaceAll(",", "@");
+      desiredName = desiredName.replaceAll("!", "@");
       if (!desiredName.equals(clientHandler.user.getUsername())) {
         changeNameTo("", desiredName);
       }

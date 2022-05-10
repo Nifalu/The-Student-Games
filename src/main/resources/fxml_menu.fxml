@@ -9,14 +9,21 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
    <children>
+      <ImageView fitHeight="720.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Holztisch1.png" />
+         </image>
+      </ImageView>
       <BorderPane minHeight="720.0" minWidth="1080.0">
          <center>
             <VBox alignment="CENTER" minHeight="600.0" minWidth="900.0" spacing="5.0" BorderPane.alignment="CENTER">
@@ -37,7 +44,7 @@
                                     <Button mnemonicParsing="false" onAction="#joinSelectedLobby" text="select Lobby" />
                                  </children>
                               </HBox>
-                              <ListView fx:id="lobbyListView" onMouseClicked="#listViewSelectedLobby" VBox.vgrow="ALWAYS" />
+                              <ListView fx:id="lobbyListView" onMouseClicked="#listViewSelectedLobby" prefHeight="574.0" prefWidth="188.0" VBox.vgrow="ALWAYS" />
                               <HBox>
                                  <children>
                                     <TextField fx:id="createLobbyTextField" onAction="#createLobby" promptText="Please enter new lobby..." HBox.hgrow="ALWAYS" />
@@ -86,7 +93,6 @@
                         <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
                         <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
                       <Button mnemonicParsing="false" onAction="#switchToGame" text="Go To Game" />
-                        <Button mnemonicParsing="false" onAction="#switchToCharSelection" text="Go To Char Selection" />
                     </items>
                   </ToolBar>
                </children>

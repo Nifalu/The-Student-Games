@@ -41,7 +41,7 @@ public class HighscoreController implements Initializable {
    * @param winners String
    */
   @FXML
-  public void printLobbies(String winners) {
+  public void printWinners(String winners) {
     String[] splittedWinners = splittedString(winners);
     Platform.runLater(() -> {
       winnerListView.getItems().clear();
@@ -113,6 +113,6 @@ public class HighscoreController implements Initializable {
    * refreshes the winners of the lobbies by calling PRINTLOBBIES
    */
   public void refreshWinners() {
-    sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
+    sendToServer.send(CommandsToServer.PRINTHIGHSCORE, "");
   }
 }

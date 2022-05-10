@@ -166,5 +166,4 @@ public class CreateLobbyHelper {
   public synchronized void printPlayersInLobby() {
     sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printUserInLobby(clienthandler.user.getLobby()));
   }
-
 }
