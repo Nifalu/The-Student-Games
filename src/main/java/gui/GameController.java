@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import utility.io.CommandsToServer;
@@ -453,7 +455,46 @@ public class GameController implements Initializable {
       }
     }
 
-    /**
+  /**
+   * adds the correct picture to the player tokens
+   */
+  public void setCharToken(int tokenNr, int charNr) {
+    System.out.println("----------------------------");
+    System.out.println("tokenNr " + tokenNr);
+    System.out.println("charNr " + charNr);
+    System.out.println("----------------------------");
+
+
+    Image img = new Image(findCorrectImag(charNr), false);
+    if (tokenNr == 1){
+      tokenOne.setFill(new ImagePattern(img));
+      tokenOne.setOpacity(1);
+    } else if (tokenNr ==2) {
+      tokenTwo.setFill(new ImagePattern(img));
+      tokenTwo.setOpacity(1);
+    } else if (tokenNr == 3) {
+      tokenThree.setFill(new ImagePattern(img));
+      tokenThree.setOpacity(1);
+    } else if (tokenNr == 4) {
+      tokenFour.setFill(new ImagePattern(img));
+      tokenFour.setOpacity(1);
+    }
+  }
+
+  public String findCorrectImag(int charNr) {
+    if (charNr == 1) {
+      return "char1.png";
+    } else if (charNr == 2) {
+      return "char2.png";
+    } else if (charNr == 3) {
+      return "char3.png";
+    } else if (charNr == 4) {
+      return "char4.png";
+    }
+    return "";
+  }
+
+  /**
      * method is used to "remove" the start and ready button once the game has started
      * (it doesn't remove the buttons but disables them and sets the opacity to 0)
      */
@@ -476,7 +517,7 @@ public class GameController implements Initializable {
     /**
      * used to switch to the Highscore scene
      */
-    public void switchToHighscore () {
+    public void switchToHighscore() {
       Main.displayHighscore();
     }
 

@@ -100,33 +100,43 @@ public class CharSelectionController implements Initializable {
     }
 
     public void enableCharOnScreen(String msg) {
-        if (msg.equals("1")) {
-            charOneSelectionCircle.setDisable(false);
-            charOneSelectionCircle.setOpacity(1);
-        } else if (msg.equals("2")) {
-            charTwoSelectionCircle.setDisable(false);
-            charTwoSelectionCircle.setOpacity(1);
-        } else if(msg.equals("3")) {
-            charThreeSelectionCircle.setDisable(false);
-            charThreeSelectionCircle.setOpacity(1);
-        } else if (msg.equals("4")){
-            charFourSelectionCircle.setDisable(false);
-            charFourSelectionCircle.setOpacity(1);
+        switch (msg) {
+            case "1":
+                charOneSelectionCircle.setDisable(false);
+                charOneSelectionCircle.setOpacity(1);
+                break;
+            case "2":
+                charTwoSelectionCircle.setDisable(false);
+                charTwoSelectionCircle.setOpacity(1);
+                break;
+            case "3":
+                charThreeSelectionCircle.setDisable(false);
+                charThreeSelectionCircle.setOpacity(1);
+                break;
+            case "4":
+                charFourSelectionCircle.setDisable(false);
+                charFourSelectionCircle.setOpacity(1);
+                break;
         }
     }
     public void disableCharOnScreen(String msg) {
-        if (msg.equals("1")) {
-            charOneSelectionCircle.setDisable(true);
-            charOneSelectionCircle.setOpacity(0.1);
-        } else if (msg.equals("2")) {
-            charTwoSelectionCircle.setDisable(true);
-            charTwoSelectionCircle.setOpacity(0.1);
-        } else if(msg.equals("3")) {
-            charThreeSelectionCircle.setDisable(true);
-            charThreeSelectionCircle.setOpacity(0.1);
-        } else if (msg.equals("4")){
-            charFourSelectionCircle.setDisable(true);
-            charFourSelectionCircle.setOpacity(0.1);
+        switch (msg) {
+            case "1":
+                charOneSelectionCircle.setDisable(true);
+                charOneSelectionCircle.setOpacity(0.1);
+                break;
+            case "2":
+                charTwoSelectionCircle.setDisable(true);
+                charTwoSelectionCircle.setOpacity(0.1);
+                break;
+            case "3":
+                charThreeSelectionCircle.setDisable(true);
+                charThreeSelectionCircle.setOpacity(0.1);
+                break;
+            case "4":
+                charFourSelectionCircle.setDisable(true);
+                charFourSelectionCircle.setOpacity(0.1);
+                break;
         }
     }
 }

@@ -152,5 +152,31 @@ public enum CommandsToServer {
   /**
    * prints out players in lobby
    */
-  PRINTPLAYERSINLOBBY, CHECKIFCHARSTAKEN, DISABLECHARGUI, ENABLECHARGUI,
+  PRINTPLAYERSINLOBBY,
+
+  /**
+   * checks which characters are already in use in a lobby
+   */
+  CHECKIFCHARSTAKEN,
+
+  /**
+   * disables the specified character in the char selection gui
+   */
+  DISABLECHARGUI,
+
+  /**
+   * enables the specified character in the char selection gui
+   */
+  ENABLECHARGUI,
+
+  /**
+   * changes a character token in the game gui
+   */
+  SETCHARTOKEN,
+
+  /**
+   * changes all character tokens in the game gui
+   * useful if  player joins a lobby AFTER everyone has already gotten and set their characters
+   */
+  SETALLCHARTOKENS,
 }
