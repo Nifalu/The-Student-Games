@@ -8,9 +8,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -28,73 +28,103 @@
          <center>
             <VBox alignment="CENTER" minHeight="600.0" minWidth="900.0" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
+                  <VBox prefHeight="36.0" prefWidth="1080.0" />
                   <HBox alignment="CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Label text="Lobby Selection" />
-                              <Label fx:id="selectedLobbyLabel" alignment="CENTER" text="SelectedLobby" textFill="#ef0d0d">
+                              <HBox layoutY="73.0" prefHeight="27.0" prefWidth="317.0" />
+                              <Label fx:id="selectedLobbyLabel" alignment="CENTER" layoutX="116.0" layoutY="155.0" prefHeight="49.0" prefWidth="193.0" text="SelectedLobby" textFill="#ef0d0d">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <HBox alignment="CENTER" spacing="5.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" onAction="#refreshLobbies" text="refresh" />
-                                    <Button mnemonicParsing="false" onAction="#joinSelectedLobby" text="select Lobby" />
-                                 </children>
-                              </HBox>
-                              <ListView fx:id="lobbyListView" onMouseClicked="#listViewSelectedLobby" prefHeight="574.0" prefWidth="188.0" VBox.vgrow="ALWAYS" />
-                              <HBox>
-                                 <children>
-                                    <TextField fx:id="createLobbyTextField" onAction="#createLobby" promptText="Please enter new lobby..." HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" onAction="#createLobby" text="createLobby" />
-                                 </children>
-                              </HBox>
+                              <ImageView fitHeight="410.0" fitWidth="433.0" layoutX="-22.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@panel_definitiv.png" />
+                                 </image>
+                              </ImageView>
+                              <ListView fx:id="lobbyListView" layoutX="97.0" layoutY="214.0" onMouseClicked="#listViewSelectedLobby" prefHeight="213.0" prefWidth="186.0" />
+                              <TextField fx:id="createLobbyTextField" layoutX="41.0" layoutY="448.0" onAction="#createLobby" prefHeight="25.0" prefWidth="149.0" promptText="Please enter new lobby..." />
+                              <Button layoutX="202.0" layoutY="448.0" mnemonicParsing="false" onAction="#createLobby" prefHeight="20.0" prefWidth="68.0" text="createLobby" />
+                              <ImageView fitHeight="68.0" fitWidth="71.0" layoutX="282.0" layoutY="154.0" onMouseClicked="#refreshLobbies" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@refreshButton_defintiv.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="71.0" fitWidth="89.0" layoutX="66.0" layoutY="154.0" onMouseClicked="#joinSelectedLobby" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@joinButton_definitiv.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="65.0" fitWidth="138.0" layoutX="14.0" layoutY="597.0" onMouseClicked="#switchToGame" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@gameButton_definitiv.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="75.0" fitWidth="176.0" layoutX="165.0" layoutY="592.0" onMouseClicked="#switchToHighscore" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@highscoreButton_definitiv.png" />
+                                 </image>
+                              </ImageView>
                            </children>
-                        </VBox>
-                        <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Label text="Chat" />
-                              <HBox alignment="TOP_CENTER">
+                              <VBox prefHeight="640.0" prefWidth="248.0">
                                  <children>
-                                    <ToggleButton mnemonicParsing="false" onAction="#switchChat" selected="true" text="LOBBY">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="switchGlobalLobby" />
-                                       </toggleGroup>
-                                    </ToggleButton>
-                                    <ToggleButton fx:id="globalToggleButton" mnemonicParsing="false" onAction="#switchChat" text="GLOBAL" toggleGroup="$switchGlobalLobby" />
+                                    <HBox alignment="CENTER" prefHeight="61.0" prefWidth="316.0">
+                                       <children>
+                                          <ToggleButton mnemonicParsing="false" onAction="#switchChat" selected="true" text="LOBBY">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="switchGlobalLobby" />
+                                             </toggleGroup>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="globalToggleButton" mnemonicParsing="false" onAction="#switchChat" prefHeight="25.0" prefWidth="84.0" text="GLOBAL" toggleGroup="$switchGlobalLobby" />
+                                       </children>
+                                    </HBox>
+                                    <AnchorPane prefHeight="651.0" prefWidth="328.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <ImageView fitHeight="365.0" fitWidth="347.0" layoutX="-3.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@panelYellow_defintiv.png" />
+                                             </image>
+                                          </ImageView>
+                                          <TextArea fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" />
+                                          <TextField fx:id="chatTextField" layoutX="45.0" layoutY="296.0" onAction="#sendChatMessage" promptText="type your message here ..." />
+                                        <Button alignment="CENTER_RIGHT" layoutX="213.0" layoutY="296.0" mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
+                                       </children>
+                                    </AnchorPane>
                                  </children>
-                              </HBox>
-                              <TextArea fx:id="chat" editable="false" VBox.vgrow="ALWAYS" />
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <TextField fx:id="chatTextField" onAction="#sendChatMessage" promptText="type your message here ..." HBox.hgrow="ALWAYS" />
-                                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
-                                 </children>
-                              </HBox>
+                              </VBox>
                            </children>
-                        </VBox>
-                        <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                        </AnchorPane>
+                        <VBox prefHeight="640.0" prefWidth="332.0">
                            <children>
-                              <Label text="Online:" />
-                              <HBox alignment="CENTER">
+                              <AnchorPane prefHeight="640.0" prefWidth="374.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#refreshFriends" text="refresh" />
+                                    <ImageView fitHeight="325.0" fitWidth="399.0" layoutX="-53.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@panelRed_definitiv.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ListView fx:id="friendListView" layoutX="23.0" layoutY="345.0" prefHeight="173.0" prefWidth="228.0" />
+                                    <ImageView fitHeight="60.0" fitWidth="69.0" layoutX="173.0" layoutY="274.0" onMouseClicked="#refreshFriends" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@refreshButton_defintiv.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="90.0" fitWidth="200.0" layoutX="162.0" layoutY="586.0" onMouseClicked="#quitGame" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@quitButton_definitiv.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
-                              </HBox>
-                              <ListView fx:id="friendListView" VBox.vgrow="ALWAYS" />
+                              </AnchorPane>
                            </children>
                         </VBox>
                      </children>
                   </HBox>
-                  <ToolBar VBox.vgrow="ALWAYS">
-                    <items>
-                        <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitGame" text="quit" />
-                        <Button mnemonicParsing="false" onAction="#switchToHighscore" text="Go To Highscore" />
-                      <Button mnemonicParsing="false" onAction="#switchToGame" text="Go To Game" />
-                    </items>
-                  </ToolBar>
                </children>
                <BorderPane.margin>
                   <Insets />

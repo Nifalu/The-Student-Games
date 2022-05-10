@@ -264,10 +264,11 @@ public class MenuController implements Initializable {
    */
   @FXML
   public void quitGame() {
-    sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
-    Stage stage = (Stage) quitButton.getScene().getWindow();
-    stage.close();
-    sendToServer.send(CommandsToServer.QUIT, msg);
+    Main.exit();
+    // sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
+    //Stage stage = (Stage) quitButton.getScene().getWindow();
+    //stage.close();
+    //sendToServer.send(CommandsToServer.QUIT, msg);
   }
 
 
@@ -317,10 +318,8 @@ public class MenuController implements Initializable {
 
   /**
    * asks to print out the lobbies when clicking on the button
-   *
-   * @param ActionEvent ActionEvent
    */
-  public void refreshLobbies(ActionEvent ActionEvent) {
+  public void refreshLobbies() {
     sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
   }
 
@@ -404,11 +403,12 @@ public class MenuController implements Initializable {
    * @param actionEvent ActionEvent
    */
   public void createLobby(ActionEvent actionEvent) {
-    refreshLobbies(actionEvent);
+    refreshLobbies();
+    refreshLobbies();
     String lobbyName = createLobbyTextField.getText();
     sendToServer.send(CommandsToServer.CREATELOBBY, lobbyName);
     sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
-    refreshLobbies(actionEvent);
+    refreshLobbies();
     Platform.runLater(() -> createLobbyTextField.clear());
   }
 }
