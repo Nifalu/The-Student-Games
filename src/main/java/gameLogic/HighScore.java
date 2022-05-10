@@ -41,8 +41,8 @@ public class HighScore {
   /**
    * @return The best 10 players of the game sorted by date of graduation with their dates
    */
-  public String getTop10() {
-    if (first == null) { loadHighscore(); }
+  public String getTop10(String game) {
+    if (first == null && game.equals("global")) { loadHighscore(); }
     Node n = first;
     int count = 0;
     String top10 = "";

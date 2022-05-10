@@ -497,12 +497,12 @@ public class Game implements Runnable {
    */
   public void closeGame() {
     //if (highScore.getTop10().length() > 0) {
-      lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10());
-      sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
+      lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10("global"));
+      sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
     //}
-    if (highScoreGame.getTop10().length() > 0) {
-      lobbyBroadcastToPlayer("Best students of this game:§" + highScoreGame.getTop10());
-      sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
+    if (highScoreGame.getTop10("game").length() > 0) {
+      lobbyBroadcastToPlayer("Best students of this game:§" + highScoreGame.getTop10("game"));
+      sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScoreGame.getTop10("game"));
       if (playersEndedGame == numPlayers) {
         lobbyBroadcastToPlayer("Congratulations! All of you have successfully graduated.");
       } else {
@@ -510,7 +510,7 @@ public class Game implements Runnable {
       }
     } else {
       lobbyBroadcastToPlayer("None of you has graduated.");
-      sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
+      sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
     }
     for (int i = 0; i < numPlayers; i++) {
       User user = lobby.getUsersReady().get(i);

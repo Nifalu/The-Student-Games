@@ -5,7 +5,6 @@ import server.User;
 import utility.io.*;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * creates a Lobby Object
@@ -346,7 +345,7 @@ public class Lobby {
     /*if (highScore.getTop10().length() == 0) {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, "empty High Score");
     } else {*/
-    sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10());
+    sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10("global"));
     //}
   }
 
