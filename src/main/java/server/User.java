@@ -71,9 +71,10 @@ public class User {
   private int userListNumber;
 
   /**
-   * the color of the users player character
+   * the player Nr. in the GUI
+   * decides which circle represents this client
    */
-  public String characterColor;
+  public int gameTokenNr = 0;
 
   /**
    * the character the player chose

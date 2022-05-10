@@ -234,9 +234,14 @@ public class Main extends Application {
     stage.show();
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
-    letterbox(scene, pane);
+    //letterbox(scene, pane);
   }
 
+  /**
+   * creates a popup of the given scene
+   *
+   * @param scene the scene you want displayed as a popup
+   */
   private static void showPopUp(Scene scene) {
     Stage popupWindow = new Stage();
     popupWindow.initModality(Modality.APPLICATION_MODAL);

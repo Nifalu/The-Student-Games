@@ -518,10 +518,10 @@
                               <Label layoutX="16.0" layoutY="19.0" text="Start" />
                            </children>
                         </Pane>
-                        <Circle fx:id="playerGreen" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="playerBlue" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="playerYellow" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="playerRed" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="tokenFour" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="tokenOne" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="tokenThree" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="tokenTwo" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </GridPane>
                   <HBox minHeight="100.0" />

@@ -62,6 +62,8 @@ public class Lobby {
 
   public HashMap<Integer, Boolean> charactersTaken = new HashMap<>();
 
+  //public HashMap<Integer, Boolean> gameTokensTaken = new HashMap<>();
+
 
 
   /**
@@ -73,12 +75,12 @@ public class Lobby {
    * to represent the players character
    * (a bit complicated but I don't have time to fix it)
    */
-  private int characterColorCounter = 0;
+  //private int characterColorCounter = 0;
 
   /**
    * the possible colors for a player character
    */
-  private final String[] characterColors = new String[]{"red", "blue", "yellow", "green"};
+  //private final String[] characterColors = new String[]{"red", "blue", "yellow", "green"};
 
   /**
    * creates a Lobby object with the given name
@@ -90,6 +92,11 @@ public class Lobby {
     this.status = 1; // status of lobby is automatically set to open
     startThread();
     this.lobbyNumber = GameList.getLobbyList().size();
+
+    gameTokensTaken.put(1, false);
+    gameTokensTaken.put(2, false);
+    gameTokensTaken.put(3, false);
+    gameTokensTaken.put(4, false);
   }
 
 
@@ -103,6 +110,9 @@ public class Lobby {
   public HashMap<Integer, User> getUsersReady() {
     return usersReady;
   }
+
+  public HashMap<Integer, Boolean> gameTokensTaken = new HashMap<>();
+
 
   /**
    * creates a HashMap with all the users that in that lobby
@@ -217,8 +227,15 @@ public class Lobby {
     if (getLobbyStatus() == 1) {
       waitingToPlay(clientHandler);
       sendToClient.send(clientHandler, CommandsToClient.PRINTGUIGAMETRACKER, "You are now waiting...");
-      clientHandler.user.characterColor = characterColors[characterColorCounter]; // gives the player a color
-      characterColorCounter += 1;
+
+      for (int i = 1; i < 5; i++) {
+        if(!gameTokensTaken.get(i)) {
+          clientHandler.user.gameTokenNr = i;
+          gameTokensTaken.put(i, true);
+          System.out.println(clientHandler.user.getUsername() + " now has Toke Nr. " + clientHandler.user.gameTokenNr);
+          break;
+        }
+      }
       lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
           + clientHandler.user.getLobby().getLobbyName());
       lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
@@ -231,7 +248,6 @@ public class Lobby {
   /**
    * disables characters in the character selection GUI if they're already taken
    */
-
   public void checkIfCharsTaken() {
     System.out.println("IS IN CHECKIFCHARSTAKEN");
     for (int i = 1; i < 5; i++) {
@@ -267,8 +283,12 @@ public class Lobby {
     usersReady.values().remove(clientHandler.user);
     clientHandler.user.setReadyToPlay(false);
     sendToClient.send(clientHandler, CommandsToClient.PRINT, "You are not waiting anymore.");
-    clientHandler.user.characterColor = ""; // removes the players color
-    characterColorCounter -= 1;
+
+    for (int i = 1; i < 5; i++) {
+      if (i == clientHandler.user.gameTokenNr) {
+        gameTokensTaken.put(i, false);
+      }
+    }
     lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is not ready.");
     lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
         clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());

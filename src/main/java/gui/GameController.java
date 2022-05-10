@@ -7,15 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import server.User;
 import utility.io.CommandsToServer;
-import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
 
 import java.net.URL;
@@ -118,25 +113,25 @@ public class GameController implements Initializable {
    * a blue circle which represents a player character
    */
   @FXML
-  private Circle playerBlue;
+  private Circle tokenOne;
 
   /**
    * a red circle which represents a player character
    */
   @FXML
-  private Circle playerRed;
+  private Circle tokenTwo;
 
   /**
    * a yellow circle which represents a player character
    */
   @FXML
-  private Circle playerYellow;
+  private Circle tokenThree;
 
   /**
    * a green circle which represents a player character
    */
   @FXML
-  private Circle playerGreen;
+  private Circle tokenFour;
 
   /**
    * GridPane which is used as the board of the game
@@ -317,13 +312,13 @@ public class GameController implements Initializable {
    */
   public void resetGame() {
     Platform.runLater(() -> {
-      playerBlue.setTranslateY(594);
-      playerBlue.setTranslateX(160);
-      playerRed.setTranslateY(594);
-      playerRed.setTranslateX(240);
-      playerYellow.setTranslateY(594);
-      playerYellow.setTranslateX(80);
-      playerGreen.setTranslateY(594);
+      tokenOne.setTranslateY(594);
+      tokenOne.setTranslateX(160);
+      tokenTwo.setTranslateY(594);
+      tokenTwo.setTranslateX(240);
+      tokenThree.setTranslateY(594);
+      tokenThree.setTranslateX(80);
+      tokenFour.setTranslateY(594);
 
       // resets the dicedice
       fourDice1.setDisable(false);
@@ -521,17 +516,17 @@ public class GameController implements Initializable {
      */
     public Circle chooseCorrectPlayerToMove (String moveToField){
       String[] playerAndNewField = moveToField.split("--"); // splits the String into the nr of the new field and the player color
-      String playerColorToMove = playerAndNewField[0];
+      String playerTokenNrToMove = playerAndNewField[0];
 
-      switch (playerColorToMove) {
-        case "blue":
-          return playerBlue;
-        case "red":
-          return playerRed;
-        case "yellow":
-          return playerYellow;
+      switch (playerTokenNrToMove) {
+        case "1":
+          return tokenOne;
+        case "2":
+          return tokenTwo;
+        case "3":
+          return tokenThree;
         default:
-          return playerGreen;
+          return tokenFour;
       }
     }
 
