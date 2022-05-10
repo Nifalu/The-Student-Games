@@ -3,6 +3,7 @@ package client;
 import gui.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import server.ClientHandler;
 import utility.io.CommandsToClient;
 
 
@@ -125,6 +126,7 @@ public class ClientReceive implements Runnable {
 
       case DISABLECHARGUI:
         Main.getCharSelectionController().disableCharOnScreen(msg);
+        System.out.println("ESCH IM DISABLECHARGUI MET " + msg);
         break;
 
       case ENABLECHARGUI:
