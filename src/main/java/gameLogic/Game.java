@@ -131,6 +131,8 @@ public class Game implements Runnable {
    * Starts the game as soon as it has been initiated by its lobby
    */
   public void run() {
+    MusicPlayer mp = new MusicPlayer();
+    mp.starteAbspielen("audio/okayLetsGo.mp3");
     highScoreGame = new HighScore();
     numPlayers = lobby.getUsersReady().size();
 

@@ -1,9 +1,7 @@
 package gui;
 
-import gameLogic.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -12,10 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import starter.Starter;
 import utility.io.CommandsToServer;
-import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
 
-import java.io.IOException;
 import java.util.Objects;
 
 

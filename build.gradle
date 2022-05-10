@@ -58,6 +58,8 @@ dependencies {
      */
     implementation 'org.openjfx:javafx-controls:11.0.2'
 
+    implementation 'javazoom:jlayer:1.0.1'
+
     // JUNIT
     /*
     The following dependency is required to perform JUnit tests, as for example HelloWorldTest.
