@@ -174,9 +174,9 @@ public class Game implements Runnable {
               //sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.PRINT,
               //        "Graduated " + place() + " in " + calendar.getCurrentDate() + " Ready for Masters?");
               highScore.add("" + playersPlaying.get(i).getUsername(),
-                  Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
+                  Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)), "global");
               highScoreGame.add("" + playersPlaying.get(i).getUsername(),
-                  Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)));
+                  Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)), "game");
             }
           }
           // moves the player characters in the GUI
@@ -408,15 +408,15 @@ public class Game implements Runnable {
       String[] arr = card.split(" ", 2);
       int positionToChange = Integer.parseInt(arr[0]);
       String textCard = arr[1];
-      lobbyBroadcastToPlayer(user.getUsername() + " draws an action card: " + textCard);
+      lobbyBroadcastToPlayer("§" + user.getUsername() + " draws an action card:" + "§" + textCard + "§");
       changePosition(user, positionToChange);
     } else if (field == 7 || field == 22 || field == 49 || field == 65) { // Quiz
       quizOngoing = true;
       String quizQuestion = Quiz.quiz();
-      String[] quiz = quizQuestion.split("§");
+      String[] quiz = quizQuestion.split("Ç");
       setUserToAnswerQuiz(user);
       setAnswer(quiz[1]);
-      lobbyBroadcastToPlayer("Exam question for " + user.getUsername() + ". " + quiz[0]);
+      lobbyBroadcastToPlayer("§" + "Exam question for " + user.getUsername() + "." + "§" + quiz[0]);
       for (int i = 0; i < maxTimeToAnswerQuiz; i++) {
         if (quizAnsweredCorrect) {
           lobbyBroadcastToPlayer(user.getUsername() + "'s answer: " + quiz[1] + " is correct.");
@@ -455,6 +455,11 @@ public class Game implements Runnable {
   public void lobbyBroadcastToPlayer(String msg) {
     sendToClient.lobbyBroadcast(lobby.usersReady,
         CommandsToClient.PRINTGUIGAMETRACKER, msg);
+    try {
+      Thread.sleep(50);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -488,10 +493,10 @@ public class Game implements Runnable {
    * Closes the game and sets the lobby's status to finished
    */
   public void closeGame() {
-    if (highScore.getTop10().length() > 0) {
+    //if (highScore.getTop10().length() > 0) {
       lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10());
       sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());
-    }
+    //}
     if (highScoreGame.getTop10().length() > 0) {
       lobbyBroadcastToPlayer("Best students of this game:§" + highScoreGame.getTop10());
       sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10());

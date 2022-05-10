@@ -140,7 +140,17 @@ public enum CommandsToServer {
   DICEDICELEFT,
 
   /**
+   * changes the players character
+   */
+  CHANGECHARACTER,
+
+  /**
+   * disables a character in the char selection screen
+   */
+  DISABLECHARACTERGUI,
+
+  /**
    * prints out players in lobby
    */
-  PRINTPLAYERSINLOBBY
+  PRINTPLAYERSINLOBBY, CHECKIFCHARSTAKEN, DISABLECHARGUI, ENABLECHARGUI,
 }

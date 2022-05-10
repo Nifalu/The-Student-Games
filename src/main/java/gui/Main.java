@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -92,6 +93,25 @@ public class Main extends Application {
   private static HighscoreController highscoreController;
 
   /**
+   * the char selection controller
+   */
+  private static CharSelectionController charSelectionController;
+
+  /**
+   * corresponding root for the char selection scene
+   */
+  private static Pane charSelectionRoot;
+
+  /**
+   * the char selection scene
+   */
+  public static Scene charSelection;
+
+  private static Pane notInLobbyRoot;
+  public static Scene notInLobby;
+  private static NotInLobbyController notInLobbyController;
+
+  /**
    * the logger
    */
   private static final Logger logger = LogManager.getLogger(Main.class);
@@ -100,6 +120,8 @@ public class Main extends Application {
    * sets the .css file to be used for the scenes
    */
   private static final String CSS = "TheStudentGameLook.css";
+
+  static SendToServer sendToServer = new SendToServer();
 
 
   /**
@@ -129,6 +151,13 @@ public class Main extends Application {
       gameRoot = getLoader("fxml_game.fxml").load();
       //gameController = getLoader("fxml_game.fxml").getController();
       game = createScene(gameRoot);
+
+      charSelectionRoot = getLoader("fxml_charSelection.fxml").load();
+      charSelection = createScene(charSelectionRoot);
+
+      notInLobbyRoot = getLoader("fxml_notInLobby.fxml").load();
+      notInLobby = createScene(notInLobbyRoot);
+
 
       displayStart(); // Display the first Scene.
       stage.centerOnScreen();
@@ -165,11 +194,18 @@ public class Main extends Application {
   }
 
   /**
+   * Displays the charselection scene on stage
+   */
+  public static void displayCharSelection() { showScene(charSelection, charSelectionRoot); }
+
+  /**
    * Display the Highscore scene on stage.
    */
   public static void displayHighscore() {
     showScene(highscore, highscoreRoot);
   }
+
+  public static void displayNotInLobbyPopUp() { showPopUp(notInLobby); }
 
   /**
    * Creates a new scene from the given root pane and adds css
@@ -199,6 +235,13 @@ public class Main extends Application {
     stage.setMinWidth(stage.getWidth());
     stage.setMinHeight(stage.getHeight());
     letterbox(scene, pane);
+  }
+
+  private static void showPopUp(Scene scene) {
+    Stage popupWindow = new Stage();
+    popupWindow.initModality(Modality.APPLICATION_MODAL);
+    popupWindow.setScene(scene);
+    popupWindow.showAndWait();
   }
 
   /**
@@ -250,6 +293,13 @@ public class Main extends Application {
   }
 
   /**
+   * returns the clients CharSelectionController
+   *
+   * @return CharSelectionController
+   */
+  public static CharSelectionController getCharSelectionController() { return charSelectionController; }
+
+  /**
    * returns the clients MenuController
    *
    * @return MenuController
@@ -275,6 +325,8 @@ public class Main extends Application {
   public static HighscoreController getHighscoreController() {
     return highscoreController;
   }
+
+  public static NotInLobbyController GetnotInLobbyController() { return notInLobbyController; }
 
   /**
    * setts the clients GameController
@@ -310,5 +362,18 @@ public class Main extends Application {
    */
   public static void setHighscoreController(HighscoreController highscoreController) {
     Main.highscoreController = highscoreController;
+  }
+
+  /**
+   * sets the clients CharSelectionController
+   *
+   * @param charSelectionController CharSelectionController
+   */
+  public static void setCharSelectionController(CharSelectionController charSelectionController) {
+    Main.charSelectionController = charSelectionController;
+  }
+
+  public static void setNotInLobbyController(NotInLobbyController notInLobbyController) {
+    Main.notInLobbyController = notInLobbyController;
   }
 }

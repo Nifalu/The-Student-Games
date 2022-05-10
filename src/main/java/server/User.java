@@ -76,9 +76,16 @@ public class User {
   public String characterColor;
 
   /**
+   * the character the player chose
+   */
+  public int characterNr = 0;
+
+  /**
    * notes whether it's game over for the user or not
    */
   public boolean gameOver;
+
+  public int playerNrInLobby;
 
   /**
    * creates a new user object
@@ -321,6 +328,11 @@ public class User {
   public void setGameOver() {
     gameOver = true;
   }
+
+  /**
+   * sets the users character choice
+   */
+  public void setCharacter(int nr) { characterNr = nr; }
 
   //-------------OTHER METHODS------------------------------
 

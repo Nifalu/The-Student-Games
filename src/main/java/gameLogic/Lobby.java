@@ -2,11 +2,10 @@ package gameLogic;
 
 import server.ClientHandler;
 import server.User;
-import utility.io.CommandsToClient;
-import utility.io.ReceiveFromProtocol;
-import utility.io.SendToClient;
+import utility.io.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * creates a Lobby Object
@@ -32,6 +31,8 @@ public class Lobby {
    * SendToClient object to communicate with the client
    */
   private final SendToClient sendToClient = new SendToClient();
+
+  private final SendToServer sendToServer = new SendToServer();
 
   /**
    * ReceiveFromProtocol object to communicate with the protocol
@@ -59,10 +60,18 @@ public class Lobby {
    */
   HashMap<Integer, User> usersReady = new HashMap<>();
 
+  public HashMap<Integer, Boolean> charactersTaken = new HashMap<>();
+
+
+
   /**
    * used to give each player joining the lobby a different character
    * +1 when a color has been given away
    * characterColorCounter is used as an index to the characterColors array
+   *
+   * the colors aren't used anymore, but the colors now resemble which circle will be chosen in the GUI
+   * to represent the players character
+   * (a bit complicated but I don't have time to fix it)
    */
   private int characterColorCounter = 0;
 
@@ -220,6 +229,23 @@ public class Lobby {
   }
 
   /**
+   * disables characters in the character selection GUI if they're already taken
+   */
+
+  public void checkIfCharsTaken() {
+    System.out.println("IS IN CHECKIFCHARSTAKEN");
+    for (int i = 1; i < 5; i++) {
+      System.out.println("CHARACTER NR: " + i + " IS " + charactersTaken.get(i));
+      if (charactersTaken.containsKey(i)) {
+        if (charactersTaken.get(i)) {
+          System.out.println("CHAR IS TAKEN: " + i);
+          sendToServer.send(CommandsToServer.DISABLECHARACTERGUI, Integer.toString(i));
+        }
+      }
+    }
+  }
+
+  /**
    * Sets a player to the waiting list of the lobby
    *
    * @param clientHandler User who is ready to play the game.
@@ -297,11 +323,11 @@ public class Lobby {
    * @param clientHandler User asking for the high score
    */
   public void getHighScore(server.ClientHandler clientHandler) {
-    if (highScore.getTop10().length() == 0) {
+    /*if (highScore.getTop10().length() == 0) {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, "empty High Score");
-    } else {
-      sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10());
-    }
+    } else {*/
+    sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10());
+    //}
   }
 
   /**

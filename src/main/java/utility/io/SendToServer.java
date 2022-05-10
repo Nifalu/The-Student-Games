@@ -156,6 +156,18 @@ public class SendToServer {
       case DICEDICELEFT:
         sendTo("DICEDICELEFT--" + msg);
         break;
+
+      case CHANGECHARACTER:
+        sendTo("CHANGECHARACTER--" + msg);
+        break;
+
+      case DISABLECHARGUI:
+        sendTo("DISABLECHARGUI--" + msg);
+        break;
+
+      case CHECKIFCHARSTAKEN:
+        sendTo("CHECKIFCHARSTAKEN--" + msg);
+        break;
     }
   }
 
