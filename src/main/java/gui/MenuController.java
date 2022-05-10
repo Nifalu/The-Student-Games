@@ -287,7 +287,10 @@ public class MenuController implements Initializable {
    * switches to the Game scene when pressing the button
    */
   public void switchToGame() {
+
     Main.displayGame();
+    sendToServer.send(CommandsToServer.SETALLCHARTOKENS, "");
+
   }
 
   /**
@@ -303,8 +306,9 @@ public class MenuController implements Initializable {
   public void switchToCharSelection() {
     // Main.displayCharSelection();
     if (clientIsInLobby) {
-      sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+      sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
       Main.displayCharSelection();
+      //sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
     } else {
       Main.displayNotInLobbyPopUp();
     }

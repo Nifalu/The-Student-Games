@@ -168,6 +168,18 @@ public class SendToServer {
       case CHECKIFCHARSTAKEN:
         sendTo("CHECKIFCHARSTAKEN--" + msg);
         break;
+
+      case SETCHARTOKEN:
+        sendTo("SETCHARTOKEN--" + msg);
+        break;
+
+      case SETALLCHARTOKENS:
+        sendTo("SETALLCHARTOKENS--" + msg);
+        break;
+
+      case CHECKALLCHARS:
+        sendTo("CHECKALLCHARS--" + msg);
+        break;
     }
   }
 

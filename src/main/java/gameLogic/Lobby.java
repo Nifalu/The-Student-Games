@@ -96,6 +96,11 @@ public class Lobby {
     gameTokensTaken.put(2, false);
     gameTokensTaken.put(3, false);
     gameTokensTaken.put(4, false);
+
+    charactersTaken.put(1, false);
+    charactersTaken.put(2, false);
+    charactersTaken.put(3, false);
+    charactersTaken.put(4, false);
   }
 
 
@@ -239,6 +244,13 @@ public class Lobby {
           + clientHandler.user.getLobby().getLobbyName());
       lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
           clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
+
+      System.out.println("d character nommmere esch: " + clientHandler.user.characterNr);
+      String character = Integer.toString(clientHandler.user.characterNr);
+      String token = Integer.toString(clientHandler.user.gameTokenNr);
+      sendToClient.lobbyBroadcast(clientHandler.user.getLobby().getUsersInLobby(), CommandsToClient.SETCHARTOKEN, character + "--" + token);
+      //sendToServer.send(CommandsToServer.SETCHARTOKEN, Integer.toString(clientHandler.user.characterNr));
+
     } else {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, "please choose a lobby");
     }

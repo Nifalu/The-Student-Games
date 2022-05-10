@@ -125,12 +125,22 @@ public class ClientReceive implements Runnable {
         break;
 
       case DISABLECHARGUI:
+        System.out.println("s sött de char " + msg + " disabled werde");
         Main.getCharSelectionController().disableCharOnScreen(msg);
-        System.out.println("ESCH IM DISABLECHARGUI MET " + msg);
         break;
 
       case ENABLECHARGUI:
         Main.getCharSelectionController().enableCharOnScreen(msg);
+        break;
+
+      case SETCHARTOKEN:
+        // splits the message
+        // part one: the new character image
+        // part two: which game token
+        String[] charAndToken = msg.split("--");
+        int charNr = Integer.parseInt(charAndToken[0]);
+        int tokenNr = Integer.parseInt(charAndToken[1]);
+        Main.getGameController().setCharToken(tokenNr, charNr);
         break;
     }
   }

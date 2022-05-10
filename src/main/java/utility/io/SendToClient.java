@@ -105,6 +105,10 @@ public class SendToClient {
         sendTo(recipient, "ENABLECHARGUI--" + msg);
         break;
 
+      case SETCHARTOKEN:
+        sendTo(recipient, "SETCHARTOKEN--" + msg);
+        break;
+
     }
   }
 
