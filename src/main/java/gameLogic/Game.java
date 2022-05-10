@@ -103,6 +103,7 @@ public class Game implements Runnable {
    */
   public User userToAnswerQuiz;
 
+
   /**
    * notes the correct answer to a quiz question
    */
@@ -161,7 +162,7 @@ public class Game implements Runnable {
             // moves the player characters in the GUI
             for (int j = 0; j < numPlayers; j++) {
               if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 89) {
-                sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
+                sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).gameTokenNr + "--" + playersPlaying.get(j).getPlayingField());
               }
             }
 
@@ -182,7 +183,7 @@ public class Game implements Runnable {
           // moves the player characters in the GUI
           for (int j = 0; j < numPlayers; j++) {
             if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 89) {
-              sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).characterColor + "--" + playersPlaying.get(j).getPlayingField());
+              sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).gameTokenNr + "--" + playersPlaying.get(j).getPlayingField());
             }
           }
         } else {
