@@ -322,14 +322,25 @@ public class ServerReceive implements Runnable {
         break;
 
       case CHECKIFCHARSTAKEN:
-        Lobby l = client.user.getLobby();
+        /*Lobby l = client.user.getLobby();
+        for (Integer key : l.getUsersInLobby().keySet()) {
+          User u = l.getUsersInLobby().get(key);
+          if (u.characterNr != 0) {
+            System.out.println("de user " + u.getUsername() + " het de charakter " + u.characterNr);
+            l.charactersTaken.put(key, true);
+            System.out.println("die eint hashmap hett jetz wert " + l.charactersTaken.get(key) + " bem key " + key);
+            sendToClient.lobbyBroadcast(l.getUsersInLobby(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
+          }
+        }*/
+
+        /*Lobby l = client.user.getLobby();
         for (Integer key : l.getUsersInLobby().keySet()) {
           User u = l.getUsersInLobby().get(key);
           if (u.characterNr != 0) {
             l.charactersTaken.put(key, true);
             sendToClient.lobbyBroadcast(l.getUsersInLobby(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
           }
-        }
+        }*/
       break;
 
       case SETCHARTOKEN:
@@ -344,6 +355,16 @@ public class ServerReceive implements Runnable {
         }
         break;
 
+      case CHECKALLCHARS:
+        Lobby l = client.user.getLobby();
+        for (Integer key : l.getUsersInLobby().keySet()) {
+          User u = l.getUsersInLobby().get(key); // gets the value out of the key
+          System.out.println("aso de user esch: " + u.getUsername() + " ond er hett de character " + u.characterNr);
+          if (u.characterNr != 0) {
+            sendToClient.send(client.user.getClienthandler(), CommandsToClient.DISABLECHARGUI, Integer.toString(u.characterNr));
+          }
+        }
+        break;
     }
   }
 }

@@ -125,8 +125,8 @@ public class ClientReceive implements Runnable {
         break;
 
       case DISABLECHARGUI:
+        System.out.println("s sött de char " + msg + " disabled werde");
         Main.getCharSelectionController().disableCharOnScreen(msg);
-        System.out.println("ESCH IM DISABLECHARGUI MET " + msg);
         break;
 
       case ENABLECHARGUI:
@@ -134,7 +134,6 @@ public class ClientReceive implements Runnable {
         break;
 
       case SETCHARTOKEN:
-        System.out.println("S ESCH IM SETCHARTOKEN MET " + msg);
         // splits the message
         // part one: the new character image
         // part two: which game token

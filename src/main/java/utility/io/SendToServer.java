@@ -176,6 +176,10 @@ public class SendToServer {
       case SETALLCHARTOKENS:
         sendTo("SETALLCHARTOKENS--" + msg);
         break;
+
+      case CHECKALLCHARS:
+        sendTo("CHECKALLCHARS--" + msg);
+        break;
     }
   }
 
