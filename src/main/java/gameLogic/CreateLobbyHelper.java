@@ -109,7 +109,7 @@ public class CreateLobbyHelper {
    * @param name name of the lobby
    */
   public synchronized void connectLobby(String name) {
-    name = name.replaceAll(" ", "_").toLowerCase();
+    name = name.replaceAll(" ", "_");
     Lobby lobby = new Lobby(name);
     GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
     sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have created Lobby " + lobby.getLobbyName());
