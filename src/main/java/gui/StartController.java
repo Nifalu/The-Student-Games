@@ -1,8 +1,10 @@
 package gui;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import utility.io.CommandsToServer;
@@ -44,6 +46,15 @@ public class StartController implements Initializable {
   @FXML
   private TextField textInput;
 
+  @FXML
+  private Button sendButton;
+
+  @FXML
+  private Button noButton;
+
+  @FXML
+  private Button yesButton;
+
 
   /**
    * This method reads the text from textInput and sends it to the server
@@ -52,6 +63,7 @@ public class StartController implements Initializable {
     String msg = textInput.getText();
     sendToServer.send(CommandsToServer.NAME, msg);
     textInput.clear();
+    switchToMenu();
   }
 
   /**
@@ -114,5 +126,21 @@ public class StartController implements Initializable {
    */
   public void switchToHighscore() {
     Main.displayHighscore();
+  }
+
+    public void nameNo(ActionEvent actionEvent) {
+      sendToServer.send(CommandsToServer.NAME, "no");
+      yesButton.setOpacity(0);
+      yesButton.setDisable(true);
+      noButton.setOpacity(0);
+      noButton.setDisable(true);
+      textInput.setOpacity(1);
+      sendButton.setOpacity(1);
+      sendButton.setDisable(false);
+    }
+
+  public void nameYes(ActionEvent actionEvent) {
+    sendToServer.send(CommandsToServer.NAME, "yes");
+    switchToMenu();
   }
 }
