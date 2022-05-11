@@ -399,10 +399,8 @@ public class MenuController implements Initializable {
 
   /**
    * creates a new lobby
-   *
-   * @param actionEvent ActionEvent
    */
-  public void createLobby(ActionEvent actionEvent) {
+  public void createLobby() {
     refreshLobbies();
     refreshLobbies();
     String lobbyName = createLobbyTextField.getText();

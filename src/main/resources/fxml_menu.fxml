@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
@@ -21,7 +21,7 @@
    <children>
       <ImageView fitHeight="720.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Holztisch1.png" />
+            <Image url="@Background.png" />
          </image>
       </ImageView>
       <BorderPane minHeight="720.0" minWidth="1080.0">
@@ -44,9 +44,16 @@
                                     <Image url="@panel_definitiv.png" />
                                  </image>
                               </ImageView>
-                              <ListView fx:id="lobbyListView" layoutX="97.0" layoutY="214.0" onMouseClicked="#listViewSelectedLobby" prefHeight="213.0" prefWidth="186.0" />
-                              <TextField fx:id="createLobbyTextField" layoutX="41.0" layoutY="448.0" onAction="#createLobby" prefHeight="25.0" prefWidth="149.0" promptText="Please enter new lobby..." />
-                              <Button layoutX="202.0" layoutY="448.0" mnemonicParsing="false" onAction="#createLobby" prefHeight="20.0" prefWidth="68.0" text="createLobby" />
+                              <ListView fx:id="lobbyListView" layoutX="97.0" layoutY="214.0" onMouseClicked="#listViewSelectedLobby" prefHeight="213.0" prefWidth="186.0">
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor></ListView>
+                              <TextField fx:id="createLobbyTextField" layoutX="80.0" layoutY="448.0" onAction="#createLobby" prefHeight="25.0" prefWidth="149.0" promptText="Please enter new lobby..." />
+                              <ImageView fitHeight="40.0" fitWidth="81.0" layoutX="229.0" layoutY="441.0" onMouseClicked="#createLobby" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@createButton_defintiv.png" />
+                                 </image>
+                              </ImageView>
                               <ImageView fitHeight="68.0" fitWidth="71.0" layoutX="282.0" layoutY="154.0" onMouseClicked="#refreshLobbies" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@refreshButton_defintiv.png" />
@@ -73,26 +80,36 @@
                            <children>
                               <VBox prefHeight="640.0" prefWidth="248.0">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="61.0" prefWidth="316.0">
-                                       <children>
-                                          <ToggleButton mnemonicParsing="false" onAction="#switchChat" selected="true" text="LOBBY">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="switchGlobalLobby" />
-                                             </toggleGroup>
-                                          </ToggleButton>
-                                          <ToggleButton fx:id="globalToggleButton" mnemonicParsing="false" onAction="#switchChat" prefHeight="25.0" prefWidth="84.0" text="GLOBAL" toggleGroup="$switchGlobalLobby" />
-                                       </children>
-                                    </HBox>
                                     <AnchorPane prefHeight="651.0" prefWidth="328.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <ImageView fitHeight="365.0" fitWidth="347.0" layoutX="-3.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fitHeight="365.0" fitWidth="347.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@panelYellow_defintiv.png" />
                                              </image>
                                           </ImageView>
                                           <TextArea fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" />
                                           <TextField fx:id="chatTextField" layoutX="45.0" layoutY="296.0" onAction="#sendChatMessage" promptText="type your message here ..." />
-                                        <Button alignment="CENTER_RIGHT" layoutX="213.0" layoutY="296.0" mnemonicParsing="false" onAction="#sendChatMessage" text="send" />
+                                          <ImageView fitHeight="48.0" fitWidth="72.0" layoutX="195.0" layoutY="285.0" onMouseClicked="#sendChatMessage" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@sendButton_definitiv.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="32.0" fitWidth="59.0" layoutX="91.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@lobbyButton_defintiv.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="39.0" fitWidth="84.0" layoutX="148.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@globalButton_defintiv.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ToggleButton layoutX="94.0" layoutY="20.0" mnemonicParsing="false" onAction="#switchChat" opacity="0.0" selected="true" text="LOBBY" textFill="TRANSPARENT">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="switchGlobalLobby" />
+                                             </toggleGroup>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="globalToggleButton" layoutX="153.0" layoutY="21.0" mnemonicParsing="false" onAction="#switchChat" opacity="0.0" prefHeight="25.0" prefWidth="84.0" text="GLOBAL" toggleGroup="$switchGlobalLobby" />
                                        </children>
                                     </AnchorPane>
                                  </children>
