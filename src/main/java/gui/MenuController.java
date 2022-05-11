@@ -307,11 +307,15 @@ public class MenuController implements Initializable {
     // Main.displayCharSelection();
     if (clientIsInLobby) {
       sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
-      Main.displayCharSelection();
+      Main.displayCharSelectionPopUp();
       //sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
     } else {
       Main.displayNotInLobbyPopUp();
     }
+  }
+
+  public void switchToNameSelection(ActionEvent actionEvent) {
+    Main.displayNameSelectionPopUp();
   }
 
 
