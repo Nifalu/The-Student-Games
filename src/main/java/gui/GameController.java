@@ -491,6 +491,10 @@ public class GameController implements Initializable {
       return "char3.png";
     } else if (charNr == 4) {
       return "char4.png";
+    } else if (charNr == 5) {
+      return "char5.png";
+    } else if (charNr == 6) {
+      return "char6.png";
     }
     return "";
   }

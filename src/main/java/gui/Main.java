@@ -107,6 +107,10 @@ public class Main extends Application {
   public static Scene notInLobby;
   private static NotInLobbyController notInLobbyController;
 
+  private static Pane nameSelectionRoot;
+  public static Scene nameSelection;
+  private static NameSelectionController nameSelectionController;
+
   /**
    * the logger
    */
@@ -154,6 +158,9 @@ public class Main extends Application {
       notInLobbyRoot = getLoader("fxml_notInLobby.fxml").load();
       notInLobby = createScene(notInLobbyRoot);
 
+      nameSelectionRoot = getLoader("fxml_nameSelection.fxml").load();
+      nameSelection = createScene(nameSelectionRoot);
+
 
       displayStart(); // Display the first Scene.
       stage.centerOnScreen();
@@ -192,7 +199,7 @@ public class Main extends Application {
   /**
    * Displays the charselection scene on stage
    */
-  public static void displayCharSelection() { showScene(charSelection, charSelectionRoot); }
+  public static void displayCharSelectionPopUp() { showPopUp(charSelection); }
 
   /**
    * Display the Highscore scene on stage.
@@ -202,6 +209,8 @@ public class Main extends Application {
   }
 
   public static void displayNotInLobbyPopUp() { showPopUp(notInLobby); }
+
+  public static void displayNameSelectionPopUp() {showPopUp(nameSelection); }
 
   /**
    * Creates a new scene from the given root pane and adds css
@@ -327,7 +336,9 @@ public class Main extends Application {
     return highscoreController;
   }
 
-  public static NotInLobbyController GetnotInLobbyController() { return notInLobbyController; }
+  public static NotInLobbyController getNotInLobbyController() { return notInLobbyController; }
+
+  public static NameSelectionController getNameSelectionController() { return nameSelectionController; }
 
   /**
    * setts the clients GameController
@@ -376,5 +387,9 @@ public class Main extends Application {
 
   public static void setNotInLobbyController(NotInLobbyController notInLobbyController) {
     Main.notInLobbyController = notInLobbyController;
+  }
+
+  public static void setNameSelectionController(NameSelectionController nameSelectionController) {
+    Main.nameSelectionController = nameSelectionController;
   }
 }

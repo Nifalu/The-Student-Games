@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import utility.io.CommandsToClient;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
@@ -31,7 +32,7 @@ public class CharSelectionController implements Initializable {
     private Circle charFiveSelectionCircle;
 
     @FXML
-    private Circle charSixselectionCircle;
+    private Circle charSixSelectionCircle;
 
     /**
      * SendToServer object to communicate with the server
@@ -48,51 +49,63 @@ public class CharSelectionController implements Initializable {
         charTwoSelectionCircle.setStroke(Color.BLACK);
         charThreeSelectionCircle.setStroke(Color.BLACK);
         charFourSelectionCircle.setStroke(Color.BLACK);
+        charFiveSelectionCircle.setStroke(Color.BLACK);
+        charSixSelectionCircle.setStroke(Color.BLACK);
+
 
         Image char1 = new Image("char1.png", false);
         Image char2 = new Image("char2.png", false);
         Image char3 = new Image("char3.png", false);
         Image char4 = new Image("char4.png", false);
+        Image char5 = new Image("char5.png", false);
+        Image char6 = new Image("char6.png", false);
         charOneSelectionCircle.setFill(new ImagePattern(char1));
         charTwoSelectionCircle.setFill(new ImagePattern(char2));
         charThreeSelectionCircle.setFill(new ImagePattern(char3));
         charFourSelectionCircle.setFill(new ImagePattern(char4));
+        charFiveSelectionCircle.setFill(new ImagePattern(char5));
+        charSixSelectionCircle.setFill(new ImagePattern(char6));
     }
 
     @FXML
     void selectCharOne(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "1");
-        switchToGame();
+        close();
     }
 
     @FXML
     void selectCharTwo(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "2");
-        switchToGame();
+        // switchToGame();
+        close();
     }
 
     @FXML
     void selectCharThree(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "3");
-        switchToGame();
+        //switchToGame();
+        close();
     }
 
     @FXML
     void selectCharFour(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "4");
-        switchToGame();
+        //switchToGame();
+        close();
     }
 
     @FXML
     void selectCharFive(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "5");
-        switchToGame();
+        //switchToGame();
+        close();
     }
 
     @FXML
     void selectCharSix(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "6");
-        switchToGame();
+        //switchToGame();
+        close();
     }
 
     public void switchToGame () {
@@ -117,6 +130,14 @@ public class CharSelectionController implements Initializable {
                 charFourSelectionCircle.setDisable(false);
                 charFourSelectionCircle.setOpacity(1);
                 break;
+            case "5":
+                charFiveSelectionCircle.setDisable(false);
+                charFiveSelectionCircle.setOpacity(1);
+                break;
+            case "6":
+                charSixSelectionCircle.setDisable(false);
+                charSixSelectionCircle.setOpacity(1);
+                break;
         }
     }
     public void disableCharOnScreen(String msg) {
@@ -137,6 +158,19 @@ public class CharSelectionController implements Initializable {
                 charFourSelectionCircle.setDisable(true);
                 charFourSelectionCircle.setOpacity(0.1);
                 break;
+            case "5":
+                charFiveSelectionCircle.setDisable(true);
+                charFiveSelectionCircle.setOpacity(0.1);
+                break;
+            case "6":
+                charSixSelectionCircle.setDisable(true);
+                charSixSelectionCircle.setOpacity(0.1);
+                break;
         }
+    }
+
+    private void close() {
+        Stage stage = (Stage) charTwoSelectionCircle.getScene().getWindow();
+        stage.close();
     }
 }

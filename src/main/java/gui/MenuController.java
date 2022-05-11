@@ -1,16 +1,30 @@
 package gui;
 
+import gameLogic.GameList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import utility.io.CommandsToServer;
+import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import gui.GameController;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static java.lang.Thread.sleep;
 
 public class MenuController implements Initializable {
 
@@ -250,10 +264,11 @@ public class MenuController implements Initializable {
    */
   @FXML
   public void quitGame() {
-    sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
-    Stage stage = (Stage) quitButton.getScene().getWindow();
-    stage.close();
-    sendToServer.send(CommandsToServer.QUIT, msg);
+    Main.exit();
+    // sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
+    //Stage stage = (Stage) quitButton.getScene().getWindow();
+    //stage.close();
+    //sendToServer.send(CommandsToServer.QUIT, msg);
   }
 
 
@@ -293,20 +308,22 @@ public class MenuController implements Initializable {
     // Main.displayCharSelection();
     if (clientIsInLobby) {
       sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
-      Main.displayCharSelection();
+      Main.displayCharSelectionPopUp();
       //sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
     } else {
       Main.displayNotInLobbyPopUp();
     }
   }
 
+  public void switchToNameSelection(ActionEvent actionEvent) {
+    Main.displayNameSelectionPopUp();
+  }
+
 
   /**
    * asks to print out the lobbies when clicking on the button
-   *
-   * @param ActionEvent ActionEvent
    */
-  public void refreshLobbies(ActionEvent ActionEvent) {
+  public void refreshLobbies() {
     sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
   }
 
@@ -377,7 +394,8 @@ public class MenuController implements Initializable {
         sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
         Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
         clientIsInLobby = true;
-        //sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+        sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+        switchToCharSelection();
       } catch (Exception e) {
         Platform.runLater(() -> selectedLobbyLabel.setText("Lobby needs to be open."));
       }
@@ -386,15 +404,14 @@ public class MenuController implements Initializable {
 
   /**
    * creates a new lobby
-   *
-   * @param actionEvent ActionEvent
    */
-  public void createLobby(ActionEvent actionEvent) {
-    refreshLobbies(actionEvent);
+  public void createLobby() {
+    refreshLobbies();
+    refreshLobbies();
     String lobbyName = createLobbyTextField.getText();
     sendToServer.send(CommandsToServer.CREATELOBBY, lobbyName);
     sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
-    refreshLobbies(actionEvent);
+    refreshLobbies();
     Platform.runLater(() -> createLobbyTextField.clear());
   }
 }
