@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import utility.io.CommandsToClient;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
@@ -62,37 +63,42 @@ public class CharSelectionController implements Initializable {
     @FXML
     void selectCharOne(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "1");
-        switchToGame();
+        close();
     }
 
     @FXML
     void selectCharTwo(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "2");
-        switchToGame();
+        // switchToGame();
+        close();
     }
 
     @FXML
     void selectCharThree(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "3");
-        switchToGame();
+        //switchToGame();
+        close();
     }
 
     @FXML
     void selectCharFour(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "4");
-        switchToGame();
+        //switchToGame();
+        close();
     }
 
     @FXML
     void selectCharFive(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "5");
-        switchToGame();
+        //switchToGame();
+        close();
     }
 
     @FXML
     void selectCharSix(MouseEvent event) {
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "6");
-        switchToGame();
+        //switchToGame();
+        close();
     }
 
     public void switchToGame () {
@@ -138,5 +144,10 @@ public class CharSelectionController implements Initializable {
                 charFourSelectionCircle.setOpacity(0.1);
                 break;
         }
+    }
+
+    private void close() {
+        Stage stage = (Stage) charTwoSelectionCircle.getScene().getWindow();
+        stage.close();
     }
 }
