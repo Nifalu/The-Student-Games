@@ -1,5 +1,6 @@
 package utility.io;
 
+import server.GameServer;
 /**
  * Instances of this class wait until a message is set from outside this class. Then returns it.
  * This class will BLOCK until a message is received! Consider placing it in a Thread if it should
@@ -12,7 +13,6 @@ public class ReceiveFromProtocol {
    */
   String receivedMessage;
 
-
   /**
    * Waits until a message is Received then returns it as String.
    *
@@ -20,7 +20,7 @@ public class ReceiveFromProtocol {
    */
   public synchronized String receive() {
     String tmp_msg;
-    while (receivedMessage == null) {
+    while (receivedMessage == null && GameServer.isonline) {
       try {
         wait(0, 100000); // waits 0.1 milliseconds
       } catch (InterruptedException e) {

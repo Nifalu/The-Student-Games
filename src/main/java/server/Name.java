@@ -1,5 +1,7 @@
 package server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utility.io.CommandsToClient;
 import utility.io.SendToClient;
 import utility.io.ReceiveFromProtocol;
@@ -14,6 +16,8 @@ public class Name {
    * knows the clienthandler
    */
   private final ClientHandler clientHandler;
+
+  private final Logger logger = LogManager.getLogger(Name.class);
 
   /**
    * SendToClient object used to communicate with the client
@@ -43,20 +47,24 @@ public class Name {
    * if not proposes a new one.
    */
   public void askUsername() {
-    sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
-    String answer = receiveFromClient.receive();
-    if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
-      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, ("Please enter your desired name below."));
-      String desiredName = receiveFromClient.receive();
-      desiredName = desiredName.replaceAll(" ", "_");
-      desiredName = desiredName.replaceAll(",", "@");
-      desiredName = desiredName.replaceAll("!", "@");
-      if (!desiredName.equals(clientHandler.user.getUsername())) {
-        changeNameTo("", desiredName);
+    try {
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
+      String answer = receiveFromClient.receive();
+      if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
+        sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, ("Please enter your desired name below."));
+        String desiredName = receiveFromClient.receive();
+        desiredName = desiredName.replaceAll(" ", "_");
+        desiredName = desiredName.replaceAll(",", "@");
+        desiredName = desiredName.replaceAll("!", "@");
+        if (!desiredName.equals(clientHandler.user.getUsername())) {
+          changeNameTo("", desiredName);
+        }
+      } else {
+        String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
+        sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
       }
-    } else {
-      String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
-      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
+    } catch (NullPointerException e) {
+      logger.info("NameReceiver did not receive a name. Server probably shut down while waiting");
     }
 
 
@@ -72,6 +80,10 @@ public class Name {
    */
   public void changeNameTo(String currentName, String preferredName) {
     preferredName = preferredName.replaceAll(" ", "_");
+    preferredName = preferredName.replaceAll(",", "_");
+    preferredName = preferredName.replaceAll("!", "_");
+    preferredName = preferredName.replaceAll("§", "_");
+    preferredName = preferredName.replaceAll("-1", "_");
     if (currentName.equals(preferredName)) {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, ("This is already your name"));
     } else if (nameAlreadyExists(preferredName)) { // Wenn preferredName bereits exisitert:
@@ -124,14 +136,8 @@ public class Name {
    * Sends welcome Message in the Chat
    */
   private void welcomeUser() {
-    // Serverside
-    String msg = clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + " has connected.";
-    System.out.println(msg);
-    sendToClient.serverBroadcast(CommandsToClient.CHAT, msg);
-
-    // Clientside
-    sendToClient.send(clientHandler, CommandsToClient.PRINT, "Your name was drawn at the reaping.");
-    sendToClient.serverBroadcast(CommandsToClient.PRINT, ("Welcome to the Student Games, " + clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + "!"));
+    sendToClient.send(clientHandler, CommandsToClient.CHAT, "Your name was drawn at the reaping.");
+    sendToClient.serverBroadcast(CommandsToClient.CHAT, ("Welcome to the Student Games, " + clientHandler.user.getUsername() + " from district " + clientHandler.user.getDistrict() + "!"));
   }
 
 }

@@ -1,16 +1,13 @@
 package server;
 
 import gameLogic.GameList;
-import gameLogic.HighScore;
 import gameLogic.Lobby;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.io.CommandsToClient;
 import utility.io.CommandsToServer;
 import utility.io.SendToClient;
-
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * receives commands on the server side
@@ -287,31 +284,6 @@ public class ServerReceive implements Runnable {
         sendToClient.lobbyBroadcast(playersInLobby, CommandsToClient.DISABLECHARGUI, msg);
         lobby.charactersTaken.put(Integer.parseInt(msg), true);
         client.user.characterNr = Integer.parseInt(msg);
-
-        /*
-        // if the client already chose a character this will enable it again
-        int oldCharNr = client.user.characterNr;
-        if (oldCharNr != 0) {
-          sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, Integer.toString(client.user.characterNr));
-          client.user.getLobby().charactersTaken.put(client.user.characterNr, false);
-          client.user.setCharacter(Integer.parseInt(msg));
-        }
-
-        // character is already in the HashMap of character
-        // this means someone has chosen it already/had chosen it at one point
-        if (client.user.getLobby().charactersTaken.containsKey(Integer.parseInt(msg))) {
-          if (!client.user.getLobby().charactersTaken.get(Integer.parseInt(msg))) {
-            client.user.getLobby().charactersTaken.put(Integer.parseInt(msg), true);
-            client.user.setCharacter(Integer.parseInt(msg));
-            System.out.println("NEW CHARACTER NR: " + client.user.characterNr);
-          }
-        } else {
-          client.user.getLobby().charactersTaken.put(Integer.parseInt(msg), true);
-          System.out.println("SET NEW KEY: " + msg + " TO " + client.user.getLobby().charactersTaken.get(Integer.parseInt(msg)));
-          client.user.setCharacter(Integer.parseInt(msg));
-          System.out.println("NEW CHARACTER NR: "  + client.user.characterNr);
-        }
-        sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.DISABLECHARGUI, msg);*/
         break;
 
       case DISABLECHARGUI:
@@ -323,25 +295,6 @@ public class ServerReceive implements Runnable {
         break;
 
       case CHECKIFCHARSTAKEN:
-        /*Lobby l = client.user.getLobby();
-        for (Integer key : l.getUsersInLobby().keySet()) {
-          User u = l.getUsersInLobby().get(key);
-          if (u.characterNr != 0) {
-            System.out.println("de user " + u.getUsername() + " het de charakter " + u.characterNr);
-            l.charactersTaken.put(key, true);
-            System.out.println("die eint hashmap hett jetz wert " + l.charactersTaken.get(key) + " bem key " + key);
-            sendToClient.lobbyBroadcast(l.getUsersInLobby(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
-          }
-        }*/
-
-        /*Lobby l = client.user.getLobby();
-        for (Integer key : l.getUsersInLobby().keySet()) {
-          User u = l.getUsersInLobby().get(key);
-          if (u.characterNr != 0) {
-            l.charactersTaken.put(key, true);
-            sendToClient.lobbyBroadcast(l.getUsersInLobby(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
-          }
-        }*/
       break;
 
       case SETCHARTOKEN:

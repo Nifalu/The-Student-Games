@@ -3,7 +3,6 @@ package server;
 import gameLogic.GameList;
 import gameLogic.Lobby;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,26 +27,40 @@ public class ServerManager {
   /**
    * Creates a new User, Adds the User to the Lists.
    *
-   * @param clientHandler ClientHandler
-   * @param username      String
+   * @param client ClientHandler
+   * @param login String
+   * @param nameclass Name
    * @return User
    */
-  public synchronized static User connect(ClientHandler clientHandler, String username) {
-    // new user is added
-    User user = new User(clientHandler, username);
-    userlist.put(userlist.size(), user);
-    user.setUserListNumber(userlist.size());
-    activeClientList.add(clientHandler);
-    return user;
-  }
+  public synchronized static User connect(ClientHandler client, String login, Name nameclass) {
+    // retrieve username and uuid from login-string
+    String[] splitter = login.split("!");
+    String name = splitter[0];
+    String uuid = splitter[1];
 
-  /**
-   * removes a user from the userlist
-   *
-   * @param user User
-   */
-  public synchronized static void disconnect(User user) {
-    userlist.remove(user.getUserListNumber() - 1, user);
+    // if a user with the given uuid already exists, connect the clienthandler with the user and return the user.
+    User user;
+    for (int i = 0; i < ServerManager.getUserlist().size(); i++) {
+      if ((user = ServerManager.getUserlist().get(i)).getUuid().equals(uuid)) {
+        System.out.println("Found user in list");
+        if (user.isOnline()) {
+          System.out.println("Found user in list -> is online");
+          user.getClienthandler().disconnectClient(); // if a single user tries to connect twice, disconnect the first.
+        }
+        user.setClienthandler(client);
+        activeClientList.add(client);
+        user.setOnline(true);
+        return user;
+      }
+    }
+    // if no user with the given uuid is found, create a new user.
+    System.out.println("no user was found. creating new one");
+    name = nameclass.proposeUsernameIfTaken(name);
+    user = new User(client, name, uuid, true);
+    userlist.put(userlist.size(), user);
+    activeClientList.add(client);
+
+    return user;
   }
 
 
@@ -55,7 +68,7 @@ public class ServerManager {
    * Creates the Main Lobby where everyone is in when they connect to the server or leave a game.
    */
   public static synchronized void createMainLobby() {
-    Lobby lobby = new Lobby("StandardLobby");
+    Lobby lobby = new Lobby("StandardLobby",true);
     GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
     lobby.setLobbyStatusToStandard();
   }
