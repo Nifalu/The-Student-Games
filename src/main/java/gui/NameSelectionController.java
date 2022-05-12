@@ -19,7 +19,7 @@ public class NameSelectionController {
 
     SendToServer sendToServer = new SendToServer();
 
-    public void changeName(ActionEvent actionEvent) {
+    public void changeName() {
         String newName = changeNameTextField.getText();
         sendToServer.send(CommandsToServer.NICK, newName);
         Stage stage = (Stage) button.getScene().getWindow();

@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CharSelectionController">
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CharSelectionController">
    <children>
+      <ImageView fitHeight="736.0" fitWidth="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@lilac.png" />
+         </image>
+      </ImageView>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="593.0">
-         <top>
-            <Label alignment="CENTER" contentDisplay="TOP" prefHeight="112.0" prefWidth="372.0" text="Choose your tribute" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="39.0" />
-               </font>
-            </Label>
-         </top>
          <center>
             <GridPane prefHeight="566.0" prefWidth="672.0" BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -65,6 +63,13 @@
                </children>
             </GridPane>
          </center>
+         <top>
+            <ImageView fitHeight="114.0" fitWidth="432.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@chooseYourTribute.png" />
+               </image>
+            </ImageView>
+         </top>
       </BorderPane>
    </children>
 </Pane>
