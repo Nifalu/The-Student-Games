@@ -1,6 +1,7 @@
 package gameLogic;
 
 
+import server.GameServer;
 import server.ServerManager;
 import server.User;
 import utility.io.CommandsToClient;
@@ -149,7 +150,7 @@ public class Game implements Runnable {
     }
 
     // The game will run until the second last player has ended the game
-    while (numPlayers - (playersEndedGame + dsq) > 1) {
+    while (numPlayers - (playersEndedGame + dsq) > 1 && GameServer.isonline) {
       for (int i = 0; i < numPlayers; i++) {
         if (i == 0) {
           //Sends at the beginning of each round the current date.
@@ -218,6 +219,9 @@ public class Game implements Runnable {
       time = maxTimeWhenInactive;
     }
     for (int i = 0; i < time; i++) {
+      if (!GameServer.isonline) {
+        break; // stops this loop when the server closes
+      }
       if (rolledDice) {
         user.setIsActivelyRollingTheDice();
         dice = Dice.dice();
@@ -383,7 +387,6 @@ public class Game implements Runnable {
    * @param field Users new position
    */
   public void checkField(User user, int field) {
-    String msg = null;
     if (field == 1) { // 1 + 55 ladder up
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
       changePosition(user, 15 - field);

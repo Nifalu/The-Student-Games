@@ -1,5 +1,7 @@
 package gameLogic;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import server.ClientHandler;
 import utility.io.CommandsToClient;
 import utility.io.ReceiveFromProtocol;
@@ -25,10 +27,7 @@ public class CreateLobbyHelper {
    */
   private final ClientHandler clienthandler;
 
-  /**
-   * knows the user
-   */
-  server.User user;
+  private final Logger logger = LogManager.getLogger(CreateLobbyHelper.class);
 
   /**
    * add createLobby
@@ -46,26 +45,30 @@ public class CreateLobbyHelper {
    * @param clienthandler sends and receives the information through the clienthandler.
    */
   public void askWhatLobbyToJoin(ClientHandler clienthandler) {
-    if (GameList.getOpenLobbies().size() == 0) {
-      sendToClient.send(clienthandler, CommandsToClient.PRINT, "There are no open Lobbies yet.");
-    } else {
-      sendToClient.send(clienthandler, CommandsToClient.PRINT, "Hello there, here are the open lobbies:");
-      String openLobbyList = GameList.printLobbies(GameList.getOpenLobbies());
-      sendToClient.send(clienthandler, CommandsToClient.PRINT, openLobbyList);
-    }
-    sendToClient.send(clienthandler, CommandsToClient.PRINT, "Would you like to create your own lobby?");
-    String answer1 = receiveFromClient.receive();
-    if (answer1.equalsIgnoreCase("YES")) {
-      sendToClient.send(clienthandler, CommandsToClient.PRINT, "Enter Name of the lobby below:");
-      String answer2 = receiveFromClient.receive();
-      answer2 = answer2.replaceAll(" ", "_").toLowerCase();
-      connectLobby(answer2);
-    }
+    try {
+      if (GameList.getOpenLobbies().size() == 0) {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, "There are no open Lobbies yet.");
+      } else {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, "Hello there, here are the open lobbies:");
+        String openLobbyList = GameList.printLobbies(GameList.getOpenLobbies());
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, openLobbyList);
+      }
+      sendToClient.send(clienthandler, CommandsToClient.PRINT, "Would you like to create your own lobby?");
+      String answer1 = receiveFromClient.receive();
+      if (answer1.equalsIgnoreCase("YES")) {
+        sendToClient.send(clienthandler, CommandsToClient.PRINT, "Enter Name of the lobby below:");
+        String answer2 = receiveFromClient.receive();
+        answer2 = answer2.replaceAll(" ", "_").toLowerCase();
+        connectLobby(answer2);
+      }
 
-    sendToClient.send(clienthandler, CommandsToClient.PRINT, "What's the number of the lobby which you " +
-        "would like to choose? ");
-    String answer = receiveFromClient.receive();
-    changeLobby(answer);
+      sendToClient.send(clienthandler, CommandsToClient.PRINT, "What's the number of the lobby which you " +
+          "would like to choose? ");
+      String answer = receiveFromClient.receive();
+      changeLobby(answer);
+    } catch (NullPointerException e) {
+      logger.info("LobbyReceiver did not receive a name. Server probably shut down while waiting");
+    }
   }
 
   /**
@@ -143,7 +146,7 @@ public class CreateLobbyHelper {
    */
   public synchronized void connectLobby(String name) {
     name = name.replaceAll(" ", "_");
-    Lobby lobby = new Lobby(name);
+    Lobby lobby = new Lobby(name, false);
     GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
     sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have created Lobby " + lobby.getLobbyName());
   }

@@ -48,11 +48,7 @@ public class Lobby {
    * Int status is -1 if the game is already finished, 0 if the game is ongoing, 1 if the game is open.
    */
   private int status;
-
-  /**
-   * the number of the lobby
-   */
-  final private int lobbyNumber;
+  private static boolean stop = false; // when set to true, the receiverThread stops
 
   /**
    * contains a HashMap of all the users in the Lobby
@@ -61,36 +57,19 @@ public class Lobby {
 
   public HashMap<Integer, Boolean> charactersTaken = new HashMap<>();
 
-  //public HashMap<Integer, Boolean> gameTokensTaken = new HashMap<>();
 
-
-
-  /**
-   * used to give each player joining the lobby a different character
-   * +1 when a color has been given away
-   * characterColorCounter is used as an index to the characterColors array
-   *
-   * the colors aren't used anymore, but the colors now resemble which circle will be chosen in the GUI
-   * to represent the players character
-   * (a bit complicated but I don't have time to fix it)
-   */
-  //private int characterColorCounter = 0;
-
-  /**
-   * the possible colors for a player character
-   */
-  //private final String[] characterColors = new String[]{"red", "blue", "yellow", "green"};
 
   /**
    * creates a Lobby object with the given name
    *
    * @param name of the lobby
    */
-  public Lobby(String name) {
+  public Lobby(String name, boolean standardLobby) {
     this.name = name;
     this.status = 1; // status of lobby is automatically set to open
-    startThread();
-    this.lobbyNumber = GameList.getLobbyList().size();
+    if (!standardLobby) {
+      startThread();
+    }
 
     gameTokensTaken.put(1, false);
     gameTokensTaken.put(2, false);
@@ -139,14 +118,6 @@ public class Lobby {
     return usersInLobby;
   }
 
-  /**
-   * returns the number of the lobby
-   *
-   * @return the number of the lobby as int.
-   */
-  public int getLobbyNumber() {
-    return lobbyNumber;
-  }
 
   /**
    * returns the name of the lobby
@@ -171,13 +142,6 @@ public class Lobby {
 
   // ----------------------- SETTERS ----------------------------------------
 
-  /**
-   * sets lobby status to open (int 1), but is rarely used due to lobbies automatically being assigned open at the
-   * beginning.
-   */
-  public void setLobbyStatusToOpen() {
-    status = 1;
-  }
 
   /**
    * sets lobby status to finished (int -1)
@@ -202,14 +166,6 @@ public class Lobby {
 
   // --------------------------ANDERE METHODEN-------------------------------
 
-  /**
-   * adds a user to the open lobby (to the list)
-   *
-   * @param user the user which is added to the lobby in the method
-   */
-  public void addUserToLobby(User user) {
-    user.setLobby(this);
-  }
 
   /**
    * removes a user from a lobby and puts the user into the standard lobby.
@@ -233,7 +189,7 @@ public class Lobby {
       sendToClient.send(clientHandler, CommandsToClient.PRINTGUIGAMETRACKER, "You are now waiting...");
 
       for (int i = 1; i < 5; i++) {
-        if(!gameTokensTaken.get(i)) {
+        if (!gameTokensTaken.get(i)) {
           clientHandler.user.gameTokenNr = i;
           gameTokensTaken.put(i, true);
           System.out.println(clientHandler.user.getUsername() + " now has Toke Nr. " + clientHandler.user.gameTokenNr);
@@ -312,37 +268,37 @@ public class Lobby {
     Thread LobbyWaitForMessageThread = new Thread(() -> {
       String msg;
       String[] answer;
-      while (true) {
+      while (!stop && status != 96) {
         msg = receiveFromProtocol.receive(); // blocks until a message is received
+        if (msg == null) {break;}
         answer = msg.split("§");
-        if (getLobbyStatus() != 69) {
-          if (msg.equals("start") && getLobbyStatus() == 1) { // starts the game
-            if (usersReady.size() >= minToStart) {
-              setLobbyStatusToOnGoing();
-              game = new Game(this, usersReady, highScore);
-              Thread gameThread = new Thread(game);
-              gameThread.start();
+        if (msg.equals("start") && getLobbyStatus() == 1) { // starts the game
+          if (usersReady.size() >= minToStart) {
+            setLobbyStatusToOnGoing();
+            game = new Game(this, usersReady, highScore);
+            Thread gameThread = new Thread(game);
+            gameThread.start();
 
-              // GAME STARTS HERE
-            }
-          } else if (getLobbyStatus() == 0) {
-            switch (answer[0]) {
-              case "dice": // roll normal dice
-                game.setRolledDice(answer[1], 6);
-                break;
-              case "dicedice": // roll special dice
-                game.setRolledDice(answer[1], 4);
-                break;
-              case "quiz": // quiz answer
-                game.quizAnswer(answer[1], answer[2]);
-                break;
-              case "wwcd": // cheat code
-                game.cheat(answer[1], Integer.parseInt(answer[2]));
-                break;
-            }
+            // GAME STARTS HERE
+          }
+        } else if (getLobbyStatus() == 0) {
+          switch (answer[0]) {
+            case "dice": // roll normal dice
+              game.setRolledDice(answer[1], 6);
+              break;
+            case "dicedice": // roll special dice
+              game.setRolledDice(answer[1], 4);
+              break;
+            case "quiz": // quiz answer
+              game.quizAnswer(answer[1], answer[2]);
+              break;
+            case "wwcd": // cheat code
+              game.cheat(answer[1], Integer.parseInt(answer[2]));
+              break;
           }
         }
       }
+      System.out.println("stopped lobby: " + name);
     });
     LobbyWaitForMessageThread.setName("LobbyWaitForMessageThread"); // set name of thread
     LobbyWaitForMessageThread.start(); // start thread
@@ -387,5 +343,11 @@ public class Lobby {
    */
   public void lobbyBroadcastToPlayer(String msg) {
     sendToClient.lobbyBroadcast(getUsersInLobby(), CommandsToClient.PRINT, msg);
+  }
+
+
+  public void stopLobby() {
+    stop = true;
+    receiveFromProtocol.setMessage("-1");
   }
 }

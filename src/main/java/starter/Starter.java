@@ -5,6 +5,7 @@ import server.GameServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Exceptions;
+import utility.io.Uuid;
 
 /**
  * Takes commandline parameters and starts the programm.
@@ -42,10 +43,8 @@ public class Starter {
 
     // Else it checks if there are enough parameters to run the program
     if (args.length < 2) {
-      System.out.println("auto");
       autostart();
     } else {
-      System.out.println("argument");
       argumentstart();
     }
   }
@@ -60,8 +59,9 @@ public class Starter {
         if (isPortAllowed(args[1])) {
           // server.Main.start(Integer.parseInt(args[1]));
           logger.info("starting server with port: " + args[1]);
+          System.out.println("Starter: RunGameServer");
           GameServer.runGameServer(Integer.parseInt(args[1]));
-
+          System.out.println("Starter: RunGameServer finished");
 
         }
         break;
@@ -84,19 +84,33 @@ public class Starter {
   public static void connect() {
     if (args.length == 0) {
       System.out.println("autoconnect");
-      autoconnect();
+      String uuid = Uuid.getUUID();
+      autoconnect(uuid);
     } else {
       String[] address = args[1].split(":", 2);
       if (address.length > 1) {
         if (isPortAllowed(address[1])) {
           if (args.length > 2) {
-            // Start the client with the given username
-            logger.info("connecting client to: " + address[0] + ":" + Integer.parseInt(address[1]) + "with username: " + args[2]);
-            ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), args[2]);
+
+            if (args.length == 4) {
+              if (args[3].equalsIgnoreCase("-1")) {
+                // Run client with username and don't reconnect
+                ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), args[2] + "!" + Uuid.generateType1UUID());
+              }
+            } else if (args[2].equalsIgnoreCase("-1")) {
+              // Run client with system-username and don't reconnect
+              System.out.println("nice");
+              ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), System.getProperty("user.name") + "!" + Uuid.generateType1UUID());
+
+            } else {
+              // Run Client with username and reconnect if possible
+              String uuid = Uuid.getUUID();
+              ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), args[2] + "!" + uuid);
+            }
           } else {
-            // Start the client with the users Home Directory Name as username
-            logger.info("connecting client to: " + address[0] + ":" + Integer.parseInt(address[1]) + "with username: user.name");
-            ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), System.getProperty("user.name"));
+            // Run Client with system-username and reconnect
+            String uuid = Uuid.getUUID();
+            ClientManager.runClientManager(address[0], Integer.parseInt(address[1]), System.getProperty("user.name") + "!" + uuid);
           }
         }
       }
@@ -121,7 +135,7 @@ public class Starter {
           return false;
         }
       } catch (NumberFormatException e) {
-        Exceptions.StarterCannotResolvePortNumber(e, value);
+        Exceptions.StarterCannotResolvePortNumber(value);
         logger.error("value for portNumber is no valid number. ( " + value + ")");
         return false;
       }
@@ -146,11 +160,11 @@ public class Starter {
     }
 
 
-    private static void autoconnect () {
+    private static void autoconnect(String uuid) {
       logger.info("------------------------------------------------------------------");
       logger.info("------------------------Autostart Client--------------------------");
       logger.info("------------------------------------------------------------------");
-      ClientManager.runClientManager(SERVERADDRESS, PORT, System.getProperty("user.name"));
+      ClientManager.runClientManager(SERVERADDRESS, PORT, System.getProperty("user.name") + "!" + uuid);
     }
 
     private static void autostartClient () {

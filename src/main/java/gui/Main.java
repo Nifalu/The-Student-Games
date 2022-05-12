@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -286,8 +287,13 @@ public class Main extends Application {
    * Sends a quit command to the server. This will close the Program!
    */
   public static void exit() {
-    SendToServer sendToServer = new SendToServer();
-    sendToServer.send(CommandsToServer.QUIT, "");
+    try {
+      SendToServer sendToServer = new SendToServer();
+      sendToServer.send(CommandsToServer.QUIT, "");
+    } catch (NullPointerException e) {
+      logger.info("closed before connection was made");
+      Platform.exit();
+    }
   }
 
 

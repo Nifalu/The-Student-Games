@@ -48,6 +48,7 @@ public class ClientHandlerIn implements Runnable {
       ServerReceiveThread.start();
       ServerReceiveThread.setName("ServerReceiveThread");
     }
+    System.out.println("clientHandlerIn finished");
   }
 
   /**
