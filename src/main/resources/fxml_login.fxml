@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="4.0" style="-fx-background-color: F5F5F5;">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="The Student Game" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" minHeight="50.0" spacing="5.0" VBox.vgrow="NEVER">
+               <children>
+                  <Label text="Connect to:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="addressfield" prefHeight="26.0" prefWidth="189.0" promptText="serveraddress" />
+                  <Label layoutX="122.0" layoutY="162.0" text=":">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="portfield" prefHeight="26.0" prefWidth="72.0" promptText="port" />
+                  <Button fx:id="connectbutton" graphicTextGap="0.0" mnemonicParsing="false" onAction="#connectToServer" opacity="0.5" text="connect" textAlignment="CENTER" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="portwarning" layoutX="258.0" layoutY="-9.0" opacity="0.0" text="port in reserved range!" textAlignment="CENTER" textFill="#ff6900" />
+               </children>
+            </AnchorPane>
+            <ListView fx:id="recentlist" VBox.vgrow="NEVER">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </ListView>
+            <HBox alignment="CENTER_LEFT" minHeight="40.0" prefHeight="100.0">
+               <children>
+                  <Button fx:id="deletebutton" mnemonicParsing="false" onAction="#removeFromList" text="delete" textAlignment="CENTER" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

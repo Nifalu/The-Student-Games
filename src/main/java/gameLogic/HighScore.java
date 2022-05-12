@@ -67,7 +67,8 @@ public class HighScore {
         line = br.readLine();
         br.close();
       } catch (IOException e) {
-        line = "";
+        //line = "";
+        return;
       }
       if (line != null) {
         String[] highscore = line.split(",");
