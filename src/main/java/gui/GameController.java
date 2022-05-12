@@ -341,13 +341,19 @@ public class GameController implements Initializable {
    */
   public void resetGame() {
     Platform.runLater(() -> {
-      tokenOne.setTranslateY(594);
-      tokenOne.setTranslateX(160);
-      tokenTwo.setTranslateY(594);
-      tokenTwo.setTranslateX(240);
-      tokenThree.setTranslateY(594);
-      tokenThree.setTranslateX(80);
-      tokenFour.setTranslateY(594);
+      tokenOne.setTranslateY(524);
+      tokenTwo.setTranslateY(524);
+      tokenThree.setTranslateY(524);
+      tokenFour.setTranslateY(524);
+
+      tokenOne.setTranslateX(890);
+      tokenTwo.setTranslateX(970);
+      tokenThree.setTranslateX(810);
+      tokenFour.setTranslateX(730);
+
+
+
+
 
       // resets the dicedice
       fourDice1.setDisable(false);
@@ -474,10 +480,10 @@ public class GameController implements Initializable {
       if (!isReady) {
         isReady = true;
         sendToServer.send(CommandsToServer.READY, null);
-        Platform.runLater(() -> readyButton.setText("UNREADY?"));
+        //Platform.runLater(() -> readyButton.setText("UNREADY?"));
       } else {
         sendToServer.send(CommandsToServer.UNREADY, null);
-        Platform.runLater(() -> readyButton.setText("READY?"));
+        //Platform.runLater(() -> readyButton.setText("READY?"));
         isReady = false;
       }
     }
