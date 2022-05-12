@@ -463,7 +463,9 @@ public class GameController implements Initializable {
     System.out.println("tokenNr " + tokenNr);
     System.out.println("charNr " + charNr);
     System.out.println("----------------------------");
-
+    if (tokenNr == 0 || charNr == 0) {
+      return;
+    }
 
     Image img = new Image(findCorrectImag(charNr), false);
     if (tokenNr == 1){
