@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import utility.Exceptions;
 import utility.io.Uuid;
 
+import java.io.File;
+
 /**
  * Takes commandline parameters and starts the programm.
  */
@@ -39,6 +41,9 @@ public class Starter {
    */
   public static void main(String[] args) {
     Starter.args = args;
+
+    File folder = new File("gamefiles/utility/");
+    folder.mkdirs();
 
 
     // Else it checks if there are enough parameters to run the program

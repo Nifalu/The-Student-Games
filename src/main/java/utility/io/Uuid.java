@@ -17,10 +17,11 @@ public class Uuid {
 
   private static void rememberConnection(String uuid) {
     try {
-      BufferedWriter bw = new BufferedWriter(new FileWriter("Properties/uuid.txt", true));
+      BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/uuid.txt", true));
       bw.write(uuid);
       bw.flush();
       bw.close();
+
     } catch (IOException e) {
       logger.warn("Could not save uuid. no reconnect possible!");
     }
@@ -29,7 +30,7 @@ public class Uuid {
   public static String getUUID() {
 
     try {
-      BufferedReader br = new BufferedReader(new FileReader("Properties/uuid.txt", StandardCharsets.UTF_8));
+      BufferedReader br = new BufferedReader(new FileReader("gamefiles/utility/uuid.txt", StandardCharsets.UTF_8));
       String line;
       if ((line = br.readLine()) != null) {
         return line;
@@ -37,7 +38,7 @@ public class Uuid {
 
     } catch (IOException e) {
       // if the connections.txt does not exist or throws an error when reading
-      logger.warn("Could not read from connections.txt -> creating new connections.txt file");
+      logger.warn("Could not get uuid -> creating new uuid file");
     }
 
     // create new ID for this connection and store it.

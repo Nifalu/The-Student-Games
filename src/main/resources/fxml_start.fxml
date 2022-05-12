@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartController">
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartController">
    <children>
       <BorderPane minHeight="460.0" minWidth="800.0" prefWidth="676.0">
          <center>
@@ -28,7 +28,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </Label>
-                  <Label id="showText" fx:id="showText" text="there should be text here" textAlignment="RIGHT">
+                  <Label id="showText" fx:id="showText" alignment="CENTER" contentDisplay="CENTER" text="there should be text here" textAlignment="CENTER">
                      <font>
                         <Font size="20.0" />
                      </font>

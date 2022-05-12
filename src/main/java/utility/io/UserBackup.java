@@ -14,7 +14,7 @@ public class UserBackup {
 
   public static void saveUsers() {
     try {
-      BufferedWriter bw = new BufferedWriter(new FileWriter("Properties/users.txt", false));
+      BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/users.txt", false));
       bw.write(getAllUsers());
       bw.flush();
       bw.close();
@@ -25,7 +25,7 @@ public class UserBackup {
 
   public static void loadUsers() {
     try {
-      BufferedReader br = new BufferedReader(new FileReader("Properties/users.txt"));
+      BufferedReader br = new BufferedReader(new FileReader("gamefiles/utility/users.txt"));
       String line = br.readLine();
       if (line == null) {
         return;

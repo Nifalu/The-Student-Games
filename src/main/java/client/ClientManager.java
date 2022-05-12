@@ -1,5 +1,6 @@
 package client;
 
+import gui.Main;
 import javafx.application.Platform;
 import utility.Exceptions;
 
@@ -73,6 +74,8 @@ public class ClientManager {
       socket = new Socket(serverAddress, serverPort);
     } catch (IOException e) {
       Exceptions.invalidServerAddress(serverAddress, serverPort);
+      Main.getStartController().printMsg("Could not connect to: <" + serverAddress +
+          "> on port: <" + serverPort +">"+ System.lineSeparator() + "Server might be offline!");
       return;
     }
     try {
