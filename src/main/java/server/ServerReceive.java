@@ -1,7 +1,6 @@
 package server;
 
 import gameLogic.GameList;
-import gameLogic.HighScore;
 import gameLogic.Lobby;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +9,6 @@ import utility.io.CommandsToServer;
 import utility.io.SendToClient;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * receives commands on the server side
@@ -176,19 +174,32 @@ public class ServerReceive implements Runnable {
       case CHANGELOBBY: // changes the lobby
         try {
           int number = Integer.parseInt(msg.replaceAll("\\s", ""));
-          if (number < GameList.getOpenLobbies().size() && number >= 0) {
-            if (client.user.getIsReady()) {
-              if (client.user.getLobby().getLobbyStatus() != 0) {
-                client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
+          if (number < GameList.getLobbyList().size() && number >= 0) {
+            if (GameList.getLobbyList().get(number).getLobbyStatus() == 1) {
+              if (client.user.getIsReady()) {
+                if (!client.user.getIsPlaying()) {
+                  client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
+                  client.user.setReadyToPlay(false);
+                  client.lobbyhelper.changeLobby(msg);
+                  client.user.getLobby().checkIfCharsTaken();
+                } else {
+                  sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to finish this game.");
+                }
+              } else {
                 client.user.setReadyToPlay(false);
                 client.lobbyhelper.changeLobby(msg);
-                client.user.getLobby().checkIfCharsTaken();
+              }
+            } else  if (GameList.getLobbyList().get(number).getLobbyStatus() == 0){
+              if (!client.user.getIsPlaying()) {
+                if (client.user.getIsReady()) {
+                  client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
+                  client.user.setReadyToPlay(false);
+                }
+                sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You are now a spectator.");
+                client.lobbyhelper.changeLobby(msg);
               } else {
                 sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to finish this game.");
               }
-            } else if (!client.user.getIsPlaying()) {
-              client.user.setReadyToPlay(false);
-              client.lobbyhelper.changeLobby(msg);
             }
           } else {
             sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "This lobby doesn't exist.");

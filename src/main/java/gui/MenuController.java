@@ -395,6 +395,7 @@ public class MenuController implements Initializable {
         Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
         clientIsInLobby = true;
         sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+        switchToCharSelection();
       } catch (Exception e) {
         Platform.runLater(() -> selectedLobbyLabel.setText("Lobby needs to be open."));
       }

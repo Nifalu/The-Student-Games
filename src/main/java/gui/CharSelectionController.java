@@ -32,7 +32,7 @@ public class CharSelectionController implements Initializable {
     private Circle charFiveSelectionCircle;
 
     @FXML
-    private Circle charSixselectionCircle;
+    private Circle charSixSelectionCircle;
 
     /**
      * SendToServer object to communicate with the server
@@ -49,15 +49,22 @@ public class CharSelectionController implements Initializable {
         charTwoSelectionCircle.setStroke(Color.BLACK);
         charThreeSelectionCircle.setStroke(Color.BLACK);
         charFourSelectionCircle.setStroke(Color.BLACK);
+        charFiveSelectionCircle.setStroke(Color.BLACK);
+        charSixSelectionCircle.setStroke(Color.BLACK);
+
 
         Image char1 = new Image("char1.png", false);
         Image char2 = new Image("char2.png", false);
         Image char3 = new Image("char3.png", false);
         Image char4 = new Image("char4.png", false);
+        Image char5 = new Image("char5.png", false);
+        Image char6 = new Image("char6.png", false);
         charOneSelectionCircle.setFill(new ImagePattern(char1));
         charTwoSelectionCircle.setFill(new ImagePattern(char2));
         charThreeSelectionCircle.setFill(new ImagePattern(char3));
         charFourSelectionCircle.setFill(new ImagePattern(char4));
+        charFiveSelectionCircle.setFill(new ImagePattern(char5));
+        charSixSelectionCircle.setFill(new ImagePattern(char6));
     }
 
     @FXML
@@ -123,6 +130,14 @@ public class CharSelectionController implements Initializable {
                 charFourSelectionCircle.setDisable(false);
                 charFourSelectionCircle.setOpacity(1);
                 break;
+            case "5":
+                charFiveSelectionCircle.setDisable(false);
+                charFiveSelectionCircle.setOpacity(1);
+                break;
+            case "6":
+                charSixSelectionCircle.setDisable(false);
+                charSixSelectionCircle.setOpacity(1);
+                break;
         }
     }
     public void disableCharOnScreen(String msg) {
@@ -142,6 +157,14 @@ public class CharSelectionController implements Initializable {
             case "4":
                 charFourSelectionCircle.setDisable(true);
                 charFourSelectionCircle.setOpacity(0.1);
+                break;
+            case "5":
+                charFiveSelectionCircle.setDisable(true);
+                charFiveSelectionCircle.setOpacity(0.1);
+                break;
+            case "6":
+                charSixSelectionCircle.setDisable(true);
+                charSixSelectionCircle.setOpacity(0.1);
                 break;
         }
     }

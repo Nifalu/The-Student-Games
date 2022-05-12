@@ -459,6 +459,7 @@ public class GameController implements Initializable {
    * adds the correct picture to the player tokens
    */
   public void setCharToken(int tokenNr, int charNr) {
+    charNr = charNr + 1;
     System.out.println("----------------------------");
     System.out.println("tokenNr " + tokenNr);
     System.out.println("charNr " + charNr);
@@ -490,6 +491,10 @@ public class GameController implements Initializable {
       return "char3.png";
     } else if (charNr == 4) {
       return "char4.png";
+    } else if (charNr == 5) {
+      return "char5.png";
+    } else if (charNr == 6) {
+      return "char6.png";
     }
     return "";
   }

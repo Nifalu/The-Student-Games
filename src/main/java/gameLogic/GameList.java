@@ -104,12 +104,14 @@ public class GameList {
           lobbyStatusString = "standard Lobby";
           break;
       }
-      if (lobbyStatusString.equals("open")) {
+      //if (!lobbyStatusString.equals("standard Lobby")) {
         s = s + counter + ". " + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  " + "§";
         counter++;
+        /*
       } else {
         s = s + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  " + "§";
       }
+         */
     }
     return s;
   }
