@@ -64,9 +64,8 @@ public class Starter {
         if (isPortAllowed(args[1])) {
           // server.Main.start(Integer.parseInt(args[1]));
           logger.info("starting server with port: " + args[1]);
-          System.out.println("Starter: RunGameServer");
           GameServer.runGameServer(Integer.parseInt(args[1]));
-          System.out.println("Starter: RunGameServer finished");
+
 
         }
         break;
