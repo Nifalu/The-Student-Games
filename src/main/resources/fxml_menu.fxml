@@ -136,6 +136,21 @@
                                           <Image url="@quitButton_definitiv.png" />
                                        </image>
                                     </ImageView>
+                                    <ImageView fitHeight="72.0" fitWidth="146.0" layoutX="183.0" layoutY="36.0" onMouseClicked="#switchToCharSelection" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@changeCharacter_defintiv.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="74.0" fitWidth="142.0" layoutX="192.0" layoutY="108.0" onMouseClicked="#switchToNameSelection" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@changeName_definitiv.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="56.0" fitWidth="79.0" layoutX="244.0" layoutY="-28.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@helpButton_definitiv.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </AnchorPane>
                            </children>

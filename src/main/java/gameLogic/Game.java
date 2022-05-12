@@ -33,6 +33,8 @@ public class Game implements Runnable {
    */
   public HashMap<Integer, server.User> playersPlaying;
 
+  public HashMap<Integer, server.User> playersPlayingAndSpectators;
+
   /**
    * the number of players
    */
@@ -456,7 +458,7 @@ public class Game implements Runnable {
    * @param msg Message to be sent.
    */
   public void lobbyBroadcastToPlayer(String msg) {
-    sendToClient.lobbyBroadcast(lobby.usersReady,
+    sendToClient.lobbyBroadcast(lobby.getUsersInLobby(),
         CommandsToClient.PRINTGUIGAMETRACKER, msg);
     try {
       Thread.sleep(50);
@@ -549,4 +551,10 @@ public class Game implements Runnable {
     }
     return s;
   }
+
+  /*public void getPlayersPlayingAndSpectators() {
+    playersPlayingAndSpectators = lobby.getUsersInLobby();
+  }
+
+   */
 }

@@ -315,7 +315,7 @@ public class MenuController implements Initializable {
     }
   }
 
-  public void switchToNameSelection(ActionEvent actionEvent) {
+  public void switchToNameSelection() {
     Main.displayNameSelectionPopUp();
   }
 

@@ -1,9 +1,8 @@
 package client;
 
-import gui.*;
+import gui.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.ClientHandler;
 import utility.io.CommandsToClient;
 
 
@@ -138,8 +137,11 @@ public class ClientReceive implements Runnable {
         // part one: the new character image
         // part two: which game token
         String[] charAndToken = msg.split("--");
+        System.out.println("setchartoken msg " + msg);
         int charNr = Integer.parseInt(charAndToken[0]);
+        System.out.println("charNr  " + charNr);
         int tokenNr = Integer.parseInt(charAndToken[1]);
+        System.out.println("tokenNr " + tokenNr);
         Main.getGameController().setCharToken(tokenNr, charNr);
         break;
     }
