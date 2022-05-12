@@ -1,17 +1,20 @@
 package gui;
 
+import javafx.animation.PathTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
+import javafx.scene.shape.*;
+import javafx.util.Duration;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
 
@@ -141,6 +144,19 @@ public class GameController implements Initializable {
   @FXML
   private GridPane board;
 
+  TranslateTransition transitionTokenOne = new TranslateTransition();
+
+  TranslateTransition transitionTokenTwo = new TranslateTransition();
+
+  TranslateTransition transitionTokenThree = new TranslateTransition();
+
+  TranslateTransition transitionTokenFour = new TranslateTransition();
+
+  double[] tokenOnePos = new double[2];
+  double[] tokenTwoPos = new double[2];
+  double[] tokenThreePos = new double[2];
+  double[] tokenFourPos = new double[2];
+
 
   /**
    * method reads input from the Textfield and checks, which command to send to the server
@@ -199,6 +215,17 @@ public class GameController implements Initializable {
     createPlayingField();
     Main.setGameController(this);
 
+    transitionTokenOne.setNode(tokenOne);
+    transitionTokenOne.setDuration(Duration.seconds(1));
+
+    transitionTokenTwo.setNode(tokenTwo);
+    transitionTokenTwo.setDuration(Duration.seconds(1));
+
+    transitionTokenThree.setNode(tokenThree);
+    transitionTokenThree.setDuration(Duration.seconds(1));
+
+    transitionTokenFour.setNode(tokenFour);
+    transitionTokenFour.setDuration(Duration.seconds(1));
     /*
     playerBlue.setStroke(Color.BLACK);
     Image blue = new Image("charBlueHead.png", false);
@@ -459,7 +486,7 @@ public class GameController implements Initializable {
    * adds the correct picture to the player tokens
    */
   public void setCharToken(int tokenNr, int charNr) {
-    charNr = charNr + 1;
+    // charNr = charNr + 1;
     System.out.println("----------------------------");
     System.out.println("tokenNr " + tokenNr);
     System.out.println("charNr " + charNr);
@@ -472,7 +499,7 @@ public class GameController implements Initializable {
     if (tokenNr == 1){
       tokenOne.setFill(new ImagePattern(img));
       tokenOne.setOpacity(1);
-    } else if (tokenNr ==2) {
+    } else if (tokenNr == 2) {
       tokenTwo.setFill(new ImagePattern(img));
       tokenTwo.setOpacity(1);
     } else if (tokenNr == 3) {
@@ -578,6 +605,22 @@ public class GameController implements Initializable {
       }
     }
 
+    private TranslateTransition chooseCorrectPathTransition (String moveToField) {
+      String[] playerAndNewField = moveToField.split("--"); // splits the String into the nr of the new field and the player color
+      String playerTokenNrToMove = playerAndNewField[0];
+
+      switch (playerTokenNrToMove) {
+        case "1":
+          return transitionTokenOne;
+        case "2":
+          return transitionTokenTwo;
+        case "3":
+          return transitionTokenThree;
+        default:
+          return transitionTokenFour;
+      }
+    }
+
 
     /**
      * This method is used to get the x- and y-coordinate of a field on the board
@@ -619,6 +662,7 @@ public class GameController implements Initializable {
     public void movePlayer (String moveToField){
 
       Circle playerToMove = chooseCorrectPlayerToMove(moveToField);
+      TranslateTransition transition = chooseCorrectPathTransition(moveToField);
 
       // get the coordinates of the new field
       String[] playerAndNewField = moveToField.split("--");
@@ -629,6 +673,21 @@ public class GameController implements Initializable {
 
       // moves the player to the new coordinates
       Platform.runLater(() -> {
+        double currentX = playerToMove.getTranslateX();
+        double currentY = playerToMove.getTranslateY();
+        double newX = newPos[0] - 25;
+        double newY = newPos[1] - 30;
+        System.out.println("(" + currentX + ", " + currentY + ")");
+
+        Line lineToMoveAlong = new Line(currentX, currentY, newX, newY);
+
+        transition.setToX(newX);
+        transition.setToY(newY);
+
+        // transition.setCycleCount(1);
+        transition.play();
+
+
         playerToMove.setTranslateX(newPos[0] - 25);
         playerToMove.setTranslateY(newPos[1] - 30);
       });
