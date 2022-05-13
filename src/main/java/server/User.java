@@ -333,7 +333,7 @@ public class User {
   /**
    * sets the game status of player to reconnected
    */
-  public void setReconnect() {
+  public void setNotGameOver() {
     gameOver = false;
   }
 
@@ -341,7 +341,6 @@ public class User {
    * sets the users character choice
    */
   public void setCharacter(int nr) { characterNr = nr; }
-
 
   public void setClienthandler(ClientHandler client) {
     this.clienthandler = client;
