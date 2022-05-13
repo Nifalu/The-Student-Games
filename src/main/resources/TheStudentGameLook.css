@@ -42,3 +42,7 @@
 #backgroundblock:hover {
     -fx-rotate: 1;
 }
+
+#tilt:hover {
+    -fx-rotate: 2;
+}

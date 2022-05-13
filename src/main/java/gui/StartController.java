@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import utility.io.*;
 
 import java.net.URL;
@@ -26,6 +28,8 @@ public class StartController implements Initializable {
    * ReceiveFromProtocol object used to communicate with the protocol
    */
   public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+  public ImageView noImage;
+  public ImageView yesImage;
 
   /**
    * a String which can save a message
@@ -127,7 +131,7 @@ public class StartController implements Initializable {
     Main.displayHighscore();
   }
 
-    public void nameNo(ActionEvent actionEvent) {
+    public void nameNo(MouseEvent actionEvent) {
       sendToServer.send(CommandsToServer.NAME, "no");
       Main.displayNameSelectionPopUp();
       switchToMenu();
@@ -142,7 +146,7 @@ public class StartController implements Initializable {
        **/
     }
 
-  public void nameYes(ActionEvent actionEvent) {
+  public void nameYes(MouseEvent actionEvent) {
     sendToServer.send(CommandsToServer.NAME, "yes");
     music("audio/whistle.mp3");
     switchToMenu();
