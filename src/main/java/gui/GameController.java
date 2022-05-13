@@ -11,6 +11,8 @@ import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
@@ -33,6 +35,8 @@ public class GameController implements Initializable {
    * SendToServer object to communicate with the server
    */
   private final SendToServer sendToServer = new SendToServer();
+  public ImageView globalbuttonimage;
+  public ImageView lobbybuttonimage;
 
   /**
    * marks whether a player wants to write in the global chat or not
@@ -48,6 +52,9 @@ public class GameController implements Initializable {
    * marks whether the game has started or not
    */
   public static boolean gameHasStarted = false;
+
+  private final double selectedOpacity = 1;
+  private final double unselectedOpacity = 0.5;
 
   /**
    * all fields of the board in a HashMap
@@ -71,12 +78,6 @@ public class GameController implements Initializable {
    */
   @FXML
   private TextArea chat;
-
-  /**
-   * a toggle button used to switch between global and lobby chat
-   */
-  @FXML
-  private ToggleButton globalToggleButton;
 
   /**
    * Polygon which represents the first dicedice
@@ -226,91 +227,7 @@ public class GameController implements Initializable {
 
     transitionTokenFour.setNode(tokenFour);
     transitionTokenFour.setDuration(Duration.seconds(1));
-    /*
-    playerBlue.setStroke(Color.BLACK);
-    Image blue = new Image("charBlueHead.png", false);
-    playerBlue.setFill(new ImagePattern(blue));
 
-    playerRed.setStroke(Color.BLACK);
-    Image red = new Image("charRedHead.png", false);
-    playerRed.setFill(new ImagePattern(red));
-
-    playerGreen.setStroke(Color.BLACK);
-    Image green = new Image("charGreenHead.png", false);
-    playerGreen.setFill(new ImagePattern(green));
-
-    playerYellow.setStroke(Color.BLACK);
-    Image yellow = new Image("charYellowHead.png", false);
-    playerYellow.setFill(new ImagePattern(yellow));
-
-
-    // sets the player figures to the start-field
-        /*System.out.println("Y: parent center: " + testToolBar.getTranslateY());
-        System.out.println("Y: starterPane parents max " + starterPaneBlue.getBoundsInParent().getMaxY());
-        System.out.println("Y: starterPane translate " + starterPaneBlue.getTranslateY());
-        playerBlue.setTranslateX(starterPaneBlue.getBoundsInParent().getCenterX());
-        playerBlue.setTranslateY(starterPaneBlue.getBoundsInParent().getCenterY());
-        System.out.println("normal translate: " + playerBlue.getTranslateY());
-        System.out.println("normal getCenter: " + playerBlue.getCenterY());
-        System.out.println("parent getCenter: " + playerBlue.getBoundsInParent().getCenterY());
-        playerBlue.setTranslateY(testToolBar.getTranslateY());*/
-
-    //playerRed.setTranslateX(starterPaneRed.getTranslateX());
-    //playerRed.setTranslateY(starterPaneRed.getTranslateY());
-
-
-    /*
-    // THREAD 1 : receive chat messages
-    // A new Thread is made that waits for incoming messages
-    // The thread will also wait for the game to start and then "remove" the start and ready button
-    Thread waitForChatThread = new Thread(() -> {
-      /*while (!hasJoinedChat) {
-        try {
-          sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-      // Main.receiveChat.setMessage("You have joined the chat.");
-
-
-
-      while (true) {
-        msg = receiveFromProtocol.receive(); // blocks until a message is received
-        Platform.runLater(() -> printChatMessage(msg)); // a javafx "thread" that calls the print method
-      }
-    });
-
-
-    // THREAD 2 : waits for game moves to update the game tracker
-    Thread waitForGameUpdatesThread = new Thread(() -> {
-      while (true) {
-        gameMove = receiveFromProtocolGameUpdate.receive(); // blocks until a message is received
-        if (!gameMove.equals(gameMoveTmp)) {
-          Platform.runLater(() -> printGameUpdate(gameMove)); // a javafx "thread" that calls the print method
-        }
-        gameMoveTmp = gameMove;
-      }
-    });
-
-
-    // THREAD 3 : waits for characters to move
-    Thread waitForCharacterMovement = new Thread(() -> {
-      while (true) {
-        moveToField = (receiveNewPlayerPosition.receive());
-        Platform.runLater(() -> movePlayer(moveToField)); // a javafx "thread" that calls the print method
-      }
-    });
-
-    // start threads
-    waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
-    waitForChatThread.start(); // start thread
-    waitForGameUpdatesThread.setName("GuiWaitForGameUpdates");
-    waitForGameUpdatesThread.start();
-    waitForCharacterMovement.setName("GuiWaitForCharacterMovements");
-    waitForCharacterMovement.start();
-
-     */
   }
 
   /**
@@ -397,8 +314,20 @@ public class GameController implements Initializable {
    *
    * @param actionEvent actionEvent
    */
-  public void switchChat(ActionEvent actionEvent) {
-    writeInGlobalChat = actionEvent.getSource() == globalToggleButton;
+  public void switchChat(MouseEvent actionEvent) {
+    if (actionEvent.getSource() == globalbuttonimage) {
+      writeInGlobalChat = true;
+      globalbuttonimage.setOpacity(selectedOpacity);
+      globalbuttonimage.setDisable(true);
+      lobbybuttonimage.setOpacity(unselectedOpacity);
+      lobbybuttonimage.setDisable(false);
+    } else {
+      writeInGlobalChat = false;
+      globalbuttonimage.setOpacity(unselectedOpacity);
+      globalbuttonimage.setDisable(false);
+      lobbybuttonimage.setOpacity(selectedOpacity);
+      lobbybuttonimage.setDisable(true);
+    }
   }
 
   /**

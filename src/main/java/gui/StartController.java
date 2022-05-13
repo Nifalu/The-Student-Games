@@ -95,18 +95,6 @@ public class StartController implements Initializable {
 
     Main.setStartController(this);
 
-    /*
-    // A new Thread is made which waits
-    Thread waitForMsgChange = new Thread(() -> {
-      while (true) {
-        msg = receiveFromProtocol.receive(); // blocks until a message is received
-        Platform.runLater(() -> printMsg(msg)); // a javafx "thread" that calls the printMsg method
-      }
-    });
-    waitForMsgChange.setName("GuiStartWaitForMsgChange"); // set name of thread
-    waitForMsgChange.start(); // start thread
-
-     */
   }
 
 

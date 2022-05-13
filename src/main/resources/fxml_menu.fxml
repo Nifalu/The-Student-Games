@@ -85,8 +85,8 @@
                                                 <Image url="@panelYellow_defintiv.png" />
                                              </image>
                                           </ImageView>
-                                          <TextArea fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" />
-                                          <TextField fx:id="chatTextField" layoutX="45.0" layoutY="296.0" onAction="#sendChatMessage" promptText="type your message here ..." />
+                                          <TextArea id="chat" fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" />
+                                          <TextField id="chat" fx:id="chatTextField" layoutX="45.0" layoutY="296.0" onAction="#sendChatMessage" promptText="type your message here ..." />
                                           <ImageView id="button" fx:id="sendButton" disable="true" fitHeight="48.0" fitWidth="72.0" layoutX="201.0" layoutY="286.0" onMouseClicked="#sendChatMessage" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@sendButton_definitiv.png" />
