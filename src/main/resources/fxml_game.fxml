@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<Pane xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <children>
       <ImageView fitHeight="778.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -105,7 +105,7 @@
                               <Label layoutX="16.0" layoutY="19.0" text="81" />
                            </children>
                         </Pane>
-                        <Pane mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;">
+                        <Pane mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                            <children>
                               <Label layoutX="16.0" layoutY="19.0" text="80" />
                            </children>

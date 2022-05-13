@@ -178,4 +178,66 @@ public class CharSelectionController implements Initializable {
         Stage stage = (Stage) charTwoSelectionCircle.getScene().getWindow();
         stage.close();
     }
+
+
+    public void changeCharOne(MouseEvent mouseEvent) {
+        Image img = new Image("char1hover.png", false);
+        charOneSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+
+    public void changeCharOneBack(MouseEvent mouseEvent) {
+        Image img = new Image("char1.png", false);
+        charOneSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharTwo(MouseEvent mouseEvent) {
+        Image img = new Image("char2hover.png", false);
+        charTwoSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharTwoBack(MouseEvent mouseEvent) {
+        Image img = new Image("char2.png", false);
+        charTwoSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharThree(MouseEvent mouseEvent) {
+        Image img = new Image("char3hover.png", false);
+        charThreeSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharThreeBack(MouseEvent mouseEvent) {
+        Image img = new Image("char3.png", false);
+        charThreeSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharFour(MouseEvent mouseEvent) {
+        Image img = new Image("char4hover.png", false);
+        charFourSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharFourBack(MouseEvent mouseEvent) {
+        Image img = new Image("char4.png", false);
+        charFourSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharFive(MouseEvent mouseEvent) {
+        Image img = new Image("char5hover.png", false);
+        charFiveSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharFiveBack(MouseEvent mouseEvent) {
+        Image img = new Image("char5.png", false);
+        charFiveSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharSix(MouseEvent mouseEvent) {
+        Image img = new Image("char6hover.png", false);
+        charSixSelectionCircle.setFill(new ImagePattern(img));
+    }
+
+    public void changeCharSixBack(MouseEvent mouseEvent) {
+        Image img = new Image("char6.png", false);
+        charSixSelectionCircle.setFill(new ImagePattern(img));
+    }
 }
