@@ -217,6 +217,7 @@ public class Main extends Application {
   public static void displayGame() {
     showScene(game, gameRoot);
     gameController.resetGame();
+    sendToServer.send(CommandsToServer.SETALLCHARTOKENS, "");
   }
 
   /**

@@ -345,10 +345,15 @@ public class ServerReceive implements Runnable {
         break;
 
       case SETALLCHARTOKENS:
+        for (int i = 1; i < 5; i++) {
+          sendToClient.send(client.user.getClienthandler(), CommandsToClient.SETCHARTOKEN, "0--" + Integer.toString(i));
+        }
         Lobby currentLobby = client.user.getLobby();
         for (Integer key : currentLobby.getUsersInLobby().keySet()) {
           User currentUser = currentLobby.getUsersInLobby().get(key);
-          sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.SETCHARTOKEN, currentUser.characterNr + "--" + currentUser.gameTokenNr);
+          if (currentUser.getIsReady()) {
+            sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.SETCHARTOKEN, currentUser.characterNr + "--" + currentUser.gameTokenNr);
+          }
         }
         break;
 

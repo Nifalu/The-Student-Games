@@ -477,7 +477,8 @@ public class GameController implements Initializable {
      * pressing it again will make the player unready
      */
     public void setPlayerAsReady () {
-      if (!isReady) {
+      sendToServer.send(CommandsToServer.READY, "");
+      /*if (!isReady) {
         isReady = true;
         sendToServer.send(CommandsToServer.READY, null);
         //Platform.runLater(() -> readyButton.setText("UNREADY?"));
@@ -485,7 +486,7 @@ public class GameController implements Initializable {
         sendToServer.send(CommandsToServer.UNREADY, null);
         //Platform.runLater(() -> readyButton.setText("READY?"));
         isReady = false;
-      }
+      }*/
     }
 
   /**

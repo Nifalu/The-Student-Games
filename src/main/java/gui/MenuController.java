@@ -243,9 +243,8 @@ public class MenuController implements Initializable {
    * switches to the Game scene when pressing the button
    */
   public void switchToGame() {
-
+    //sendToServer.send(CommandsToServer.SETALLCHARTOKENS, "");
     Main.displayGame();
-    sendToServer.send(CommandsToServer.SETALLCHARTOKENS, "");
 
   }
 
