@@ -8,6 +8,7 @@ import utility.io.CommandsToClient;
 import utility.io.SendToClient;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * This class handles everything related with the game
@@ -134,8 +135,6 @@ public class Game implements Runnable {
    * Starts the game as soon as it has been initiated by its lobby
    */
   public void run() {
-    MusicPlayer mp = new MusicPlayer();
-    mp.starteAbspielen("audio/okayLetsGo.mp3");
     highScoreGame = new HighScore();
     numPlayers = lobby.getUsersReady().size();
 
@@ -144,6 +143,7 @@ public class Game implements Runnable {
     Calendar calendar = new Calendar(2021, 9, 21);
     calendar.getCurrentDate();
     for (int u = 0; u < numPlayers; u++) {
+      //music ("audio/okayLetsGo.mp3");
       lobby.getUsersReady().get(u).setPlayingField(0);
       playersPlaying.put(u, lobby.getUsersReady().get(u));
       lobby.getUsersReady().get(u).setIsPlaying(true);
@@ -243,6 +243,9 @@ public class Game implements Runnable {
     } else {
       dice = 0;
     }
+    String[] diceMusic = {"audio/dice1.mp3", "audio/dice2.mp3", "audio/dice3.mp3"};
+    Random random = new Random();
+    music(diceMusic[random.nextInt(3)]);
     return dice;
   }
 
@@ -279,10 +282,22 @@ public class Game implements Runnable {
   public void cheat(String user, int number) {
     if (!userToRollDice.getRolledDice()) {
       if (userToRollDice.getUsername().equals(user)) {
-        cheated = true;
-        lobbyBroadcastToPlayer(userToRollDice.getUsername() + " has rich parents and moved to: " + number);
-        changePosition(userToRollDice, number - userToRollDice.getPlayingField());
-        rolledDice = true;
+        if (!userToRollDice.isPunished()) {
+          if (number > 88) {
+            userToRollDice.setPunished(true);
+            cheated = true;
+            lobbyBroadcastToPlayer(userToRollDice.getUsername() + " wanted to cheat to the finish.");
+            changePosition(userToRollDice, 2 - userToRollDice.getPlayingField());
+            rolledDice = true;
+          } else {
+            cheated = true;
+            lobbyBroadcastToPlayer(userToRollDice.getUsername() + " has rich parents and moved to: " + number);
+            changePosition(userToRollDice, number - userToRollDice.getPlayingField());
+            rolledDice = true;
+          }
+        } else {
+          lobbyBroadcastToPlayer(userToRollDice.getUsername() + " wanted to cheat again.");
+        }
       }
     }
   }
@@ -347,6 +362,7 @@ public class Game implements Runnable {
       for (int i = 0; i < playersPlaying.size(); i++) {
         if (playersPlaying.get(i).getPlayingField() == newPosition && playersPlaying.get(i).getPlayingField() != user.getPlayingField()) {
           playersPlaying.get(i).setPlayingField(currentPosition);
+          music("audio/laughter.mp3");
           lobbyBroadcastToPlayer(user.getUsername() + " pushed back " + playersPlaying.get(i).getUsername() + " to " + currentPosition);
         }
       }
@@ -381,46 +397,46 @@ public class Game implements Runnable {
    */
   public void checkField(User user, int field) {
     if (field == 1) { // 1 + 55 ladder up
-      //pause(500);
+      pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
       changePosition(user, 15 - field);
     } else if (field == 55) {
-      //pause(500);
+      pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
       changePosition(user, 59 - field);
     } else if (field == 20) { // 20 - 87 ladder down
-      //pause(500);
+      pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 14 - field);
     } else if (field == 26) {
-      //pause(500);
+      pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 10 - field);
     } else if (field == 52) {
-      //pause(100);
+      pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 36 - field);
     } else if (field == 57) {
-      //pause(100);
+      pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 40 - field);
     } else if (field == 80) {
-      //pause(100);
+      pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 78 - field);
     } else if (field == 87) {
-      //pause(100);
+      pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 68 - field);
     } else if (field == 17 || field == 31 || field == 45 || field == 73) { // Action Cards
-      //pause(100);
+      pause(1500);
       String card = Cards.getCards();
       String[] arr = card.split(" ", 2);
       int positionToChange = Integer.parseInt(arr[0]);
       String textCard = arr[1];
       lobbyBroadcastToPlayer("§" + user.getUsername() + " draws an action card:" + "§" + textCard + "§");
       changePosition(user, positionToChange);
-    } else if (field == 7 || field == 22 || field == 49 || field == 65) { // Quiz
+    } else if (field == 7 || field == 13 || field == 22 || field == 38 || field == 49 || field == 65 || field == 83) { // Quiz
       quizOngoing = true;
       String quizQuestion = Quiz.quiz();
       String[] quiz = quizQuestion.split("Ç");
@@ -441,6 +457,7 @@ public class Game implements Runnable {
             user.setFirstTime(false);
           } else {
             gameOver(user);
+            sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.MUSIC, "audio/nooh.mp3");
           }
           break;
         } else {
@@ -488,6 +505,10 @@ public class Game implements Runnable {
                 playersPlaying.get(j).gameTokenNr + "--" + playersPlaying.get(j).getPlayingField());
       }
     }
+  }
+
+  public void music (String music) {
+    sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MUSIC, music);
   }
 
 
@@ -557,6 +578,7 @@ public class Game implements Runnable {
     user.setFirstTime(true);
     user.resetSpecialDice();
     user.setReadyToPlay(false);
+    user.setPunished(false);
   }
 
   /**

@@ -1,5 +1,6 @@
 package client;
 
+import gameLogic.MusicPlayer;
 import gui.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -143,6 +144,11 @@ public class ClientReceive implements Runnable {
         int tokenNr = Integer.parseInt(charAndToken[1]);
         System.out.println("tokenNr " + tokenNr);
         Main.getGameController().setCharToken(tokenNr, charNr);
+        break;
+
+      case MUSIC:
+        MusicPlayer mp = new MusicPlayer();
+        mp.starteAbspielen(msg);
         break;
     }
   }

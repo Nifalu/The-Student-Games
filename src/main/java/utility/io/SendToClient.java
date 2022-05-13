@@ -109,6 +109,9 @@ public class SendToClient {
         sendTo(recipient, "SETCHARTOKEN--" + msg);
         break;
 
+      case MUSIC:
+        sendTo(recipient, "MUSIC--" + msg);
+        break;
     }
   }
 
