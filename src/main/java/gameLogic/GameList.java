@@ -95,7 +95,7 @@ public class GameList {
           lobbyStatusString = "open";
           break;
         case 0:
-          lobbyStatusString = "on going";
+          lobbyStatusString = "ongoing";
           break;
         case -1:
           lobbyStatusString = "finished";

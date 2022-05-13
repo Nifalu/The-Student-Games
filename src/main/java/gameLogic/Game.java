@@ -107,7 +107,6 @@ public class Game implements Runnable {
    */
   public User userToAnswerQuiz;
 
-
   /**
    * notes the correct answer to a quiz question
    */
@@ -137,13 +136,12 @@ public class Game implements Runnable {
   public void run() {
     highScoreGame = new HighScore();
     numPlayers = lobby.getUsersReady().size();
-
+    music("audio/gameStart.mp3");
 
     // Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
     Calendar calendar = new Calendar(2021, 9, 21);
     calendar.getCurrentDate();
     for (int u = 0; u < numPlayers; u++) {
-      //music ("audio/okayLetsGo.mp3");
       lobby.getUsersReady().get(u).setPlayingField(0);
       playersPlaying.put(u, lobby.getUsersReady().get(u));
       lobby.getUsersReady().get(u).setIsPlaying(true);
@@ -181,7 +179,7 @@ public class Game implements Runnable {
                   Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)), "game");
             }
           }
-
+          pause(500);
           // moves the player characters in the GUI
           positionUpdate();
         } else {
@@ -436,7 +434,7 @@ public class Game implements Runnable {
       String textCard = arr[1];
       lobbyBroadcastToPlayer("§" + user.getUsername() + " draws an action card:" + "§" + textCard + "§");
       changePosition(user, positionToChange);
-    } else if (field == 7 || field == 22 || field == 49 || field == 65) { // Quiz
+    } else if (field == 7 || field == 13 || field == 22 || field == 38 || field == 49 || field == 65 || field == 83) { // Quiz
       quizOngoing = true;
       String quizQuestion = Quiz.quiz();
       String[] quiz = quizQuestion.split("Ç");
@@ -448,24 +446,26 @@ public class Game implements Runnable {
           lobbyBroadcastToPlayer(user.getUsername() + "'s answer: " + quiz[1] + " is correct.");
           changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]));
           quizAnsweredCorrect = false;
+          music("audio/correct.mp3");
           break;
         } else if (quizAnsweredWrong || i == maxTimeToAnswerQuiz - 1) {
           quizAnsweredWrong = false;
           lobbyBroadcastToPlayer(user.getUsername() + "'s answer is wrong.");
           if (user.isFirstTime()) {
-            changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]) * -1);
             user.setFirstTime(false);
+            music("audio/wrong.mp3");
+            changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]) * -1);
           } else {
             gameOver(user);
             sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.MUSIC, "audio/nooh.mp3");
           }
           break;
         } else {
-          try {
-            Thread.sleep(1);
-          } catch (Exception e) {
-            e.printStackTrace();
+          if (maxTimeToAnswerQuiz - i == 5000 || maxTimeToAnswerQuiz - i == 4000 ||
+                  maxTimeToAnswerQuiz - i == 3000 || maxTimeToAnswerQuiz - i == 2000) {
+            music("audio/wetClick.mp3");
           }
+          pause(1);
         }
       }
       quizOngoing = false;
@@ -489,6 +489,11 @@ public class Game implements Runnable {
     }
   }
 
+  /**
+   * Thread.sleep so the GUI can update all the position and all the people are able to see every new position
+   *
+   * @param time Time in ms till next move.
+   */
   public void pause (int time) {
     try {
       Thread.sleep(time);
@@ -497,6 +502,9 @@ public class Game implements Runnable {
     }
   }
 
+  /**
+   * Sends the updated position to the GUI
+   */
   public void positionUpdate() {
     // moves the player characters in the GUI
     for (int j = 0; j < numPlayers; j++) {
@@ -507,10 +515,14 @@ public class Game implements Runnable {
     }
   }
 
+  /**
+   * Receives the music to be played
+   *
+   * @param music Music to be played
+   */
   public void music (String music) {
     sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MUSIC, music);
   }
-
 
   /**
    * If a player has answered two question wrong then the person will exmatriculated.
@@ -543,10 +555,8 @@ public class Game implements Runnable {
    * Closes the game and sets the lobby's status to finished
    */
   public void closeGame() {
-    //if (highScore.getTop10().length() > 0) {
-      lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10("global"));
-      sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
-    //}
+    lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10("global"));
+    sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
     if (highScoreGame.getTop10("game").length() > 0) {
       lobbyBroadcastToPlayer("Best students of this game:§" + highScoreGame.getTop10("game"));
       sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScoreGame.getTop10("game"));
@@ -565,6 +575,7 @@ public class Game implements Runnable {
       user.setLobby(GameList.getLobbyList().get(0));
       resetPlayer(user);
       user.setIsPlaying(false);
+      user.setNotGameOver();
     }
     lobby.setLobbyStatusToFinished();
   }

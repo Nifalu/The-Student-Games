@@ -12,11 +12,11 @@ import javafx.scene.paint.Color;
 import javafx.util.converter.IntegerStringConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import server.ServerManager;
+import server.User;
 import starter.Starter;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -31,6 +31,7 @@ public class LoginController implements Initializable {
   public TextField addressfield;
   public Button deletebutton;
   public Label portwarning;
+  public Button addbutton;
 
   private final Border invalidBorder = new Border(
       new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(2)));
@@ -38,6 +39,7 @@ public class LoginController implements Initializable {
       new BorderStroke(Color.ORANGE, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(2)));
   private final Border validBorder = new Border(
       new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(2)));
+
 
   private boolean addressIsReady = false;
   private boolean portIsReady = false;
@@ -47,27 +49,31 @@ public class LoginController implements Initializable {
   public void connectToServer() {
     String address = addressfield.getText();
     String port = portfield.getText();
-    addToList(address + ":" + port);
+    addToList();
     Starter.address = address;
     Starter.port = Integer.parseInt(port);
     Main.displayStart();
   }
 
-  public void addToList(String addressAndPort) {
+  public void addToList() {
+    String addressAndPort = addressfield.getText() + ":" + portfield.getText();
     if (!recentlist.getItems().contains(addressAndPort)) {
       Platform.runLater(() -> recentlist.getItems().add(addressAndPort));
+      addLogin(addressAndPort);
     }
   }
 
   public void removeFromList() {
     String selected = recentlist.getSelectionModel().getSelectedItem();
     Platform.runLater(() -> recentlist.getItems().remove(selected));
+    removeLogin(selected);
   }
 
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     Main.setLoginController(this);
+    loadLogins();
     portfieldvalidator();
     addressfieldListener();
     allReadyListener();
@@ -124,23 +130,30 @@ public class LoginController implements Initializable {
       if (newv) {
         connectbutton.disableProperty().set(false);
         connectbutton.setOpacity(1);
+        addbutton.disableProperty().set(false);
+        addbutton.setOpacity(1);
       } else {
         connectbutton.disableProperty().set(true);
         connectbutton.setOpacity(0.5);
+        addbutton.disableProperty().set(true);
+        addbutton.setOpacity(0.5);
       }
     });
   }
 
   public void recentlistListener() {
     recentlist.getSelectionModel().selectedItemProperty().addListener((obs,oldv,newv) -> {
-      deletebutton.setOpacity(1);
       String address;
       String port;
       if (newv != null) {
+        deletebutton.setOpacity(1);
+        deletebutton.disableProperty().set(false);
         String[] text = recentlist.getSelectionModel().getSelectedItem().split(":");
         address = text[0];
         port = text[1];
       } else {
+        deletebutton.setOpacity(0.5);
+        deletebutton.disableProperty().set(true);
         address = "";
         port = "";
       }
@@ -154,7 +167,7 @@ public class LoginController implements Initializable {
 
   private void saveLogins(String msg) {
     try {
-      BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/logins.txt", true));
+      BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/logins.txt", false));
       bw.write(msg);
       bw.flush();
       bw.close();
@@ -163,5 +176,45 @@ public class LoginController implements Initializable {
     }
   }
 
+  private void addLogin(String msg) {
+    try {
+      BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/logins.txt", true));
+      bw.write(msg+"!");
+      bw.flush();
+      bw.close();
+    } catch (IOException e) {
+      logger.warn("Logins were not saved!");
+    }
+  }
+
+  private void removeLogin(String toDelete) {
+    try {
+      BufferedReader br = new BufferedReader(new FileReader("gamefiles/utility/logins.txt"));
+      String savedlogins = br.readLine();
+      if (savedlogins != null) {
+        savedlogins = savedlogins.replace(toDelete + "!", "");
+        saveLogins(savedlogins);
+      }
+      br.close();
+    } catch (IOException e) {
+      logger.warn("Login was not removed");
+    }
+  }
+
+  private void loadLogins() {
+    try {
+      BufferedReader br = new BufferedReader(new FileReader("gamefiles/utility/logins.txt"));
+      String s;
+      if ((s = br.readLine()) != null) {
+        for (String i : s.split("!")) {
+          Platform.runLater(() -> recentlist.getItems().add(i));
+        }
+      }
+      br.close();
+    } catch (IOException e) {
+      logger.warn("Logins could not be loaded");
+    }
+
+  }
 
 }

@@ -1,10 +1,13 @@
 package gui;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
 
@@ -23,6 +26,11 @@ public class MenuController implements Initializable {
    */
   private static String msg;
 
+  private String selectedLobby = "";
+
+  private final double selectedOpacity = 1;
+  private final double unselectedOpacity = 0.5;
+
   /**
    * notes whether the user has joined the chat or not
    */
@@ -32,6 +40,10 @@ public class MenuController implements Initializable {
    * ToggleGroup used for the ToggleButton in the chat
    */
   public ToggleGroup switchGlobalLobby;
+  public ImageView toGameButton;
+  public ImageView joinLobbyButton;
+  public ImageView createLobbyButton;
+  public ImageView sendButton;
 
   /**
    * notes whether the user wants to write in global chat
@@ -186,62 +198,11 @@ public class MenuController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
 
     Main.setMenuController(this);
-
-
     selectedLobbyLabel.setText("Please create or choose a lobby.");
+    lobbySelectionListener();
+    createLobbyListener();
+    sendListener();
 
-    /*
-    Thread lobbyListThread = new Thread(() -> {
-      while (true) {
-
-        lobbyList = lobbyReceiver.receive();
-        lobbyList = removeNewline(lobbyList);
-        String[] splittedLobbies = splittedString(lobbyList);
-        Platform.runLater(() -> printLobbies(splittedLobbies));
-      }
-    });
-
-    Thread friendThread = new Thread(() -> {
-      while (true) {
-
-        friendList = friendsReceiver.receive();
-        friendList = removeNewline(friendList);
-        String[] splittedFriends = splittedLobbies(friendList);
-        Platform.runLater(() -> printFriends(splittedFriends));
-      }
-    });
-
-
-    // A new Thread is made that waits for incoming messages
-    Thread waitForChatThread = new Thread(() -> {
-
-      /*while (!hasJoinedChat) {
-        try {
-          sleep(10);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-
-
-
-
-      receiveFromProtocol.setMessage("You have joined the chat.");
-      while (true) {
-        msg = receiveFromProtocol.receive(); // blocks until a message is received
-        Platform.runLater(() -> printChatMessage(msg)); // a javafx "thread" that calls the print method
-      }
-    });
-
-    // starts threads
-    friendThread.setName("friendThread");
-    friendThread.start();
-    lobbyListThread.setName("GuiWaitForLobbyList"); // set name of thread
-    lobbyListThread.start();
-    waitForChatThread.setName("GuiWaitForChatThread"); // set name of thread
-    waitForChatThread.start(); // start thread
-
-     */
   }
 
   /**
@@ -250,10 +211,6 @@ public class MenuController implements Initializable {
   @FXML
   public void quitGame() {
     Main.exit();
-    // sendToServer.send(CommandsToServer.CHAT, "left the chat"); // may need to change
-    //Stage stage = (Stage) quitButton.getScene().getWindow();
-    //stage.close();
-    //sendToServer.send(CommandsToServer.QUIT, msg);
   }
 
 
@@ -369,10 +326,11 @@ public class MenuController implements Initializable {
    * joins the lobby selected in the listview
    */
   public void joinSelectedLobby() {
-    String selectedLobby = listViewSelectedLobby();
-    if (selectedLobby == null) {
-      Platform.runLater(() -> selectedLobbyLabel.setText("Please select a lobby."));
-    } else {
+    joinLobbyButton.setDisable(true);
+    joinLobbyButton.setOpacity(unselectedOpacity);
+    String newSelectedLobby;
+    if (!(newSelectedLobby = listViewSelectedLobby()).equals(selectedLobby)) {
+      selectedLobby = newSelectedLobby;
       String lobbyNumber = selectedLobby.substring(0, 1);
       try {
         sendToServer.send(CommandsToServer.ENABLECURRENTCHARGUI, "");
@@ -392,6 +350,7 @@ public class MenuController implements Initializable {
     }
   }
 
+
   /**
    * creates a new lobby
    */
@@ -404,4 +363,62 @@ public class MenuController implements Initializable {
     refreshLobbies();
     Platform.runLater(() -> createLobbyTextField.clear());
   }
+
+
+  private void lobbySelectionListener() {
+    lobbyListView.getSelectionModel().selectedItemProperty().addListener((obs, oldv, newv) -> {
+      if (newv.contains("open") || newv.contains("going")) {
+        if (!newv.equals(selectedLobby)) {
+          joinLobbyButton.setDisable(false);
+          joinLobbyButton.setOpacity(selectedOpacity);
+        } else {
+          joinLobbyButton.setDisable(true);
+          joinLobbyButton.setOpacity(unselectedOpacity);
+        }
+        toGameButton.setDisable(false);
+        toGameButton.setOpacity(selectedOpacity);
+      } else {
+        joinLobbyButton.setDisable(true);
+        joinLobbyButton.setOpacity(unselectedOpacity);
+        toGameButton.setDisable(true);
+        toGameButton.setOpacity(unselectedOpacity);
+      }
+    });
+  }
+
+  private void createLobbyListener() {
+    createLobbyTextField.textProperty().addListener((obs,oldv,newv) -> {
+      if (newv.equals("")) {
+        createLobbyButton.setDisable(true);
+        createLobbyButton.opacityProperty().set(unselectedOpacity);
+        createLobbyTextField.setStyle("-fx-text-fill: black");
+      }
+      if (newv.matches("[a-zA-Z]+")) {
+        createLobbyButton.setDisable(false);
+        createLobbyButton.opacityProperty().set(selectedOpacity);
+        createLobbyTextField.setStyle("-fx-text-fill: green");
+      } else {
+        createLobbyButton.setDisable(true);
+        createLobbyButton.opacityProperty().set(unselectedOpacity);
+        createLobbyTextField.setStyle("-fx-text-fill: red");
+      }
+    });
+  }
+
+  private void sendListener() {
+    EventHandler<ActionEvent> tmp = chatTextField.getOnAction();
+    chatTextField.textProperty().addListener((obs,oldv,newv) -> {
+      if (newv.equals("")) {
+        sendButton.setDisable(true);
+        sendButton.opacityProperty().set(unselectedOpacity);
+        chatTextField.onActionProperty().set(null);
+      } else {
+        sendButton.setDisable(false);
+        sendButton.opacityProperty().set(selectedOpacity);
+        chatTextField.onActionProperty().set(tmp);
+      }
+    });
+  }
+
+
 }

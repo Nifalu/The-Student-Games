@@ -12,7 +12,11 @@ import java.util.Random;
  */
 public class User {
 
+  /**
+   * tells if the user is still online
+   */
   private boolean isOnline;
+
   /**
    * the users clienthandler
    */
@@ -22,6 +26,7 @@ public class User {
    * the users uuid
    */
   private final String uuid;
+
   /**
    * the users username
    */
@@ -42,6 +47,9 @@ public class User {
    */
   private boolean isReady;
 
+  /**
+   * let the game know if the user tried to cheat into the finish
+   */
   private boolean punished;
 
   /**
@@ -109,6 +117,11 @@ public class User {
   // ----- GETTERS -----
 
 
+  /**
+   * returns the information if a user is still online
+   *
+   * @return boolean: online
+   */
   public boolean isOnline() {
     return isOnline;
   }
@@ -226,6 +239,11 @@ public class User {
     return uuid;
   }
 
+  /**
+   * returns whether the user is punishedd or not
+   *
+   * @return boolean
+   */
   public boolean isPunished() {
     return punished;
   }
@@ -333,7 +351,7 @@ public class User {
   /**
    * sets the game status of player to reconnected
    */
-  public void setReconnect() {
+  public void setNotGameOver() {
     gameOver = false;
   }
 
@@ -342,15 +360,24 @@ public class User {
    */
   public void setCharacter(int nr) { characterNr = nr; }
 
-
   public void setClienthandler(ClientHandler client) {
     this.clienthandler = client;
   }
 
+  /**
+   * sets online status of the user
+   *
+   * @param online boolean
+   */
   public void setOnline(boolean online) {
     isOnline = online;
   }
 
+  /**
+   * sets whether user tried to cheat into the finish
+   *
+   * @param punished boolean
+   */
   public void setPunished(boolean punished) {
     this.punished = punished;
   }

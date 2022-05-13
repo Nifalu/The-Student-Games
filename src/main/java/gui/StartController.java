@@ -150,6 +150,6 @@ public class StartController implements Initializable {
 
   public void music(String music) {
     MusicPlayer mp = new MusicPlayer();
-    mp.starteAbspielen(music);
+    mp.startMusic(music);
   }
 }

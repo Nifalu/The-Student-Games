@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -49,7 +49,7 @@
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor></ListView>
                               <TextField fx:id="createLobbyTextField" layoutX="80.0" layoutY="448.0" onAction="#createLobby" prefHeight="25.0" prefWidth="149.0" promptText="Please enter new lobby..." />
-                              <ImageView fitHeight="40.0" fitWidth="81.0" layoutX="229.0" layoutY="441.0" onMouseClicked="#createLobby" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="createLobbyButton" accessibleRole="BUTTON" disable="true" fitHeight="40.0" fitWidth="81.0" layoutX="229.0" layoutY="441.0" onMouseClicked="#createLobby" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@createButton_defintiv.png" />
                                  </image>
@@ -59,12 +59,12 @@
                                     <Image url="@refreshButton_defintiv.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="71.0" fitWidth="89.0" layoutX="66.0" layoutY="154.0" onMouseClicked="#joinSelectedLobby" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="joinLobbyButton" accessibleRole="BUTTON" disable="true" fitHeight="71.0" fitWidth="89.0" layoutX="66.0" layoutY="154.0" onMouseClicked="#joinSelectedLobby" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@joinButton_definitiv.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="65.0" fitWidth="138.0" layoutX="14.0" layoutY="597.0" onMouseClicked="#switchToGame" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="toGameButton" accessibleRole="BUTTON" disable="true" fitHeight="65.0" fitWidth="138.0" layoutX="14.0" layoutY="597.0" onMouseClicked="#switchToGame" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@gameButton_definitiv.png" />
                                  </image>
@@ -89,7 +89,7 @@
                                           </ImageView>
                                           <TextArea fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" />
                                           <TextField fx:id="chatTextField" layoutX="45.0" layoutY="296.0" onAction="#sendChatMessage" promptText="type your message here ..." />
-                                          <ImageView fitHeight="48.0" fitWidth="72.0" layoutX="195.0" layoutY="285.0" onMouseClicked="#sendChatMessage" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="sendButton" disable="true" fitHeight="48.0" fitWidth="72.0" layoutX="201.0" layoutY="286.0" onMouseClicked="#sendChatMessage" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@sendButton_definitiv.png" />
                                              </image>
