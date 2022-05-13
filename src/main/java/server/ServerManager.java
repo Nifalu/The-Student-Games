@@ -50,6 +50,7 @@ public class ServerManager {
         user.setClienthandler(client);
         activeClientList.add(client);
         user.setOnline(true);
+        user.setReconnect();
         return user;
       }
     }

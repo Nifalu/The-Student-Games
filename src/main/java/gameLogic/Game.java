@@ -511,7 +511,7 @@ public class Game implements Runnable {
    */
   public void lostConnection(server.User user) {
     lobbyBroadcastToPlayer(user.getUsername() + " lost connection and left the game.");
-    user.setPlayingField(0);
+    //user.setPlayingField(0);
     user.setGameOver();
     resetPlayer(user);
     user.setIsPlaying(false);

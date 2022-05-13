@@ -326,6 +326,13 @@ public class User {
   }
 
   /**
+   * sets the game status of player to reconnected
+   */
+  public void setReconnect() {
+    gameOver = false;
+  }
+
+  /**
    * sets the users character choice
    */
   public void setCharacter(int nr) { characterNr = nr; }
