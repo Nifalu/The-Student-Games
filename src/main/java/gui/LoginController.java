@@ -10,8 +10,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.converter.IntegerStringConverter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import starter.Starter;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -37,6 +42,7 @@ public class LoginController implements Initializable {
   private boolean addressIsReady = false;
   private boolean portIsReady = false;
   private final BooleanProperty allReady = new SimpleBooleanProperty(false);
+  private final Logger logger = LogManager.getLogger(LoginController.class);
 
   public void connectToServer() {
     String address = addressfield.getText();
@@ -103,27 +109,13 @@ public class LoginController implements Initializable {
 
   public void addressfieldListener() {
     addressfield.textProperty().addListener((obs, oldv, newv) -> {
-      try {
-        InetAddress.getByName(newv);
         addressIsReady = !newv.equals("");
         allReady.set(portIsReady && addressIsReady);
         if (newv.equals("")) {
-          //System.out.println("1");
           addressfield.setBorder(null);
         } else {
           addressfield.setBorder(validBorder);
         }
-      } catch (UnknownHostException e) {
-        addressIsReady = false;
-        allReady.set(false);
-        if (newv.equals("")) {
-          //System.out.println("2");
-          addressfield.setBorder(null);
-        } else {
-          addressfield.setBorder(invalidBorder);
-        }
-      }
-
     });
   }
 
@@ -158,5 +150,18 @@ public class LoginController implements Initializable {
       });
     });
   }
+
+
+  private void saveLogins(String msg) {
+    try {
+      BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/logins.txt", true));
+      bw.write(msg);
+      bw.flush();
+      bw.close();
+    } catch (IOException e) {
+      logger.warn("Users were not saved!");
+    }
+  }
+
 
 }
