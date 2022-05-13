@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import utility.io.CommandsToClient;
 import utility.io.CommandsToServer;
 import utility.io.SendToClient;
-
 import java.util.HashMap;
 
 /**

@@ -65,6 +65,7 @@ public class ConnectionToServerMonitor implements Runnable {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+    System.out.println("connectionMonitor closed");
   }
 
 

@@ -197,7 +197,7 @@ public class SendToServer {
       ClientManager.getOut().write(msg);
       ClientManager.getOut().newLine();
       ClientManager.getOut().flush();
-    } catch (IOException e) {
+    } catch (Exception e) {
       System.out.println("cannot reach server");
     }
   }

@@ -59,15 +59,16 @@ public class HighScore {
   }
 
   public void loadHighscore() {
-      BufferedReader br = null;
-      String line = "";
+      BufferedReader br;
+      String line;
       Node current = first;
       try {
-        br = new BufferedReader(new FileReader("highscore.txt"));
+        br = new BufferedReader(new FileReader("gamefiles/utility/highscore.txt"));
         line = br.readLine();
         br.close();
       } catch (IOException e) {
-        line = "";
+        //line = "";
+        return;
       }
       if (line != null) {
         String[] highscore = line.split(",");
@@ -90,7 +91,7 @@ public class HighScore {
   }
 
   public void saveHighscore(){
-    BufferedWriter bw = null;
+    BufferedWriter bw;
     String save = "";
     Node current = first;
     while (current != null) {
@@ -98,7 +99,7 @@ public class HighScore {
       current = current.next;
     }
     try {
-      bw = new BufferedWriter(new FileWriter("highscore.txt", false));
+      bw = new BufferedWriter(new FileWriter("gamefiles/utility/highscore.txt", false));
       bw.write(save);
       bw.flush();
       bw.close();

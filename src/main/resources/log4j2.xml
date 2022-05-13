@@ -10,55 +10,55 @@
 
             <!-- Logs the current Run into a File -->
             <File name="FileLast"
-                  fileName="Logs/GeneralAll.log" immediateFlush="true" append="false">
+                  fileName="gamefiles/logs/GeneralAll.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
             <!-- This File contains all Network Traffic-->
             <File name="AllTraffic"
-                  fileName="Logs/NetworkAllTraffic.log" immediateFlush="true" append="false">
+                  fileName="gamefiles/logs/NetworkAllTraffic.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
             <!-- This File contains all Network Traffic excluding pings -->
             <File name="TrafficNoPing"
-                  fileName="Logs/NetworkAllNoPing.log" immediateFlush="true" append="false">
+                  fileName="gamefiles/logs/NetworkAllNoPing.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
             <!-- This File contains all server Traffic excluding pings -->
             <File name="ServerTraffic"
-                  fileName="Logs/ServerTraffic.log" immediateFlush="true" append="false">
+                  fileName="gamefiles/logs/ServerTraffic.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
             <!-- This File contains all server Traffic excluding pings -->
             <File name="ServerTrafficNoPing"
-                  fileName="Logs/ServerTrafficNoPing.log" immediateFlush="true" append="false">
+                  fileName="gamefiles/logs/ServerTrafficNoPing.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
             <!-- This File contains all client Traffic excluding pings -->
             <File name="ClientTraffic"
-                  fileName="Logs/ClientTraffic.log" immediateFlush="true" append="false">
+                  fileName="gamefiles/logs/ClientTraffic.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
             <!-- This File contains all client Traffic excluding pings -->
             <File name="ClientTrafficNoPing"
-                  fileName="Logs/ClientTrafficNoPing.log" immediateFlush="true" append="false">
+                  fileName="gamefiles/logs/ClientTrafficNoPing.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
             <!-- This File contains game-state logs -->
             <File name="Game"
-                  fileName="Logs/Gamelogic.log" immediateFlush="true" append="false">
+                  fileName="gamefiles/logs/Gamelogic.log" immediateFlush="true" append="false">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
             </File>
 
             <!-- This File is not overwritten when the program is reset/restarted -->
             <RollingFile name="FileContinuous"
-                         fileName="Logs/GeneralContinuous.log"
+                         fileName="gamefiles/logs/GeneralContinuous.log"
                          filePattern="${APP_LOG_ROOT}/appName-%d{yyyy-MM-dd}-%i.log.gz">
                 <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger{36} - %msg%n"/>
                 <Policies>

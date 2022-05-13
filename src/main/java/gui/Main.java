@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -28,6 +29,21 @@ public class Main extends Application {
 
 
   // Different Scenes that can be shown on the Stage and their corresponding root Panes and controllers.
+
+  /**
+   * Scene for the Login
+   */
+  private static Scene login;
+
+  /**
+   * root corresponding to the login scene
+   */
+  private static Pane loginRoot;
+
+  /**
+   * the logincontroller
+   */
+  private static LoginController loginController;
   /**
    * Scene for the start
    */
@@ -136,20 +152,19 @@ public class Main extends Application {
       stage.setOnCloseRequest(e -> exit());
       Main.stage = stage;
 
+      loginRoot = getLoader("fxml_login.fxml").load();
+      login = createScene(loginRoot);
+
       startRoot = getLoader("fxml_start.fxml").load();
-      // startController = getLoader("fxml_start.fxml").getController();
       start = createScene(startRoot);
 
       menuRoot = getLoader("fxml_menu.fxml").load();
-      // menuController = getLoader("fxml_menu.fxml").getController();
       menu = createScene(menuRoot);
 
       highscoreRoot = getLoader("fxml_highscore.fxml").load();
-      // highscoreController = getLoader("fxml_highscore.fxml").getController();
       highscore = createScene(highscoreRoot);
 
       gameRoot = getLoader("fxml_game.fxml").load();
-      //gameController = getLoader("fxml_game.fxml").getController();
       game = createScene(gameRoot);
 
       charSelectionRoot = getLoader("fxml_charSelection.fxml").load();
@@ -162,15 +177,22 @@ public class Main extends Application {
       nameSelection = createScene(nameSelectionRoot);
 
 
-      displayStart(); // Display the first Scene.
+      if (Starter.isArgumentStart) {
+        displayStart();
+      } else {
+        displayLogin();
+      }
       stage.centerOnScreen();
-
-      Starter.connect(); // Tells the Starter that the gui is ready and the client can connect to the server
 
     } catch (Exception e) {
       logger.error("Failed to load scenes", e);
       exit();
     }
+  }
+
+
+  public static void displayLogin() {
+    showScene(login, loginRoot);
   }
 
   /**
@@ -186,6 +208,7 @@ public class Main extends Application {
    */
   public static void displayStart() {
     showScene(start, startRoot);
+    Starter.connect();
   }
 
   /**
@@ -286,8 +309,13 @@ public class Main extends Application {
    * Sends a quit command to the server. This will close the Program!
    */
   public static void exit() {
-    SendToServer sendToServer = new SendToServer();
-    sendToServer.send(CommandsToServer.QUIT, "");
+    try {
+      SendToServer sendToServer = new SendToServer();
+      sendToServer.send(CommandsToServer.QUIT, "");
+    } catch (NullPointerException e) {
+      logger.info("closed before connection was made");
+      Platform.exit();
+    }
   }
 
 
@@ -317,6 +345,8 @@ public class Main extends Application {
   public static MenuController getMenuController() {
     return menuController;
   }
+
+
 
   /**
    * returns the clients GameController
@@ -358,6 +388,10 @@ public class Main extends Application {
     Main.startController = startController;
   }
 
+  public static void setLoginController(LoginController loginController) {
+    Main.loginController = loginController;
+  }
+
   /**
    * sets the clients MenuController
    *
@@ -392,4 +426,10 @@ public class Main extends Application {
   public static void setNameSelectionController(NameSelectionController nameSelectionController) {
     Main.nameSelectionController = nameSelectionController;
   }
+
+
+  public static LoginController getLoginController() {
+    return loginController;
+  }
+
 }

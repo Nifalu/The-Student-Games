@@ -1,5 +1,7 @@
 package server;
 
+import gameLogic.GameList;
+
 import java.util.Random;
 
 
@@ -10,11 +12,16 @@ import java.util.Random;
  */
 public class User {
 
+  private boolean isOnline;
   /**
    * the users clienthandler
    */
-  private final ClientHandler clienthandler;
+  private ClientHandler clienthandler;
 
+  /**
+   * the users uuid
+   */
+  private final String uuid;
   /**
    * the users username
    */
@@ -66,11 +73,6 @@ public class User {
   private boolean isNotActivelyRollingTheDice;
 
   /**
-   * the clients number on the userlist
-   */
-  private int userListNumber;
-
-  /**
    * the player Nr. in the GUI
    * decides which circle represents this client
    */
@@ -86,22 +88,28 @@ public class User {
    */
   public boolean gameOver;
 
-  public int playerNrInLobby;
-
   /**
    * creates a new user object
    *
    * @param clientHandler ClientHandler
    * @param username      String
    */
-  public User(ClientHandler clientHandler, String username) {
+  public User(ClientHandler clientHandler, String username, String uuid, boolean isOnline) {
     this.clienthandler = clientHandler;
     this.username = username;
     this.district = assignDistrict();
+    this.uuid = uuid;
+    this.lobby = GameList.getLobbyList().get(0);
+    this.isOnline = isOnline;
   }
 
 
   // ----- GETTERS -----
+
+
+  public boolean isOnline() {
+    return isOnline;
+  }
 
   /**
    * returns the clients username
@@ -202,14 +210,6 @@ public class User {
     return isNotActivelyRollingTheDice;
   }
 
-  /**
-   * returns the clients userlist number
-   *
-   * @return int
-   */
-  public int getUserListNumber() {
-    return userListNumber;
-  }
 
   /**
    * returns whether the game is over or not
@@ -218,6 +218,10 @@ public class User {
    */
   public boolean getGameOver() {
     return gameOver;
+  }
+
+  public String getUuid() {
+    return uuid;
   }
 
 
@@ -315,15 +319,6 @@ public class User {
   }
 
   /**
-   * sets the clients userlist number
-   *
-   * @param userListNumber int
-   */
-  public void setUserListNumber(int userListNumber) {
-    this.userListNumber = userListNumber;
-  }
-
-  /**
    * sets the game status to over
    */
   public void setGameOver() {
@@ -334,6 +329,15 @@ public class User {
    * sets the users character choice
    */
   public void setCharacter(int nr) { characterNr = nr; }
+
+
+  public void setClienthandler(ClientHandler client) {
+    this.clienthandler = client;
+  }
+
+  public void setOnline(boolean online) {
+    isOnline = online;
+  }
 
   //-------------OTHER METHODS------------------------------
 
