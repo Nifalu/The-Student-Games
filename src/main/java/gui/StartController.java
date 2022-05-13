@@ -76,8 +76,10 @@ public class StartController implements Initializable {
    */
   @FXML
   public void printMsg(String msg) {
-    Platform.runLater(() -> showText.setText(msg));
-    // showText.setText(msg);
+    if (msg != null) {
+      Platform.runLater(() -> showText.setText(msg));
+      // showText.setText(msg);
+    }
   }
 
 

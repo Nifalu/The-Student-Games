@@ -198,8 +198,10 @@ public class GameController implements Initializable {
    */
   @FXML
   public void printChatMessage(String msg) {
-    chat.appendText(msg);
-    chat.appendText("\n");
+    if (msg != null) {
+      chat.appendText(msg);
+      chat.appendText("\n");
+    }
   }
 
   /**
@@ -289,13 +291,15 @@ public class GameController implements Initializable {
    * @param gameMove String
    */
   public void printGameUpdate(String gameMove) {
-    String[] splitted = gameMove.split("§");
-    Platform.runLater(() -> {
-      for (String s : splitted) {
-        gameTracker.appendText(s);
-        gameTracker.appendText("\n");
-      }
-    });
+    if (gameMove != null) {
+      String[] splitted = gameMove.split("§");
+      Platform.runLater(() -> {
+        for (String s : splitted) {
+          gameTracker.appendText(s);
+          gameTracker.appendText("\n");
+        }
+      });
+    }
   }
 
   /**

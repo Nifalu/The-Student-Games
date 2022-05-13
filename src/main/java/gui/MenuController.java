@@ -151,10 +151,12 @@ public class MenuController implements Initializable {
    */
   @FXML
   public void printChatMessage(String msg) {
-    Platform.runLater(() -> {
-      chat.appendText(msg);
-      chat.appendText("\n");
-    });
+    if (msg != null) {
+      Platform.runLater(() -> {
+        chat.appendText(msg);
+        chat.appendText("\n");
+      });
+    }
   }
 
   /**
