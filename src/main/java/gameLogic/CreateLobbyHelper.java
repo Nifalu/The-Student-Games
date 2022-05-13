@@ -120,9 +120,6 @@ public class CreateLobbyHelper {
   public synchronized void changeLobby(String number) {
     number = number.replaceAll("\\s", "");
     int lobbynumber = Integer.parseInt(number);
-    System.out.println("number " + lobbynumber);
-    System.out.println("lobby size " + GameList.getLobbyList().size());
-    System.out.println("lobby " + GameList.getLobbyList().get(lobbynumber));
     if (lobbynumber < GameList.getLobbyList().size() && lobbynumber >= 0) {
       if (GameList.getLobbyList().get(lobbynumber).getLobbyStatus() == 1) {
         clienthandler.user.setLobby(GameList.getLobbyList().get(lobbynumber));

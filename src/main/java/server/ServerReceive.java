@@ -175,13 +175,16 @@ public class ServerReceive implements Runnable {
         try {
           int number = Integer.parseInt(msg.replaceAll("\\s", ""));
           if (number < GameList.getLobbyList().size() && number >= 0) {
-            if (GameList.getLobbyList().get(number).getLobbyStatus() == 1) {
+            if (GameList.getLobbyList().get(number).getLobbyStatus() == 1 ||
+                    GameList.getLobbyList().get(number).getLobbyStatus() == 69) {
               if (client.user.getIsReady()) {
                 if (!client.user.getIsPlaying()) {
                   client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
                   client.user.setReadyToPlay(false);
                   client.lobbyhelper.changeLobby(msg);
-                  client.user.getLobby().checkIfCharsTaken();
+                  if (GameList.getLobbyList().get(number).getLobbyStatus() == 1) {
+                    client.user.getLobby().checkIfCharsTaken();
+                  }
                 } else {
                   sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to finish this game.");
                 }
