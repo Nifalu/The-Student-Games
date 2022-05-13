@@ -309,7 +309,7 @@ public class MenuController implements Initializable {
     if (clientIsInLobby) {
       sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
       Main.displayCharSelectionPopUp();
-      //sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+      //sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
     } else {
       Main.displayNotInLobbyPopUp();
     }
@@ -394,7 +394,7 @@ public class MenuController implements Initializable {
         sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
         Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
         clientIsInLobby = true;
-        sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+        //sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
         switchToCharSelection();
       } catch (Exception e) {
         Platform.runLater(() -> selectedLobbyLabel.setText("Lobby needs to be open."));
