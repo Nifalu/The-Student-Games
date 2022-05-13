@@ -1,7 +1,5 @@
 package utility.io;
 
-import server.ClientHandler;
-
 /**
  * contains all commands for the client
  */
@@ -73,6 +71,8 @@ public enum CommandsToClient {
    * tells the client how many dicedice he has left
    */
   DICEDICELEFT,
+
+  MUSIC,
 
   DISABLECHARGUI,
 

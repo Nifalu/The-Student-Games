@@ -42,6 +42,8 @@ public class User {
    */
   private boolean isReady;
 
+  private boolean punished;
+
   /**
    * the users current lobby
    */
@@ -224,6 +226,9 @@ public class User {
     return uuid;
   }
 
+  public boolean isPunished() {
+    return punished;
+  }
 
   // ----- SETTERS -----
 
@@ -344,6 +349,10 @@ public class User {
 
   public void setOnline(boolean online) {
     isOnline = online;
+  }
+
+  public void setPunished(boolean punished) {
+    this.punished = punished;
   }
 
   //-------------OTHER METHODS------------------------------
