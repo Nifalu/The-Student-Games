@@ -6,8 +6,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -39,7 +37,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="410.0" fitWidth="433.0" layoutX="-22.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="backgroundblock" fitHeight="410.0" fitWidth="433.0" layoutX="-22.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@panel_definitiv.png" />
                                  </image>
@@ -49,27 +47,27 @@
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor></ListView>
                               <TextField fx:id="createLobbyTextField" layoutX="80.0" layoutY="448.0" onAction="#createLobby" prefHeight="25.0" prefWidth="149.0" promptText="Please enter new lobby..." />
-                              <ImageView fx:id="createLobbyButton" accessibleRole="BUTTON" disable="true" fitHeight="40.0" fitWidth="81.0" layoutX="229.0" layoutY="441.0" onMouseClicked="#createLobby" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="button" fx:id="createLobbyButton" accessibleRole="BUTTON" disable="true" fitHeight="40.0" fitWidth="81.0" layoutX="229.0" layoutY="441.0" onMouseClicked="#createLobby" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@createButton_defintiv.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="68.0" fitWidth="71.0" layoutX="282.0" layoutY="154.0" onMouseClicked="#refreshLobbies" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="button" fitHeight="68.0" fitWidth="71.0" layoutX="282.0" layoutY="154.0" onMouseClicked="#refreshLobbies" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@refreshButton_defintiv.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="joinLobbyButton" accessibleRole="BUTTON" disable="true" fitHeight="71.0" fitWidth="89.0" layoutX="66.0" layoutY="154.0" onMouseClicked="#joinSelectedLobby" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="button" fx:id="joinLobbyButton" accessibleRole="BUTTON" disable="true" fitHeight="71.0" fitWidth="89.0" layoutX="66.0" layoutY="154.0" onMouseClicked="#joinSelectedLobby" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@joinButton_definitiv.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="toGameButton" accessibleRole="BUTTON" disable="true" fitHeight="65.0" fitWidth="138.0" layoutX="14.0" layoutY="597.0" onMouseClicked="#switchToGame" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="button" fx:id="toGameButton" accessibleRole="BUTTON" disable="true" fitHeight="65.0" fitWidth="138.0" layoutX="14.0" layoutY="597.0" onMouseClicked="#switchToGame" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@gameButton_definitiv.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="75.0" fitWidth="176.0" layoutX="165.0" layoutY="592.0" onMouseClicked="#switchToHighscore" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="button" fitHeight="75.0" fitWidth="176.0" layoutX="165.0" layoutY="592.0" onMouseClicked="#switchToHighscore" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@highscoreButton_definitiv.png" />
                                  </image>
@@ -82,34 +80,28 @@
                                  <children>
                                     <AnchorPane prefHeight="651.0" prefWidth="328.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <ImageView fitHeight="365.0" fitWidth="347.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView id="backgroundblock" fitHeight="365.0" fitWidth="347.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@panelYellow_defintiv.png" />
                                              </image>
                                           </ImageView>
                                           <TextArea fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" />
                                           <TextField fx:id="chatTextField" layoutX="45.0" layoutY="296.0" onAction="#sendChatMessage" promptText="type your message here ..." />
-                                          <ImageView fx:id="sendButton" disable="true" fitHeight="48.0" fitWidth="72.0" layoutX="201.0" layoutY="286.0" onMouseClicked="#sendChatMessage" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView id="button" fx:id="sendButton" disable="true" fitHeight="48.0" fitWidth="72.0" layoutX="201.0" layoutY="286.0" onMouseClicked="#sendChatMessage" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@sendButton_definitiv.png" />
                                              </image>
                                           </ImageView>
-                                          <ImageView fitHeight="32.0" fitWidth="59.0" layoutX="91.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView id="button" fx:id="lobbychatbuttonimage" disable="true" fitHeight="32.0" fitWidth="59.0" layoutX="91.0" layoutY="17.0" onMouseClicked="#switchChat" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@lobbyButton_defintiv.png" />
                                              </image>
                                           </ImageView>
-                                          <ImageView fitHeight="39.0" fitWidth="84.0" layoutX="148.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView id="button" fx:id="globalchatbuttonimage" fitHeight="39.0" fitWidth="84.0" layoutX="148.0" layoutY="14.0" onMouseClicked="#switchChat" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@globalButton_defintiv.png" />
                                              </image>
                                           </ImageView>
-                                          <ToggleButton layoutX="94.0" layoutY="20.0" mnemonicParsing="false" onAction="#switchChat" opacity="0.0" selected="true" text="LOBBY" textFill="TRANSPARENT">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="switchGlobalLobby" />
-                                             </toggleGroup>
-                                          </ToggleButton>
-                                          <ToggleButton fx:id="globalToggleButton" layoutX="153.0" layoutY="21.0" mnemonicParsing="false" onAction="#switchChat" opacity="0.0" prefHeight="25.0" prefWidth="84.0" text="GLOBAL" toggleGroup="$switchGlobalLobby" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -120,33 +112,33 @@
                            <children>
                               <AnchorPane prefHeight="640.0" prefWidth="374.0">
                                  <children>
-                                    <ImageView fitHeight="325.0" fitWidth="399.0" layoutX="-53.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="backgroundblock" fitHeight="325.0" fitWidth="399.0" layoutX="-53.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@panelRed_definitiv.png" />
                                        </image>
                                     </ImageView>
                                     <ListView fx:id="friendListView" layoutX="23.0" layoutY="345.0" prefHeight="173.0" prefWidth="228.0" />
-                                    <ImageView fitHeight="60.0" fitWidth="69.0" layoutX="173.0" layoutY="274.0" onMouseClicked="#refreshFriends" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="button" fitHeight="60.0" fitWidth="69.0" layoutX="173.0" layoutY="274.0" onMouseClicked="#refreshFriends" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@refreshButton_defintiv.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fitHeight="90.0" fitWidth="200.0" layoutX="162.0" layoutY="586.0" onMouseClicked="#quitGame" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="button" fitHeight="90.0" fitWidth="200.0" layoutX="162.0" layoutY="586.0" onMouseClicked="#quitGame" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@quitButton_definitiv.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fitHeight="72.0" fitWidth="146.0" layoutX="183.0" layoutY="36.0" onMouseClicked="#switchToCharSelection" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="button" fitHeight="72.0" fitWidth="146.0" layoutX="183.0" layoutY="36.0" onMouseClicked="#switchToCharSelection" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@changeCharacter_defintiv.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fitHeight="74.0" fitWidth="142.0" layoutX="192.0" layoutY="108.0" onMouseClicked="#switchToNameSelection" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="button" fitHeight="74.0" fitWidth="142.0" layoutX="192.0" layoutY="108.0" onMouseClicked="#switchToNameSelection" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@changeName_definitiv.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fitHeight="56.0" fitWidth="79.0" layoutX="244.0" layoutY="-28.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="button" fitHeight="56.0" fitWidth="79.0" layoutX="244.0" layoutY="-28.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@helpButton_definitiv.png" />
                                        </image>

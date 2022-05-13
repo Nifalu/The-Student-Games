@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
 
@@ -25,6 +26,7 @@ public class MenuController implements Initializable {
    * String which saves a message
    */
   private static String msg;
+
 
   private String selectedLobby = "";
 
@@ -44,6 +46,10 @@ public class MenuController implements Initializable {
   public ImageView joinLobbyButton;
   public ImageView createLobbyButton;
   public ImageView sendButton;
+  public ImageView globalchatbuttonimage;
+  public ImageView lobbychatbuttonimage;
+  public ToggleButton globalToggleButton;
+  public ToggleButton lobbyToggleButton;
 
   /**
    * notes whether the user wants to write in global chat
@@ -80,12 +86,6 @@ public class MenuController implements Initializable {
    */
   @FXML
   private Button quitButton;
-
-  /**
-   * a ToggleButton used to switch to global chat
-   */
-  @FXML
-  private ToggleButton globalToggleButton;
 
   /**
    * a ListView showing lobbies
@@ -221,8 +221,21 @@ public class MenuController implements Initializable {
    *
    * @param actionEvent actionEvent
    */
-  public void switchChat(ActionEvent actionEvent) {
-    writeInGlobalChat = actionEvent.getSource() == globalToggleButton;
+  public void switchChat(MouseEvent actionEvent) {
+    if (actionEvent.getSource() == globalchatbuttonimage) {
+      writeInGlobalChat = true;
+      globalchatbuttonimage.setOpacity(selectedOpacity);
+      globalchatbuttonimage.setDisable(true);
+      lobbychatbuttonimage.setOpacity(unselectedOpacity);
+      lobbychatbuttonimage.setDisable(false);
+
+    } else {
+      writeInGlobalChat = false;
+      globalchatbuttonimage.setOpacity(unselectedOpacity);
+      globalchatbuttonimage.setDisable(false);
+      lobbychatbuttonimage.setOpacity(selectedOpacity);
+      lobbychatbuttonimage.setDisable(true);
+    }
   }
 
 
