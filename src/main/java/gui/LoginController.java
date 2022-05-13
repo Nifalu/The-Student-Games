@@ -195,6 +195,7 @@ public class LoginController implements Initializable {
         savedlogins = savedlogins.replace(toDelete + "!", "");
         saveLogins(savedlogins);
       }
+      br.close();
     } catch (IOException e) {
       logger.warn("Login was not removed");
     }
@@ -209,6 +210,7 @@ public class LoginController implements Initializable {
           Platform.runLater(() -> recentlist.getItems().add(i));
         }
       }
+      br.close();
     } catch (IOException e) {
       logger.warn("Logins could not be loaded");
     }
