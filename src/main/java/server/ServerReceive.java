@@ -304,11 +304,19 @@ public class ServerReceive implements Runnable {
         break;
 
       case DISABLECHARGUI:
-        sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.DISABLECHARGUI, msg);
+        //sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.DISABLECHARGUI, msg);
+        if (!msg.equals("0")) {
+          sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.DISABLECHARGUI, msg);
+          client.user.getLobby().charactersTaken.put(Integer.parseInt(msg), true);
+        }
         break;
 
       case ENABLECHARGUI:
-        sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, msg);
+        //sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, msg);
+        if (!msg.equals("0")) {
+          sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, msg);
+          client.user.getLobby().charactersTaken.put(Integer.parseInt(msg), false);
+        }
         break;
 
       /*case CHECKIFCHARSTAKEN:
