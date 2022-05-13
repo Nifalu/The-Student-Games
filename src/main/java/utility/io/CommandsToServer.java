@@ -178,5 +178,18 @@ public enum CommandsToServer {
    * changes all character tokens in the game gui
    * useful if  player joins a lobby AFTER everyone has already gotten and set their characters
    */
-  SETALLCHARTOKENS, CHECKALLCHARS, ENABLEALLCHARS,
+  SETALLCHARTOKENS,
+
+  /**
+   * checks which characters are already taken in a lobby and enables/disables the correct ones in the
+   * character selection screen
+   * used when joining a lobby
+   */
+  CHECKALLCHARS,
+
+  /**
+   * enables the current character in the char selection screen
+   * useful if the user is unknown to the class which wants to enable their character
+   */
+  ENABLECURRENTCHARGUI,
 }

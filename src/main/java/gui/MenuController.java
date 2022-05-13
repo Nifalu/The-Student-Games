@@ -289,12 +289,12 @@ public class MenuController implements Initializable {
   /**
    * switches to the Char Selection scene when pressing the button
    */
-  public void switchToCharSelection() {
+  public void switchToCharSelection() throws InterruptedException {
+    Thread.sleep(500);
     // Main.displayCharSelection();
+    sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
     if (clientIsInLobby) {
-      sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
       Main.displayCharSelectionPopUp();
-      //sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
     } else {
       Main.displayNotInLobbyPopUp();
     }
@@ -375,14 +375,15 @@ public class MenuController implements Initializable {
     } else {
       String lobbyNumber = selectedLobby.substring(0, 1);
       try {
+        sendToServer.send(CommandsToServer.ENABLECURRENTCHARGUI, "");
+        sendToServer.send(CommandsToServer.CHANGECHARACTER, "0");
         Integer.parseInt(lobbyNumber);
         sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
         Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
         clientIsInLobby = true;
-        //sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
-        //switchToCharSelection();
+
         if (selectedLobby.contains("open")) {
-          sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+          // sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
           switchToCharSelection();
         }
       } catch (Exception e) {

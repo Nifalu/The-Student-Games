@@ -497,7 +497,7 @@ public class GameController implements Initializable {
     System.out.println("tokenNr " + tokenNr);
     System.out.println("charNr " + charNr);
     System.out.println("----------------------------");
-    if (tokenNr == 0 || charNr == 0) {
+    if (tokenNr == 0) {
       return;
     }
 
@@ -530,6 +530,8 @@ public class GameController implements Initializable {
       return "char5.png";
     } else if (charNr == 6) {
       return "char6.png";
+    } else if (charNr == 0) {
+      return "char0.png";
     }
     return "";
   }

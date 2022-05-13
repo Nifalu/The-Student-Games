@@ -52,7 +52,6 @@ public class CharSelectionController implements Initializable {
         charFiveSelectionCircle.setStroke(Color.BLACK);
         charSixSelectionCircle.setStroke(Color.BLACK);
 
-
         Image char1 = new Image("char1.png", false);
         Image char2 = new Image("char2.png", false);
         Image char3 = new Image("char3.png", false);
@@ -114,6 +113,9 @@ public class CharSelectionController implements Initializable {
 
     public void enableCharOnScreen(String msg) {
         switch (msg) {
+            case "0":
+                // do nothing
+                break;
             case "1":
                 charOneSelectionCircle.setDisable(false);
                 charOneSelectionCircle.setOpacity(1);
@@ -142,6 +144,9 @@ public class CharSelectionController implements Initializable {
     }
     public void disableCharOnScreen(String msg) {
         switch (msg) {
+            case "0":
+                // do nothing
+                break;
             case "1":
                 charOneSelectionCircle.setDisable(true);
                 charOneSelectionCircle.setOpacity(0.1);

@@ -180,6 +180,10 @@ public class SendToServer {
       case CHECKALLCHARS:
         sendTo("CHECKALLCHARS--" + msg);
         break;
+
+      case ENABLECURRENTCHARGUI:
+        sendTo("ENABLECURRENTCHARGUI--" + msg);
+        break;
     }
   }
 
