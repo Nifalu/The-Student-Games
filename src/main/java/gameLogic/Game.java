@@ -164,11 +164,7 @@ public class Game implements Runnable {
             changePosition(playersPlaying.get(i), sendAllDice(playersPlaying.get(i).getClienthandler().user));
 
             // moves the player characters in the GUI
-            for (int j = 0; j < numPlayers; j++) {
-              if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 89) {
-                sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).gameTokenNr + "--" + playersPlaying.get(j).getPlayingField());
-              }
-            }
+            positionUpdate();
 
             cheated = false;
 
@@ -184,12 +180,9 @@ public class Game implements Runnable {
                   Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)), "game");
             }
           }
+
           // moves the player characters in the GUI
-          for (int j = 0; j < numPlayers; j++) {
-            if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 89) {
-              sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER, playersPlaying.get(j).gameTokenNr + "--" + playersPlaying.get(j).getPlayingField());
-            }
-          }
+          positionUpdate();
         } else {
           if (playersPlaying.get(i).getPlayingField() != 0) {
             lostConnection(playersPlaying.get(i));
@@ -356,24 +349,24 @@ public class Game implements Runnable {
     }
 
     //puts the player to the new position
+    if (newPosition > 88) { newPosition = 89; }
     user.setPlayingField(newPosition);
+    positionUpdate();
     if (!cheated) {
       if (newPosition <= 88) {
         lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to " + newPosition);
         checkField(user, newPosition);
       } else {
-        user.setPlayingField(89);
         lobbyBroadcastToPlayer(user.getUsername() + " moved from: " + currentPosition + " to Bachelorfeier");
         user.setIsPlaying(false);
       }
-      //checkField(user, newPosition);
     } else {
       if (newPosition > 88) {
-        user.setPlayingField(89);
         checkField(user, newPosition);
         user.setIsPlaying(false);
       }
     }
+    positionUpdate();
   }
 
   /**
@@ -385,30 +378,39 @@ public class Game implements Runnable {
   public void checkField(User user, int field) {
     String msg = null;
     if (field == 1) { // 1 + 55 ladder up
+      //pause(500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
       changePosition(user, 15 - field);
     } else if (field == 55) {
+      //pause(500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
       changePosition(user, 59 - field);
     } else if (field == 20) { // 20 - 87 ladder down
+      //pause(500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 14 - field);
     } else if (field == 26) {
+      //pause(500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 10 - field);
     } else if (field == 52) {
+      //pause(100);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 36 - field);
     } else if (field == 57) {
+      //pause(100);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 40 - field);
     } else if (field == 80) {
+      //pause(100);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 78 - field);
     } else if (field == 87) {
+      //pause(100);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       changePosition(user, 68 - field);
     } else if (field == 17 || field == 31 || field == 45 || field == 73) { // Action Cards
+      //pause(100);
       String card = Cards.getCards();
       String[] arr = card.split(" ", 2);
       int positionToChange = Integer.parseInt(arr[0]);
@@ -466,6 +468,25 @@ public class Game implements Runnable {
       e.printStackTrace();
     }
   }
+
+  public void pause (int time) {
+    try {
+      Thread.sleep(time);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void positionUpdate() {
+    // moves the player characters in the GUI
+    for (int j = 0; j < numPlayers; j++) {
+      if (playersPlaying.get(j).getPlayingField() >= 0 && playersPlaying.get(j).getPlayingField() <= 89) {
+        sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.GUIMOVECHARACTER,
+                playersPlaying.get(j).gameTokenNr + "--" + playersPlaying.get(j).getPlayingField());
+      }
+    }
+  }
+
 
   /**
    * If a player has answered two question wrong then the person will exmatriculated.

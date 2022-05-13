@@ -240,8 +240,8 @@ public class Lobby {
           break;
         }
       }
-      lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
-          + clientHandler.user.getLobby().getLobbyName());
+      //lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
+      //    + clientHandler.user.getLobby().getLobbyName());
       lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
           clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
 
@@ -386,6 +386,6 @@ public class Lobby {
    * @param msg Message to be sent to the users
    */
   public void lobbyBroadcastToPlayer(String msg) {
-    sendToClient.lobbyBroadcast(getUsersInLobby(), CommandsToClient.PRINT, msg);
+    sendToClient.lobbyBroadcast(getUsersInLobby(), CommandsToClient.PRINTGUIGAMETRACKER, msg);
   }
 }
