@@ -55,7 +55,7 @@ public class ServerManager {
    * Creates the Main Lobby where everyone is in when they connect to the server or leave a game.
    */
   public static synchronized void createMainLobby() {
-    Lobby lobby = new Lobby("StandardLobby");
+    Lobby lobby = new Lobby("ZG");
     GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
     lobby.setLobbyStatusToStandard();
   }
