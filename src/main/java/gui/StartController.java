@@ -129,6 +129,9 @@ public class StartController implements Initializable {
 
     public void nameNo(ActionEvent actionEvent) {
       sendToServer.send(CommandsToServer.NAME, "no");
+      Main.displayNameSelectionPopUp();
+      switchToMenu();
+      /**
       yesButton.setOpacity(0);
       yesButton.setDisable(true);
       noButton.setOpacity(0);
@@ -136,6 +139,7 @@ public class StartController implements Initializable {
       textInput.setOpacity(1);
       sendButton.setOpacity(1);
       sendButton.setDisable(false);
+       **/
     }
 
   public void nameYes(ActionEvent actionEvent) {
