@@ -436,7 +436,7 @@ public class Game implements Runnable {
       String textCard = arr[1];
       lobbyBroadcastToPlayer("§" + user.getUsername() + " draws an action card:" + "§" + textCard + "§");
       changePosition(user, positionToChange);
-    } else if (field == 7 || field == 22 || field == 49 || field == 65) { // Quiz
+    } else if (field == 7 || field == 13 || field == 22 || field == 38 || field == 49 || field == 65 || field == 83) { // Quiz
       quizOngoing = true;
       String quizQuestion = Quiz.quiz();
       String[] quiz = quizQuestion.split("Ç");

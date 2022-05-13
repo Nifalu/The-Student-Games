@@ -20,7 +20,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <children>
       <ImageView fitHeight="778.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -92,7 +92,7 @@
                               <Label layoutX="16.0" layoutY="19.0" text="84" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue powderblue;" GridPane.columnIndex="3" GridPane.rowIndex="0">
                            <children>
                               <Label layoutX="16.0" layoutY="19.0" text="83" />
                            </children>
@@ -317,7 +317,7 @@
                               <Label layoutX="16.0" layoutY="19.0" text="30" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: plum;" GridPane.columnIndex="8" GridPane.rowIndex="5">
                            <children>
                               <Label layoutX="16.0" layoutY="19.0" text="31" />
                            </children>
@@ -352,7 +352,7 @@
                               <Label layoutX="16.0" layoutY="19.0" text="37" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue powderblue;" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
                               <Label layoutX="16.0" layoutY="19.0" text="38" />
                            </children>
@@ -427,7 +427,7 @@
                               <Label layoutX="18.0" layoutY="19.0" text="12" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: powderblue powderblue;" GridPane.columnIndex="6" GridPane.rowIndex="7">
                            <children>
                               <Label layoutX="16.0" layoutY="19.0" text="13" />
                            </children>
