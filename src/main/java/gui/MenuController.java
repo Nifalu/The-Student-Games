@@ -367,7 +367,7 @@ public class MenuController implements Initializable {
 
   private void lobbySelectionListener() {
     lobbyListView.getSelectionModel().selectedItemProperty().addListener((obs, oldv, newv) -> {
-      if (newv.contains("open") || newv.contains("ongoing")) {
+      if (newv.contains("open") || newv.contains("going")) {
         if (!newv.equals(selectedLobby)) {
           joinLobbyButton.setDisable(false);
           joinLobbyButton.setOpacity(selectedOpacity);
