@@ -69,7 +69,7 @@ public class ServerManager {
    * @param user User
    */
   public synchronized static void disconnect(User user) {
-    userlist.remove(user.getUserListNumber() - 1, user);
+    //userlist.remove(user.getUserListNumber() - 1, user);
   }
 
 
