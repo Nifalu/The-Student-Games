@@ -11,37 +11,51 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /*
- * @author David J. Barnes und Michael KÃ¶lling
+ * @author David J. Barnes und Michael Kölling
  * @version 31.07.2011
  */
 
+/**
+ * MusicPlayer plays the given music from folder audio
+ */
 public class MusicPlayer
 {
 
     private AdvancedPlayer player;
 
+    /**
+     * creates a new MusicPlayer
+     */
     public MusicPlayer()
     {
         player = null;
     }
 
-
-    public void dateiAnspielen(String dateiname)
+    /**
+     * Plays the music for a short time
+     *
+     * @param musicName Music to be played
+     */
+    public void shortPlay(String musicName)
     {
         try {
-            playerVorbereiten(dateiname);
+            playerPreparer(musicName);
             player.play(5000);
         }
         catch(JavaLayerException e) {
-            meldeProblem(dateiname);
+            printError(musicName);
         }
     }
 
-
-    public void starteAbspielen(final String dateiname)
+    /**
+     * Starts the music
+     *
+     * @param musicName Music to be played
+     */
+    public void startMusic(final String musicName)
     {
         try {
-            playerVorbereiten(dateiname);
+            playerPreparer(musicName);
             Thread playerThread = new Thread() {
                 public void run()
                 {
@@ -49,55 +63,68 @@ public class MusicPlayer
                         player.play(5000);
                     }
                     catch(JavaLayerException e) {
-                        meldeProblem(dateiname);
+                        printError(musicName);
                     }
                 }
             };
             playerThread.start();
         }
         catch (Exception ex) {
-            meldeProblem(dateiname);
+            printError(musicName);
         }
     }
 
+    /**
+     * Stops the music
+     */
     public void stop()
     {
         killPlayer();
     }
 
-
-    private void playerVorbereiten(String dateiname)
+    /**
+     * Prepares the music player with to music to be played
+     *
+     * @param musicName Music to be played
+     */
+    private void playerPreparer(String musicName)
     {
         try {
-            InputStream is = gibEingabestream(dateiname);
-            player = new AdvancedPlayer(is, erzeugeAudiogeraet());
+            InputStream is = giveInStream(musicName);
+            player = new AdvancedPlayer(is, createAudioPlayer());
         }
         catch (IOException e) {
-            meldeProblem(dateiname);
+            printError(musicName);
             killPlayer();
         }
         catch(JavaLayerException e) {
-            meldeProblem(dateiname);
+            printError(musicName);
             killPlayer();
         }
     }
 
-
-    private InputStream gibEingabestream(String dateiname)
+    /**
+     * Inputstream with its given music
+     *
+     * @param musicName Music to be played
+     * @return FactoryRegistry
+     * @throws IOException
+     */
+    private InputStream giveInStream(String musicName)
             throws IOException
     {
         return new BufferedInputStream(
-                new FileInputStream(dateiname));
+                new FileInputStream(musicName));
     }
-
-
-    private AudioDevice erzeugeAudiogeraet()
+    private AudioDevice createAudioPlayer()
             throws JavaLayerException
     {
         return FactoryRegistry.systemRegistry().createAudioDevice();
     }
 
-
+    /**
+     * Kills the music player
+     */
     private void killPlayer()
     {
         synchronized(this) {
@@ -109,9 +136,13 @@ public class MusicPlayer
     }
 
 
-    private void meldeProblem(String dateiname)
+    /**
+     * Print an error message if something wrong happens
+     * @param musicName Name of music to be played
+     */
+    private void printError(String musicName)
     {
-        System.out.println("Es gab ein Problem beim Abspielen von: " + dateiname);
+        System.out.println("There was a problem with playing: " + musicName);
     }
 
 }
