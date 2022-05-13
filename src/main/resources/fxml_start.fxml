@@ -46,13 +46,11 @@
                   <Image url="@noButton.png" />
                </image>
             </ImageView>
-            <Button fx:id="yesButton" layoutX="293.0" layoutY="278.0" mnemonicParsing="false" onAction="#nameYes" opacity="0.0" prefHeight="45.0" prefWidth="76.0" text="yes" />
             <ImageView fx:id="yesImage" fitHeight="59.0" fitWidth="88.0" layoutX="287.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@yesButton.png" />
                </image>
             </ImageView>
-            <Button fx:id="noButton" layoutX="398.0" layoutY="277.0" mnemonicParsing="false" onAction="#nameNo" opacity="0.0" prefHeight="45.0" prefWidth="80.0" text="no" />
             <ImageView fitHeight="235.0" fitWidth="76.0" layoutX="580.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@char2_noBackground.png" />
@@ -98,6 +96,8 @@
                   <Image url="@diceGreen.png" />
                </image>
             </ImageView>
+            <Button fx:id="yesButton" layoutX="293.0" layoutY="278.0" mnemonicParsing="false" onAction="#nameYes" opacity="0.0" prefHeight="45.0" prefWidth="76.0" text="yes" />
+            <Button fx:id="noButton" layoutX="398.0" layoutY="277.0" mnemonicParsing="false" onAction="#nameNo" opacity="0.0" prefHeight="45.0" prefWidth="80.0" text="no" />
          </children>
       </AnchorPane>
    </children>
