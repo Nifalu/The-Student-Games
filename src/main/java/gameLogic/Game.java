@@ -209,6 +209,8 @@ public class Game implements Runnable {
     if (user.getIsNotActivelyRollingTheDice()) {
       time = maxTimeWhenInactive;
     }
+    String[] diceMusic = {"audio/dice1.mp3", "audio/dice2.mp3", "audio/dice3.mp3", "audio/dice4.mp3"};
+    Random random = new Random();
     for (int i = 0; i < time; i++) {
       if (!GameServer.isonline) {
         break; // stops this loop when the server closes
@@ -216,15 +218,18 @@ public class Game implements Runnable {
       if (rolledDice) {
         user.setIsActivelyRollingTheDice();
         dice = Dice.dice();
+        music(diceMusic[random.nextInt(4)]);
         break;
       } else if (rolledSpecialDice) {
         user.setIsActivelyRollingTheDice();
         dice = Dice.specialDice();
         lobbyBroadcastToPlayer(userToRollDice.getUsername() + " rolled a special dice and has " + userToRollDice.getSpecialDiceLeft() + " dices left");
         sendToClient.send(userToRollDice.getClienthandler(), CommandsToClient.DICEDICELEFT, Integer.toString(userToRollDice.getSpecialDiceLeft()));
+        music("audio/specialDice.mp3");
         break;
       } else if (i == time - 1) {
         user.setNotActivelyRollingTheDice();
+        music(diceMusic[random.nextInt(4)]);
       } else {
         try {
           Thread.sleep(1);
@@ -241,9 +246,6 @@ public class Game implements Runnable {
     } else {
       dice = 0;
     }
-    String[] diceMusic = {"audio/dice1.mp3", "audio/dice2.mp3", "audio/dice3.mp3"};
-    Random random = new Random();
-    music(diceMusic[random.nextInt(3)]);
     return dice;
   }
 
@@ -394,43 +396,42 @@ public class Game implements Runnable {
    * @param field Users new position
    */
   public void checkField(User user, int field) {
-    if (field == 1) { // 1 + 55 ladder up
+    if (field == 1 || field == 55) {
+      music("audio/correct.mp3");
       pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
-      changePosition(user, 15 - field);
-    } else if (field == 55) {
-      pause(1500);
-      lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
-      changePosition(user, 59 - field);
-    } else if (field == 20) { // 20 - 87 ladder down
-      pause(1500);
-      lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
-      changePosition(user, 14 - field);
-    } else if (field == 26) {
+      if (field == 1) { // 1 + 55 ladder up
+        changePosition(user, 15 - field);
+      } else {
+        changePosition(user, 59 - field);
+      }
+    } else if (field == 20 || field == 26 || field == 52 || field == 57 || field == 80 || field == 87) {
+      music("audio/wrong.mp3");
       pause(1500);
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
-      changePosition(user, 10 - field);
-    } else if (field == 52) {
-      pause(1500);
-      lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
-      changePosition(user, 36 - field);
-    } else if (field == 57) {
-      pause(1500);
-      lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
-      changePosition(user, 40 - field);
-    } else if (field == 80) {
-      pause(1500);
-      lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
-      changePosition(user, 78 - field);
-    } else if (field == 87) {
-      pause(1500);
-      lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
-      changePosition(user, 68 - field);
+      if (field == 20) { // 20 - 87 ladder down
+        changePosition(user, 14 - field);
+      } else if (field == 26) {
+        changePosition(user, 10 - field);
+      } else if (field == 52) {
+        changePosition(user, 36 - field);
+      } else if (field == 57) {
+        changePosition(user, 40 - field);
+      } else if (field == 80) {
+        changePosition(user, 78 - field);
+      } else {
+        changePosition(user, 68 - field);
+      }
     } else if (field == 17 || field == 31 || field == 45 || field == 73) { // Action Cards
       pause(1500);
       String card = Cards.getCards();
       String[] arr = card.split(" ", 2);
       int positionToChange = Integer.parseInt(arr[0]);
+      if (positionToChange > 0) {
+        music("audio/correct.mp3");
+      } else {
+        music("audio/wrong.mp3");
+      }
       String textCard = arr[1];
       lobbyBroadcastToPlayer("§" + user.getUsername() + " draws an action card:" + "§" + textCard + "§");
       changePosition(user, positionToChange);
@@ -444,9 +445,9 @@ public class Game implements Runnable {
       for (int i = 0; i < maxTimeToAnswerQuiz; i++) {
         if (quizAnsweredCorrect) {
           lobbyBroadcastToPlayer(user.getUsername() + "'s answer: " + quiz[1] + " is correct.");
+          music("audio/correct.mp3");
           changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]));
           quizAnsweredCorrect = false;
-          music("audio/correct.mp3");
           break;
         } else if (quizAnsweredWrong || i == maxTimeToAnswerQuiz - 1) {
           quizAnsweredWrong = false;
