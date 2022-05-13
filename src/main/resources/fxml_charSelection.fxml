@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 
-<Pane xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CharSelectionController">
+<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CharSelectionController">
    <children>
       <ImageView fitHeight="736.0" fitWidth="593.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -30,32 +30,32 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Circle fx:id="charOneSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharOne" radius="100.0" stroke="BLACK" strokeType="INSIDE">
+                  <Circle id="chreisEis" fx:id="charOneSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharOne" onMouseEntered="#changeCharOne" onMouseExited="#changeCharOneBack" radius="100.0" stroke="BLACK" strokeType="INSIDE">
                      <GridPane.margin>
                         <Insets left="45.0" />
                      </GridPane.margin>
                   </Circle>
-                  <Circle fx:id="charTwoSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharTwo" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1">
+                  <Circle fx:id="charTwoSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharTwo" onMouseEntered="#changeCharTwo" onMouseExited="#changeCharTwoBack" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="45.0" />
                      </GridPane.margin>
                   </Circle>
-                  <Circle fx:id="charThreeSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharThree" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1">
+                  <Circle id="charThreeSelectionCircle" fx:id="charThreeSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharThree" onMouseEntered="#changeCharThree" onMouseExited="#changeCharThreeBack" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="45.0" />
                      </GridPane.margin>
                   </Circle>
-                  <Circle fx:id="charFourSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharFour" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Circle fx:id="charFourSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharFour" onMouseEntered="#changeCharFour" onMouseExited="#changeCharFourBack" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="45.0" />
                      </GridPane.margin>
                   </Circle>
-                  <Circle fx:id="charFiveSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharFive" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2">
+                  <Circle fx:id="charFiveSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharFive" onMouseEntered="#changeCharFive" onMouseExited="#changeCharFiveBack" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="45.0" />
                      </GridPane.margin>
                   </Circle>
-                  <Circle fx:id="charSixSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharSix" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Circle fx:id="charSixSelectionCircle" fill="DODGERBLUE" onMouseClicked="#selectCharSix" onMouseEntered="#changeCharSix" onMouseExited="#changeCharSixBack" radius="100.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="45.0" />
                      </GridPane.margin>
