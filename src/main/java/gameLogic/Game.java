@@ -107,7 +107,6 @@ public class Game implements Runnable {
    */
   public User userToAnswerQuiz;
 
-
   /**
    * notes the correct answer to a quiz question
    */
@@ -490,6 +489,11 @@ public class Game implements Runnable {
     }
   }
 
+  /**
+   * Thread.sleep so the GUI can update all the position and all the people are able to see every new position
+   *
+   * @param time Time in ms till next move.
+   */
   public void pause (int time) {
     try {
       Thread.sleep(time);
@@ -498,6 +502,9 @@ public class Game implements Runnable {
     }
   }
 
+  /**
+   * Sends the updated position to the GUI
+   */
   public void positionUpdate() {
     // moves the player characters in the GUI
     for (int j = 0; j < numPlayers; j++) {
@@ -508,6 +515,11 @@ public class Game implements Runnable {
     }
   }
 
+  /**
+   * Receives the music to be played
+   *
+   * @param music Music to be played
+   */
   public void music (String music) {
     sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MUSIC, music);
   }
@@ -543,10 +555,8 @@ public class Game implements Runnable {
    * Closes the game and sets the lobby's status to finished
    */
   public void closeGame() {
-    //if (highScore.getTop10().length() > 0) {
-      lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10("global"));
-      sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
-    //}
+    lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10("global"));
+    sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
     if (highScoreGame.getTop10("game").length() > 0) {
       lobbyBroadcastToPlayer("Best students of this game:§" + highScoreGame.getTop10("game"));
       sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScoreGame.getTop10("game"));

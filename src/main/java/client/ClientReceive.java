@@ -148,7 +148,7 @@ public class ClientReceive implements Runnable {
 
       case MUSIC:
         MusicPlayer mp = new MusicPlayer();
-        mp.starteAbspielen(msg);
+        mp.startMusic(msg);
         break;
     }
   }
