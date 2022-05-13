@@ -101,7 +101,7 @@ public class GameList {
           lobbyStatusString = "finished";
           break;
         case 69:
-          lobbyStatusString = "standard Lobby";
+          lobbyStatusString = "Zwischengeschoss";
           break;
       }
       //if (!lobbyStatusString.equals("standard Lobby")) {
