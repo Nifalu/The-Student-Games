@@ -1,30 +1,15 @@
 package gui;
 
-import gameLogic.GameList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import utility.io.CommandsToServer;
-import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import gui.GameController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static java.lang.Thread.sleep;
 
 public class MenuController implements Initializable {
 
@@ -309,7 +294,7 @@ public class MenuController implements Initializable {
     if (clientIsInLobby) {
       sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
       Main.displayCharSelectionPopUp();
-      //sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+      //sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
     } else {
       Main.displayNotInLobbyPopUp();
     }
@@ -394,8 +379,12 @@ public class MenuController implements Initializable {
         sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
         Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
         clientIsInLobby = true;
-        sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
-        switchToCharSelection();
+        //sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
+        //switchToCharSelection();
+        if (selectedLobby.contains("open")) {
+          sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
+          switchToCharSelection();
+        }
       } catch (Exception e) {
         Platform.runLater(() -> selectedLobbyLabel.setText("Lobby needs to be open."));
       }

@@ -178,5 +178,5 @@ public enum CommandsToServer {
    * changes all character tokens in the game gui
    * useful if  player joins a lobby AFTER everyone has already gotten and set their characters
    */
-  SETALLCHARTOKENS, CHECKALLCHARS,
+  SETALLCHARTOKENS, CHECKALLCHARS, ENABLEALLCHARS,
 }

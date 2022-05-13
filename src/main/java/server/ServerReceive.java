@@ -175,13 +175,16 @@ public class ServerReceive implements Runnable {
         try {
           int number = Integer.parseInt(msg.replaceAll("\\s", ""));
           if (number < GameList.getLobbyList().size() && number >= 0) {
-            if (GameList.getLobbyList().get(number).getLobbyStatus() == 1) {
+            if (GameList.getLobbyList().get(number).getLobbyStatus() == 1 ||
+                    GameList.getLobbyList().get(number).getLobbyStatus() == 69) {
               if (client.user.getIsReady()) {
                 if (!client.user.getIsPlaying()) {
                   client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
                   client.user.setReadyToPlay(false);
                   client.lobbyhelper.changeLobby(msg);
-                  client.user.getLobby().checkIfCharsTaken();
+                  if (GameList.getLobbyList().get(number).getLobbyStatus() == 1) {
+                    client.user.getLobby().checkIfCharsTaken();
+                  }
                 } else {
                   sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to finish this game.");
                 }
@@ -333,7 +336,7 @@ public class ServerReceive implements Runnable {
         sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, msg);
         break;
 
-      case CHECKIFCHARSTAKEN:
+      /*case CHECKIFCHARSTAKEN:
         /*Lobby l = client.user.getLobby();
         for (Integer key : l.getUsersInLobby().keySet()) {
           User u = l.getUsersInLobby().get(key);
@@ -353,7 +356,7 @@ public class ServerReceive implements Runnable {
             sendToClient.lobbyBroadcast(l.getUsersInLobby(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
           }
         }*/
-      break;
+      //break;
 
       case SETCHARTOKEN:
         sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.SETCHARTOKEN, msg + "--" + client.user.gameTokenNr);
@@ -369,14 +372,30 @@ public class ServerReceive implements Runnable {
 
       case CHECKALLCHARS:
         Lobby l = client.user.getLobby();
+        System.out.println("MOMENTANI LOBBY: " + l.getLobbyName());
+
+        // enables all chars
+        for (int i = 1; i < 7; i++) {
+          sendToClient.send(client.user.getClienthandler(), CommandsToClient.ENABLECHARGUI, Integer.toString(i));
+        }
+
         for (Integer key : l.getUsersInLobby().keySet()) {
           User u = l.getUsersInLobby().get(key); // gets the value out of the key
-          System.out.println("aso de user esch: " + u.getUsername() + " ond er hett de character " + u.characterNr);
+          // System.out.println("aso de user esch: " + u.getUsername() + " ond er hett de character " + u.characterNr);
           if (u.characterNr != 0) {
             sendToClient.send(client.user.getClienthandler(), CommandsToClient.DISABLECHARGUI, Integer.toString(u.characterNr));
           }
         }
         break;
+
+        /*
+      case ENABLEALLCHARS:
+        for (int i = 1; i < 7; i++) {
+          sendToClient.send(client.user.getClienthandler(), CommandsToClient.ENABLECHARGUI, Integer.toString(i));
+        }
+        break;
+
+         */
     }
   }
 }
