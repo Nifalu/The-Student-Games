@@ -152,12 +152,11 @@ public class MenuController implements Initializable {
   @FXML
   public void printChatMessage(String msg) {
     if (msg != null) {
-      Platform.runLater(() -> {
-        chat.appendText(msg);
-        chat.appendText("\n");
-      });
+      Platform.runLater(() -> chat.appendText(msg + System.lineSeparator()));
+      //chat.appendText("\n");
     }
   }
+
 
   /**
    * print all Lobbies into the GUI (ListView)
