@@ -147,6 +147,9 @@ public class ClientReceive implements Runnable {
         MusicPlayer mp = new MusicPlayer();
         mp.startMusic(msg);
         break;
+
+      case MARKPLAYER:
+        Main.getGameController().markPlayer(msg);
     }
   }
 

@@ -112,6 +112,10 @@ public class SendToClient {
       case MUSIC:
         sendTo(recipient, "MUSIC--" + msg);
         break;
+
+      case MARKPLAYER:
+        sendTo(recipient, "MARKPLAYER--" + msg);
+        break;
     }
   }
 
