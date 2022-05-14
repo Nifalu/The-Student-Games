@@ -2,6 +2,7 @@ package server;
 
 import gameLogic.GameList;
 import gameLogic.Lobby;
+import utility.io.SendToClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;

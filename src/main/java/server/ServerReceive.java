@@ -162,7 +162,7 @@ public class ServerReceive implements Runnable {
         client.lobbyhelper.printOnGoingLobbiesAndSendToClient();
         break;
 
-      case PRINTLOBBIES: // prints all lobies list
+      case PRINTLOBBIES: // prints all lobbies list
         client.lobbyhelper.printLobbiesAndSendToClient();
         break;
 
@@ -346,7 +346,7 @@ public class ServerReceive implements Runnable {
 
       case SETALLCHARTOKENS:
         for (int i = 1; i < 5; i++) {
-          sendToClient.send(client.user.getClienthandler(), CommandsToClient.SETCHARTOKEN, "0--" + Integer.toString(i));
+          sendToClient.send(client.user.getClienthandler(), CommandsToClient.SETCHARTOKEN, "0--" + i);
         }
         Lobby currentLobby = client.user.getLobby();
         for (Integer key : currentLobby.getUsersInLobby().keySet()) {

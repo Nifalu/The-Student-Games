@@ -139,6 +139,16 @@ public class Lobby {
     return status;
   }
 
+  public String getLobbyStatusAsString() {
+    switch(status) {
+      case -1: return "finished";
+      case 0: return "ongoing";
+      case 1: return "open";
+      case 69: return "Zwischengeschoss";
+    }
+    return "error";
+  }
+
 
   // ----------------------- SETTERS ----------------------------------------
 

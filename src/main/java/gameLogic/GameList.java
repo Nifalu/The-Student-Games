@@ -93,6 +93,7 @@ public class GameList {
       switch (lobbyStatus) {
         case 1:
           lobbyStatusString = "open";
+
           break;
         case 0:
           lobbyStatusString = "ongoing";
@@ -105,8 +106,8 @@ public class GameList {
           break;
       }
       //if (!lobbyStatusString.equals("standard Lobby")) {
-        s = s + counter + ". " + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  " + "§";
-        counter++;
+      s = s + counter + ". " + lobbyList.get(i).getLobbyName() + " [" + lobbyStatusString + "] §";
+      counter++;
         /*
       } else {
         s = s + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  " + "§";
