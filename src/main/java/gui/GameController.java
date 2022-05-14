@@ -199,8 +199,8 @@ public class GameController implements Initializable {
   @FXML
   public void printChatMessage(String msg) {
     if (msg != null) {
-      chat.appendText(msg);
-      chat.appendText("\n");
+      Platform.runLater(() -> chat.appendText(msg + System.lineSeparator()));
+      //chat.appendText("\n");
     }
   }
 
