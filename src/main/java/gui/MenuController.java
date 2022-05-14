@@ -165,11 +165,39 @@ public class MenuController implements Initializable {
    */
   @FXML
   public void printLobbies(String lobbies) {
+    if (!lobbyListView.getItems().contains(lobbies)) {
+      if (lobbies.contains("0."))
+      Platform.runLater(() -> lobbyListView.getItems().add(0, lobbies));
+      else {
+        Platform.runLater(() -> lobbyListView.getItems().add(1, lobbies));
+      }
+    }
+    /*
     String[] splittedLobbies = splittedString(lobbies);
     Platform.runLater(() -> {
       lobbyListView.getItems().clear();
       lobbyListView.getItems().addAll(splittedLobbies);
     });
+
+     */
+  }
+
+  /**
+   * creates a new lobby
+   */
+  public void createLobby() {
+    String lobbyName = createLobbyTextField.getText();
+    sendToServer.send(CommandsToServer.CREATELOBBY, lobbyName);
+    //sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
+    //refreshLobbies();
+    Platform.runLater(() -> createLobbyTextField.clear());
+  }
+
+  /**
+   * asks to print out the lobbies when clicking on the button
+   */
+  public void refreshLobbies() {
+    sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
   }
 
   /**
@@ -274,14 +302,6 @@ public class MenuController implements Initializable {
     Main.displayNameSelectionPopUp();
   }
 
-
-  /**
-   * asks to print out the lobbies when clicking on the button
-   */
-  public void refreshLobbies() {
-    sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
-  }
-
   /**
    * returns the string split at §
    *
@@ -361,20 +381,6 @@ public class MenuController implements Initializable {
         Platform.runLater(() -> selectedLobbyLabel.setText("Lobby needs to be open."));
       }
     }
-  }
-
-
-  /**
-   * creates a new lobby
-   */
-  public void createLobby() {
-    refreshLobbies();
-    refreshLobbies();
-    String lobbyName = createLobbyTextField.getText();
-    sendToServer.send(CommandsToServer.CREATELOBBY, lobbyName);
-    sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
-    refreshLobbies();
-    Platform.runLater(() -> createLobbyTextField.clear());
   }
 
 

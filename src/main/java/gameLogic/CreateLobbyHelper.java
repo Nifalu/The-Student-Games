@@ -3,9 +3,13 @@ package gameLogic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.ClientHandler;
+import server.ServerManager;
+import server.User;
 import utility.io.CommandsToClient;
 import utility.io.ReceiveFromProtocol;
 import utility.io.SendToClient;
+
+import java.util.HashMap;
 
 /**
  * this class handles everything related to creating andS joining a lobby.
@@ -119,7 +123,6 @@ public class CreateLobbyHelper {
     }
   }
    */
-
   public synchronized void changeLobby(String number) {
     number = number.replaceAll("\\s", "");
     int lobbynumber = Integer.parseInt(number);
@@ -127,11 +130,11 @@ public class CreateLobbyHelper {
       if (GameList.getLobbyList().get(lobbynumber).getLobbyStatus() == 1) {
         clienthandler.user.setLobby(GameList.getLobbyList().get(lobbynumber));
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby: " +
-                GameList.getLobbyList().get(lobbynumber).getLobbyName());
+            GameList.getLobbyList().get(lobbynumber).getLobbyName());
       } else if (GameList.getLobbyList().get(lobbynumber).getLobbyStatus() == 0) {
         clienthandler.user.setLobby(GameList.getLobbyList().get(lobbynumber));
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now a spectator of Lobby: " +
-                GameList.getLobbyList().get(lobbynumber).getLobbyName());
+            GameList.getLobbyList().get(lobbynumber).getLobbyName());
       }
     } else {
       sendToClient.send(clienthandler, CommandsToClient.PRINT, "Whoops that lobby does not exist. ");
@@ -147,8 +150,11 @@ public class CreateLobbyHelper {
   public synchronized void connectLobby(String name) {
     name = name.replaceAll(" ", "_");
     Lobby lobby = new Lobby(name, false);
+    String num = String.valueOf(GameList.getLobbyList().size());
     GameList.getLobbyList().put(GameList.getLobbyList().size(), lobby);
     sendToClient.send(clienthandler, CommandsToClient.PRINT, "You have created Lobby " + lobby.getLobbyName());
+    sendToClient.serverBroadcast(CommandsToClient.PRINTLOBBIESGUI,
+        num + ". " + lobby.getLobbyName() +" [" + lobby.getLobbyStatusAsString() + "]" );
   }
 
   /**
@@ -171,29 +177,43 @@ public class CreateLobbyHelper {
    * Prints all the lobbies with the status open.
    */
   public synchronized void printOpenLobbiesAndSendToClient() {
-    sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getOpenLobbies()));
+    for (HashMap.Entry<Integer, Lobby> entry : GameList.getOpenLobbies().entrySet()) {
+      sendToClient.send(clienthandler, CommandsToClient.PRINT,
+          entry.getKey() + ". " + entry.getValue().getLobbyName() + " [" + entry.getValue().getLobbyStatusAsString() + "]");
+    }
   }
 
   /**
    * Prints all the lobbies with the status finished and sends it to the client.
    */
   public synchronized void printFinishedLobbiesAndSendToClient() {
-    sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getFinishedLobbies()));
+    for (HashMap.Entry<Integer, Lobby> entry : GameList.getFinishedLobbies().entrySet()) {
+      sendToClient.send(clienthandler, CommandsToClient.PRINT,
+          entry.getKey() + ". " + entry.getValue().getLobbyName() + " [" + entry.getValue().getLobbyStatusAsString() + "]");
+    }
   }
 
   /**
    * Prints all the lobbies with the status ongoing and sends it to the client.
    */
   public synchronized void printOnGoingLobbiesAndSendToClient() {
-    sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getOnGoingLobbies()));
+    for (HashMap.Entry<Integer, Lobby> entry : GameList.getOnGoingLobbies().entrySet()) {
+      sendToClient.send(clienthandler, CommandsToClient.PRINT,
+          entry.getKey() + ". " + entry.getValue().getLobbyName() + " [" + entry.getValue().getLobbyStatusAsString() + "]");
+    }
   }
 
   /**
    * Prints all the lobbies and indicates their status and sends it to the client.
    */
   public synchronized void printLobbiesAndSendToClient() {
-    sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLobbies(GameList.getLobbyList()));
-    sendToClient.send(clienthandler, CommandsToClient.PRINTLOBBIESGUI, GameList.printLobbies(GameList.getLobbyList()));
+    for (HashMap.Entry<Integer, Lobby> entry : GameList.getLobbyList().entrySet()) {
+      sendToClient.send(clienthandler, CommandsToClient.PRINT,
+          entry.getKey() + ". " + entry.getValue().getLobbyName() + " [" + entry.getValue().getLobbyStatusAsString() + "]");
+      sendToClient.send(clienthandler, CommandsToClient.PRINTLOBBIESGUI,
+          entry.getKey() + ". " + entry.getValue().getLobbyName() + " [" + entry.getValue().getLobbyStatusAsString() + "]");
+    }
+    //sendToClient.send(clienthandler, CommandsToClient.PRINTLOBBIESGUI, GameList.printLobbies(GameList.getLobbyList()));
   }
 
   /**

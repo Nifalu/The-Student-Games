@@ -200,6 +200,8 @@ public class Main extends Application {
    */
   public static void displayMenu() {
     MenuController.hasJoinedChat = true;
+    getMenuController().refreshLobbies();
+    getMenuController().refreshFriends();
     showScene(menu, menuRoot);
   }
 
