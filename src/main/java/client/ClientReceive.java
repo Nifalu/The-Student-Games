@@ -49,7 +49,7 @@ public class ClientReceive implements Runnable {
     input = line.split("--", 2);
 
     // prevents a null-pointer when only a command was received
-    if (input.length > 0) {
+    if (input.length > 1) {
       msg = input[1];
     } else {
       logger.warn("received command with no message");
