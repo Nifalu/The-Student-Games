@@ -10,10 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
@@ -60,11 +62,6 @@ public class GameController implements Initializable {
    * all fields of the board in a HashMap
    */
   public static HashMap<Integer, Integer[]> fields = new HashMap<>();
-
-  public int blueCharNr = 1;
-  public int redCharNr = 1;
-  public int yellowCharNr = 1;
-  public int greenCharNr = 1;
 
 
   /**
@@ -152,12 +149,6 @@ public class GameController implements Initializable {
   TranslateTransition transitionTokenThree = new TranslateTransition();
 
   TranslateTransition transitionTokenFour = new TranslateTransition();
-
-  double[] tokenOnePos = new double[2];
-  double[] tokenTwoPos = new double[2];
-  double[] tokenThreePos = new double[2];
-  double[] tokenFourPos = new double[2];
-
 
   /**
    * method reads input from the Textfield and checks, which command to send to the server
@@ -269,10 +260,6 @@ public class GameController implements Initializable {
       tokenTwo.setTranslateX(970);
       tokenThree.setTranslateX(810);
       tokenFour.setTranslateX(730);
-
-
-
-
 
       // resets the dicedice
       fourDice1.setDisable(false);
@@ -426,11 +413,6 @@ public class GameController implements Initializable {
    * adds the correct picture to the player tokens
    */
   public void setCharToken(int tokenNr, int charNr) {
-    // charNr = charNr + 1;
-    System.out.println("----------------------------");
-    System.out.println("tokenNr " + tokenNr);
-    System.out.println("charNr " + charNr);
-    System.out.println("----------------------------");
     if (tokenNr == 0) {
       return;
     }
@@ -634,5 +616,47 @@ public class GameController implements Initializable {
         playerToMove.setTranslateY(newPos[1] - 30);
       });
     }
-  }
+
+
+    public void markPlayer(String tokenNr) {
+      // glow doesn't work >:(
+      /*Glow glow = new Glow();
+      glow.setLevel(100);
+      Glow noGlow = new Glow();
+      glow.setLevel(0);*/
+
+      tokenOne.setStroke(Color.BLACK);
+      tokenOne.setStrokeWidth(1.0);
+
+      tokenTwo.setStroke(Color.BLACK);
+      tokenTwo.setStrokeWidth(1.0);
+
+      tokenThree.setStroke(Color.BLACK);
+      tokenThree.setStrokeWidth(1.0);
+
+      tokenFour.setStroke(Color.BLACK);
+      tokenFour.setStrokeWidth(1.0);
+      switch (tokenNr) {
+        case("1"):
+          tokenOne.setStroke(Color.DARKORANGE);
+          tokenOne.setStrokeWidth(3.0);
+          break;
+        case("2"):
+          tokenTwo.setStroke(Color.DARKORANGE);
+          tokenTwo.setStrokeWidth(3.0);
+          break;
+        case("3"):
+          tokenThree.setStroke(Color.DARKORANGE);
+          tokenThree.setStrokeWidth(3.0);
+          break;
+        case("4"):
+          tokenFour.setStroke(Color.DARKORANGE);
+          tokenFour.setStrokeWidth(3.0);
+          break;
+        default:
+          break;
+      }
+    }
+
+}
 

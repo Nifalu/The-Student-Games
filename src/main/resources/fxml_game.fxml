@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <children>
       <ImageView fitHeight="778.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -32,7 +32,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
                <children>
-                  <GridPane fx:id="board" gridLinesVisible="true" VBox.vgrow="ALWAYS">
+                  <GridPane fx:id="board" gridLinesVisible="true" mouseTransparent="true" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -602,12 +602,12 @@
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <HBox spacing="5.0">
+                  <HBox mouseTransparent="true" spacing="5.0">
                      <padding>
                         <Insets bottom="5.0" />
                      </padding>
                   </HBox>
-                  <HBox spacing="5.0">
+                  <HBox mouseTransparent="true" spacing="5.0">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -615,7 +615,7 @@
                         <Insets bottom="10.0" top="2.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER" spacing="2.0">
+                  <HBox alignment="CENTER" mouseTransparent="true" spacing="2.0">
                      <padding>
                         <Insets bottom="10.0" top="2.0" />
                      </padding>

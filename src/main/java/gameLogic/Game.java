@@ -154,6 +154,8 @@ public class Game implements Runnable {
           //Sends at the beginning of each round the current date.
           lobbyBroadcastToPlayer(calendar.getCurrentDate());
         }
+        sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MARKPLAYER, Integer.toString(playersPlaying.get(i).gameTokenNr));
+
         if (ServerManager.getActiveClientList().contains(playersPlaying.get(i).getClienthandler())) {
           if (playersPlaying.get(i).getPlayingField() <= 88 &&
               !playersPlaying.get(i).getGameOver()) {
