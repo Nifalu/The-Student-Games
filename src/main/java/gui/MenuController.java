@@ -431,17 +431,22 @@ public class MenuController implements Initializable {
   }
 
   private void createLobbyListener() {
+    EventHandler<ActionEvent> tmp = createLobbyTextField.getOnAction();
+    createLobbyTextField.onActionProperty().set(null);
     createLobbyTextField.textProperty().addListener((obs, oldv, newv) -> {
       if (newv.equals("")) {
+        createLobbyTextField.onActionProperty().set(null);
         createLobbyButton.setDisable(true);
         createLobbyButton.opacityProperty().set(unselectedOpacity);
         createLobbyTextField.setStyle("-fx-text-fill: black");
       }
       if (newv.matches("[a-zA-Z]+")) {
+        createLobbyTextField.onActionProperty().set(tmp);
         createLobbyButton.setDisable(false);
         createLobbyButton.opacityProperty().set(selectedOpacity);
         createLobbyTextField.setStyle("-fx-text-fill: green");
       } else {
+        createLobbyTextField.onActionProperty().set(null);
         createLobbyButton.setDisable(true);
         createLobbyButton.opacityProperty().set(unselectedOpacity);
         createLobbyTextField.setStyle("-fx-text-fill: red");
@@ -451,6 +456,7 @@ public class MenuController implements Initializable {
 
   private void sendListener() {
     EventHandler<ActionEvent> tmp = chatTextField.getOnAction();
+    chatTextField.onActionProperty().set(null);
     chatTextField.textProperty().addListener((obs, oldv, newv) -> {
       if (newv.equals("")) {
         sendButton.setDisable(true);
