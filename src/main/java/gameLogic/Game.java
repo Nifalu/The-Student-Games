@@ -139,7 +139,7 @@ public class Game implements Runnable {
     music("audio/gameStart.mp3");
 
     // Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
-    Calendar calendar = new Calendar(2021, 9, 21);
+    Calendar calendar = new Calendar(2021, 9, 20);
     calendar.getCurrentDate();
     for (int u = 0; u < numPlayers; u++) {
       lobby.getUsersReady().get(u).setPlayingField(0);
@@ -216,8 +216,7 @@ public class Game implements Runnable {
     for (int i = 0; i < time; i++) {
       if (!GameServer.isonline) {
         break; // stops this loop when the server closes
-      }
-      if (rolledDice) {
+      } else if (rolledDice) {
         user.setIsActivelyRollingTheDice();
         dice = Dice.dice();
         music(diceMusic[random.nextInt(4)]);
@@ -232,13 +231,11 @@ public class Game implements Runnable {
       } else if (i == time - 1) {
         user.setNotActivelyRollingTheDice();
         music(diceMusic[random.nextInt(4)]);
-      } else {
-        try {
-          Thread.sleep(1);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+      } else if (time - i == 5000) {
+        sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.PRINT, "5 seconds left roll the dice");
+        music("audio/wetClick.mp3");
       }
+      pause(1);
     }
     user.setRolledDice(true);
     rolledDice = false;
@@ -399,8 +396,8 @@ public class Game implements Runnable {
    */
   public void checkField(User user, int field) {
     if (field == 1 || field == 55) {
-      music("audio/correct.mp3");
       pause(1500);
+      music("audio/correct.mp3");
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
       if (field == 1) { // 1 + 55 ladder up
         changePosition(user, 15 - field);
@@ -408,8 +405,8 @@ public class Game implements Runnable {
         changePosition(user, 59 - field);
       }
     } else if (field == 20 || field == 26 || field == 52 || field == 57 || field == 80 || field == 87) {
-      music("audio/wrong.mp3");
       pause(1500);
+      music("audio/wrong.mp3");
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       if (field == 20) { // 20 - 87 ladder down
         changePosition(user, 14 - field);
@@ -464,8 +461,8 @@ public class Game implements Runnable {
           }
           break;
         } else {
-          if (maxTimeToAnswerQuiz - i == 5000 || maxTimeToAnswerQuiz - i == 4000 ||
-                  maxTimeToAnswerQuiz - i == 3000 || maxTimeToAnswerQuiz - i == 2000) {
+          if (maxTimeToAnswerQuiz - i == 5000) {
+            sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.PRINT, "5 seconds left to answer");
             music("audio/wetClick.mp3");
           }
           pause(1);
@@ -558,6 +555,7 @@ public class Game implements Runnable {
    * Closes the game and sets the lobby's status to finished
    */
   public void closeGame() {
+    music("audio/click.mp3");
     lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10("global"));
     sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
     if (highScoreGame.getTop10("game").length() > 0) {
