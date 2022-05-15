@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
 
@@ -26,6 +28,8 @@ public class MenuController implements Initializable {
    * String which saves a message
    */
   private static String msg;
+
+  private final Logger logger = LogManager.getLogger(MenuController.class);
 
 
   private String selectedLobby = "";
@@ -161,16 +165,34 @@ public class MenuController implements Initializable {
   /**
    * print all Lobbies into the GUI (ListView)
    *
-   * @param lobbies String containing all the lobbies
+   * @param lobby String containing all the lobbies
    */
   @FXML
-  public void printLobbies(String lobbies) {
-    if (!lobbyListView.getItems().contains(lobbies)) {
-      if (lobbies.contains("0."))
-      Platform.runLater(() -> lobbyListView.getItems().add(0, lobbies));
-      else {
-        Platform.runLater(() -> lobbyListView.getItems().add(1, lobbies));
+  public synchronized void printLobbies(String lobby) {
+    String lobbynum = lobby.substring(0, 1);
+    System.out.println("print: " + lobbynum);
+
+    // searches for the lobbynumber in the list.
+    for (String it : lobbyListView.getItems()) {
+      // if lobbynumber does not match
+      if (it.contains(lobbynum)) {
+        try {
+          System.out.println("set: " + lobbynum);
+          Platform.runLater(() -> lobbyListView.getItems().set(Integer.parseInt(lobbynum), lobby));
+          return;
+        } catch (NumberFormatException e) {
+          logger.error("Lobby has illegal number" + lobbynum);
+        }
       }
+    }
+    // if lobbynumber is not in the list:
+    // checks if the lobby to be added is the standardlobby
+    if (lobby.contains("0.")) {
+      // adds the standardlobby to the top
+      Platform.runLater(() -> lobbyListView.getItems().add(0, lobby));
+    } else {
+      // puts the lobby right under the standardlobby
+      Platform.runLater(() -> lobbyListView.getItems().add(1, lobby));
     }
     /*
     String[] splittedLobbies = splittedString(lobbies);
@@ -406,7 +428,7 @@ public class MenuController implements Initializable {
   }
 
   private void createLobbyListener() {
-    createLobbyTextField.textProperty().addListener((obs,oldv,newv) -> {
+    createLobbyTextField.textProperty().addListener((obs, oldv, newv) -> {
       if (newv.equals("")) {
         createLobbyButton.setDisable(true);
         createLobbyButton.opacityProperty().set(unselectedOpacity);
@@ -426,7 +448,7 @@ public class MenuController implements Initializable {
 
   private void sendListener() {
     EventHandler<ActionEvent> tmp = chatTextField.getOnAction();
-    chatTextField.textProperty().addListener((obs,oldv,newv) -> {
+    chatTextField.textProperty().addListener((obs, oldv, newv) -> {
       if (newv.equals("")) {
         sendButton.setDisable(true);
         sendButton.opacityProperty().set(unselectedOpacity);
