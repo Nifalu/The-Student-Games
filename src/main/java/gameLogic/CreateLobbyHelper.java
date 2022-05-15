@@ -125,17 +125,58 @@ public class CreateLobbyHelper {
    */
   public synchronized void changeLobby(String number) {
     number = number.replaceAll("\\s", "");
+
+    // enables the players old char in their old lobby
+    // the same as the ENABLECURRENTCHARGUI command in the ServerReiceive
+    clienthandler.user.getLobby().getCharactersTaken().put(clienthandler.user.characterNr, false);
+    sendToClient.lobbyBroadcast(clienthandler.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, Integer.toString(clienthandler.user.characterNr));
+
+
+    HashMap<Integer, User> playersInLobby = clienthandler.user.getLobby().getUsersInLobby();
+    Lobby lobby = clienthandler.user.getLobby();
+
+    // enables the character again, if the player had already chosen one
+    /*if (clienthandler.user.characterNr != 0) {
+      sendToClient.lobbyBroadcast(playersInLobby, CommandsToClient.ENABLECHARGUI, Integer.toString(clienthandler.user.characterNr));
+      lobby.getCharactersTaken().put(clienthandler.user.characterNr, false);
+    }*/
+
+    // disables the character for the others
+    // sendToClient.lobbyBroadcast(playersInLobby, CommandsToClient.DISABLECHARGUI, msg);
+    //lobby.getCharactersTaken().put(Integer.parseInt(msg), true);
+    clienthandler.user.characterNr = 0;
+
+
+
+
     int lobbynumber = Integer.parseInt(number);
     if (lobbynumber < GameList.getLobbyList().size() && lobbynumber >= 0) {
       if (GameList.getLobbyList().get(lobbynumber).getLobbyStatus() == 1) {
         clienthandler.user.setLobby(GameList.getLobbyList().get(lobbynumber));
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby: " +
             GameList.getLobbyList().get(lobbynumber).getLobbyName());
+
+        Lobby l = clienthandler.user.getLobby();
+
+        // disables the taken ones and enables the free ones
+        for (Integer key: l.getCharactersTaken().keySet()) {
+          Boolean taken = l.getCharactersTaken().get(key);
+          if (taken) {
+            sendToClient.send(clienthandler.user.getClienthandler(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
+          } else {
+            sendToClient.send(clienthandler.user.getClienthandler(), CommandsToClient.ENABLECHARGUI, Integer.toString(key));
+          }
+        }
       } else if (GameList.getLobbyList().get(lobbynumber).getLobbyStatus() == 0) {
         clienthandler.user.setLobby(GameList.getLobbyList().get(lobbynumber));
         sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now a spectator of Lobby: " +
             GameList.getLobbyList().get(lobbynumber).getLobbyName());
       }
+
+      for (int i = 1; i < 5; i++) {
+        sendToClient.send(clienthandler.user.getClienthandler(), CommandsToClient.SETCHARTOKEN, "0--" + i);
+      }
+
     } else {
       sendToClient.send(clienthandler, CommandsToClient.PRINT, "Whoops that lobby does not exist. ");
     }

@@ -127,10 +127,10 @@ public class MenuController implements Initializable {
 
     String msg = (chatTextField.getText());
     if (msg.startsWith("/nick")) {
-      System.out.println("momentan msg: " + msg);
+      //System.out.println("momentan msg: " + msg);
       String[] split = msg.split(" ", 2);
       String newName = split[1];
-      System.out.println("neui dengs: " + newName);
+      // System.out.println("neui dengs: " + newName);
       sendToServer.send(CommandsToServer.NICK, newName);
     } else if (msg.startsWith("/whisper")) {
       String[] split = msg.split(" ", 3);
@@ -312,7 +312,7 @@ public class MenuController implements Initializable {
   public void switchToCharSelection() throws InterruptedException {
     Thread.sleep(500);
     // Main.displayCharSelection();
-    sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
+    // sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
     if (clientIsInLobby) {
       Main.displayCharSelectionPopUp();
     } else {
@@ -389,16 +389,18 @@ public class MenuController implements Initializable {
       String lobbyNumber = selectedLobby.substring(0, 1);
       try {
         // HERE WE COULD ADD AN IF BLOCK THAT ONLY SENDS CHARSELECT COMMANDS IF LOBBY IS OPEN
-        sendToServer.send(CommandsToServer.ENABLECURRENTCHARGUI, "");
-        sendToServer.send(CommandsToServer.CHANGECHARACTER, "0");
+        //sendToServer.send(CommandsToServer.ENABLECURRENTCHARGUI, ""); // enables the players old char in their old lobby
+        //sendToServer.send(CommandsToServer.CHANGECHARACTER, "0"); // sets the players char as 0 (standard char image)
 
         Integer.parseInt(lobbyNumber);
         sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
+
+        // sendToServer.send(CommandsToServer.CHECKALLCHARS, "");
+
         Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
         clientIsInLobby = true;
 
         if (selectedLobby.contains("open")) {
-          // sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
           switchToCharSelection();
         }
         refreshFriends();

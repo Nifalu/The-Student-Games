@@ -601,7 +601,7 @@ public class GameController implements Initializable {
         double currentY = playerToMove.getTranslateY();
         double newX = newPos[0] - 25;
         double newY = newPos[1] - 30;
-        System.out.println("(" + currentX + ", " + currentY + ")");
+        //System.out.println("(" + currentX + ", " + currentY + ")");
 
         Line lineToMoveAlong = new Line(currentX, currentY, newX, newY);
 
