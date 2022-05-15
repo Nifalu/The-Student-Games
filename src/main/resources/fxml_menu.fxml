@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -85,7 +85,7 @@
                                                 <Image url="@panelYellow_defintiv.png" />
                                              </image>
                                           </ImageView>
-                                          <TextArea id="chat" fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" />
+                                          <TextArea id="chat" fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" wrapText="true" />
                                           <TextField id="chat" fx:id="chatTextField" layoutX="45.0" layoutY="296.0" onAction="#sendChatMessage" promptText="type your message here ..." />
                                           <ImageView id="button" fx:id="sendButton" disable="true" fitHeight="48.0" fitWidth="72.0" layoutX="201.0" layoutY="286.0" onMouseClicked="#sendChatMessage" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                              <image>

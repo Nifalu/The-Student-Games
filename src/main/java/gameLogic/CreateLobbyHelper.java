@@ -135,18 +135,9 @@ public class CreateLobbyHelper {
     HashMap<Integer, User> playersInLobby = clienthandler.user.getLobby().getUsersInLobby();
     Lobby lobby = clienthandler.user.getLobby();
 
-    // enables the character again, if the player had already chosen one
-    /*if (clienthandler.user.characterNr != 0) {
-      sendToClient.lobbyBroadcast(playersInLobby, CommandsToClient.ENABLECHARGUI, Integer.toString(clienthandler.user.characterNr));
-      lobby.getCharactersTaken().put(clienthandler.user.characterNr, false);
-    }*/
-
-    // disables the character for the others
-    // sendToClient.lobbyBroadcast(playersInLobby, CommandsToClient.DISABLECHARGUI, msg);
-    //lobby.getCharactersTaken().put(Integer.parseInt(msg), true);
     clienthandler.user.characterNr = 0;
-
-
+    Lobby currentLobby = clienthandler.user.getLobby();
+    HashMap<Integer, User> playersInOldLobby = clienthandler.user.getLobby().getUsersInLobby();
 
 
     int lobbynumber = Integer.parseInt(number);
@@ -175,6 +166,13 @@ public class CreateLobbyHelper {
 
       for (int i = 1; i < 5; i++) {
         sendToClient.send(clienthandler.user.getClienthandler(), CommandsToClient.SETCHARTOKEN, "0--" + i);
+      }
+
+      for (Integer key : playersInOldLobby.keySet()) {
+        User currentUser = playersInOldLobby.get(key);
+        if (currentUser.getIsReady()) {
+          sendToClient.lobbyBroadcast(playersInOldLobby, CommandsToClient.SETCHARTOKEN, currentUser.characterNr + "--" + currentUser.gameTokenNr);
+        }
       }
 
     } else {
