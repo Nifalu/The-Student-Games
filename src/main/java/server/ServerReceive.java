@@ -181,9 +181,9 @@ public class ServerReceive implements Runnable {
                   client.user.getLobby().removeFromWaitingList(client.user.getClienthandler());
                   client.user.setReadyToPlay(false);
                   client.lobbyhelper.changeLobby(msg);
-                  if (GameList.getLobbyList().get(number).getLobbyStatus() == 1) {
+                  /*if (GameList.getLobbyList().get(number).getLobbyStatus() == 1) {
                     client.user.getLobby().checkIfCharsTaken();
-                  }
+                  }*/
                 } else {
                   sendToClient.send(client.user.getClienthandler(), CommandsToClient.PRINT, "You have to finish this game.");
                 }
@@ -285,7 +285,6 @@ public class ServerReceive implements Runnable {
         break;
 
       case CHANGECHARACTER:
-        //System.out.println("OLD CHAR NR: " + client.user.characterNr);
         // checks if player already selected a character -> enables it again if necessary
         HashMap<Integer, User> playersInLobby = client.user.getLobby().getUsersInLobby();
         Lobby lobby = client.user.getLobby();
@@ -293,12 +292,12 @@ public class ServerReceive implements Runnable {
         // enables the character again, if the player had already chosen one
         if (client.user.characterNr != 0) {
           sendToClient.lobbyBroadcast(playersInLobby, CommandsToClient.ENABLECHARGUI, Integer.toString(client.user.characterNr));
-          lobby.charactersTaken.put(client.user.characterNr, false);
+          lobby.getCharactersTaken().put(client.user.characterNr, false);
         }
 
         // disables the character for the others
         sendToClient.lobbyBroadcast(playersInLobby, CommandsToClient.DISABLECHARGUI, msg);
-        lobby.charactersTaken.put(Integer.parseInt(msg), true);
+        lobby.getCharactersTaken().put(Integer.parseInt(msg), true);
         client.user.characterNr = Integer.parseInt(msg);
         break;
 
@@ -306,7 +305,7 @@ public class ServerReceive implements Runnable {
         //sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.DISABLECHARGUI, msg);
         if (!msg.equals("0")) {
           sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.DISABLECHARGUI, msg);
-          client.user.getLobby().charactersTaken.put(Integer.parseInt(msg), true);
+          client.user.getLobby().getCharactersTaken().put(Integer.parseInt(msg), true);
         }
         break;
 
@@ -314,79 +313,51 @@ public class ServerReceive implements Runnable {
         //sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, msg);
         if (!msg.equals("0")) {
           sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, msg);
-          client.user.getLobby().charactersTaken.put(Integer.parseInt(msg), false);
+          client.user.getLobby().getCharactersTaken().put(Integer.parseInt(msg), false);
         }
         break;
 
-      /*case CHECKIFCHARSTAKEN:
-        /*Lobby l = client.user.getLobby();
-        for (Integer key : l.getUsersInLobby().keySet()) {
-          User u = l.getUsersInLobby().get(key);
-          if (u.characterNr != 0) {
-            System.out.println("de user " + u.getUsername() + " het de charakter " + u.characterNr);
-            l.charactersTaken.put(key, true);
-            System.out.println("die eint hashmap hett jetz wert " + l.charactersTaken.get(key) + " bem key " + key);
-            sendToClient.lobbyBroadcast(l.getUsersInLobby(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
-          }
-        }*/
-
-        /*Lobby l = client.user.getLobby();
-        for (Integer key : l.getUsersInLobby().keySet()) {
-          User u = l.getUsersInLobby().get(key);
-          if (u.characterNr != 0) {
-            l.charactersTaken.put(key, true);
-            sendToClient.lobbyBroadcast(l.getUsersInLobby(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
-          }
-        }*/
-      //break;
 
       case SETCHARTOKEN:
         sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.SETCHARTOKEN, msg + "--" + client.user.gameTokenNr);
         break;
 
       case SETALLCHARTOKENS:
-        for (int i = 1; i < 5; i++) {
+        /*for (int i = 1; i < 5; i++) {
           sendToClient.send(client.user.getClienthandler(), CommandsToClient.SETCHARTOKEN, "0--" + i);
-        }
+        }*/
+
         Lobby currentLobby = client.user.getLobby();
         for (Integer key : currentLobby.getUsersInLobby().keySet()) {
           User currentUser = currentLobby.getUsersInLobby().get(key);
           if (currentUser.getIsReady()) {
-            sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.SETCHARTOKEN, currentUser.characterNr + "--" + currentUser.gameTokenNr);
+            sendToClient.send(client, CommandsToClient.SETCHARTOKEN, currentUser.characterNr + "--" + currentUser.gameTokenNr);
           }
         }
         break;
 
       case CHECKALLCHARS:
         Lobby l = client.user.getLobby();
-        System.out.println("MOMENTANI LOBBY: " + l.getLobbyName());
+        // System.out.println("MOMENTANI LOBBY: " + l.getLobbyName());
 
         // enables all chars
-        for (int i = 1; i < 7; i++) {
+        /*for (int i = 1; i < 7; i++) {
           sendToClient.send(client.user.getClienthandler(), CommandsToClient.ENABLECHARGUI, Integer.toString(i));
-        }
+        }*/
 
-        // disables the taken ones
-        for (Integer key: l.charactersTaken.keySet()) {
-          Boolean taken = l.charactersTaken.get(key);
+        // disables the taken ones and enables the free ones
+        for (Integer key: l.getCharactersTaken().keySet()) {
+          Boolean taken = l.getCharactersTaken().get(key);
           if (taken) {
             sendToClient.send(client.user.getClienthandler(), CommandsToClient.DISABLECHARGUI, Integer.toString(key));
           } else {
             sendToClient.send(client.user.getClienthandler(), CommandsToClient.ENABLECHARGUI, Integer.toString(key));
           }
         }
-
-        /*
-        for (Integer key : l.getUsersInLobby().keySet()) {
-          User u = l.getUsersInLobby().get(key); // gets the value out of the key
-          // System.out.println("aso de user esch: " + u.getUsername() + " ond er hett de character " + u.characterNr);
-          if (u.characterNr != 0) {
-            sendToClient.send(client.user.getClienthandler(), CommandsToClient.DISABLECHARGUI, Integer.toString(u.characterNr));
-          }
-        }*/
         break;
 
       case ENABLECURRENTCHARGUI:
+        client.user.getLobby().getCharactersTaken().put(client.user.characterNr, false);
         sendToClient.lobbyBroadcast(client.user.getLobby().getUsersInLobby(), CommandsToClient.ENABLECHARGUI, Integer.toString(client.user.characterNr));
         break;
     }

@@ -125,7 +125,7 @@ public class ClientReceive implements Runnable {
         break;
 
       case DISABLECHARGUI:
-        System.out.println("s sött de char " + msg + " disabled werde");
+        // System.out.println("s sött de char " + msg + " disabled werde");
         Main.getCharSelectionController().disableCharOnScreen(msg);
         break;
 

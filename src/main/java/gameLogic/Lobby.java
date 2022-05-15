@@ -55,7 +55,7 @@ public class Lobby {
    */
   HashMap<Integer, User> usersReady = new HashMap<>();
 
-  public HashMap<Integer, Boolean> charactersTaken = new HashMap<>();
+  private HashMap<Integer, Boolean> charactersTaken = new HashMap<>();
 
 
 
@@ -80,6 +80,8 @@ public class Lobby {
     charactersTaken.put(2, false);
     charactersTaken.put(3, false);
     charactersTaken.put(4, false);
+    charactersTaken.put(5, false);
+    charactersTaken.put(6, false);
   }
 
 
@@ -226,12 +228,12 @@ public class Lobby {
    * disables characters in the character selection GUI if they're already taken
    */
   public void checkIfCharsTaken() {
-    System.out.println("IS IN CHECKIFCHARSTAKEN");
+    //System.out.println("IS IN CHECKIFCHARSTAKEN");
     for (int i = 1; i < 5; i++) {
-      System.out.println("CHARACTER NR: " + i + " IS " + charactersTaken.get(i));
+      //System.out.println("CHARACTER NR: " + i + " IS " + charactersTaken.get(i));
       if (charactersTaken.containsKey(i)) {
         if (charactersTaken.get(i)) {
-          System.out.println("CHAR IS TAKEN: " + i);
+          //System.out.println("CHAR IS TAKEN: " + i);
           sendToServer.send(CommandsToServer.DISABLECHARACTERGUI, Integer.toString(i));
         }
       }
@@ -344,6 +346,10 @@ public class Lobby {
    */
   public Game getGame() {
     return game;
+  }
+
+  public HashMap<Integer, Boolean> getCharactersTaken() {
+    return charactersTaken;
   }
 
   /**
