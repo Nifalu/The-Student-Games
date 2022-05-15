@@ -178,6 +178,7 @@ public class MenuController implements Initializable {
         System.out.println("set: " + lobbynum);
         int finalCounter = counter;
         Platform.runLater(() -> lobbyListView.getItems().set(finalCounter, lobby));
+        refreshFriends();
         return;
       }
       counter++;
@@ -192,6 +193,7 @@ public class MenuController implements Initializable {
       // puts the lobby right under the standardlobby
       Platform.runLater(() -> lobbyListView.getItems().add(1, lobby));
     }
+    refreshFriends();
     /*
     String[] splittedLobbies = splittedString(lobbies);
     Platform.runLater(() -> {
@@ -209,7 +211,7 @@ public class MenuController implements Initializable {
     String lobbyName = createLobbyTextField.getText();
     sendToServer.send(CommandsToServer.CREATELOBBY, lobbyName);
     //sendToServer.send(CommandsToServer.PRINTLOBBIES, "");
-    //refreshLobbies();
+    refreshFriends();
     Platform.runLater(() -> createLobbyTextField.clear());
   }
 
@@ -386,8 +388,10 @@ public class MenuController implements Initializable {
       selectedLobby = newSelectedLobby;
       String lobbyNumber = selectedLobby.substring(0, 1);
       try {
+        // HERE WE COULD ADD AN IF BLOCK THAT ONLY SENDS CHARSELECT COMMANDS IF LOBBY IS OPEN
         sendToServer.send(CommandsToServer.ENABLECURRENTCHARGUI, "");
         sendToServer.send(CommandsToServer.CHANGECHARACTER, "0");
+
         Integer.parseInt(lobbyNumber);
         sendToServer.send(CommandsToServer.CHANGELOBBY, lobbyNumber);
         Platform.runLater(() -> selectedLobbyLabel.setText("You are now member of Lobby: " + lobbyNumber));
@@ -397,6 +401,7 @@ public class MenuController implements Initializable {
           // sendToServer.send(CommandsToServer.CHECKIFCHARSTAKEN, "");
           switchToCharSelection();
         }
+        refreshFriends();
       } catch (Exception e) {
         Platform.runLater(() -> selectedLobbyLabel.setText("Lobby needs to be open."));
       }

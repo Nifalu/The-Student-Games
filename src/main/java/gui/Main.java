@@ -314,6 +314,7 @@ public class Main extends Application {
   public static void exit() {
     try {
       SendToServer sendToServer = new SendToServer();
+      sendToServer.send(CommandsToServer.PRINTLOUNGINGLIST, "");
       sendToServer.send(CommandsToServer.QUIT, "");
     } catch (NullPointerException e) {
       logger.info("closed before connection was made");
