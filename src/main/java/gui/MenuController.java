@@ -171,22 +171,20 @@ public class MenuController implements Initializable {
   public synchronized void printLobbies(String lobby) {
     String lobbynum = lobby.substring(0, 1);
     System.out.println("print: " + lobbynum);
-
-    // searches for the lobbynumber in the list.
+    int counter = 0;
     for (String it : lobbyListView.getItems()) {
-      // if lobbynumber does not match
+      // if lobbynumber does match
       if (it.contains(lobbynum)) {
-        try {
-          System.out.println("set: " + lobbynum);
-          Platform.runLater(() -> lobbyListView.getItems().set(Integer.parseInt(lobbynum), lobby));
-          return;
-        } catch (NumberFormatException e) {
-          logger.error("Lobby has illegal number" + lobbynum);
-        }
+        System.out.println("set: " + lobbynum);
+        int finalCounter = counter;
+        Platform.runLater(() -> lobbyListView.getItems().set(finalCounter, lobby));
+        return;
       }
+      counter++;
     }
     // if lobbynumber is not in the list:
     // checks if the lobby to be added is the standardlobby
+    System.out.println("not found: " + lobbynum);
     if (lobby.contains("0.")) {
       // adds the standardlobby to the top
       Platform.runLater(() -> lobbyListView.getItems().add(0, lobby));
