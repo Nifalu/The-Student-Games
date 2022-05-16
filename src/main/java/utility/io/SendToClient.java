@@ -137,6 +137,14 @@ public class SendToClient {
       case NAME:
         sendTo(recipient, "NAME--" + msg);
         break;
+
+      case YOURTURN:
+        sendTo(recipient,"YOURTURN--" + msg);
+        break;
+
+      case YOURQUIZ:
+        sendTo(recipient,"YOURQUIZ--" + msg);
+        break;
     }
   }
 

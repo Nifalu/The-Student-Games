@@ -159,6 +159,7 @@ public class Game implements Runnable {
           if (playersPlaying.get(i).getPlayingField() <= 88 &&
               !playersPlaying.get(i).getGameOver()) {
             sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MARKPLAYER, Integer.toString(playersPlaying.get(i).gameTokenNr));
+            sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.YOURTURN, "");
             lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
 
             //sends the current users turn and the diced number to PlayingFields
@@ -440,6 +441,7 @@ public class Game implements Runnable {
       String quizQuestion = Quiz.quiz();
       String[] quiz = quizQuestion.split("Ç");
       setUserToAnswerQuiz(user);
+      sendToClient.send(user.getClienthandler(), CommandsToClient.YOURQUIZ,"");
       setAnswer(quiz[1]);
       lobbyBroadcastToPlayer("§" + "Exam question for " + user.getUsername() + "." + "§" + quiz[0]);
       for (int i = 0; i < maxTimeToAnswerQuiz; i++) {

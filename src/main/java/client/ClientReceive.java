@@ -154,6 +154,13 @@ public class ClientReceive implements Runnable {
         Main.getMenuController().setNamelabel(msg);
         Main.getGameController().setNamelabel(msg);
         break;
+
+      case YOURTURN:
+        Main.getGameController().setMyTurn(true);
+        break;
+
+      case YOURQUIZ:
+        Main.getGameController().setMyQuiz(true);
     }
   }
 
