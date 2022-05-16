@@ -529,7 +529,7 @@
                               <Image url="@highscoreButton_definitiv.png" />
                            </image>
                         </ImageView>
-                        <ImageView id="button" fx:id="readybutton" fitHeight="59.0" fitWidth="139.0" onMouseClicked="#setPlayerAsReady" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="button" fx:id="readyButton" fitHeight="59.0" fitWidth="139.0" onMouseClicked="#setPlayerAsReady" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@readyButton_definitiv.png" />
                            </image>
@@ -566,22 +566,22 @@
                         <TextArea id="chatwindow" fx:id="chat" editable="false" layoutX="37.0" layoutY="64.0" prefHeight="170.0" prefWidth="294.0" wrapText="true" />
                         <TextField id="chattextfield" fx:id="chatTextField" layoutX="39.0" layoutY="242.0" onAction="#sendChatMessage" prefHeight="26.0" prefWidth="216.0" promptText="type your message here ..." />
                         <TextArea id="announcer" fx:id="gameTracker" editable="false" focusTraversable="false" layoutX="39.0" layoutY="283.0" prefHeight="103.0" prefWidth="289.0" wrapText="true" />
-                        <ImageView id="button" fx:id="quizD" fitHeight="61.0" fitWidth="61.0" layoutX="253.0" layoutY="396.0" onMouseClicked="#answerQuizD" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="button" fx:id="quizD" fitHeight="61.0" fitWidth="61.0" layoutX="253.0" layoutY="396.0" onMouseClicked="#answerQuizD" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@DButton_definitiv.png" />
                            </image>
                         </ImageView>
-                        <ImageView id="button" fx:id="quizA" fitHeight="59.0" fitWidth="65.0" layoutX="39.0" layoutY="395.0" onMouseClicked="#answerQuizA" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="button" fx:id="quizA" fitHeight="59.0" fitWidth="65.0" layoutX="39.0" layoutY="395.0" onMouseClicked="#answerQuizA" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@AButton_definitiv.png" />
                            </image>
                         </ImageView>
-                        <ImageView id="button" fx:id="quizB" fitHeight="69.0" fitWidth="76.0" layoutX="106.0" layoutY="390.0" onMouseClicked="#answerQuizB" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="button" fx:id="quizB" fitHeight="69.0" fitWidth="76.0" layoutX="106.0" layoutY="390.0" onMouseClicked="#answerQuizB" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@BButton_defintiv.png" />
                            </image>
                         </ImageView>
-                        <ImageView id="button" fx:id="quizC" fitHeight="67.0" fitWidth="73.0" layoutX="180.0" layoutY="393.0" onMouseClicked="#answerQuizC" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="button" fx:id="quizC" fitHeight="67.0" fitWidth="73.0" layoutX="180.0" layoutY="393.0" onMouseClicked="#answerQuizC" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@CButton_definitiv.png" />
                            </image>

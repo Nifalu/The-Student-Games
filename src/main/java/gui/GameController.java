@@ -59,8 +59,6 @@ public class GameController implements Initializable {
   @FXML
   private ImageView startbutton;
   @FXML
-  private ImageView readybutton;
-  @FXML
   private ImageView highscorebutton;
   @FXML
   private ImageView menubutton;
@@ -810,7 +808,7 @@ public class GameController implements Initializable {
   @FXML
   private void setPlayerAsReady() {
     sendToServer.send(CommandsToServer.READY, "");
-    readybutton.setOpacity(unselectedOpacity);
+    readyButton.setOpacity(unselectedOpacity);
     transitionReadyButton.stop();
       /*if (!isReady) {
         isReady = true;
@@ -833,8 +831,8 @@ public class GameController implements Initializable {
     // gameHasStarted = true;
     menubutton.setDisable(true);
     menubutton.setOpacity(unselectedOpacity);
-    readybutton.setDisable(true);
-    readybutton.setOpacity(unselectedOpacity);
+    readyButton.setDisable(true);
+    readyButton.setOpacity(unselectedOpacity);
   }
 
   /**
