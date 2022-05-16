@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartController">
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -32,7 +32,7 @@
                   <Image url="@charHeadsGREEN_noBackground.png" />
                </image>
             </ImageView>
-            <Label id="showText" fx:id="showText" alignment="CENTER" contentDisplay="CENTER" layoutX="179.0" layoutY="208.0" text="hey there would you liked to me named ..." textAlignment="CENTER">
+            <Label id="showText" fx:id="showText" alignment="CENTER" contentDisplay="CENTER" layoutX="168.0" layoutY="202.0" prefHeight="82.0" prefWidth="509.0" text="hey there would you liked to me named ..." textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
@@ -40,12 +40,12 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </Label>
-            <ImageView id="button" fx:id="noImage" fitHeight="59.0" fitWidth="88.0" layoutX="394.0" layoutY="271.0" onMouseClicked="#nameNo" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="button" fx:id="noImage" fitHeight="59.0" fitWidth="88.0" layoutX="411.0" layoutY="280.0" onMouseClicked="#nameNo" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@noButton.png" />
                </image>
             </ImageView>
-            <ImageView id="button" fx:id="yesImage" fitHeight="59.0" fitWidth="88.0" layoutX="287.0" layoutY="271.0" onMouseClicked="#nameYes" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="button" fx:id="yesImage" fitHeight="59.0" fitWidth="88.0" layoutX="308.0" layoutY="280.0" onMouseClicked="#nameYes" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@yesButton.png" />
                </image>
@@ -75,7 +75,7 @@
                   <Image url="@char2_symmetrie.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="257.0" fitWidth="175.0" layoutX="340.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="234.0" fitWidth="129.0" layoutX="340.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@ritterChar.png" />
                </image>
