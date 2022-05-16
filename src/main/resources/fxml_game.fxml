@@ -529,7 +529,7 @@
                               <Image url="@highscoreButton_definitiv.png" />
                            </image>
                         </ImageView>
-                        <ImageView id="button" fitHeight="59.0" fitWidth="139.0" onMouseClicked="#setPlayerAsReady" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="button" fx:id="readyButton" fitHeight="59.0" fitWidth="139.0" onMouseClicked="#setPlayerAsReady" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@readyButton_definitiv.png" />
                            </image>
