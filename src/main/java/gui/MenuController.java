@@ -244,7 +244,11 @@ public class MenuController implements Initializable {
     if (lobby.contains("0.")) { // adds the standardlobby to the top
       Platform.runLater(() -> lobbyListView.getItems().add(0, lobby));
     } else { // puts the lobby right under the standardlobby
-      Platform.runLater(() -> lobbyListView.getItems().add(1, lobby));
+      try {
+        Platform.runLater(() -> lobbyListView.getItems().add(1, lobby));
+      } catch (NullPointerException e) {
+        logger.warn("tried adding a lobby on position 1 when position 0 was not set. Lobby was: " + lobby);
+      }
     }
 
     // because a new lobby was added, update the friends-list as well.
