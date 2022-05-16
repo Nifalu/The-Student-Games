@@ -11,8 +11,6 @@ import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import static utility.io.UserBackup.logger;
-
 /**
  * Offers multiple ways to send a message to a specific client while also checking if the commands are valid
  */
@@ -157,9 +155,11 @@ public class SendToClient {
    */
   private synchronized void sendTo(ClientHandler recipient, String msg) {
     try {
-      recipient.getOut().write(msg);
-      recipient.getOut().newLine();
-      recipient.getOut().flush();
+      if (recipient.user.isOnline()) {
+        recipient.getOut().write(msg);
+        recipient.getOut().newLine();
+        recipient.getOut().flush();
+      }
     } catch (IOException e) {
       System.out.println("cannot reach user" + msg);
     }
