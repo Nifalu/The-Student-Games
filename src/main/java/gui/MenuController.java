@@ -111,6 +111,12 @@ public class MenuController implements Initializable {
   private Label selectedLobbyLabel;
 
   /**
+   * displays current name in menu
+   */
+  @FXML
+  private Label namelabel;
+
+  /**
    * a ListView showing lobbies
    */
   @FXML
@@ -464,7 +470,12 @@ public class MenuController implements Initializable {
     return s.split("%");
   }
 
-  public void openHelp(MouseEvent mouseEvent) {
+  public void openHelp() {
     Main.displayHelpPopUp();
+  }
+
+  public void setNamelabel(String name) {
+    Platform.runLater(() -> namelabel.setText(name));
+    refreshFriends();
   }
 }

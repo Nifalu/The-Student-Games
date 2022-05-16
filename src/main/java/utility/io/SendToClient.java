@@ -133,6 +133,10 @@ public class SendToClient {
       case MARKPLAYER:
         sendTo(recipient, "MARKPLAYER--" + msg);
         break;
+
+      case NAME:
+        sendTo(recipient, "NAME--" + msg);
+        break;
     }
   }
 
