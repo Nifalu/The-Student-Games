@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.animation.Animation;
 import javafx.animation.PathTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -25,6 +26,8 @@ import utility.io.SendToServer;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import static java.lang.Thread.sleep;
 
 
 /**
@@ -126,6 +129,9 @@ public class GameController implements Initializable {
   @FXML
   private Circle tokenFour;
 
+  @FXML
+  private ImageView readyButton;
+
   /**
    * GridPane which is used as the board of the game
    */
@@ -139,6 +145,8 @@ public class GameController implements Initializable {
   TranslateTransition transitionTokenThree = new TranslateTransition();
 
   TranslateTransition transitionTokenFour = new TranslateTransition();
+
+  TranslateTransition transitionReadyButton = new TranslateTransition();
 
   /**
    * method reads input from the Textfield and checks, which command to send to the server
@@ -194,10 +202,20 @@ public class GameController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
+    isReady = false;
     resetGame();
-    createPlayingField();
     Main.setGameController(this);
+
+    transitionReadyButton.setNode(readyButton);
+    transitionReadyButton.setDuration(Duration.millis(600));
+    transitionReadyButton.setToY(3);
+    transitionReadyButton.setToX(3);
+    transitionReadyButton.setToX(0.1);
+
+    transitionReadyButton.setCycleCount(Animation.INDEFINITE);
+    transitionReadyButton.play();
+
+
 
     transitionTokenOne.setNode(tokenOne);
     transitionTokenOne.setDuration(Duration.seconds(1));
@@ -388,6 +406,7 @@ public class GameController implements Initializable {
      */
     public void setPlayerAsReady () {
       sendToServer.send(CommandsToServer.READY, "");
+      transitionReadyButton.stop();
       /*if (!isReady) {
         isReady = true;
         sendToServer.send(CommandsToServer.READY, null);
@@ -658,6 +677,7 @@ public class GameController implements Initializable {
     void showHoverImage(Circle token, String id) {
       if (id.equals("char1")) {
         token.setFill(new ImagePattern(new Image("char1hover.png")));
+
       } else if (id.equals("char2")) {
         token.setFill(new ImagePattern(new Image("char2hover.png")));
 

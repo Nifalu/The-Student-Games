@@ -93,6 +93,10 @@ public class Main extends Application {
    */
   private static GameController gameController;
 
+  private static IntroController introController;
+  private static Scene intro;
+  private static Pane introRoot;
+
   /**
    * Scene for the highscore
    */
@@ -173,12 +177,17 @@ public class Main extends Application {
       Pane nameSelectionRoot = getLoader("fxml_nameSelection.fxml").load();
       nameSelection = createScene(nameSelectionRoot);
 
-      Pane helpRoot = getLoader("fxml_help.fxml").load();
+      helpRoot = getLoader("fxml_help.fxml").load();
       help = createScene(helpRoot);
+
+      introRoot = getLoader("fxml_intro.fxml").load();
+      intro = createScene(introRoot);
 
 
       if (Starter.isArgumentStart) {
-        displayStart();
+        displayIntro();
+        //wait(700);
+        //displayStart();
       } else {
         displayLogin();
       }
@@ -225,6 +234,8 @@ public class Main extends Application {
    * Displays the charselection scene on stage
    */
   public static void displayCharSelectionPopUp() { showPopUp(charSelection); }
+
+  public static void displayIntro() { showScene(intro, introRoot); }
 
   /**
    * Display the Highscore scene on stage.
@@ -343,6 +354,8 @@ public class Main extends Application {
    */
   public static CharSelectionController getCharSelectionController() { return charSelectionController; }
 
+  public static IntroController getIntroController() { return introController; }
+
   /**
    * returns the clients MenuController
    *
@@ -380,6 +393,8 @@ public class Main extends Application {
   public static void setGameController(GameController gameController) {
     Main.gameController = gameController;
   }
+
+  public static void setIntroController(IntroController introController) { Main.introController = introController; }
 
   public static void setHelpController(HelpController helpController) { Main.helpController = helpController; }
 
