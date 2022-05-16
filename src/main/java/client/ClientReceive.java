@@ -148,6 +148,12 @@ public class ClientReceive implements Runnable {
 
       case MARKPLAYER:
         Main.getGameController().markPlayer(msg);
+        break;
+
+      case NAME:
+        Main.getMenuController().setNamelabel(msg);
+        Main.getGameController().setNamelabel(msg);
+        break;
     }
   }
 

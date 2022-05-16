@@ -232,7 +232,7 @@ public class Game implements Runnable {
         user.setNotActivelyRollingTheDice();
         music(diceMusic[random.nextInt(4)]);
       } else if (time - i == 5000) {
-        sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.PRINT, "5 seconds left roll the dice");
+        sendToClient.send(userToRollDice.getClienthandler(), CommandsToClient.PRINT, "5 seconds left roll the dice");
         music("audio/wetClick.mp3");
       }
       pause(1);

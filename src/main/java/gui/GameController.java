@@ -39,6 +39,7 @@ public class GameController implements Initializable {
   private final SendToServer sendToServer = new SendToServer();
   public ImageView globalbuttonimage;
   public ImageView lobbybuttonimage;
+  public Rectangle regularDice;
 
   /**
    * marks whether a player wants to write in the global chat or not
@@ -63,6 +64,7 @@ public class GameController implements Initializable {
    */
   public static HashMap<Integer, Integer[]> fields = new HashMap<>();
 
+  public Label namelabel;
 
   /**
    * a TextField to enter chat messages
@@ -93,18 +95,6 @@ public class GameController implements Initializable {
    */
   @FXML
   private Polygon fourDice3;
-
-  /**
-   * button used for setting the player as ready or unready
-   */
-  @FXML
-  private Button readyButton;
-
-  /**
-   * button used to start the game
-   */
-  @FXML
-  private Button startButton;
 
   /**
    * TextArea used to display what happens in the game
@@ -464,19 +454,6 @@ public class GameController implements Initializable {
     return "";
   }
 
-  /**
-     * method is used to "remove" the start and ready button once the game has started
-     * (it doesn't remove the buttons but disables them and sets the opacity to 0)
-     */
-    public void disableStartAndReadyButton () {
-      Platform.runLater(() -> {
-        startButton.setDisable(true);
-        startButton.setOpacity(0);
-        readyButton.setDisable(true);
-        readyButton.setOpacity(0);
-      });
-    }
-
     /**
      * used to switch to the Menu scene
      */
@@ -672,6 +649,10 @@ public class GameController implements Initializable {
 
     public void openHelp(MouseEvent mouseEvent) {
       Main.displayHelpPopUp();
+    }
+
+    public void setNamelabel(String name) {
+      Platform.runLater(() -> namelabel.setText(name));
     }
 
     void showHoverImage(Circle token, String id) {

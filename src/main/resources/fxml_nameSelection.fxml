@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="278.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.NameSelectionController">
+<AnchorPane prefHeight="278.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.NameSelectionController">
    <children>
       <ImageView fitHeight="278.0" fitWidth="505.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,11 +19,10 @@
          </image>
       </ImageView>
       <TextField fx:id="changeNameTextField" layoutX="40.0" layoutY="171.0" onAction="#changeName" prefHeight="31.0" prefWidth="331.0" promptText="enter your new name here ..." />
-      <ImageView fitHeight="52.0" fitWidth="96.0" layoutX="386.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="button" fx:id="okButton" fitHeight="52.0" fitWidth="96.0" layoutX="386.0" layoutY="162.0" onMouseClicked="#changeName" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@enterButton_definitiv.png" />
          </image>
       </ImageView>
-      <Button fx:id="button" layoutX="395.0" layoutY="171.0" mnemonicParsing="false" onAction="#changeName" opacity="0.0" prefHeight="31.0" prefWidth="79.0" text="Button" />
    </children>
 </AnchorPane>

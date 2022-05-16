@@ -48,10 +48,11 @@ public class Name {
    */
   public void askUsername() {
     try {
-      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Hey there, would you like to be named " + clientHandler.user.getUsername() + "?");
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Would you like to be named " + clientHandler.user.getUsername() + "?");
+      sendToClient.send(clientHandler, CommandsToClient.NAME, clientHandler.user.getUsername());
       String answer = receiveFromClient.receive();
       if (!answer.equalsIgnoreCase("YES")) { // if they are not happy with the proposed name
-        sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, ("Please enter your desired name below."));
+        //sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, ("Please enter your desired name below."));
         String desiredName = receiveFromClient.receive();
         desiredName = desiredName.replaceAll(" ", "_");
         desiredName = desiredName.replaceAll(",", "@");
@@ -61,13 +62,11 @@ public class Name {
         }
       } else {
         String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
-        sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
+        //sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
       }
     } catch (NullPointerException e) {
       logger.info("NameReceiver did not receive a name. Server probably shut down while waiting");
     }
-
-
     welcomeUser();
   }
 
@@ -91,13 +90,15 @@ public class Name {
       newName = proposeUsernameIfTaken(preferredName);
       clientHandler.user.setUsername(newName);
       // sendToClient.send(clientHandler, CommandsToClient.PRINT, ("Sorry! This tribute already exists. Try this one: " + newName));
-      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Sorry! This tribute already exists. Try this one: " + newName + ". Feel free to switch to the chat now.");
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "Sorry! This tribute already exists. Do you like: " + newName + " ?" );
+      clientHandler.user.setUsername(newName);
+      sendToClient.send(clientHandler, CommandsToClient.NAME, newName);
 
     } else { // wenn preferredName frei ist:
       sendToClient.serverBroadcast(CommandsToClient.PRINT, (clientHandler.user.getUsername() + " is now called: " + preferredName));
+      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, "You're now called: " + preferredName + ". Continue?");
       clientHandler.user.setUsername(preferredName);
-      String tmpMsg = "Hi " + clientHandler.user.getUsername() + "! Feel free to switch to the chat now.";
-      sendToClient.send(clientHandler, CommandsToClient.PRINTGUISTART, tmpMsg);
+      sendToClient.send(clientHandler, CommandsToClient.NAME, preferredName);
     }
   }
 

@@ -1,16 +1,24 @@
 package utility.io;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import server.ClientHandler;
 import server.ServerManager;
 import server.User;
 
 import java.io.IOException;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.Iterator;
+
+import static utility.io.UserBackup.logger;
 
 /**
  * Offers multiple ways to send a message to a specific client while also checking if the commands are valid
  */
 public class SendToClient {
+
+  Logger logger = LogManager.getLogger(SendToClient.class);
 
   /**
    * Send a message to all Clients on the server
@@ -19,8 +27,13 @@ public class SendToClient {
    * @param msg String
    */
   public synchronized void serverBroadcast(CommandsToClient cmd, String msg) {
-    for (ClientHandler clientHandler : ServerManager.getActiveClientList()) {
-      send(clientHandler, cmd, msg);
+
+    for (Iterator<ClientHandler> it = ServerManager.getActiveClientList().iterator(); it.hasNext();) {
+      try {
+        send(it.next(), cmd, msg);
+      } catch (ConcurrentModificationException e) {
+        logger.warn("ActiveClientList changed size while trying to do a serverbroadcast");
+      }
     }
   }
 
@@ -33,8 +46,12 @@ public class SendToClient {
    * @param msg String message
    */
   public synchronized void lobbyBroadcast(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
-    for (User user : map.values()) {
-      send(user.getClienthandler(), cmd, msg);
+    for (Iterator<User> it = map.values().iterator(); it.hasNext();) {
+      try {
+        send(it.next().getClienthandler(), cmd, msg);
+      } catch (ConcurrentModificationException e) {
+        logger.warn("User-list for LobbyBroadcast changed size while trying to do a lobbybroadcast");
+      }
     }
   }
 
@@ -115,6 +132,10 @@ public class SendToClient {
 
       case MARKPLAYER:
         sendTo(recipient, "MARKPLAYER--" + msg);
+        break;
+
+      case NAME:
+        sendTo(recipient, "NAME--" + msg);
         break;
     }
   }

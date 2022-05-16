@@ -6,6 +6,7 @@ import server.User;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * GameList class the contains all the list which are relevant in the game.
@@ -42,7 +43,9 @@ public class GameList {
    */
   public synchronized static String printUserList() {
     String s = "";
-    for (int i = 0; i < getUserlist().size(); i++) {
+    int i;
+    for (Iterator<Integer> it = getUserlist().keySet().iterator(); it.hasNext();) {
+      i = it.next();
       s = s + " " + getUserlist().get(i).getUsername();
     }
     return s;
@@ -57,9 +60,11 @@ public class GameList {
   public synchronized static String printUserInLobby(Lobby lobby) {
     ArrayList<ClientHandler> userList = ServerManager.getActiveClientList();
     String s = "";
-    for (ClientHandler clientHandler : userList) {
-      if (clientHandler.user.getLobby().equals(lobby)) {
-        s = s + "      -" + clientHandler.user.getUsername() + "%";
+    ClientHandler client;
+    for (Iterator<ClientHandler> it = userList.iterator(); it.hasNext();) {
+      client = it.next();
+      if (client.user.getLobby().equals(lobby)) {
+        s = s + "      -" + client.user.getUsername() + "%";
       }
     }
     return s;
@@ -72,7 +77,9 @@ public class GameList {
    */
   public synchronized static String printLoungingList() {
     String print = "";
-    for (int i = 0; i < getLobbyList().size(); i++) {
+    int i;
+    for (Iterator<Integer> it = getLobbyList().keySet().iterator(); it.hasNext();) {
+      i = it.next();
       print = print + getLobbyList().get(i).getLobbyName() + "%" + printUserInLobby(getLobbyList().get(i));
     }
     return print;
@@ -87,7 +94,9 @@ public class GameList {
   public synchronized static String printLobbies(HashMap<Integer, Lobby> lobbyList) {
     String s = "";
     int counter = 0;
-    for (int i = 0; i < lobbyList.size(); i++) {
+    int i;
+    for (Iterator<Integer> it = lobbyList.keySet().iterator(); it.hasNext();) {
+      i = it.next();
       int lobbyStatus = lobbyList.get(i).getLobbyStatus();
       String lobbyStatusString = "";
       switch (lobbyStatus) {
@@ -105,31 +114,11 @@ public class GameList {
           lobbyStatusString = "Zwischengeschoss";
           break;
       }
-      //if (!lobbyStatusString.equals("standard Lobby")) {
       s = s + counter + ". " + lobbyList.get(i).getLobbyName() + " [" + lobbyStatusString + "] §";
       counter++;
-        /*
-      } else {
-        s = s + lobbyList.get(i).getLobbyName() + " " + "[" + lobbyStatusString + "]  " + "§";
-      }
-         */
     }
     return s;
   }
-
-
-    /*public synchronized static HashMap<Integer, User> getUsersInLobby(Lobby lobby) {
-        int size = ServerManager.getUserlist().size();
-        int counter = 0;
-        HashMap<Integer, User> usersInLobby = new HashMap<>();
-        for (int i = 0; i < size; i++) {
-            User user = ServerManager.getUserlist().get(i);
-            if (user.getLobby().equals(lobby)) {
-                usersInLobby.put(counter, user);
-            }
-        }
-        return usersInLobby;
-    }*/
 
   /**
    * @return all the lobbies with the status open, which is saved in the lobby object as an int.
@@ -138,7 +127,9 @@ public class GameList {
   public synchronized static HashMap<Integer, Lobby> getOpenLobbies() {
     HashMap<Integer, Lobby> openLobbies = new HashMap<>();
     int activeLobbyCounter = 0;
-    for (int i = 0; i < lobbyList.size(); i++) {
+    int i;
+    for (Iterator<Integer> it = getLobbyList().keySet().iterator(); it.hasNext();) {
+      i = it.next();
       if (lobbyList.get(i).getLobbyStatus() == 1) {
         openLobbies.put(activeLobbyCounter, lobbyList.get(i));
         activeLobbyCounter++;
@@ -154,7 +145,9 @@ public class GameList {
   public synchronized static HashMap<Integer, Lobby> getFinishedLobbies() {
     HashMap<Integer, Lobby> finishedLobbies = new HashMap<>();
     int InActiveLobbyCounter = 0;
-    for (int i = 0; i < lobbyList.size(); i++) {
+    int i;
+    for (Iterator<Integer> it = getLobbyList().keySet().iterator(); it.hasNext();) {
+      i = it.next();
       if (lobbyList.get(i).getLobbyStatus() == -1) {
         finishedLobbies.put(InActiveLobbyCounter, lobbyList.get(i));
         InActiveLobbyCounter++;
@@ -170,7 +163,9 @@ public class GameList {
   public synchronized static HashMap<Integer, Lobby> getOnGoingLobbies() {
     HashMap<Integer, Lobby> OnGoingLobbies = new HashMap<>();
     int OnGoingLobbyCounter = 0;
-    for (int i = 0; i < lobbyList.size(); i++) {
+    int i;
+    for (Iterator<Integer> it = getLobbyList().keySet().iterator(); it.hasNext();) {
+      i = it.next();
       if (lobbyList.get(i).getLobbyStatus() == 0) {
         OnGoingLobbies.put(OnGoingLobbyCounter, lobbyList.get(i));
         OnGoingLobbyCounter++;
