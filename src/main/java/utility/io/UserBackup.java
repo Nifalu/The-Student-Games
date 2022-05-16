@@ -1,5 +1,6 @@
 package utility.io;
 
+import gameLogic.GameList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.ServerManager;
@@ -38,6 +39,7 @@ public class UserBackup {
         if (split.length == 2) {
           user = new User(null, split[0], split[1], false);
           ServerManager.getUserlist().put(ServerManager.getUserlist().size(), user);
+          user.setLobby(GameList.getLobbyList().get(0));
         }
       }
     } catch (

@@ -106,23 +106,6 @@ public class CreateLobbyHelper {
    *
    * @param number The number of the new Lobby
    */
-  /*public synchronized void changeLobby(String number) {
-    number = number.replaceAll("\\s", "");
-    if (checkIfOpenLobbyExists(number)) {
-      int lobbynumber = Integer.parseInt(number);
-      clienthandler.user.setLobby(GameList.getOpenLobbies().get(lobbynumber));
-      sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now member of Lobby: " +
-          GameList.getOpenLobbies().get(lobbynumber).getLobbyName());
-    } else if (checkIfOngoingLobbyExists(number)) {
-      int lobbynumber = Integer.parseInt(number);
-      clienthandler.user.setLobby(GameList.getOnGoingLobbies().get(lobbynumber));
-      sendToClient.send(clienthandler, CommandsToClient.PRINT, "You are now a spectator of Lobby: " +
-              GameList.getOnGoingLobbies().get(lobbynumber).getLobbyName());
-    } else {
-      sendToClient.send(clienthandler, CommandsToClient.PRINT, "Whoops that lobby does not exist. ");
-    }
-  }
-   */
   public synchronized void changeLobby(String number) {
     number = number.replaceAll("\\s", "");
 
@@ -208,7 +191,7 @@ public class CreateLobbyHelper {
    * and the players in the specific lobby and sends it to the client.
    */
   public synchronized void printLoungingListAndSendToClient() {
-    sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLoungingList());
+    //sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLoungingList());
     sendToClient.serverBroadcast(CommandsToClient.PRINTFRIENDSGUI, GameList.printLoungingList());
   }
 
