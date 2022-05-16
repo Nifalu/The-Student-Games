@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -148,7 +148,7 @@
                                           <Image url="@changeName_definitiv.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView id="button" fitHeight="56.0" fitWidth="79.0" layoutX="244.0" layoutY="-28.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="button" fitHeight="56.0" fitWidth="79.0" layoutX="244.0" layoutY="-28.0" onMouseClicked="#openHelp" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@helpButton_definitiv.png" />
                                        </image>
