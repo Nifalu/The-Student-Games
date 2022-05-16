@@ -23,3 +23,39 @@
     -fx-scale-x: 1.5;
     -fx-scale-y: 1.5;
 }
+
+#char1:hover {
+    -fx-image: "char1hover.png";
+    -fx-scale-x: 1.35;
+    -fx-scale-y: 1.35;
+}
+
+#char2:hover {
+    -fx-image: "char2hover.png";
+    -fx-scale-x: 1.35;
+    -fx-scale-y: 1.35;
+}
+
+#char3:hover {
+    -fx-image: "char3hover.png";
+    -fx-scale-x: 1.35;
+    -fx-scale-y: 1.35;
+}
+
+#char4:hover {
+    -fx-image: "char4hover.png";
+    -fx-scale-x: 1.35;
+    -fx-scale-y: 1.35;
+}
+
+#char5:hover {
+    -fx-image: "char5hover.png";
+    -fx-scale-x: 1.35;
+    -fx-scale-y: 1.35;
+}
+
+#char6:hover {
+    -fx-image: "char6hover.png";
+    -fx-scale-x: 1.35;
+    -fx-scale-y: 1.35;
+}

@@ -421,17 +421,29 @@ public class GameController implements Initializable {
     if (tokenNr == 1){
       tokenOne.setFill(new ImagePattern(img));
       tokenOne.setOpacity(1);
+      tokenOne.setId("char" + (charNr));
     } else if (tokenNr == 2) {
       tokenTwo.setFill(new ImagePattern(img));
       tokenTwo.setOpacity(1);
+      tokenTwo.setId("char" + (charNr));
     } else if (tokenNr == 3) {
       tokenThree.setFill(new ImagePattern(img));
       tokenThree.setOpacity(1);
+      tokenThree.setId("char" + (charNr));
     } else if (tokenNr == 4) {
       tokenFour.setFill(new ImagePattern(img));
       tokenFour.setOpacity(1);
+      tokenFour.setId("char" + (charNr));
     }
+
+    System.out.println("----IDs------");
+    System.out.println(tokenOne.getId());
+    System.out.println(tokenTwo.getId());
+    System.out.println(tokenThree.getId());
+    System.out.println(tokenFour.getId());
+
   }
+
 
   public String findCorrectImag(int charNr) {
     if (charNr == 1) {
@@ -600,7 +612,7 @@ public class GameController implements Initializable {
         double currentX = playerToMove.getTranslateX();
         double currentY = playerToMove.getTranslateY();
         double newX = newPos[0] - 25;
-        double newY = newPos[1] - 30;
+        double newY = newPos[1] - 35;
         //System.out.println("(" + currentX + ", " + currentY + ")");
 
         Line lineToMoveAlong = new Line(currentX, currentY, newX, newY);
@@ -661,5 +673,81 @@ public class GameController implements Initializable {
     public void openHelp(MouseEvent mouseEvent) {
       Main.displayHelpPopUp();
     }
+
+    void showHoverImage(Circle token, String id) {
+      if (id.equals("char1")) {
+        token.setFill(new ImagePattern(new Image("char1hover.png")));
+      } else if (id.equals("char2")) {
+        token.setFill(new ImagePattern(new Image("char2hover.png")));
+
+      } else if (id.equals("char3")) {
+        token.setFill(new ImagePattern(new Image("char3hover.png")));
+
+      } else if (id.equals("char4")) {
+        token.setFill(new ImagePattern(new Image("char4hover.png")));
+
+      } else if (id.equals("char5")) {
+        token.setFill(new ImagePattern(new Image("char5hover.png")));
+
+      }
+      else if (id.equals("char6")) {
+        token.setFill(new ImagePattern(new Image("char6hover.png")));
+
+      }
+    }
+
+  void showRegularImage(Circle token, String id) {
+    if (id.equals("char1")) {
+      token.setFill(new ImagePattern(new Image("char1.png")));
+    } else if (id.equals("char2")) {
+      token.setFill(new ImagePattern(new Image("char2.png")));
+
+    } else if (id.equals("char3")) {
+      token.setFill(new ImagePattern(new Image("char3.png")));
+
+    } else if (id.equals("char4")) {
+      token.setFill(new ImagePattern(new Image("char4.png")));
+
+    } else if (id.equals("char5")) {
+      token.setFill(new ImagePattern(new Image("char5.png")));
+
+    }
+    else if (id.equals("char6")) {
+      token.setFill(new ImagePattern(new Image("char6h.png")));
+
+    }
+  }
+
+  public void tokenOneHover(MouseEvent mouseEvent) {
+      showHoverImage(tokenOne, tokenOne.getId());
+  }
+
+  public void tokenOneHoverEnd(MouseEvent mouseEvent) {
+      showRegularImage(tokenOne, tokenOne.getId());
+  }
+
+  public void tokenTwoHover(MouseEvent mouseEvent) {
+      showHoverImage(tokenTwo, tokenTwo.getId());
+  }
+
+  public void tokenTwoHoverEnd(MouseEvent mouseEvent) {
+      showRegularImage(tokenTwo, tokenTwo.getId());
+  }
+
+  public void tokenThreeHover(MouseEvent mouseEvent) {
+      showHoverImage(tokenThree, tokenThree.getId());
+  }
+
+  public void tokenThreeHoverEnd(MouseEvent mouseEvent) {
+      showRegularImage(tokenThree, tokenThree.getId());
+  }
+
+  public void tokenFourHover(MouseEvent mouseEvent) {
+      showHoverImage(tokenFour, tokenFour.getId());
+  }
+
+  public void tokenFourHoverEnd(MouseEvent mouseEvent) {
+      showRegularImage(tokenFour, tokenFour.getId());
+  }
 }
 
