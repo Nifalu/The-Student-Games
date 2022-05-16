@@ -464,4 +464,7 @@ public class MenuController implements Initializable {
     return s.split("%");
   }
 
+  public void openHelp(MouseEvent mouseEvent) {
+    Main.displayHelpPopUp();
+  }
 }

@@ -74,6 +74,10 @@ public class Main extends Application {
    */
   private static MenuController menuController;
 
+  private static Pane helpRoot;
+  private static HelpController helpController;
+  private static Scene help;
+
   /**
    * the corresponding root to the game scene
    */
@@ -169,6 +173,9 @@ public class Main extends Application {
       Pane nameSelectionRoot = getLoader("fxml_nameSelection.fxml").load();
       nameSelection = createScene(nameSelectionRoot);
 
+      Pane helpRoot = getLoader("fxml_help.fxml").load();
+      help = createScene(helpRoot);
+
 
       if (Starter.isArgumentStart) {
         displayStart();
@@ -230,6 +237,8 @@ public class Main extends Application {
   public static void displayNotInLobbyPopUp() { showPopUp(notInLobby); }
 
   public static void displayNameSelectionPopUp() {showPopUp(nameSelection); }
+
+  public static void displayHelpPopUp() {showPopUp(help); }
 
   /**
    * Creates a new scene from the given root pane and adds css
@@ -343,7 +352,7 @@ public class Main extends Application {
     return menuController;
   }
 
-
+  public static HelpController getHelpController() { return helpController; }
 
   /**
    * returns the clients GameController
@@ -371,6 +380,8 @@ public class Main extends Application {
   public static void setGameController(GameController gameController) {
     Main.gameController = gameController;
   }
+
+  public static void setHelpController(HelpController helpController) { Main.helpController = helpController; }
 
   /**
    * sets the clients StartController
