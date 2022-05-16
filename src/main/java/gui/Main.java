@@ -186,8 +186,6 @@ public class Main extends Application {
 
       if (Starter.isArgumentStart) {
         displayIntro();
-        //wait(700);
-        //displayStart();
       } else {
         displayLogin();
       }
