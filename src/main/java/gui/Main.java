@@ -224,6 +224,7 @@ public class Main extends Application {
    */
   public static void displayHighscore() {
     showScene(highscore, highscoreRoot);
+    getHighscoreController().refreshWinners();
   }
 
   public static void displayNotInLobbyPopUp() { showPopUp(notInLobby); }

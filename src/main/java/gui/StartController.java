@@ -4,13 +4,8 @@ import gameLogic.MusicPlayer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import utility.io.CommandsToServer;
-import utility.io.ReceiveFromProtocol;
 import utility.io.SendToServer;
 
 import java.net.URL;
@@ -21,21 +16,9 @@ import java.util.ResourceBundle;
  */
 public class StartController implements Initializable {
 
-  /**
-   * SendToServer object used to communicate with the server
-   */
-  private final SendToServer sendToServer = new SendToServer();
-  /**
-   * ReceiveFromProtocol object used to communicate with the protocol
-   */
-  public static ReceiveFromProtocol receiveFromProtocol = new ReceiveFromProtocol();
+
   public ImageView noImage;
   public ImageView yesImage;
-
-  /**
-   * a String which can save a message
-   */
-  String msg;
 
   /**
    * a label which is used to ask for the clients username
@@ -43,32 +26,6 @@ public class StartController implements Initializable {
   @FXML
   private Label showText;
 
-  /**
-   * a TextField used to enter answers to question
-   */
-  @FXML
-  private TextField textInput;
-
-  @FXML
-  private Button sendButton;
-
-  @FXML
-  private Button noButton;
-
-  @FXML
-  private Button yesButton;
-
-
-  /**
-   * This method reads the text from textInput and sends it to the server
-   */
-  public void sendMsg() {
-    String msg = textInput.getText();
-    sendToServer.send(CommandsToServer.NAME, msg);
-    textInput.clear();
-    music("audio/whistle.mp3");
-    switchToMenu();
-  }
 
   /**
    * changes the displayed text on the stage
@@ -79,16 +36,12 @@ public class StartController implements Initializable {
   public void printMsg(String msg) {
     if (msg != null) {
       Platform.runLater(() -> showText.setText(msg));
-      // showText.setText(msg);
     }
   }
 
 
   /**
    * This method is called, when the class is created
-   * It is used to wait on incoming messages
-   * This method waits for a change in the field msg, if it's changed it will call the printMsg method, which
-   * changes the text on screen
    *
    * @param location  location
    * @param resources resources
@@ -97,7 +50,6 @@ public class StartController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
 
     Main.setStartController(this);
-
   }
 
 
@@ -108,38 +60,12 @@ public class StartController implements Initializable {
     Main.displayMenu();
   }
 
-  /**
-   * switches to the Game scene when clicking the button
-   */
-  public void switchToGame() {
-    Main.displayGame();
-  }
 
-  /**
-   * switches to the Highscore scene when clicking the button
-   */
-  public void switchToHighscore() {
-    Main.displayHighscore();
-  }
-
-    public void nameNo(MouseEvent actionEvent) {
-      sendToServer.send(CommandsToServer.NAME, "no");
+    public void nameNo() {
       Main.displayNameSelectionPopUp();
-      music("audio/whistle.mp3");
-      switchToMenu();
-      /**
-      yesButton.setOpacity(0);
-      yesButton.setDisable(true);
-      noButton.setOpacity(0);
-      noButton.setDisable(true);
-      textInput.setOpacity(1);
-      sendButton.setOpacity(1);
-      sendButton.setDisable(false);
-       **/
     }
 
-  public void nameYes(MouseEvent actionEvent) {
-    sendToServer.send(CommandsToServer.NAME, "yes");
+  public void nameYes() {
     music("audio/whistle.mp3");
     switchToMenu();
   }
