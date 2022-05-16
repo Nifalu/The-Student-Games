@@ -658,5 +658,8 @@ public class GameController implements Initializable {
       }
     }
 
+    public void openHelp(MouseEvent mouseEvent) {
+      Main.displayHelpPopUp();
+    }
 }
 
