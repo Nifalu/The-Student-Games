@@ -63,8 +63,6 @@ public class IntroController implements Initializable {
 
         playMedia();
 
-        Main.displayStart();
-
     }
 
 
