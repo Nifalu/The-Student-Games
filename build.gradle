@@ -23,7 +23,7 @@ tasks.register('build-cs108') {
 
 javafx {
     version = "11.0.2"
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.base', 'javafx.media']
 }
 
 group 'district-9'
