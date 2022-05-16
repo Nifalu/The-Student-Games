@@ -25,6 +25,7 @@ import javafx.util.Duration;
 
 public class IntroController implements Initializable {
     public void switchToStart(ActionEvent actionEvent) {
+        Main.displayStart();
     }
 
 
@@ -61,6 +62,8 @@ public class IntroController implements Initializable {
         mediaView.setMediaPlayer(mediaPlayer);
 
         playMedia();
+
+        Main.displayStart();
 
     }
 
