@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <children>
       <ImageView fitHeight="778.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -597,7 +597,7 @@
                         </ImageView>
                         <ImageView id="button" fx:id="lobbybuttonimage" disable="true" fitHeight="38.0" fitWidth="72.0" layoutX="169.0" layoutY="24.0" onMouseClicked="#switchChat" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@lobbyButton_defintiv.png" />
+                              <Image url="@arenaButton_definitiv.png" />
                            </image>
                         </ImageView>
                      </children>

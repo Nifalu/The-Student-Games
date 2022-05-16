@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartController">
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -75,9 +75,9 @@
                   <Image url="@char2_symmetrie.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="198.0" fitWidth="167.0" layoutX="332.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="257.0" fitWidth="175.0" layoutX="340.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@char6.png" />
+                  <Image url="@ritterChar.png" />
                </image>
             </ImageView>
             <ImageView id="tilt" fitHeight="59.0" fitWidth="61.0" layoutX="499.0" layoutY="548.0" pickOnBounds="true" preserveRatio="true">
