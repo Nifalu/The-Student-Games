@@ -658,6 +658,7 @@ public class GameController implements Initializable {
     void showHoverImage(Circle token, String id) {
       if (id.equals("char1")) {
         token.setFill(new ImagePattern(new Image("char1hover.png")));
+
       } else if (id.equals("char2")) {
         token.setFill(new ImagePattern(new Image("char2hover.png")));
 

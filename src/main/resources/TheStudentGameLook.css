@@ -2,6 +2,7 @@
 #button:hover {
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
+    -fx-cursor: hand;
 }
 
 #button:hover:pressed {
@@ -58,4 +59,13 @@
     -fx-image: "char6hover.png";
     -fx-scale-x: 1.35;
     -fx-scale-y: 1.35;
+}
+
+#selectionCircle:hover {
+    -fx-cursor: hand;
+}
+
+#dice:hover {
+    -fx-rotate: 2;
+    -fx-cursor: hand;
 }

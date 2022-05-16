@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <children>
       <ImageView fitHeight="778.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -628,10 +628,10 @@
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Rectangle id="tilt" fx:id="regularDice" arcHeight="5.0" arcWidth="5.0" fill="#b8caf5" height="75.0" onMouseClicked="#throwRegularDice" stroke="BLACK" strokeType="INSIDE" width="77.0" />
-                        <Polygon id="tilt" fx:id="fourDice1" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon id="tilt" fx:id="fourDice2" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon id="tilt" fx:id="fourDice3" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Rectangle id="dice" fx:id="regularDice" arcHeight="5.0" arcWidth="5.0" fill="#b8caf5" height="75.0" onMouseClicked="#throwRegularDice" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                        <Polygon id="dice" fx:id="fourDice1" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon id="dice" fx:id="fourDice2" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon id="dice" fx:id="fourDice3" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" top="10.0" />
