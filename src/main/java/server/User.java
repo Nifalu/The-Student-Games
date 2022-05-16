@@ -1,6 +1,7 @@
 package server;
 
 import gameLogic.GameList;
+import gameLogic.Lobby;
 
 import java.util.Random;
 
@@ -55,7 +56,7 @@ public class User {
   /**
    * the users current lobby
    */
-  private gameLogic.Lobby lobby;
+  private Lobby lobby;
 
   /**
    * the field on the board

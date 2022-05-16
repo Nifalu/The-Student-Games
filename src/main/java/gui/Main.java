@@ -110,21 +110,14 @@ public class Main extends Application {
   private static CharSelectionController charSelectionController;
 
   /**
-   * corresponding root for the char selection scene
-   */
-  private static Pane charSelectionRoot;
-
-  /**
    * the char selection scene
    */
   public static Scene charSelection;
 
-  private static Pane notInLobbyRoot;
-  public static Scene notInLobby;
+  private static Scene notInLobby;
   private static NotInLobbyController notInLobbyController;
 
-  private static Pane nameSelectionRoot;
-  public static Scene nameSelection;
+  private static Scene nameSelection;
   private static NameSelectionController nameSelectionController;
 
   /**
@@ -167,13 +160,13 @@ public class Main extends Application {
       gameRoot = getLoader("fxml_game.fxml").load();
       game = createScene(gameRoot);
 
-      charSelectionRoot = getLoader("fxml_charSelection.fxml").load();
+      Pane charSelectionRoot = getLoader("fxml_charSelection.fxml").load();
       charSelection = createScene(charSelectionRoot);
 
-      notInLobbyRoot = getLoader("fxml_notInLobby.fxml").load();
+      Pane notInLobbyRoot = getLoader("fxml_notInLobby.fxml").load();
       notInLobby = createScene(notInLobbyRoot);
 
-      nameSelectionRoot = getLoader("fxml_nameSelection.fxml").load();
+      Pane nameSelectionRoot = getLoader("fxml_nameSelection.fxml").load();
       nameSelection = createScene(nameSelectionRoot);
 
 
@@ -199,7 +192,8 @@ public class Main extends Application {
    * Display the Menu scene on stage.
    */
   public static void displayMenu() {
-    MenuController.hasJoinedChat = true;
+    getMenuController().refreshLobbies();
+    getMenuController().refreshFriends();
     showScene(menu, menuRoot);
   }
 
@@ -312,6 +306,7 @@ public class Main extends Application {
   public static void exit() {
     try {
       SendToServer sendToServer = new SendToServer();
+      sendToServer.send(CommandsToServer.PRINTLOUNGINGLIST, "");
       sendToServer.send(CommandsToServer.QUIT, "");
     } catch (NullPointerException e) {
       logger.info("closed before connection was made");
@@ -367,10 +362,6 @@ public class Main extends Application {
     return highscoreController;
   }
 
-  public static NotInLobbyController getNotInLobbyController() { return notInLobbyController; }
-
-  public static NameSelectionController getNameSelectionController() { return nameSelectionController; }
-
   /**
    * setts the clients GameController
    *
@@ -418,19 +409,6 @@ public class Main extends Application {
    */
   public static void setCharSelectionController(CharSelectionController charSelectionController) {
     Main.charSelectionController = charSelectionController;
-  }
-
-  public static void setNotInLobbyController(NotInLobbyController notInLobbyController) {
-    Main.notInLobbyController = notInLobbyController;
-  }
-
-  public static void setNameSelectionController(NameSelectionController nameSelectionController) {
-    Main.nameSelectionController = nameSelectionController;
-  }
-
-
-  public static LoginController getLoginController() {
-    return loginController;
   }
 
 }

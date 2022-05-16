@@ -18,7 +18,7 @@ public class SendToClient {
    * @param cmd Enum
    * @param msg String
    */
-  public void serverBroadcast(CommandsToClient cmd, String msg) {
+  public synchronized void serverBroadcast(CommandsToClient cmd, String msg) {
     for (ClientHandler clientHandler : ServerManager.getActiveClientList()) {
       send(clientHandler, cmd, msg);
     }
@@ -32,7 +32,7 @@ public class SendToClient {
    * @param cmd commandToClient
    * @param msg String message
    */
-  public void lobbyBroadcast(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
+  public synchronized void lobbyBroadcast(HashMap<Integer, User> map, CommandsToClient cmd, String msg) {
     for (User user : map.values()) {
       send(user.getClienthandler(), cmd, msg);
     }
@@ -45,7 +45,7 @@ public class SendToClient {
    * @param cmd       Enum
    * @param msg       String
    */
-  public void send(ClientHandler recipient, CommandsToClient cmd, String msg) {
+  public synchronized void send(ClientHandler recipient, CommandsToClient cmd, String msg) {
 
     switch (cmd) {
 
@@ -132,7 +132,7 @@ public class SendToClient {
       recipient.getOut().newLine();
       recipient.getOut().flush();
     } catch (IOException e) {
-      //System.out.println("cannot reach user" + msg);
+      System.out.println("cannot reach user" + msg);
     }
   }
 }

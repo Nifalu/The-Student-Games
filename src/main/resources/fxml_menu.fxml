@@ -32,7 +32,7 @@
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <HBox layoutY="73.0" prefHeight="27.0" prefWidth="317.0" />
-                              <Label fx:id="selectedLobbyLabel" alignment="CENTER" layoutX="116.0" layoutY="155.0" prefHeight="49.0" prefWidth="193.0" text="SelectedLobby" textFill="#ef0d0d">
+                              <Label fx:id="selectedLobbyLabel" alignment="CENTER" layoutX="156.0" layoutY="155.0" prefHeight="49.0" prefWidth="128.0" text="SelectedLobby" textFill="#ef0d0d">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -42,7 +42,7 @@
                                     <Image url="@panel_definitiv.png" />
                                  </image>
                               </ImageView>
-                              <ListView fx:id="lobbyListView" layoutX="97.0" layoutY="214.0" onMouseClicked="#listViewSelectedLobby" prefHeight="213.0" prefWidth="186.0">
+                              <ListView fx:id="lobbyListView" layoutX="63.0" layoutY="214.0" prefHeight="213.0" prefWidth="244.0">
                                  <cursor>
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor></ListView>
@@ -90,7 +90,7 @@
                                                 <Image url="@panelYellow_defintiv.png" />
                                              </image>
                                           </ImageView>
-                                          <TextArea id="chat" fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" />
+                                          <TextArea id="chat" fx:id="chat" editable="false" layoutX="58.0" layoutY="49.0" prefHeight="237.0" prefWidth="195.0" wrapText="true" />
                                           <TextField id="chat" fx:id="chatTextField" layoutX="45.0" layoutY="296.0" onAction="#sendChatMessage" promptText="type your message here ..." />
                                           <ImageView id="button" fx:id="sendButton" disable="true" fitHeight="48.0" fitWidth="72.0" layoutX="201.0" layoutY="286.0" onMouseClicked="#sendChatMessage" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                                              <image>
