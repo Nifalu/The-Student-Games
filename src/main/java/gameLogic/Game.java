@@ -154,11 +154,11 @@ public class Game implements Runnable {
           //Sends at the beginning of each round the current date.
           lobbyBroadcastToPlayer(calendar.getCurrentDate());
         }
-        sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MARKPLAYER, Integer.toString(playersPlaying.get(i).gameTokenNr));
 
         if (ServerManager.getActiveClientList().contains(playersPlaying.get(i).getClienthandler())) {
           if (playersPlaying.get(i).getPlayingField() <= 88 &&
               !playersPlaying.get(i).getGameOver()) {
+            sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MARKPLAYER, Integer.toString(playersPlaying.get(i).gameTokenNr));
             lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
 
             //sends the current users turn and the diced number to PlayingFields
@@ -232,7 +232,7 @@ public class Game implements Runnable {
         user.setNotActivelyRollingTheDice();
         music(diceMusic[random.nextInt(4)]);
       } else if (time - i == 5000) {
-        sendToClient.send(userToRollDice.getClienthandler(), CommandsToClient.PRINT, "5 seconds left roll the dice");
+        lobbyBroadcastToPlayer(userToRollDice.getUsername() + " has 5 seconds left roll the dice");
         music("audio/wetClick.mp3");
       }
       pause(1);
@@ -433,6 +433,7 @@ public class Game implements Runnable {
       }
       String textCard = arr[1];
       lobbyBroadcastToPlayer("§" + user.getUsername() + " draws an action card:" + "§" + textCard + "§");
+      pause(1500);
       changePosition(user, positionToChange);
     } else if (field == 7 || field == 13 || field == 22 || field == 38 || field == 49 || field == 65 || field == 83) { // Quiz
       quizOngoing = true;
@@ -462,7 +463,7 @@ public class Game implements Runnable {
           break;
         } else {
           if (maxTimeToAnswerQuiz - i == 5000) {
-            sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.PRINT, "5 seconds left to answer");
+            lobbyBroadcastToPlayer(userToAnswerQuiz.getUsername() +" has 5 seconds left to answer");
             music("audio/wetClick.mp3");
           }
           pause(1);
