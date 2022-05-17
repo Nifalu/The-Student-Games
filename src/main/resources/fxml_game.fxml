@@ -670,8 +670,7 @@
                      <children>
                         <AnchorPane prefHeight="147.0" prefWidth="357.0">
                            <children>
-                              <Rectangle id="tilt" fx:id="regularDice" arcHeight="5.0" arcWidth="5.0" fill="#b8caf5" height="75.0" layoutX="25.0" layoutY="-23.0" onMouseClicked="#throwRegularDice" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="77.0" />
-                              <ImageView id="dice" fitHeight="100.0" fitWidth="103.0" layoutY="52.0" onMouseClicked="#throwRegularDice" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="dice" fx:id="regularDice" fitHeight="100.0" fitWidth="103.0" layoutY="52.0" onMouseClicked="#throwRegularDice" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@diceYellow.png" />
                                  </image>

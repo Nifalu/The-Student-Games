@@ -164,6 +164,9 @@ public class Game implements Runnable {
             }
             sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MARKPLAYER, Integer.toString(playersPlaying.get(i).gameTokenNr));
             sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.YOURTURN, "");
+
+            // mis-used for a quickfix. if msg does not contain "roll the Dice", the buttons in the menu scene will fail.
+            // the buttons check if "roll the dice" has been sent to detect that the game has started. (I know this is bad)
             lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
 
             //sends the current users turn and the diced number to PlayingFields
@@ -177,7 +180,11 @@ public class Game implements Runnable {
             //checks if a player has ended the game and adds him to the high score
             if (playersPlaying.get(i).getPlayingField() > 88) {
               playersEndedGame += 1;
+
+              // mis-used for a quickfix. if msg does not contain "graduated", the buttons in the menu scene will fail.
+              // the buttons check if "graduated" has been sent to detect that someone has finished (I know this is bad)
               lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " graduated " + place() + " in " + calendar.getCurrentDate());
+
               //MusicPlayer jiggleJiggle = new MusicPlayer();
               //jiggleJiggle.dateiAnspielen("audio/jiggleJiggle.mp3");
               highScore.add("" + playersPlaying.get(i).getUsername(),
@@ -575,7 +582,10 @@ public class Game implements Runnable {
         lobbyBroadcastToPlayer("Congratulations! Most of you have successfully graduated.");
       }
     } else {
+      // mis-used for a quickfix. if msg does not contain "graduated", the buttons in the menu scene will fail.
+      // the buttons check if "graduated" has been sent to detect that nobody has finished (I know this is bad)
       lobbyBroadcastToPlayer("None of you has graduated.");
+
       sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
     }
     for (int i = 0; i < numPlayers; i++) {

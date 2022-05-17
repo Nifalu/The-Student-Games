@@ -55,14 +55,17 @@
             </VBox>
          </center>
          <bottom>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView id="button" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="button" fitHeight="60.0" fitWidth="111.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@closeButton.png" />
                      </image>
                   </ImageView>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </HBox>
          </bottom>
       </BorderPane>

@@ -119,22 +119,12 @@ public class GameController implements Initializable {
    * the rectangle used as the regular dice (6 sides)
    */
   @FXML
-  private Rectangle regularDice;
+  private ImageView regularDice;
 
   /**
    * marks whether a player wants to write in the global chat or not
    */
   private boolean writeInGlobalChat = false;
-
-  /**
-   * marks whether a player is ready or not
-   */
-  private boolean isReady = false;
-
-  /**
-   * marks whether the game has started or not
-   */
-  private static boolean gameHasStarted = false;
 
   /**
    * the opacity of the selected chat button (lobby or global)
@@ -149,12 +139,17 @@ public class GameController implements Initializable {
   /**
    * boolean property which checks if the player has to answer a quiz question
    */
-  private SimpleBooleanProperty isMyQuiz = new SimpleBooleanProperty(false);
+  private final SimpleBooleanProperty isMyQuiz = new SimpleBooleanProperty(false);
 
   /**
    * boolean property which checks if it's the players turn
    */
-  private SimpleBooleanProperty isMyTurn = new SimpleBooleanProperty(false);
+  private final SimpleBooleanProperty isMyTurn = new SimpleBooleanProperty(false);
+
+  /**
+   * boolean that is true when the game has started and false when its finished
+   */
+  private boolean hasStarted = false;
 
 
   /**
@@ -321,6 +316,20 @@ public class GameController implements Initializable {
           gameTracker.appendText("\n");
         }
       });
+      if (gameMove.contains("graduated")) {
+        Platform.runLater(() -> {
+          menubutton.setOpacity(selectedOpacity);
+          menubutton.setDisable(false);
+          hasStarted = false;
+        });
+      }
+      if (!hasStarted && gameMove.contains("roll the Dice")) {
+        menubutton.setOpacity(unselectedOpacity);
+        readyButton.setOpacity(unselectedOpacity);
+        startbutton.setOpacity(unselectedOpacity);
+        startbutton.setDisable(true);
+        hasStarted = true;
+      }
     }
   }
 
@@ -367,7 +376,6 @@ public class GameController implements Initializable {
       Platform.runLater(() -> chat.appendText(msg + System.lineSeparator()));
     }
   }
-
 
 
   /**
@@ -487,6 +495,7 @@ public class GameController implements Initializable {
 
   /**
    * chooses the correct TranslateTransition so the correct player moves
+   *
    * @param moveToField String containing the player token number and the new field to move to
    * @return TranslateTransition of the player who should move
    */
@@ -545,7 +554,6 @@ public class GameController implements Initializable {
    * @param moveToField String: contains the color of the character to move and on which field he belongs
    */
   public void movePlayer(String moveToField) {
-
     Circle playerToMove = chooseCorrectPlayerToMove(moveToField);
     TranslateTransition transition = chooseCorrectPathTransition(moveToField);
 
@@ -576,85 +584,87 @@ public class GameController implements Initializable {
     });
   }
 
-      // ---------------------------------- QUIZ ------------------------------------ //
+  // ---------------------------------- QUIZ ------------------------------------ //
 
-      /**
-       * answers a quiz question with A when pressing the button
-       */
-      @FXML
-      private void answerQuizA () {
-        sendToServer.send(CommandsToServer.QUIZ, "A");
-        isMyQuiz.set(false);
-      }
+  /**
+   * answers a quiz question with A when pressing the button
+   */
+  @FXML
+  private void answerQuizA() {
+    sendToServer.send(CommandsToServer.QUIZ, "A");
+    isMyQuiz.set(false);
+  }
 
-      /**
-       * answers a quiz question with B when pressing the button
-       */
-      @FXML
-      private void answerQuizB () {
-        sendToServer.send(CommandsToServer.QUIZ, "B");
-        isMyQuiz.set(false);
-      }
+  /**
+   * answers a quiz question with B when pressing the button
+   */
+  @FXML
+  private void answerQuizB() {
+    sendToServer.send(CommandsToServer.QUIZ, "B");
+    isMyQuiz.set(false);
+  }
 
-      /**
-       * answers a quiz question with C when pressing the button
-       */
-      @FXML
-      private void answerQuizC () {
-        sendToServer.send(CommandsToServer.QUIZ, "C");
-        isMyQuiz.set(false);
-      }
+  /**
+   * answers a quiz question with C when pressing the button
+   */
+  @FXML
+  private void answerQuizC() {
+    sendToServer.send(CommandsToServer.QUIZ, "C");
+    isMyQuiz.set(false);
+  }
 
-      /**
-       * answers a quiz question with D when pressing the button
-       */
-      @FXML
-      private void answerQuizD () {
-        sendToServer.send(CommandsToServer.QUIZ, "D");
-        isMyQuiz.set(false);
-      }
+  /**
+   * answers a quiz question with D when pressing the button
+   */
+  @FXML
+  private void answerQuizD() {
+    sendToServer.send(CommandsToServer.QUIZ, "D");
+    isMyQuiz.set(false);
+  }
 
-      // --------------------------------- TOKENS ----------------------------------- //
+  // --------------------------------- TOKENS ----------------------------------- //
 
-      /**
-       * adds the correct picture to the player tokens
-       * @param tokenNr int of the token number
-       * @param charNr int of the char number
-       */
-      public void setCharToken ( int tokenNr, int charNr){
-        if (tokenNr == 0) {
-          return;
-        }
+  /**
+   * adds the correct picture to the player tokens
+   *
+   * @param tokenNr int of the token number
+   * @param charNr  int of the char number
+   */
+  public void setCharToken(int tokenNr, int charNr) {
+    if (tokenNr == 0) {
+      return;
+    }
 
-        Image img = new Image(findCorrectImag(charNr), false);
-        if (tokenNr == 1) {
-          tokenOne.setFill(new ImagePattern(img));
-          tokenOne.setOpacity(1);
-          tokenOne.setId("char" + (charNr));
-        } else if (tokenNr == 2) {
-          tokenTwo.setFill(new ImagePattern(img));
-          tokenTwo.setOpacity(1);
-          tokenTwo.setId("char" + (charNr));
-        } else if (tokenNr == 3) {
-          tokenThree.setFill(new ImagePattern(img));
-          tokenThree.setOpacity(1);
-          tokenThree.setId("char" + (charNr));
-        } else if (tokenNr == 4) {
-          tokenFour.setFill(new ImagePattern(img));
-          tokenFour.setOpacity(1);
-          tokenFour.setId("char" + (charNr));
-        }
+    Image img = new Image(findCorrectImag(charNr), false);
+    if (tokenNr == 1) {
+      tokenOne.setFill(new ImagePattern(img));
+      tokenOne.setOpacity(1);
+      tokenOne.setId("char" + (charNr));
+    } else if (tokenNr == 2) {
+      tokenTwo.setFill(new ImagePattern(img));
+      tokenTwo.setOpacity(1);
+      tokenTwo.setId("char" + (charNr));
+    } else if (tokenNr == 3) {
+      tokenThree.setFill(new ImagePattern(img));
+      tokenThree.setOpacity(1);
+      tokenThree.setId("char" + (charNr));
+    } else if (tokenNr == 4) {
+      tokenFour.setFill(new ImagePattern(img));
+      tokenFour.setOpacity(1);
+      tokenFour.setId("char" + (charNr));
+    }
 
-        System.out.println("----IDs------");
-        System.out.println(tokenOne.getId());
-        System.out.println(tokenTwo.getId());
-        System.out.println(tokenThree.getId());
-        System.out.println(tokenFour.getId());
+    System.out.println("----IDs------");
+    System.out.println(tokenOne.getId());
+    System.out.println(tokenTwo.getId());
+    System.out.println(tokenThree.getId());
+    System.out.println(tokenFour.getId());
 
-      }
+  }
 
   /**
    * marks the player in the gui whose turn it is
+   *
    * @param tokenNr String containing the number of the token which should be marked
    */
   public void markPlayer(String tokenNr) {
@@ -702,6 +712,7 @@ public class GameController implements Initializable {
 
   /**
    * finds the correct image when given a character number
+   *
    * @param charNr the character number you want the image of
    * @return returns the path of the wanted image as a String
    */
@@ -746,8 +757,9 @@ public class GameController implements Initializable {
 
   /**
    * shows the correct hover image of the token when hovering (entering the circle which represents the token)
+   *
    * @param token Circle which represents the player token which is being hovered on
-   * @param id String containing the id of the circle being hovered on
+   * @param id    String containing the id of the circle being hovered on
    */
   void showHoverImage(Circle token, String id) {
     switch (id) {
@@ -780,8 +792,9 @@ public class GameController implements Initializable {
 
   /**
    * shows the correct regular image of the token when stopping hovering (exiting the circle which represents the token)
+   *
    * @param token Circle which represents the player token which is not being hovered on anymore
-   * @param id String containing the id of the circle which is not hovered on anymore
+   * @param id    String containing the id of the circle which is not hovered on anymore
    */
   void showRegularImage(Circle token, String id) {
     switch (id) {
@@ -812,6 +825,7 @@ public class GameController implements Initializable {
   }
 
   // --------------------------------- CHAR HOVERS ----------------------------------- //
+
   /**
    * changes the character images when hovering over token one
    */
@@ -942,16 +956,10 @@ public class GameController implements Initializable {
   private void setPlayerAsReady() {
     sendToServer.send(CommandsToServer.READY, "");
     readyButton.setOpacity(unselectedOpacity);
+    readyButton.setDisable(true);
+    startbutton.setOpacity(selectedOpacity);
+    startbutton.setDisable(false);
     transitionReadyButton.stop();
-      /*if (!isReady) {
-        isReady = true;
-        sendToServer.send(CommandsToServer.READY, null);
-        //Platform.runLater(() -> readyButton.setText("UNREADY?"));
-      } else {
-        sendToServer.send(CommandsToServer.UNREADY, null);
-        //Platform.runLater(() -> readyButton.setText("READY?"));
-        isReady = false;
-      }*/
   }
 
   /**
@@ -959,13 +967,12 @@ public class GameController implements Initializable {
    */
   @FXML
   private void startTheGame() {
-    resetGame();
+    alternateResetGame();
     sendToServer.send(CommandsToServer.START, null);
-    // gameHasStarted = true;
-    menubutton.setDisable(true);
-    menubutton.setOpacity(unselectedOpacity);
-    readyButton.setDisable(true);
-    readyButton.setOpacity(unselectedOpacity);
+    Platform.runLater(() -> {
+      readyButton.setOpacity(unselectedOpacity);
+      readyButton.setDisable(true);
+    });
   }
 
   /**
@@ -991,6 +998,42 @@ public class GameController implements Initializable {
       fourDice1.setOpacity(1);
       fourDice2.setOpacity(1);
       fourDice3.setOpacity(1);
+
+      readyButton.setOpacity(selectedOpacity);
+      readyButton.setDisable(false);
+      menubutton.setOpacity(selectedOpacity);
+      startbutton.setOpacity(unselectedOpacity);
+      startbutton.setDisable(true);
+    });
+  }
+
+  /**
+   * This method is used to reset the game at the start of it
+   * the player characters are moved to the starting position and all dicedice are given back to the player
+   */
+  public void alternateResetGame() {
+    Platform.runLater(() -> {
+      tokenOne.setTranslateY(524);
+      tokenTwo.setTranslateY(524);
+      tokenThree.setTranslateY(524);
+      tokenFour.setTranslateY(524);
+
+      tokenOne.setTranslateX(890);
+      tokenTwo.setTranslateX(970);
+      tokenThree.setTranslateX(810);
+      tokenFour.setTranslateX(730);
+
+      // resets the dicedice
+      fourDice1.setDisable(false);
+      fourDice2.setDisable(false);
+      fourDice3.setDisable(false);
+      fourDice1.setOpacity(1);
+      fourDice2.setOpacity(1);
+      fourDice3.setOpacity(1);
+
+      readyButton.setOpacity(selectedOpacity);
+      readyButton.setDisable(false);
+      menubutton.setOpacity(selectedOpacity);
     });
   }
 
@@ -999,6 +1042,7 @@ public class GameController implements Initializable {
 
   /**
    * sets the name label which displays the users own username
+   *
    * @param name String containing the users name
    */
   public void setNamelabel(String name) {
@@ -1007,6 +1051,7 @@ public class GameController implements Initializable {
 
   /**
    * sets the listener variable containing whether it's the players turn or not
+   *
    * @param b boolean containing whether it's the users turn
    */
   public void setMyTurn(boolean b) {
@@ -1015,6 +1060,7 @@ public class GameController implements Initializable {
 
   /**
    * sets the listener variable containing whether the player has to answer a quiz question or not
+   *
    * @param b boolean containing whether the player has to answer a quiz question or not
    */
   public void setMyQuiz(boolean b) {
@@ -1028,30 +1074,38 @@ public class GameController implements Initializable {
     isMyTurn.addListener((obs, oldv, newv) -> {
       if (newv) {
         regularDice.setDisable(false);
-        regularDice.setStroke(Color.DARKORANGE);
-        regularDice.setStrokeWidth(3.0);
+        regularDice.setScaleX(1);
+        regularDice.setScaleY(1);
+        regularDice.setMouseTransparent(false);
         fourDice1.setDisable(false);
-        //fourDice1.setStroke(Color.DARKORANGE);
-        //fourDice1.setStrokeWidth(3.0);
+        fourDice1.setScaleX(1);
+        fourDice1.setScaleY(1);
+        fourDice1.setMouseTransparent(false);
         fourDice2.setDisable(false);
-        //fourDice2.setStroke(Color.DARKORANGE);
-        //fourDice2.setStrokeWidth(3.0);
+        fourDice2.setScaleX(1);
+        fourDice2.setScaleY(1);
+        fourDice2.setMouseTransparent(false);
         fourDice3.setDisable(false);
-        //fourDice3.setStroke(Color.DARKORANGE);
-        //fourDice3.setStrokeWidth(3.0);
+        fourDice3.setScaleX(1);
+        fourDice3.setScaleY(1);
+        fourDice3.setMouseTransparent(false);
       } else {
         regularDice.setDisable(true);
-        regularDice.setStroke(Color.BLACK);
-        regularDice.setStrokeWidth(1.0);
+        regularDice.setScaleX(0.7);
+        regularDice.setScaleY(0.7);
+        regularDice.setMouseTransparent(true);
         fourDice1.setDisable(true);
-        //fourDice1.setStroke(Color.BLACK);
-        //fourDice1.setStrokeWidth(1.0);
+        fourDice1.setScaleX(0.7);
+        fourDice1.setScaleY(0.7);
+        fourDice1.setMouseTransparent(true);
         fourDice2.setDisable(true);
-        //fourDice2.setStroke(Color.BLACK);
-        //fourDice2.setStrokeWidth(1.0);
+        fourDice2.setScaleX(0.7);
+        fourDice2.setScaleY(0.7);
+        fourDice2.setMouseTransparent(true);
         fourDice3.setDisable(true);
-        //fourDice3.setStroke(Color.BLACK);
-        //fourDice3.setStrokeWidth(1.0);
+        fourDice3.setScaleX(0.7);
+        fourDice3.setScaleY(0.7);
+        fourDice3.setMouseTransparent(true);
       }
     });
   }
@@ -1082,7 +1136,6 @@ public class GameController implements Initializable {
       }
     });
   }
-
 
 }
 
