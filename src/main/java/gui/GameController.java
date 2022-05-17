@@ -804,7 +804,7 @@ public class GameController implements Initializable {
         break;
 
       case "char6":
-        token.setFill(new ImagePattern(new Image("char6h.png")));
+        token.setFill(new ImagePattern(new Image("char6.png")));
         break;
     }
   }
