@@ -36,7 +36,7 @@ public class Game implements Runnable {
   public HashMap<Integer, server.User> playersPlaying;
 
   /**
-   * a HashMap
+   * a HashMap containing players and spectators
    */
   public HashMap<Integer, server.User> playersPlayingAndSpectators;
 
