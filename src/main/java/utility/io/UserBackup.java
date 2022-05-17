@@ -62,7 +62,7 @@ public class UserBackup {
   }
 
   /**
-   * returns all users with a backup
+   * returns all users currently stored in the userlist as a single string.
    * @return String
    */
   private static String getAllUsers() {

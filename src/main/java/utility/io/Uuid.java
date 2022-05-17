@@ -10,14 +10,26 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * This class stores and loads uuid's from and in a file to allow clients to reconnect to a server and be remembered
+ * by the server.
+ */
 public class Uuid {
 
+  /**
+   * uuid logger
+   */
   static Logger logger = LogManager.getLogger(Uuid.class);
 
 
+  /**
+   * Writes the given uuid in the uuid file. This uuid will be used to connect to the server when starting the client.
+   * If it is overwritten by a different uuid, the old one will be lost forever!
+   * @param uuid uuid to be saved in the file
+   */
   private static void rememberConnection(String uuid) {
     try {
-      BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/uuid.txt", true));
+      BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/uuid.txt", false));
       bw.write(uuid);
       bw.flush();
       bw.close();
@@ -27,6 +39,11 @@ public class Uuid {
     }
   }
 
+  /**
+   * Tries to read the UUID from the uuid file. If successful, it returns the uuid. If not (if for example the file
+   * is empty), a new uuid will be generated, saved in the file and returned.
+   * @return uuid as String
+   */
   public static String getUUID() {
 
     try {
@@ -47,10 +64,18 @@ public class Uuid {
     return uuid;
   }
 
+  /**
+   * generates a type1 uuid
+   * @return uuid
+   */
   public static UUID generateType1UUID() {
     return new UUID(get64MostSignificantBitsForVersion1(), get64LeastSignificantBitsForVersion1());
   }
 
+  /**
+   * gets the 64 least significant bits for the uuid version 1
+   * @return the 64 least significant bits as long
+   */
   private static long get64LeastSignificantBitsForVersion1() {
     Random random = new Random();
     long random63BitLong = random.nextLong() & 0x3FFFFFFFFFFFFFFFL;
@@ -58,6 +83,10 @@ public class Uuid {
     return random63BitLong + variant3BitFlag;
   }
 
+  /**
+   * gets the 64 most significant bits for the uuid version 1
+   * @return the 64 most significant bits as long
+   */
   private static long get64MostSignificantBitsForVersion1() {
     LocalDateTime start = LocalDateTime.of(1582, 10, 15, 0, 0, 0);
     Duration duration = Duration.between(start, LocalDateTime.now());
