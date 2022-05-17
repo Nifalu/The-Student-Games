@@ -3,7 +3,6 @@ package gameLogic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.ClientHandler;
-import server.ServerManager;
 import server.User;
 import utility.io.CommandsToClient;
 import utility.io.ReceiveFromProtocol;
@@ -199,7 +198,6 @@ public class CreateLobbyHelper {
    * and the players in the specific lobby and sends it to the client.
    */
   public synchronized void printLoungingListAndSendToClient() {
-    //sendToClient.send(clienthandler, CommandsToClient.PRINT, GameList.printLoungingList());
     sendToClient.serverBroadcast(CommandsToClient.PRINTFRIENDSGUI, GameList.printLoungingList());
   }
 
@@ -243,7 +241,6 @@ public class CreateLobbyHelper {
       sendToClient.send(clienthandler, CommandsToClient.PRINTLOBBIESGUI,
           entry.getKey() + ". " + entry.getValue().getLobbyName() + " [" + entry.getValue().getLobbyStatusAsString() + "]");
     }
-    //sendToClient.send(clienthandler, CommandsToClient.PRINTLOBBIESGUI, GameList.printLobbies(GameList.getLobbyList()));
   }
 
   /**

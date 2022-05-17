@@ -72,7 +72,6 @@ public class HighScore {
         line = br.readLine();
         br.close();
       } catch (IOException e) {
-        //line = "";
         return;
       }
       if (line != null) {
@@ -91,7 +90,6 @@ public class HighScore {
             current.next = n;
           }
         }
-        //lblHighscore.setText(line);
       }
   }
 

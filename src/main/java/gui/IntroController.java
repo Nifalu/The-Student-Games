@@ -44,12 +44,6 @@ public class IntroController implements Initializable {
     private MediaView mediaView;
 
     /**
-     * the play, pause and reset button for the video
-     */
-    @FXML
-    private Button playButton, pauseButton, resetButton;
-
-    /**
      * saves a file of choice
      */
     private File file;
@@ -77,7 +71,6 @@ public class IntroController implements Initializable {
      * the root object was not localized.
      */
     @Override
-
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         Main.setIntroController(this);

@@ -17,6 +17,11 @@ public class Lobby {
   final int minToStart = 2;
 
   /**
+   * max amount of players to start a game
+   */
+  final int maxToStart = 4;
+
+  /**
    * the name of the lobby
    */
   String name;
@@ -216,28 +221,32 @@ public class Lobby {
    */
   public void readyToPlay(ClientHandler clientHandler) {
     if (getLobbyStatus() == 1) {
-      waitingToPlay(clientHandler);
-      sendToClient.send(clientHandler, CommandsToClient.PRINTGUIGAMETRACKER, "You are now waiting...");
+      //System.out.println("size usersReady " + usersReady.size());
+      //System.out.println("maxTo " + maxToStart);
+      if (usersReady.size() < maxToStart) {
+        waitingToPlay(clientHandler);
+        sendToClient.send(clientHandler, CommandsToClient.PRINTGUIGAMETRACKER, "You are now waiting...");
 
-      for (int i = 1; i < 5; i++) {
-        if (!gameTokensTaken.get(i)) {
-          clientHandler.user.gameTokenNr = i;
-          gameTokensTaken.put(i, true);
-          System.out.println(clientHandler.user.getUsername() + " now has Toke Nr. " + clientHandler.user.gameTokenNr);
-          break;
+        for (int i = 1; i < 5; i++) {
+          if (!gameTokensTaken.get(i)) {
+            clientHandler.user.gameTokenNr = i;
+            gameTokensTaken.put(i, true);
+            break;
+          }
         }
+        //lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
+        //    + clientHandler.user.getLobby().getLobbyName());
+        lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
+                clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
+
+        String character = Integer.toString(clientHandler.user.characterNr);
+        String token = Integer.toString(clientHandler.user.gameTokenNr);
+        sendToClient.lobbyBroadcast(clientHandler.user.getLobby().getUsersInLobby(), CommandsToClient.SETCHARTOKEN, character + "--" + token);
+        //sendToServer.send(CommandsToServer.SETCHARTOKEN, Integer.toString(clientHandler.user.characterNr));
+
+      } else {
+        sendToClient.send(clientHandler, CommandsToClient.PRINT, "There are already " + maxToStart + " players ready.");
       }
-      //lobbyBroadcastToPlayer(clientHandler.user.getUsername() + " is ready for a Game in Lobby: "
-      //    + clientHandler.user.getLobby().getLobbyName());
-      lobbyBroadcastToPlayer("People in the Lobby " + clientHandler.user.getLobby().getLobbyName() + ": " +
-          clientHandler.user.getLobby().getUsersInLobby().size() + "; People ready: " + clientHandler.user.getLobby().getUsersReady().size());
-
-      System.out.println("d character nommmere esch: " + clientHandler.user.characterNr);
-      String character = Integer.toString(clientHandler.user.characterNr);
-      String token = Integer.toString(clientHandler.user.gameTokenNr);
-      sendToClient.lobbyBroadcast(clientHandler.user.getLobby().getUsersInLobby(), CommandsToClient.SETCHARTOKEN, character + "--" + token);
-      //sendToServer.send(CommandsToServer.SETCHARTOKEN, Integer.toString(clientHandler.user.characterNr));
-
     } else {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, "please choose a lobby");
     }
@@ -247,12 +256,9 @@ public class Lobby {
    * disables characters in the character selection GUI if they're already taken
    */
   public void checkIfCharsTaken() {
-    //System.out.println("IS IN CHECKIFCHARSTAKEN");
     for (int i = 1; i < 5; i++) {
-      //System.out.println("CHARACTER NR: " + i + " IS " + charactersTaken.get(i));
       if (charactersTaken.containsKey(i)) {
         if (charactersTaken.get(i)) {
-          //System.out.println("CHAR IS TAKEN: " + i);
           sendToServer.send(CommandsToServer.DISABLECHARACTERGUI, Integer.toString(i));
         }
       }
@@ -341,12 +347,8 @@ public class Lobby {
    * @param clientHandler User asking for the high score
    */
   public void getHighScore(server.ClientHandler clientHandler) {
-    /*if (highScore.getTop10().length() == 0) {
-      sendToClient.send(clientHandler, CommandsToClient.PRINT, "empty High Score");
-    } else {*/
     sendToClient.send(clientHandler, CommandsToClient.PRINT, highScore.getTop10("global"));
     sendToClient.send(clientHandler, CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
-    //}
   }
 
   /**

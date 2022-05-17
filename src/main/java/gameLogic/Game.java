@@ -35,6 +35,9 @@ public class Game implements Runnable {
    */
   public HashMap<Integer, server.User> playersPlaying;
 
+  /**
+   * a HashMap containing players and spectators
+   */
   public HashMap<Integer, server.User> playersPlayingAndSpectators;
 
   /**
@@ -558,7 +561,6 @@ public class Game implements Runnable {
    */
   public void lostConnection(server.User user) {
     lobbyBroadcastToPlayer(user.getUsername() + " lost connection and left the game.");
-    //user.setPlayingField(0);
     user.setLobbyBeforeDisconnection(this.lobby.getLobbyName());
     user.setGameOver();
     resetPlayer(user);
@@ -628,9 +630,4 @@ public class Game implements Runnable {
     return s;
   }
 
-  /*public void getPlayersPlayingAndSpectators() {
-    playersPlayingAndSpectators = lobby.getUsersInLobby();
-  }
-
-   */
 }
