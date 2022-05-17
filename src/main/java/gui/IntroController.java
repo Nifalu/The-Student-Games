@@ -4,6 +4,7 @@ import java.io.File;
 
 import java.net.URL;
 
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -80,14 +81,9 @@ public class IntroController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         Main.setIntroController(this);
-
-        file = new File("src/main/resources/Intro4.1.mp4");
-
-        media = new Media(file.toURI().toString());
-
-        mediaPlayer = new MediaPlayer(media);
-
-        mediaView.setMediaPlayer(mediaPlayer);
+        loadMedia();
+        //file = new File("src/main/resources/Intro4.1.mp4");
+        //media = new Media(file.toURI().toString());
     }
 
 
@@ -96,6 +92,14 @@ public class IntroController implements Initializable {
      */
     public void playMedia() {
         mediaPlayer.play();
+    }
+
+    public void loadMedia() {
+        media = new Media(Objects.requireNonNull(IntroController.class.getClassLoader().getResource("Intro4.1.mp4")).toString());
+
+        mediaPlayer = new MediaPlayer(media);
+
+        mediaView.setMediaPlayer(mediaPlayer);
     }
 
 }
