@@ -99,6 +99,8 @@ public class User {
    */
   public boolean gameOver;
 
+  public String lobbyBeforeDisconnection = "lobbyNameBeforeDisconnection";
+
   /**
    * creates a new user object
    *
@@ -255,6 +257,10 @@ public class User {
     return punished;
   }
 
+  public void setLobbyBeforeDisconnection(String lobbyName) {
+    this.lobbyBeforeDisconnection = lobbyName;
+  }
+
   // ----- SETTERS -----
 
   /**
@@ -386,6 +392,11 @@ public class User {
    */
   public void setPunished(boolean punished) {
     this.punished = punished;
+  }
+
+
+  public String getLobbyBeforeDisconnection() {
+    return lobbyBeforeDisconnection;
   }
 
   //-------------OTHER METHODS------------------------------
