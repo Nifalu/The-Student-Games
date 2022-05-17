@@ -22,30 +22,87 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
+/**
+ * the controller for the login scene
+ */
 public class LoginController implements Initializable {
 
-
+  /**
+   * a list of recently visited addresses
+   */
   public ListView<String> recentlist;
+
+  /**
+   * the connect button
+   */
   public Button connectbutton;
+
+  /**
+   * a textfield which is used to enter the port number
+   */
   public TextField portfield;
+
+  /**
+   * a textfield which is used to enter addresses
+   */
   public TextField addressfield;
+
+  /**
+   * the delete button
+   */
   public Button deletebutton;
+
+  /**
+   * a label showing a port warning
+   */
   public Label portwarning;
+
+  /**
+   * the add button
+   */
   public Button addbutton;
 
+  /**
+   * a red border for invalid inputs
+   */
   private final Border invalidBorder = new Border(
       new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(2)));
+
+  /**
+   * an orange border for inputs
+   */
   private final Border warnBorder = new Border(
       new BorderStroke(Color.ORANGE, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(2)));
+
+  /**
+   * a green border for completely vaild inputs
+   */
   private final Border validBorder = new Border(
       new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(2)));
 
-
+  /**
+   * saves whether the address is ready or not
+   */
   private boolean addressIsReady = false;
+
+  /**
+   * checks whether the port is ready or not
+   */
   private boolean portIsReady = false;
+
+  /**
+   * a BooleanProperty which checks if all's ready
+   */
   private final BooleanProperty allReady = new SimpleBooleanProperty(false);
+
+  /**
+   * the Logger for this class
+   */
   private final Logger logger = LogManager.getLogger(LoginController.class);
 
+  /**
+   * connect the client to the server
+   */
   public void connectToServer() {
     String address = addressfield.getText();
     String port = portfield.getText();
@@ -55,6 +112,9 @@ public class LoginController implements Initializable {
     Main.displayStart();
   }
 
+  /**
+   * adds a new address to the recentList
+   */
   public void addToList() {
     String addressAndPort = addressfield.getText() + ":" + portfield.getText();
     if (!recentlist.getItems().contains(addressAndPort)) {
@@ -63,13 +123,26 @@ public class LoginController implements Initializable {
     }
   }
 
+  /**
+   * removes an address from the recentList
+   */
   public void removeFromList() {
     String selected = recentlist.getSelectionModel().getSelectedItem();
     Platform.runLater(() -> recentlist.getItems().remove(selected));
     removeLogin(selected);
   }
 
-
+  /**
+   * this method is called when the scene starts
+   * it's mainly used to start all the listeners
+   * @param location URL
+   * The location used to resolve relative paths for the root object, or
+   * {@code null} if the location is not known.
+   *
+   * @param resources ResourceBundle
+   * The resources used to localize the root object, or {@code null} if
+   * the root object was not localized.
+   */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     Main.setLoginController(this);
@@ -80,6 +153,9 @@ public class LoginController implements Initializable {
     recentlistListener();
   }
 
+  /**
+   * this method is used to validate the port
+   */
   public void portfieldvalidator() {
     portfield.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
     portfield.textProperty().addListener((obs, oldv, newv) -> {
@@ -113,6 +189,9 @@ public class LoginController implements Initializable {
     });
   }
 
+  /**
+   * the listener which checks if the input is valid so far
+   */
   public void addressfieldListener() {
     addressfield.textProperty().addListener((obs, oldv, newv) -> {
         addressIsReady = !newv.equals("");
@@ -125,6 +204,9 @@ public class LoginController implements Initializable {
     });
   }
 
+  /**
+   * the listener which checks if all's ready yet
+   */
   public void allReadyListener() {
     allReady.addListener((obs, oldv, newv) -> {
       if (newv) {
@@ -141,6 +223,9 @@ public class LoginController implements Initializable {
     });
   }
 
+  /**
+   * the listener which waits for changes in the recentList
+   */
   public void recentlistListener() {
     recentlist.getSelectionModel().selectedItemProperty().addListener((obs,oldv,newv) -> {
       String address;
@@ -164,7 +249,10 @@ public class LoginController implements Initializable {
     });
   }
 
-
+  /**
+   * this method is used to save logins in a .txt file
+   * @param msg String
+   */
   private void saveLogins(String msg) {
     try {
       BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/logins.txt", false));
@@ -176,6 +264,10 @@ public class LoginController implements Initializable {
     }
   }
 
+  /**
+   * this method is used to add a new login
+   * @param msg String
+   */
   private void addLogin(String msg) {
     try {
       BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/logins.txt", true));
@@ -187,6 +279,10 @@ public class LoginController implements Initializable {
     }
   }
 
+  /**
+   * removes a login
+   * @param toDelete String
+   */
   private void removeLogin(String toDelete) {
     try {
       BufferedReader br = new BufferedReader(new FileReader("gamefiles/utility/logins.txt"));
@@ -201,6 +297,9 @@ public class LoginController implements Initializable {
     }
   }
 
+  /**
+   * loads the logins
+   */
   private void loadLogins() {
     try {
       BufferedReader br = new BufferedReader(new FileReader("gamefiles/utility/logins.txt"));

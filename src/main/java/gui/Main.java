@@ -148,6 +148,10 @@ public class Main extends Application {
    * the notInLobby scene
    */
   private static Scene notInLobby;
+
+  /**
+   * the notInLobbyController
+   */
   private static NotInLobbyController notInLobbyController;
 
   /**
@@ -160,12 +164,34 @@ public class Main extends Application {
    */
   private static NameSelectionController nameSelectionController;
 
+  /**
+   * the quitConfirmation scene
+   */
   private static Scene quitConfirmation;
+
+  /**
+   * the quitConfirmationController
+   */
   private static QuitConfirmController quitConfirmController;
+
+  /**
+   * the corresponding quitConfirmation root
+   */
   private static Pane quitConfirmationRoot;
 
+  /**
+   * the menuconfirmation scene
+   */
   private static Scene menuConfirmation;
+
+  /**
+   * the corresponding menuconfirmation root
+   */
   private static Pane menuConfirmationRoot;
+
+  /**
+   * the menuConfirmController
+   */
   private static MenuConfirmController menuConfirmController;
 
   /**
@@ -312,8 +338,14 @@ public class Main extends Application {
    */
   public static void displayHelpPopUp() { showPopUp(help); }
 
+  /**
+   * displays the quitConfirmation popup
+   */
   public static void displayQuitConfirmationPopUp() { showPopUp(quitConfirmation); }
 
+  /**
+   * displays the menuConfirmation popup
+   */
   public static void displayMenuConfirmationPopUp() { showPopUp(menuConfirmation); }
 
   /**
@@ -458,8 +490,18 @@ public class Main extends Application {
     return highscoreController;
   }
 
+  /**
+   * returns the clients QuitConfirmationController
+   *
+   * @return QuitConfirmController
+   */
   public static QuitConfirmController getQuitConfirmController() { return quitConfirmController; }
 
+  /**
+   * returns the clients MenuConfirmController
+   *
+   * @return MenuConfirmController
+   */
   public static MenuConfirmController getMenuConfirmController() { return menuConfirmController; }
 
   /**
@@ -509,8 +551,16 @@ public class Main extends Application {
     Main.menuController = menuController;
   }
 
+  /**
+   * sets the clients QuitConfirmController
+   * @param quitConfirmController QuitConfirmController
+   */
   public static void setQuitConfirmController(QuitConfirmController quitConfirmController) { Main.quitConfirmController = quitConfirmController; }
 
+  /**
+   * sets the clients MenuConfirmController
+   * @param menuConfirmController MenuConfirmController
+   */
   public static void setMenuConfirmController(MenuConfirmController menuConfirmController) { Main.menuConfirmController = menuConfirmController; }
 
   /**

@@ -16,6 +16,9 @@ import utility.io.SendToServer;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * the controller for the menu scene
+ */
 public class MenuController implements Initializable {
 
   // ---------------------------------- UTILITY ---------------------------------------- //
@@ -133,8 +136,8 @@ public class MenuController implements Initializable {
    * Initializes this class. This method is called when the class is loaded for the first time.
    * It contains basic methods that need to be run from the beginning and can not be called from outside
    *
-   * @param location  resource
-   * @param resources resources
+   * @param location  URL
+   * @param resources ResourceBundle
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -376,6 +379,9 @@ public class MenuController implements Initializable {
     }
   }
 
+  /**
+   * opens the name selection pop up
+   */
   @FXML
   private void switchToNameSelection() {
     Main.displayNameSelectionPopUp();
@@ -391,6 +397,9 @@ public class MenuController implements Initializable {
 
   // ---------------------------------- LISTENERS ---------------------------------------- //
 
+  /**
+   * the listener used to check which lobbies are open, going, finished
+   */
   private void lobbySelectionListener() {
     lobbyListView.getSelectionModel().selectedItemProperty().addListener((obs, oldv, newv) -> {
       if (newv.contains("open") || newv.contains("going")) {
@@ -412,6 +421,9 @@ public class MenuController implements Initializable {
     });
   }
 
+  /**
+   * the listener which watches out for new lobbies being created
+   */
   private void createLobbyListener() {
     EventHandler<ActionEvent> tmp = createLobbyTextField.getOnAction();
     createLobbyTextField.onActionProperty().set(null);
@@ -436,6 +448,9 @@ public class MenuController implements Initializable {
     });
   }
 
+  /**
+   * the listener used to check if something has been sent in the chat
+   */
   private void sendListener() {
     EventHandler<ActionEvent> tmp = chatTextField.getOnAction();
     chatTextField.onActionProperty().set(null);
@@ -474,10 +489,17 @@ public class MenuController implements Initializable {
     return s.split("%");
   }
 
+  /**
+   * opens the help popup
+   */
   public void openHelp() {
     Main.displayHelpPopUp();
   }
 
+  /**
+   * sets the name label containing the users username
+   * @param name String
+   */
   public void setNamelabel(String name) {
     Platform.runLater(() -> namelabel.setText(name));
     refreshFriends();

@@ -9,10 +9,19 @@ import server.User;
 import java.io.*;
 import java.util.HashMap;
 
+/**
+ * this class is used to create and manage user backups
+ */
 public class UserBackup {
 
+  /**
+   * creates the logger for this class
+   */
   static Logger logger = LogManager.getLogger(UserBackup.class);
 
+  /**
+   * saves the users in a .txt file
+   */
   public static void saveUsers() {
     try {
       BufferedWriter bw = new BufferedWriter(new FileWriter("gamefiles/utility/users.txt", false));
@@ -24,6 +33,9 @@ public class UserBackup {
     }
   }
 
+  /**
+   * loads the users from a .txt file
+   */
   public static void loadUsers() {
     try {
       BufferedReader br = new BufferedReader(new FileReader("gamefiles/utility/users.txt"));
@@ -49,6 +61,10 @@ public class UserBackup {
 
   }
 
+  /**
+   * returns all users with a backup
+   * @return String
+   */
   private static String getAllUsers() {
     StringBuilder sb = new StringBuilder();
 

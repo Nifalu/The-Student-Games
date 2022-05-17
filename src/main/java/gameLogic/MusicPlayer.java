@@ -21,6 +21,9 @@ import java.io.InputStream;
 public class MusicPlayer
 {
 
+    /**
+     * the player used to play the music
+     */
     private AdvancedPlayer player;
 
     /**
@@ -108,7 +111,7 @@ public class MusicPlayer
      *
      * @param musicName Music to be played
      * @return FactoryRegistry
-     * @throws IOException
+     * @throws IOException exception
      */
     private InputStream giveInStream(String musicName)
             throws IOException
@@ -116,6 +119,12 @@ public class MusicPlayer
         return new BufferedInputStream(
                 new FileInputStream(musicName));
     }
+
+    /**
+     * creates the audio player
+     * @return AudioDevice
+     * @throws JavaLayerException exception
+     */
     private AudioDevice createAudioPlayer()
             throws JavaLayerException
     {

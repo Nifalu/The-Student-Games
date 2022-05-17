@@ -12,6 +12,9 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * this class contains unit tests regarding the players name
+ */
 @TestMethodOrder(OrderAnnotation.class)
 public class NameTest {
 
@@ -268,14 +271,10 @@ public class NameTest {
   }
 
 
-
-
-
-
-
-
-
-
+  /**
+   * checks if clienthandlers are added correctly
+   * @param amount int
+   */
   private void addClientHandlers(int amount) {
     ClientHandler client;
     for (int i = 0; i < amount; i++) {
@@ -283,38 +282,80 @@ public class NameTest {
     }
   }
 
+  /**
+   * check if a user can create a lobby
+   * @param usernum int: number of the user
+   * @param lobbynum String: number of the lobby
+   */
   private void UserCreatesLobby(int usernum, String lobbynum) {
     getClient(usernum).lobbyhelper.connectLobby(lobbynum);
   }
 
+  /**
+   * checks if a user can correctly join a lobby
+   * @param usernum int: number of the user
+   * @param lobbynum int: number of the lobby
+   */
   private void UserJoinsLobby(int usernum, int lobbynum) {
     getClient(usernum).lobbyhelper.changeLobby(String.valueOf(lobbynum));
   }
 
+  /**
+   * checks if you can get the correct user out of the userList
+   * @param num int: number of the user
+   * @return User
+   */
   private User getUser(int num) {
     return GameList.getUserlist().get(num);
   }
 
+  /**
+   * checks if you can get the correct client out of the activeClientList
+   * @param num int: number of the client
+   * @return
+   */
   private ClientHandler getClient(int num) {
     return ServerManager.getActiveClientList().get(num);
   }
 
+  /**
+   * checks if the activeClientList is returned correctly
+   * @return ArrayList: contains all active ClientHandlers
+   */
   private ArrayList<ClientHandler> getClients() {
     return ServerManager.getActiveClientList();
   }
 
+  /**
+   * checks if you can get the correct lobby
+   * @param num int: number of the lobby
+   * @return Lobby
+   */
   private Lobby getLobby(int num) {
     return GameList.getLobbyList().get(num);
   }
 
+  /**
+   * checks if you can get all the lobbies (the lobbyList)
+   * @return HashMap: contains all Lobbies
+   */
   private HashMap<Integer, Lobby> getLobbies() {
     return GameList.getLobbyList();
   }
 
+  /**
+   * checks if you can get all the users (the userList)
+   * @return HashMap: contains all users
+   */
   private HashMap<Integer, User> getUsers() {
     return GameList.getUserlist();
   }
 
+  /**
+   * checks if you can get the correct username from a user
+   * @param num int: number of the user
+   * @return String: the username
+   */
   private String getUsername(int num) {
     return GameList.getUserlist().get(num).getUsername();
   }

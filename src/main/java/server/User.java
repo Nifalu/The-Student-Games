@@ -236,6 +236,10 @@ public class User {
     return gameOver;
   }
 
+  /**
+   * returns the users Uuid
+   * @return String
+   */
   public String getUuid() {
     return uuid;
   }
@@ -361,6 +365,10 @@ public class User {
    */
   public void setCharacter(int nr) { characterNr = nr; }
 
+  /**
+   * sets the users ClientHandler
+   * @param client ClientHandler
+   */
   public void setClienthandler(ClientHandler client) {
     this.clienthandler = client;
   }

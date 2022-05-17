@@ -10,7 +10,7 @@ import utility.io.Uuid;
 import java.io.File;
 
 /**
- * Takes commandline parameters and starts the programm.
+ * Takes commandline parameters and starts the program
  */
 public class Starter {
 
@@ -24,14 +24,29 @@ public class Starter {
    */
   private static String[] args;
 
+  /**
+   * the clients username
+   */
   private static String username = System.getProperty("user.name");
 
+  /**
+   * saves whether reconnects are possible
+   */
   private static boolean reconnect = true;
 
+  /**
+   * the server address
+   */
   public static String address;
 
+  /**
+   * the server port
+   */
   public static int port;
 
+  /**
+   * saves if the server/client has started
+   */
   public static boolean isArgumentStart;
 
   /**
@@ -56,6 +71,9 @@ public class Starter {
     }
   }
 
+  /**
+   * starts the server/client
+   */
   private static void argumentstart() {
     switch (args[0].toLowerCase()) {
 
@@ -110,12 +128,18 @@ public class Starter {
     startGui();
   }
 
+  /**
+   * starts the GUI
+   */
   private static void startGui() {
     Thread guiStarter = new Thread(() -> gui.Launcher.main(new String[0]));
     guiStarter.start();
     guiStarter.setName("guiStarterThread");
   }
 
+  /**
+   * connects the client
+   */
   public static void connect() {
     String uuid = Uuid.getUUID();
     if (reconnect) {
@@ -149,6 +173,10 @@ public class Starter {
     }
   }
 
+  /**
+   * checks whether the username is too long or not and replaces symbols which aren't allowed
+   * @return boolean
+   */
   private static boolean checkUsername() {
     if (username.length() > 20) {
       System.out.println("username is too long");

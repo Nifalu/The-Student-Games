@@ -22,25 +22,59 @@ import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
 
-
+/**
+ * the controller to the intro scene which will be displayed at the start of the game
+ * the intro scene shows the intro video
+ */
 public class IntroController implements Initializable {
+
+    /**
+     * switches to the start screen when pressing the button
+     */
     public void switchToStart() {
         Main.displayStart();
     }
 
 
+    /**
+     * a node which provides a view of the media being played by the media player
+     */
     @FXML
     private MediaView mediaView;
 
+    /**
+     * the play, pause and reset button for the video
+     */
     @FXML
     private Button playButton, pauseButton, resetButton;
 
+    /**
+     * saves a file of choice
+     */
     private File file;
 
+    /**
+     * saves the media to display
+     */
     private Media media;
 
+    /**
+     * the MediaPlayer used to play the media
+     */
     private MediaPlayer mediaPlayer;
 
+    /**
+     * method is called when the sceen first opens
+     * the method will play the intro video
+     *
+     * @param arg0 URL
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param arg1 ResourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
 
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -57,6 +91,10 @@ public class IntroController implements Initializable {
 
     }
 
+
+    /**
+     * plays the media (here: the intro video)
+     */
     public void playMedia() {
         mediaPlayer.play();
     }

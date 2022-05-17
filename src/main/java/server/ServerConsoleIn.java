@@ -3,11 +3,19 @@ package server;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * creates a thread for the console input
+ */
 public class ServerConsoleIn implements Runnable {
 
+  /**
+   * checks if the thread has stopped
+   */
   private boolean stop = false;
 
-
+  /**
+   * starts the ConsoleIn
+   */
   @Override
   public synchronized void run() {
     try {
@@ -32,6 +40,9 @@ public class ServerConsoleIn implements Runnable {
     }
   }
 
+  /**
+   * stops the thread
+   */
   public void stop() {
     stop = true;
   }

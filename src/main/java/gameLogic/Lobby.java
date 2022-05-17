@@ -31,6 +31,9 @@ public class Lobby {
    */
   private final SendToClient sendToClient = new SendToClient();
 
+  /**
+   * SendToServer object to communicate with the server
+   */
   private final SendToServer sendToServer = new SendToServer();
 
   /**
@@ -48,13 +51,20 @@ public class Lobby {
    * Int status is -1 if the game is already finished, 0 if the game is ongoing, 1 if the game is open.
    */
   private int status;
-  private static boolean stop = false; // when set to true, the receiverThread stops
+
+  /**
+   * when set to true, the receiverThread stops
+   */
+  private static boolean stop = false;
 
   /**
    * contains a HashMap of all the users in the Lobby
    */
   HashMap<Integer, User> usersReady = new HashMap<>();
 
+  /**
+   * HashMap which saves all the possible characters and if they're already taken or not
+   */
   private HashMap<Integer, Boolean> charactersTaken = new HashMap<>();
 
 
@@ -96,6 +106,9 @@ public class Lobby {
     return usersReady;
   }
 
+  /**
+   * HashMap which saves all the player tokens in the game and which ones are already taken
+   */
   public HashMap<Integer, Boolean> gameTokensTaken = new HashMap<>();
 
 
@@ -142,6 +155,10 @@ public class Lobby {
     return status;
   }
 
+  /**
+   * returns the lobby status as a String
+   * @return String
+   */
   public String getLobbyStatusAsString() {
     switch(status) {
       case -1: return "finished";
@@ -349,6 +366,10 @@ public class Lobby {
     return game;
   }
 
+  /**
+   * returns the charactersTaken HashMap
+   * @return HashMap
+   */
   public HashMap<Integer, Boolean> getCharactersTaken() {
     return charactersTaken;
   }
@@ -363,6 +384,9 @@ public class Lobby {
   }
 
 
+  /**
+   * stops the lobby
+   */
   public void stopLobby() {
     stop = true;
     receiveFromProtocol.setMessage("-1");

@@ -31,6 +31,9 @@ public class CreateLobbyHelper {
    */
   private final ClientHandler clienthandler;
 
+  /**
+   * creates the logger
+   */
   private final Logger logger = LogManager.getLogger(CreateLobbyHelper.class);
 
   /**
@@ -91,6 +94,11 @@ public class CreateLobbyHelper {
     }
   }
 
+  /**
+   * checks if the lobby is ongoing
+   * @param number String
+   * @return boolean
+   */
   public boolean checkIfOngoingLobbyExists(String number) {
     try {
       int lobbyNumber = Integer.parseInt(number);

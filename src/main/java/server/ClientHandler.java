@@ -107,7 +107,9 @@ public class ClientHandler implements Runnable {
     lobbyhelper.askWhatLobbyToJoin(this);
   }
 
-
+  /**
+   * sets up the clientHandler for a client
+   */
   private void setup() {
     try {
       // send data
@@ -188,8 +190,11 @@ public class ClientHandler implements Runnable {
   }
 
 
-  // THIS CONSTRUCTOR CREATES A FAKE CLIENTHANDLER FOR UNIT TESTING
-  // IT CANNOT RECEIVE AND DOES PRINT TO CONSOLE INSTEAD OF SENDING TO A CLIENT
+  /**
+   * this constructor creates a fake clienthandler for unit testing
+   * it cannot receive and does print to console instead of sending to a client
+   * @param username
+   */
   public ClientHandler(String username) {
     this.user = ServerManager.connect(this, username, nameClass);
     this.out = new BufferedWriter(new OutputStreamWriter(new PrintStream(System.out)));
