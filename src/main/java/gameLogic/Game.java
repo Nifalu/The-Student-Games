@@ -396,31 +396,31 @@ public class Game implements Runnable {
    * @param field Users new position
    */
   public void checkField(User user, int field) {
-    if (field == 1 || field == 55) {
+    if (field == 3 || field == 55) {
       pause(1500);
       music("audio/correct.mp3");
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
-      if (field == 1) { // 1 + 55 ladder up
-        changePosition(user, 15 - field);
+      if (field == 3) { // 1 + 55 ladder up
+        changePosition(user, 16 - field);
       } else {
-        changePosition(user, 59 - field);
+        changePosition(user, 64 - field);
       }
-    } else if (field == 20 || field == 26 || field == 52 || field == 57 || field == 80 || field == 87) {
+    } else if (field == 21 || field == 28 || field == 52 || field == 57 || field == 80 || field == 87) {
       pause(1500);
       music("audio/wrong.mp3");
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
-      if (field == 20) { // 20 - 87 ladder down
-        changePosition(user, 14 - field);
-      } else if (field == 26) {
-        changePosition(user, 10 - field);
+      if (field == 21) { // 20 - 87 ladder down
+        changePosition(user, 18 - field);
+      } else if (field == 28) {
+        changePosition(user, 11 - field);
       } else if (field == 52) {
-        changePosition(user, 36 - field);
+        changePosition(user, 47 - field);
       } else if (field == 57) {
-        changePosition(user, 40 - field);
+        changePosition(user, 42 - field);
       } else if (field == 80) {
-        changePosition(user, 78 - field);
+        changePosition(user, 60 - field);
       } else {
-        changePosition(user, 68 - field);
+        changePosition(user, 72 - field);
       }
     } else if (field == 17 || field == 31 || field == 45 || field == 73) { // Action Cards
       pause(1500);
