@@ -382,11 +382,11 @@ public class MenuController implements Initializable {
   }
 
   /**
-   * Method which allows users to quit when pressing the quit button
+   * opens the quit confirmation popup
    */
   @FXML
   private void quitGame() {
-    Main.exit();
+    Main.displayQuitConfirmationPopUp();
   }
 
   // ---------------------------------- LISTENERS ---------------------------------------- //
