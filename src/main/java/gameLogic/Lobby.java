@@ -231,7 +231,6 @@ public class Lobby {
           if (!gameTokensTaken.get(i)) {
             clientHandler.user.gameTokenNr = i;
             gameTokensTaken.put(i, true);
-            //System.out.println(clientHandler.user.getUsername() + " now has Toke Nr. " + clientHandler.user.gameTokenNr);
             break;
           }
         }

@@ -5,8 +5,6 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,8 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
@@ -570,7 +566,6 @@ public class GameController implements Initializable {
       double currentY = playerToMove.getTranslateY();
       double newX = newPos[0] - 25;
       double newY = newPos[1] - 35;
-      //System.out.println("(" + currentX + ", " + currentY + ")");
 
       Line lineToMoveAlong = new Line(currentX, currentY, newX, newY);
 
@@ -654,12 +649,6 @@ public class GameController implements Initializable {
       tokenFour.setId("char" + (charNr));
     }
 
-    System.out.println("----IDs------");
-    System.out.println(tokenOne.getId());
-    System.out.println(tokenTwo.getId());
-    System.out.println(tokenThree.getId());
-    System.out.println(tokenFour.getId());
-
   }
 
   /**
@@ -668,11 +657,6 @@ public class GameController implements Initializable {
    * @param tokenNr String containing the number of the token which should be marked
    */
   public void markPlayer(String tokenNr) {
-    // glow doesn't work >:(
-      /*Glow glow = new Glow();
-      glow.setLevel(100);
-      Glow noGlow = new Glow();
-      glow.setLevel(0);*/
 
     tokenOne.setStroke(Color.BLACK);
     tokenOne.setStrokeWidth(1.0);
@@ -735,24 +719,6 @@ public class GameController implements Initializable {
       default:
         return "";
     }
-    /*
-    if (charNr == 1) {
-      return "char1.png";
-    } else if (charNr == 2) {
-      return "char2.png";
-    } else if (charNr == 3) {
-      return "char3.png";
-    } else if (charNr == 4) {
-      return "char4.png";
-    } else if (charNr == 5) {
-      return "char5.png";
-    } else if (charNr == 6) {
-      return "char6.png";
-    } else if (charNr == 0) {
-      return "char0.png";
-    }
-    return "";
-     */
   }
 
   /**
