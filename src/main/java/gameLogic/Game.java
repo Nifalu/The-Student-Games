@@ -158,6 +158,10 @@ public class Game implements Runnable {
         if (ServerManager.getActiveClientList().contains(playersPlaying.get(i).getClienthandler())) {
           if (playersPlaying.get(i).getPlayingField() <= 88 &&
               !playersPlaying.get(i).getGameOver()) {
+            if (playersPlaying.get(i).getLobbyBeforeDisconnection().equals(this.lobby.getLobbyName())) {
+              playersPlaying.get(i).setLobbyBeforeDisconnection("lobbyNameBeforeDisconnection");
+              dsq--;
+            }
             sendToClient.lobbyBroadcast(lobby.getUsersInLobby(), CommandsToClient.MARKPLAYER, Integer.toString(playersPlaying.get(i).gameTokenNr));
             sendToClient.send(playersPlaying.get(i).getClienthandler(), CommandsToClient.YOURTURN, "");
             lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " has to roll the Dice");
@@ -186,7 +190,7 @@ public class Game implements Runnable {
           // moves the player characters in the GUI
           positionUpdate();
         } else {
-          if (playersPlaying.get(i).getPlayingField() != 0) {
+          if (playersPlaying.get(i).getPlayingField() != 0 && !playersPlaying.get(i).getGameOver()) {
             lostConnection(playersPlaying.get(i));
           }
         }
@@ -225,15 +229,15 @@ public class Game implements Runnable {
       } else if (rolledSpecialDice) {
         user.setIsActivelyRollingTheDice();
         dice = Dice.specialDice();
-        lobbyBroadcastToPlayer(userToRollDice.getUsername() + " rolled a special dice and has " + userToRollDice.getSpecialDiceLeft() + " dices left");
-        sendToClient.send(userToRollDice.getClienthandler(), CommandsToClient.DICEDICELEFT, Integer.toString(userToRollDice.getSpecialDiceLeft()));
+        lobbyBroadcastToPlayer(user.getUsername() + " rolled a special dice and has " + user.getSpecialDiceLeft() + " dices left");
+        sendToClient.send(user.getClienthandler(), CommandsToClient.DICEDICELEFT, Integer.toString(user.getSpecialDiceLeft()));
         music("audio/specialDice.mp3");
         break;
       } else if (i == time - 1) {
         user.setNotActivelyRollingTheDice();
         music(diceMusic[random.nextInt(4)]);
       } else if (time - i == 5000) {
-        lobbyBroadcastToPlayer(userToRollDice.getUsername() + " has 5 seconds left roll the dice");
+        lobbyBroadcastToPlayer(user.getUsername() + " has 5 seconds left roll the dice");
         music("audio/wetClick.mp3");
       }
       pause(1);
@@ -548,6 +552,7 @@ public class Game implements Runnable {
   public void lostConnection(server.User user) {
     lobbyBroadcastToPlayer(user.getUsername() + " lost connection and left the game.");
     //user.setPlayingField(0);
+    user.setLobbyBeforeDisconnection(this.lobby.getLobbyName());
     user.setGameOver();
     resetPlayer(user);
     user.setIsPlaying(false);

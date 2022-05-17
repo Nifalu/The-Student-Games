@@ -100,6 +100,11 @@ public class User {
   public boolean gameOver;
 
   /**
+   * notes the lobby name when disconnecting
+   */
+  public String lobbyBeforeDisconnection = "lobbyNameBeforeDisconnection";
+
+  /**
    * creates a new user object
    *
    * @param clientHandler ClientHandler
@@ -255,6 +260,15 @@ public class User {
     return punished;
   }
 
+  /**
+   * sets lobby name before disconnecting
+   * 
+   * @return lobby name
+   */
+  public String getLobbyBeforeDisconnection() {
+    return lobbyBeforeDisconnection;
+  }
+
   // ----- SETTERS -----
 
   /**
@@ -386,6 +400,15 @@ public class User {
    */
   public void setPunished(boolean punished) {
     this.punished = punished;
+  }
+
+  /**
+   * sets lobby name before disconnecting
+   *
+   * @param lobbyName String
+   */
+  public void setLobbyBeforeDisconnection(String lobbyName) {
+    this.lobbyBeforeDisconnection = lobbyName;
   }
 
   //-------------OTHER METHODS------------------------------
