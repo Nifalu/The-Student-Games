@@ -29,10 +29,19 @@ public class GameServer {
    */
   static ServerSocket serverSocket;
 
+  /**
+   * saves whether the server is online or not
+   */
   public static boolean isonline = true;
 
+  /**
+   * which port is being used for the server
+   */
   public static int port;
 
+  /**
+   * SendToClient object which is used to communicate with the server
+   */
   private static final SendToClient sendToClient = new SendToClient();
 
 
@@ -42,8 +51,14 @@ public class GameServer {
    */
   private static final Logger logger = LogManager.getLogger(GameServer.class);
 
+  /**
+   * the server input
+   */
   static ServerConsoleIn serverconin;
 
+  /**
+   * the corresponding thread to the serverconin
+   */
   static Thread seconin;
 
   /**
@@ -132,6 +147,9 @@ public class GameServer {
     }
   }
 
+  /**
+   * used to disconnect all clients from the server
+   */
   private static void disconnectAllClients() {
     if (ServerManager.getActiveClientList().size() != 0) {
       ServerManager.getActiveClientList().get(0).disconnectClient();

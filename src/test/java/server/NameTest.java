@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(OrderAnnotation.class)
 public class NameTest {
 
+  /**
+   * tests if the ClientHandler can connect by checking the userlist
+   */
   @Test
   @Order(1)
   public void connectClientHandlers() {
@@ -25,6 +28,9 @@ public class NameTest {
     );
   }
 
+  /**
+   * tests usernames: checks if uppercase works
+   */
   @Test
   @Order(2)
   public void uppercaseName() {
@@ -32,6 +38,9 @@ public class NameTest {
     assertEquals("ABCD",getUsername(0),"uppercase allowed");
   }
 
+  /**
+   * tests usernames: checks if lowercase works
+   */
   @Test
   @Order(3)
   public void lowercaseName() {
@@ -39,6 +48,9 @@ public class NameTest {
     assertEquals("abcd",getUsername(0),"lowercase allowed");
   }
 
+  /**
+   * tests usernames: checks if numbers work
+   */
   @Test
   @Order(4)
   public void numberName() {
@@ -46,6 +58,9 @@ public class NameTest {
     assertEquals("1234",getUsername(0),"numbers allowed");
   }
 
+  /**
+   * tests usernames: checks if username is already taken, if yes it will check if everything's handled correctly
+   */
   @Test
   @Order(5)
   public void nameAlreadyExists() {
@@ -59,6 +74,9 @@ public class NameTest {
     assertEquals("firstname1",getUsername(1),"keeps own name");
   }
 
+  /**
+   * tests usernames: checks if names with special characters work
+   */
   @Test
   @Order(6)
   public void NameWithspecialChars() {
@@ -66,6 +84,9 @@ public class NameTest {
     assertEquals("%£•@🥰",getUsername(0),"special chars allowed");
   }
 
+  /**
+   * tests usernames: checks if an empty username works
+   */
   @Test
   @Order(7)
   public void emptyName() {
@@ -73,6 +94,9 @@ public class NameTest {
     assertEquals("",getUsername(0),"empty name allowed");
   }
 
+  /**
+   * tests usernames: checks if names with spaces work
+   */
   @Test
   @Order(8)
   public void NameWithSpaces() {
@@ -80,6 +104,9 @@ public class NameTest {
     assertEquals("Hello_World",getUsername(0));
   }
 
+  /**
+   * tests usernames: checks if long names work
+   */
   @Test
   @Order(9)
   public void verylongname() {
@@ -87,6 +114,9 @@ public class NameTest {
     assertEquals(String.valueOf(Double.MAX_VALUE),getUsername(0),"very long name allowed");
   }
 
+  /**
+   * checks if the message is sent correctly
+   */
   @Test
   @Order(10)
   public void sendMsg() {
@@ -94,6 +124,9 @@ public class NameTest {
     send.send(getClient(0), CommandsToClient.CHAT,"TestMessage");
   }
 
+  /**
+   * checks if an empty message is sent correctly
+   */
   @Test
   @Order(11)
   public void sendEmptyMsg() {
@@ -101,6 +134,9 @@ public class NameTest {
     send.send(getClient(0), CommandsToClient.CHAT,"");
   }
 
+  /**
+   * checks if a message with spaces is sent correctly
+   */
   @Test
   @Order(12)
   public void sendMsgWithSpaces() {
@@ -108,6 +144,9 @@ public class NameTest {
     send.send(getClient(0), CommandsToClient.CHAT,"Hello World");
   }
 
+  /**
+   * checks if special characters are sent correctly
+   */
   @Test
   @Order(13)
   public void SendSpecialChars() {
@@ -115,6 +154,9 @@ public class NameTest {
     send.send(getClient(0), CommandsToClient.CHAT,"%£•@🥰");
   }
 
+  /**
+   * checks if the server can correctly receive uppercase messages
+   */
   @Test
   @Order(14)
   public void ReceiveUpperCase() {
@@ -123,6 +165,9 @@ public class NameTest {
     assertEquals("ABCD", receiver.receive());
   }
 
+  /**
+   * checks if the server can correctly receive an empty message
+   */
   @Test
   @Order(15)
   public void ReceiveNothing() {
@@ -131,6 +176,9 @@ public class NameTest {
     assertEquals("", receiver.receive());
   }
 
+  /**
+   * checks if the server can correctly receive special characters
+   */
   @Test
   @Order(16)
   public void ReceiveSpecialChars() {
@@ -139,6 +187,9 @@ public class NameTest {
     assertEquals("%£•@🥰", receiver.receive());
   }
 
+  /**
+   * checks if the server can correctly receive numbers
+   */
   @Test
   @Order(17)
   public void ReceiveNumbers() {
@@ -147,6 +198,9 @@ public class NameTest {
     assertEquals("1234", receiver.receive());
   }
 
+  /**
+   * checks if the server can correctly receive large numbers
+   */
   @Test
   @Order(18)
   public void ReceiveLargeNumbers() {
@@ -155,6 +209,9 @@ public class NameTest {
     assertEquals(String.valueOf(Double.MAX_VALUE), receiver.receive());
   }
 
+  /**
+   * checks if a lobby can be created correctly when containing uppercase letters
+   */
   @Test
   @Order(19)
   public void createUppercaseLobby() {
@@ -162,6 +219,9 @@ public class NameTest {
     assertEquals("TESTLobby", getLobby(0).getLobbyName());
   }
 
+  /**
+   * checks if a lobby can be created correctly when containing lowercase letters
+   */
   @Test
   @Order(20)
   public void createLowercaseLobby() {
@@ -169,6 +229,9 @@ public class NameTest {
     assertEquals("testlobby", getLobby(1).getLobbyName());
   }
 
+  /**
+   * checks if a lobby can be created correctly with an empty name
+   */
   @Test
   @Order(21)
   public void createEmptyLobby() {
@@ -176,6 +239,9 @@ public class NameTest {
     assertEquals("", getLobby(2).getLobbyName());
   }
 
+  /**
+   * checks if a lobby can be created correctly when the name contains spaces
+   */
   @Test
   @Order(22)
   public void createLobbyWithSpaces() {
@@ -183,12 +249,18 @@ public class NameTest {
     assertEquals("Hello_World", getLobby(3).getLobbyName());
   }
 
+  /**
+   * checks if lobbies are stored correctly
+   */
   @Test
   @Order(23)
   public void LobbiesAreStoredCorrectly() {
     assertEquals(4, getLobbies().size());
   }
 
+  /**
+   * checks if clients are stored correctly
+   */
   @Test
   @Order(24)
   public void ClientsAreStoredCorrectly() {

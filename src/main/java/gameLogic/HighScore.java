@@ -58,6 +58,9 @@ public class HighScore {
     return top10;
   }
 
+  /**
+   * loads in the highscore file
+   */
   public void loadHighscore() {
       BufferedReader br;
       String line;
@@ -90,6 +93,9 @@ public class HighScore {
       }
   }
 
+  /**
+   * saves the highscore to an external .txt file
+   */
   public void saveHighscore(){
     BufferedWriter bw;
     String save = "";
