@@ -109,7 +109,7 @@ public class LoginController implements Initializable {
     addToList();
     Starter.address = address;
     Starter.port = Integer.parseInt(port);
-    Main.displayStart();
+    Main.displayIntro();
   }
 
   /**

@@ -79,6 +79,8 @@ public class IntroController implements Initializable {
 
     public void initialize(URL arg0, ResourceBundle arg1) {
 
+        Main.setIntroController(this);
+
         file = new File("src/main/resources/Intro4.1.mp4");
 
         media = new Media(file.toURI().toString());
@@ -86,9 +88,6 @@ public class IntroController implements Initializable {
         mediaPlayer = new MediaPlayer(media);
 
         mediaView.setMediaPlayer(mediaPlayer);
-
-        playMedia();
-
     }
 
 

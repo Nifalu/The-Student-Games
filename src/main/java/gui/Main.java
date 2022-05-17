@@ -313,7 +313,10 @@ public class Main extends Application {
   /**
    * displays the intro scene on stage
    */
-  public static void displayIntro() { showScene(intro, introRoot); }
+  public static void displayIntro() {
+    showScene(intro, introRoot);
+    getIntroController().playMedia();
+  }
 
   /**
    * Display the Highscore scene on stage.
