@@ -184,19 +184,19 @@ public class GameController implements Initializable {
    * Polygon which represents the first dicedice
    */
   @FXML
-  private Polygon fourDice1;
+  private ImageView fourDice1;
 
   /**
    * Polygon which represents the second dicedice
    */
   @FXML
-  private Polygon fourDice2;
+  private ImageView fourDice2;
 
   /**
    * Polygon which represents the third dicedice
    */
   @FXML
-  private Polygon fourDice3;
+  private ImageView fourDice3;
 
   /**
    * TextArea used to display what happens in the game
@@ -1029,27 +1029,27 @@ public class GameController implements Initializable {
         regularDice.setStroke(Color.DARKORANGE);
         regularDice.setStrokeWidth(3.0);
         fourDice1.setDisable(false);
-        fourDice1.setStroke(Color.DARKORANGE);
-        fourDice1.setStrokeWidth(3.0);
+        //fourDice1.setStroke(Color.DARKORANGE);
+        //fourDice1.setStrokeWidth(3.0);
         fourDice2.setDisable(false);
-        fourDice2.setStroke(Color.DARKORANGE);
-        fourDice2.setStrokeWidth(3.0);
+        //fourDice2.setStroke(Color.DARKORANGE);
+        //fourDice2.setStrokeWidth(3.0);
         fourDice3.setDisable(false);
-        fourDice3.setStroke(Color.DARKORANGE);
-        fourDice3.setStrokeWidth(3.0);
+        //fourDice3.setStroke(Color.DARKORANGE);
+        //fourDice3.setStrokeWidth(3.0);
       } else {
         regularDice.setDisable(true);
         regularDice.setStroke(Color.BLACK);
         regularDice.setStrokeWidth(1.0);
         fourDice1.setDisable(true);
-        fourDice1.setStroke(Color.BLACK);
-        fourDice1.setStrokeWidth(1.0);
+        //fourDice1.setStroke(Color.BLACK);
+        //fourDice1.setStrokeWidth(1.0);
         fourDice2.setDisable(true);
-        fourDice2.setStroke(Color.BLACK);
-        fourDice2.setStrokeWidth(1.0);
+        //fourDice2.setStroke(Color.BLACK);
+        //fourDice2.setStrokeWidth(1.0);
         fourDice3.setDisable(true);
-        fourDice3.setStroke(Color.BLACK);
-        fourDice3.setStrokeWidth(1.0);
+        //fourDice3.setStroke(Color.BLACK);
+        //fourDice3.setStrokeWidth(1.0);
       }
     });
   }

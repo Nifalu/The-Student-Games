@@ -24,22 +24,16 @@ import javafx.util.Duration;
 
 
 public class IntroController implements Initializable {
-    public void switchToStart(ActionEvent actionEvent) {
+    public void switchToStart() {
         Main.displayStart();
     }
 
 
     @FXML
-
     private MediaView mediaView;
 
-
-
     @FXML
-
     private Button playButton, pauseButton, resetButton;
-
-
 
     private File file;
 
@@ -47,13 +41,11 @@ public class IntroController implements Initializable {
 
     private MediaPlayer mediaPlayer;
 
-
-
     @Override
 
     public void initialize(URL arg0, ResourceBundle arg1) {
 
-        file = new File("src/main/resources/Intro4.mp4");
+        file = new File("src/main/resources/Intro4.1.mp4");
 
         media = new Media(file.toURI().toString());
 
@@ -65,28 +57,8 @@ public class IntroController implements Initializable {
 
     }
 
-
-
     public void playMedia() {
-
         mediaPlayer.play();
-
-    }
-
-    public void pauseMedia() {
-
-
-
-        mediaPlayer.pause();
-
-    }
-
-
-
-    public void resetMedia() {
-        if (mediaPlayer.getStatus() != MediaPlayer.Status.READY) {
-            mediaPlayer.seek(Duration.seconds(0.0));
-        }
     }
 
 }
