@@ -99,6 +99,9 @@ public class User {
    */
   public boolean gameOver;
 
+  /**
+   * notes the lobby name when disconnecting
+   */
   public String lobbyBeforeDisconnection = "lobbyNameBeforeDisconnection";
 
   /**
@@ -257,8 +260,13 @@ public class User {
     return punished;
   }
 
-  public void setLobbyBeforeDisconnection(String lobbyName) {
-    this.lobbyBeforeDisconnection = lobbyName;
+  /**
+   * sets lobby name before disconnecting
+   * 
+   * @return lobby name
+   */
+  public String getLobbyBeforeDisconnection() {
+    return lobbyBeforeDisconnection;
   }
 
   // ----- SETTERS -----
@@ -394,9 +402,13 @@ public class User {
     this.punished = punished;
   }
 
-
-  public String getLobbyBeforeDisconnection() {
-    return lobbyBeforeDisconnection;
+  /**
+   * sets lobby name before disconnecting
+   *
+   * @param lobbyName String
+   */
+  public void setLobbyBeforeDisconnection(String lobbyName) {
+    this.lobbyBeforeDisconnection = lobbyName;
   }
 
   //-------------OTHER METHODS------------------------------
