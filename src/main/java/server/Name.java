@@ -17,6 +17,9 @@ public class Name {
    */
   private final ClientHandler clientHandler;
 
+  /**
+   * the logger for this class
+   */
   private final Logger logger = LogManager.getLogger(Name.class);
 
   /**

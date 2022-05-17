@@ -5,8 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/**
+ * the controller for the notInLobby scene
+ */
 public class NotInLobbyController {
 
+    /**
+     * a button to close the window
+     */
     @FXML
     private Button button;
 

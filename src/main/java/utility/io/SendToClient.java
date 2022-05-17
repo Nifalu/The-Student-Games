@@ -16,6 +16,9 @@ import java.util.Iterator;
  */
 public class SendToClient {
 
+  /**
+   * the logger for this class
+   */
   Logger logger = LogManager.getLogger(SendToClient.class);
 
   /**
