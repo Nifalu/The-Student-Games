@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <children>
       <ImageView fitHeight="778.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -137,6 +137,11 @@
                         </Pane>
                         <Pane mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                            <children>
+                              <ImageView depthTest="ENABLE" disable="true" fitHeight="164.0" fitWidth="334.0" layoutX="-90.0" layoutY="14.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@LeiterLong.png" />
+                                 </image>
+                              </ImageView>
                               <Label layoutX="16.0" layoutY="19.0" text="80" />
                            </children>
                         </Pane>
@@ -549,14 +554,7 @@
                         <Circle id="char" fx:id="tokenOne" onMouseEntered="#tokenOneHover" onMouseExited="#tokenOneHoverEnd" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
                         <Circle id="char" fx:id="tokenThree" onMouseEntered="#tokenThreeHover" onMouseExited="#tokenThreeHoverEnd" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
                         <Circle id="char" fx:id="tokenTwo" onMouseEntered="#tokenTwoHover" onMouseExited="#tokenTwoHoverEnd" opacity="0.3" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Pane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <ImageView depthTest="ENABLE" disable="true" fitHeight="164.0" fitWidth="334.0" layoutX="-95.0" layoutY="26.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@LeiterLong.png" />
-                                 </image>
-                              </ImageView>
-                           </children></Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </GridPane>
                   <HBox alignment="CENTER" minHeight="92.0" prefHeight="92.0" prefWidth="681.0">
