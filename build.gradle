@@ -60,7 +60,7 @@ dependencies {
 
     implementation 'javazoom:jlayer:1.0.1'
 
-    implementation 'org.openjfx:javafx-media:19-ea+6'
+    implementation 'org.openjfx:javafx-media:11.0.2'
 
     // JUNIT
     /*

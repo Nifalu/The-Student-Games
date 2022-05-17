@@ -16,8 +16,14 @@ import java.util.ResourceBundle;
  */
 public class StartController implements Initializable {
 
-
+  /**
+   * the image used as a no "button"
+   */
   public ImageView noImage;
+
+  /**
+   * the image used as a yes "button"
+   */
   public ImageView yesImage;
 
   /**
@@ -60,16 +66,25 @@ public class StartController implements Initializable {
     Main.displayMenu();
   }
 
-
-    public void nameNo() {
+  /**
+   * shows the name selectino popup when the client isn't happy with their proposed name (they press the no image/button)
+   */
+  public void nameNo() {
       Main.displayNameSelectionPopUp();
     }
 
+  /**
+   * switches the client over to the menu scene, when their happy with their username
+   */
   public void nameYes() {
     music("audio/whistle.mp3");
     switchToMenu();
   }
 
+  /**
+   * used to add music/sounds to the scene
+   * @param music String containing the address of the chosen sound file
+   */
   public void music(String music) {
     MusicPlayer mp = new MusicPlayer();
     mp.startMusic(music);

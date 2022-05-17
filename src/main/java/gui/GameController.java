@@ -42,33 +42,82 @@ public class GameController implements Initializable {
    * SendToServer object to communicate with the server
    */
   private final SendToServer sendToServer = new SendToServer();
+
+  /**
+   * the image used as a send "button"
+   */
   @FXML
   private ImageView sendbutton;
+
+  /**
+   * the image used as the quiz c "button"
+   */
   @FXML
   private ImageView quizC;
+
+  /**
+   * the image used as the quiz b "button"
+   */
   @FXML
   private ImageView quizB;
+
+  /**
+   * the image used as the quiz a "button"
+   */
   @FXML
   private ImageView quizA;
+
+  /**
+   * the image used as the quiz d "button"
+   */
   @FXML
   private ImageView quizD;
+
+  /**
+   * the image used as the quit "button"
+   */
   @FXML
   private ImageView quitbutton;
+
+  /**
+   * the image used as the help "button"
+   */
   @FXML
   private ImageView helpbutton;
+
+  /**
+   * the image used as the start "button"
+   */
   @FXML
   private ImageView startbutton;
+
+  /**
+   * the image used as the highscore "button"
+   */
   @FXML
   private ImageView highscorebutton;
+
+  /**
+   * the image used as the menu "button"
+   */
   @FXML
   private ImageView menubutton;
 
+  /**
+   * the image used as the "button" to change to global chat
+   */
   @FXML
   private ImageView globalbuttonimage;
 
+  /**
+   * the image used as the "button" to change to lobby chat
+   */
   @FXML
   private ImageView lobbybuttonimage;
 
+  /**
+   * the rectangle used as the regular dice (6 sides)
+   */
   @FXML
   private Rectangle regularDice;
 
@@ -87,10 +136,24 @@ public class GameController implements Initializable {
    */
   private static boolean gameHasStarted = false;
 
+  /**
+   * the opacity of the selected chat button (lobby or global)
+   */
   private final double selectedOpacity = 1;
+
+  /**
+   * the opacity of the chat button (lobal or globby) which is not selected
+   */
   private final double unselectedOpacity = 0.5;
 
+  /**
+   * boolean property which checks if the player has to answer a quiz question
+   */
   private SimpleBooleanProperty isMyQuiz = new SimpleBooleanProperty(false);
+
+  /**
+   * boolean property which checks if it's the players turn
+   */
   private SimpleBooleanProperty isMyTurn = new SimpleBooleanProperty(false);
 
 
@@ -99,6 +162,9 @@ public class GameController implements Initializable {
    */
   private static final HashMap<Integer, Integer[]> fields = new HashMap<>();
 
+  /**
+   * the label used to mark the users playername on screen
+   */
   @FXML
   private Label namelabel;
 
@@ -162,6 +228,9 @@ public class GameController implements Initializable {
   @FXML
   private Circle tokenFour;
 
+  /**
+   * the image used as the ready "button"
+   */
   @FXML
   private ImageView readyButton;
 
@@ -171,14 +240,29 @@ public class GameController implements Initializable {
   @FXML
   private GridPane board;
 
+  /**
+   * the TranslateTransition which is used to animate the movements of token one
+   */
   TranslateTransition transitionTokenOne = new TranslateTransition();
 
+  /**
+   * the TranslateTransition which is used to animate the movements of token two
+   */
   TranslateTransition transitionTokenTwo = new TranslateTransition();
 
+  /**
+   * the TranslateTransition which is used to animate the movements of token three
+   */
   TranslateTransition transitionTokenThree = new TranslateTransition();
 
+  /**
+   * the TranslateTransition which is used to animate the movements of token four
+   */
   TranslateTransition transitionTokenFour = new TranslateTransition();
 
+  /**
+   * the TranslateTransition which is used to animage the ready button/image
+   */
   TranslateTransition transitionReadyButton = new TranslateTransition();
 
   /**
@@ -401,6 +485,11 @@ public class GameController implements Initializable {
     }
   }
 
+  /**
+   * chooses the correct TranslateTransition so the correct player moves
+   * @param moveToField String containing the player token number and the new field to move to
+   * @return TranslateTransition of the player who should move
+   */
   private TranslateTransition chooseCorrectPathTransition(String moveToField) {
     String[] playerAndNewField = moveToField.split("--"); // splits the String into the nr of the new field and the player color
     String playerTokenNrToMove = playerAndNewField[0];
@@ -562,7 +651,10 @@ public class GameController implements Initializable {
 
       }
 
-
+  /**
+   * marks the player in the gui whose turn it is
+   * @param tokenNr String containing the number of the token which should be marked
+   */
   public void markPlayer(String tokenNr) {
     // glow doesn't work >:(
       /*Glow glow = new Glow();
@@ -606,7 +698,11 @@ public class GameController implements Initializable {
 
 // --------------------------------- CHAR IMAGES ----------------------------------- //
 
-
+  /**
+   * finds the correct image when given a character number
+   * @param charNr the character number you want the image of
+   * @return returns the path of the wanted image as a String
+   */
   public String findCorrectImag(int charNr) {
     switch (charNr) {
       case 0:
@@ -646,7 +742,11 @@ public class GameController implements Initializable {
      */
   }
 
-
+  /**
+   * shows the correct hover image of the token when hovering (entering the circle which represents the token)
+   * @param token Circle which represents the player token which is being hovered on
+   * @param id String containing the id of the circle being hovered on
+   */
   void showHoverImage(Circle token, String id) {
     switch (id) {
       case "char1":
@@ -676,6 +776,11 @@ public class GameController implements Initializable {
     }
   }
 
+  /**
+   * shows the correct regular image of the token when stopping hovering (exiting the circle which represents the token)
+   * @param token Circle which represents the player token which is not being hovered on anymore
+   * @param id String containing the id of the circle which is not hovered on anymore
+   */
   void showRegularImage(Circle token, String id) {
     switch (id) {
       case "char1":
@@ -705,42 +810,65 @@ public class GameController implements Initializable {
   }
 
   // --------------------------------- CHAR HOVERS ----------------------------------- //
-
+  /**
+   * changes the character images when hovering over token one
+   */
   @FXML
   private void tokenOneHover() {
     showHoverImage(tokenOne, tokenOne.getId());
   }
 
+  /**
+   * changes the character image back when stopping hovering over token one
+   */
   @FXML
   private void tokenOneHoverEnd() {
     showRegularImage(tokenOne, tokenOne.getId());
   }
 
+  /**
+   * changes the character images when hovering over token two
+   */
   @FXML
   private void tokenTwoHover() {
     showHoverImage(tokenTwo, tokenTwo.getId());
   }
 
+  /**
+   * changes the character image back when stopping hovering over token two
+   */
   @FXML
   private void tokenTwoHoverEnd() {
     showRegularImage(tokenTwo, tokenTwo.getId());
   }
 
+  /**
+   * changes the character images when hovering over token three
+   */
   @FXML
   private void tokenThreeHover() {
     showHoverImage(tokenThree, tokenThree.getId());
   }
 
+  /**
+   * changes the character image back when stopping hovering over token three
+   */
   @FXML
   private void tokenThreeHoverEnd() {
     showRegularImage(tokenThree, tokenThree.getId());
   }
 
+  /**
+   * changes the character images when hovering over token four
+   */
   @FXML
   private void tokenFourHover() {
     showHoverImage(tokenFour, tokenFour.getId());
   }
 
+  /**
+   * changes the character image back when stopping hovering over token four
+   */
   @FXML
   private void tokenFourHoverEnd() {
     showRegularImage(tokenFour, tokenFour.getId());
@@ -748,6 +876,9 @@ public class GameController implements Initializable {
 
   // --------------------------------- SCENE SWITCHERS----------------------------------- //
 
+  /**
+   * opens the help popup which contains the manual
+   */
   @FXML
   private void openHelp() {
     Main.displayHelpPopUp();
@@ -864,19 +995,33 @@ public class GameController implements Initializable {
 
   // --------------------------------- UTILITY ----------------------------------- //
 
+  /**
+   * sets the name label which displays the users own username
+   * @param name String containing the users name
+   */
   public void setNamelabel(String name) {
     Platform.runLater(() -> namelabel.setText(name));
   }
 
+  /**
+   * sets the listener variable containing whether it's the players turn or not
+   * @param b boolean containing whether it's the users turn
+   */
   public void setMyTurn(boolean b) {
     isMyTurn.set(b);
   }
 
+  /**
+   * sets the listener variable containing whether the player has to answer a quiz question or not
+   * @param b boolean containing whether the player has to answer a quiz question or not
+   */
   public void setMyQuiz(boolean b) {
     isMyQuiz.set(b);
   }
 
-
+  /**
+   * waits until it's the players turn and then activates and highlights the dice
+   */
   private void MyTurnListener() {
     isMyTurn.addListener((obs, oldv, newv) -> {
       if (newv) {
@@ -909,6 +1054,9 @@ public class GameController implements Initializable {
     });
   }
 
+  /**
+   * waits until the player has to answer a quiz question and enables the quiz answer buttons
+   */
   private void MyQuizListener() {
     isMyQuiz.addListener((obs, oldv, newv) -> {
       if (newv) {

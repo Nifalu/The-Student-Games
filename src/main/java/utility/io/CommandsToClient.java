@@ -72,11 +72,45 @@ public enum CommandsToClient {
    */
   DICEDICELEFT,
 
+  /**
+   * used to send/play music
+   */
   MUSIC,
 
+  /**
+   * used to disable a character in the char selection screen
+   */
   DISABLECHARGUI,
 
-  ENABLECHARGUI, SETCHARTOKEN, MARKPLAYER, NAME, YOURTURN, YOURQUIZ
+  /**
+   * used to enable a character int he char selection screen
+   */
+  ENABLECHARGUI,
+
+  /**
+   * used to set a character token in the game screen
+   */
+  SETCHARTOKEN,
+
+  /**
+   * used to mark the player whose turn it is
+   */
+  MARKPLAYER,
+
+  /**
+   * used to display the users name in the GUI
+   */
+  NAME,
+
+  /**
+   * used to highlight on the gui when it's the clients turn
+   */
+  YOURTURN,
+
+  /**
+   * used to enable the quiz buttons in the game gui when the client has to answer a quiz question
+   */
+  YOURQUIZ
 
 
 }
