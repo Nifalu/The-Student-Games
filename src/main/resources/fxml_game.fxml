@@ -15,11 +15,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GameController">
    <children>
       <ImageView fitHeight="778.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -249,6 +248,7 @@
                         <Pane mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tomato;" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <children>
                               <Label layoutX="16.0" layoutY="19.0" text="57" />
+                              <ImageView fitHeight="150.0" fitWidth="105.0" layoutX="-84.0" layoutY="-84.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
                         <Pane mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -628,10 +628,31 @@
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Rectangle id="tilt" fx:id="regularDice" arcHeight="5.0" arcWidth="5.0" fill="#b8caf5" height="75.0" onMouseClicked="#throwRegularDice" stroke="BLACK" strokeType="INSIDE" width="77.0" />
-                        <Polygon id="tilt" fx:id="fourDice1" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon id="tilt" fx:id="fourDice2" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon id="tilt" fx:id="fourDice3" fill="#7e86bb" onMouseClicked="#throwFourDice" points="5.0, 22.0, 72.0, 41.0, 60.0, -41.0" stroke="BLACK" strokeType="INSIDE" />
+                        <AnchorPane prefHeight="147.0" prefWidth="357.0">
+                           <children>
+                              <Rectangle id="tilt" fx:id="regularDice" arcHeight="5.0" arcWidth="5.0" fill="#b8caf5" height="75.0" layoutX="25.0" layoutY="-23.0" onMouseClicked="#throwRegularDice" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                              <ImageView id="dice" fitHeight="100.0" fitWidth="103.0" layoutY="52.0" onMouseClicked="#throwRegularDice" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@diceYellow.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView id="dice" fx:id="fourDice1" fitHeight="81.0" fitWidth="93.0" layoutX="87.0" layoutY="52.0" onMouseClicked="#throwFourDice" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@specialDice.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView id="dice" fx:id="fourDice2" fitHeight="81.0" fitWidth="93.0" layoutX="178.0" layoutY="52.0" onMouseClicked="#throwFourDice" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@specialDice.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView id="dice" fx:id="fourDice3" fitHeight="81.0" fitWidth="93.0" layoutX="266.0" layoutY="52.0" onMouseClicked="#throwFourDice" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@specialDice.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
                      </children>
                      <padding>
                         <Insets bottom="10.0" top="10.0" />
