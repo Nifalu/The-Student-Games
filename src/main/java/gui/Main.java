@@ -74,8 +74,19 @@ public class Main extends Application {
    */
   private static MenuController menuController;
 
+  /**
+   * corresponding root to the help scene
+   */
   private static Pane helpRoot;
+
+  /**
+   * the helpcontroller
+   */
   private static HelpController helpController;
+
+  /**
+   * the help scene
+   */
   private static Scene help;
 
   /**
@@ -93,8 +104,19 @@ public class Main extends Application {
    */
   private static GameController gameController;
 
+  /**
+   * the introcontroller
+   */
   private static IntroController introController;
+
+  /**
+   * the intro scene
+   */
   private static Scene intro;
+
+  /**
+   * the corresponding root to the intro scene
+   */
   private static Pane introRoot;
 
   /**
@@ -122,11 +144,29 @@ public class Main extends Application {
    */
   public static Scene charSelection;
 
+  /**
+   * the notInLobby scene
+   */
   private static Scene notInLobby;
   private static NotInLobbyController notInLobbyController;
 
+  /**
+   * the name selection scene
+   */
   private static Scene nameSelection;
+
+  /**
+   * the nameselectioncontroller
+   */
   private static NameSelectionController nameSelectionController;
+
+  private static Scene quitConfirmation;
+  private static QuitConfirmController quitConfirmController;
+  private static Pane quitConfirmationRoot;
+
+  private static Scene menuConfirmation;
+  private static Pane menuConfirmationRoot;
+  private static MenuConfirmController menuConfirmController;
 
   /**
    * the logger
@@ -138,6 +178,9 @@ public class Main extends Application {
    */
   private static final String CSS = "TheStudentGameLook.css";
 
+  /**
+   * the SendToServer object used to communicate with the server
+   */
   static SendToServer sendToServer = new SendToServer();
 
 
@@ -183,6 +226,12 @@ public class Main extends Application {
       introRoot = getLoader("fxml_intro.fxml").load();
       intro = createScene(introRoot);
 
+      quitConfirmationRoot = getLoader("fxml_quitConfirm.fxml").load();
+      quitConfirmation = createScene(quitConfirmationRoot);
+
+      menuConfirmationRoot = getLoader("fxml_menuConfirm.fxml").load();
+      menuConfirmation = createScene(menuConfirmationRoot);
+
 
       if (Starter.isArgumentStart) {
         displayIntro();
@@ -197,7 +246,9 @@ public class Main extends Application {
     }
   }
 
-
+  /**
+   * displays the login scene on stage
+   */
   public static void displayLogin() {
     showScene(login, loginRoot);
   }
@@ -233,6 +284,9 @@ public class Main extends Application {
    */
   public static void displayCharSelectionPopUp() { showPopUp(charSelection); }
 
+  /**
+   * displays the intro scene on stage
+   */
   public static void displayIntro() { showScene(intro, introRoot); }
 
   /**
@@ -243,11 +297,24 @@ public class Main extends Application {
     getHighscoreController().refreshWinners();
   }
 
+  /**
+   * displays the notInLobby popup
+   */
   public static void displayNotInLobbyPopUp() { showPopUp(notInLobby); }
 
-  public static void displayNameSelectionPopUp() {showPopUp(nameSelection); }
+  /**
+   * displays the name selection popup
+   */
+  public static void displayNameSelectionPopUp() { showPopUp(nameSelection); }
 
-  public static void displayHelpPopUp() {showPopUp(help); }
+  /**
+   * displays the help pop up
+   */
+  public static void displayHelpPopUp() { showPopUp(help); }
+
+  public static void displayQuitConfirmationPopUp() { showPopUp(quitConfirmation); }
+
+  public static void displayMenuConfirmationPopUp() { showPopUp(menuConfirmation); }
 
   /**
    * Creates a new scene from the given root pane and adds css
@@ -352,6 +419,10 @@ public class Main extends Application {
    */
   public static CharSelectionController getCharSelectionController() { return charSelectionController; }
 
+  /**
+   * returns the clients IntroController
+   * @return IntroController
+   */
   public static IntroController getIntroController() { return introController; }
 
   /**
@@ -363,6 +434,10 @@ public class Main extends Application {
     return menuController;
   }
 
+  /**
+   * returns the clients HelpController
+   * @return HelpController
+   */
   public static HelpController getHelpController() { return helpController; }
 
   /**
@@ -383,6 +458,10 @@ public class Main extends Application {
     return highscoreController;
   }
 
+  public static QuitConfirmController getQuitConfirmController() { return quitConfirmController; }
+
+  public static MenuConfirmController getMenuConfirmController() { return menuConfirmController; }
+
   /**
    * setts the clients GameController
    *
@@ -392,8 +471,16 @@ public class Main extends Application {
     Main.gameController = gameController;
   }
 
+  /**
+   * sets the clients IntroController
+   * @param introController IntroController
+   */
   public static void setIntroController(IntroController introController) { Main.introController = introController; }
 
+  /**
+   * sets the clients HelpController
+   * @param helpController HelpController
+   */
   public static void setHelpController(HelpController helpController) { Main.helpController = helpController; }
 
   /**
@@ -405,6 +492,10 @@ public class Main extends Application {
     Main.startController = startController;
   }
 
+  /**
+   * sets the clients LoginController
+   * @param loginController LoginController
+   */
   public static void setLoginController(LoginController loginController) {
     Main.loginController = loginController;
   }
@@ -417,6 +508,10 @@ public class Main extends Application {
   public static void setMenuController(MenuController menuController) {
     Main.menuController = menuController;
   }
+
+  public static void setQuitConfirmController(QuitConfirmController quitConfirmController) { Main.quitConfirmController = quitConfirmController; }
+
+  public static void setMenuConfirmController(MenuConfirmController menuConfirmController) { Main.menuConfirmController = menuConfirmController; }
 
   /**
    * sets the clients HighscoreController
