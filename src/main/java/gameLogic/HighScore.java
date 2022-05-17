@@ -39,6 +39,8 @@ public class HighScore {
   }
 
   /**
+   * returns the top 10 players.
+   * @param game String of the game
    * @return The best 10 players of the game sorted by date of graduation with their dates
    */
   public String getTop10(String game) {

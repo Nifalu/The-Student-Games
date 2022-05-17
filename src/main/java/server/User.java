@@ -104,6 +104,8 @@ public class User {
    *
    * @param clientHandler ClientHandler
    * @param username      String
+   * @param uuid uuid as String
+   * @param isOnline boolean if user is online
    */
   public User(ClientHandler clientHandler, String username, String uuid, boolean isOnline) {
     this.clienthandler = clientHandler;
@@ -359,11 +361,6 @@ public class User {
   public void setNotGameOver() {
     gameOver = false;
   }
-
-  /**
-   * sets the users character choice
-   */
-  public void setCharacter(int nr) { characterNr = nr; }
 
   /**
    * sets the users ClientHandler

@@ -618,6 +618,8 @@ public class GameController implements Initializable {
 
       /**
        * adds the correct picture to the player tokens
+       * @param tokenNr int of the token number
+       * @param charNr int of the char number
        */
       public void setCharToken ( int tokenNr, int charNr){
         if (tokenNr == 0) {

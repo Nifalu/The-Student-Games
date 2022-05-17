@@ -19,18 +19,16 @@ public class QuitConfirmController {
 
     /**
      * closes the game (disconnects the client, closes the GUI) when pressing the yes "button"
-     * @param mouseEvent
      */
-    public void yesQuit(MouseEvent mouseEvent) {
+    public void yesQuit() {
         Main.exit();
     }
 
     /**
      * closes the popup window without closing the GUI or disconnecting the client
      * called by pressing the no "button"
-     * @param mouseEvent
      */
-    public void noQuit(MouseEvent mouseEvent) {
+    public void noQuit() {
         Stage stage = (Stage) yesButton.getScene().getWindow();
         stage.close();
     }

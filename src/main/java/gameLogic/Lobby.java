@@ -73,6 +73,7 @@ public class Lobby {
    * creates a Lobby object with the given name
    *
    * @param name of the lobby
+   * @param standardLobby boolean if the lobby is the standardlobby
    */
   public Lobby(String name, boolean standardLobby) {
     this.name = name;

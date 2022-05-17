@@ -278,7 +278,7 @@ public class NameTest {
   private void addClientHandlers(int amount) {
     ClientHandler client;
     for (int i = 0; i < amount; i++) {
-      client = new ClientHandler("Player_" + String.valueOf(i));
+      client = new ClientHandler("Player_" + i + "!" + i);
     }
   }
 
@@ -312,7 +312,7 @@ public class NameTest {
   /**
    * checks if you can get the correct client out of the activeClientList
    * @param num int: number of the client
-   * @return
+   * @return ClientHandler client handler
    */
   private ClientHandler getClient(int num) {
     return ServerManager.getActiveClientList().get(num);

@@ -193,7 +193,7 @@ public class ClientHandler implements Runnable {
   /**
    * this constructor creates a fake clienthandler for unit testing
    * it cannot receive and does print to console instead of sending to a client
-   * @param username
+   * @param username username string
    */
   public ClientHandler(String username) {
     this.user = ServerManager.connect(this, username, nameClass);
