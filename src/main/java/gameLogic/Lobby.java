@@ -115,6 +115,7 @@ public class Lobby {
         }
       } catch (Exception e) {
         System.out.println("Could not get user in lobby");
+        break;
       }
     }
     return usersInLobby;

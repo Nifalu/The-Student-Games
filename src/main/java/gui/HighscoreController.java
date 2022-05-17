@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import utility.io.CommandsToServer;
 import utility.io.SendToServer;
 
@@ -52,8 +53,9 @@ public class HighscoreController implements Initializable {
    * switches to the Menu scene when pressing the button
    */
   @FXML
-  private void switchToMenu() {
-    Main.displayMenu();
+  private void exit() {
+    Stage stage = (Stage) winnerListView.getScene().getWindow();
+    stage.close();
   }
 
   /**

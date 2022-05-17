@@ -57,9 +57,9 @@
          <bottom>
             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView id="button" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#switchToMenu" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="button" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@menuButton_definitiv.png" />
+                        <Image url="@closeButton.png" />
                      </image>
                   </ImageView>
                </children>

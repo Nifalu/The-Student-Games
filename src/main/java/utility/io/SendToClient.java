@@ -30,7 +30,8 @@ public class SendToClient {
       try {
         send(it.next(), cmd, msg);
       } catch (ConcurrentModificationException e) {
-        logger.warn("ActiveClientList changed size while trying to do a serverbroadcast");
+        logger.warn("ActiveClientList changed size while trying to do a serverbroadcast! cmd: " + cmd + " msg: " + msg);
+        break;
       }
     }
   }
@@ -48,7 +49,8 @@ public class SendToClient {
       try {
         send(it.next().getClienthandler(), cmd, msg);
       } catch (ConcurrentModificationException e) {
-        logger.warn("User-list for LobbyBroadcast changed size while trying to do a lobbybroadcast");
+        logger.warn("User-list for LobbyBroadcast changed size while trying to do a lobbybroadcast! cmd: " + cmd + " msg: " + msg);
+        break;
       }
     }
   }

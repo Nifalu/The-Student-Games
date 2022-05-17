@@ -239,7 +239,7 @@ public class Main extends Application {
    * Display the Highscore scene on stage.
    */
   public static void displayHighscore() {
-    showScene(highscore, highscoreRoot);
+    showPopUp(highscore);
     getHighscoreController().refreshWinners();
   }
 

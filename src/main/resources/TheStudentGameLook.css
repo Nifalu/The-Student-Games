@@ -66,6 +66,6 @@
 }
 
 #dice:hover {
-    -fx-rotate: 2;
+    -fx-rotate: 15;
     -fx-cursor: hand;
 }
