@@ -76,8 +76,12 @@ public class StartController implements Initializable {
    * switches the client over to the menu scene, when their happy with their username
    */
   public void nameYes() {
-    music("src/main/resources/whistle.wav");
-    switchToMenu();
+    try {
+      music("/whistle.wav");
+      switchToMenu();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   /**

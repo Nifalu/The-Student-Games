@@ -1,26 +1,14 @@
 package gui;
 
-import java.io.File;
-
-import java.net.URL;
-
-import java.util.Objects;
-import java.util.ResourceBundle;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
 import javafx.fxml.Initializable;
-
-import javafx.scene.control.Button;
-
 import javafx.scene.media.Media;
-
 import javafx.scene.media.MediaPlayer;
-
 import javafx.scene.media.MediaView;
 
-import javafx.util.Duration;
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
 /**
@@ -88,7 +76,7 @@ public class IntroController implements Initializable {
     }
 
     public void loadMedia() {
-        media = new Media(Objects.requireNonNull(IntroController.class.getClassLoader().getResource("Intro4.1.mp4")).toString());
+        media = new Media(getClass().getResource("/Intro4.1.mp4").toExternalForm());
 
         mediaPlayer = new MediaPlayer(media);
 

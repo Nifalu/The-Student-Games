@@ -139,7 +139,7 @@ public class Game implements Runnable {
   public void run() {
     highScoreGame = new HighScore();
     numPlayers = lobby.getUsersReady().size();
-    music("src/main/resources/gameStart.wav");
+    music("/gameStart.wav");
 
     // Calendar will be set to 21.09.2021 and every player will be put to the starting point of the playing field.
     Calendar calendar = new Calendar(2021, 9, 20);
@@ -189,7 +189,7 @@ public class Game implements Runnable {
               lobbyBroadcastToPlayer(playersPlaying.get(i).getUsername() + " graduated " + place() + " in " + calendar.getCurrentDate());
 
               //MusicPlayer jiggleJiggle = new MusicPlayer();
-              //jiggleJiggle.dateiAnspielen("src/main/resources/jiggleJiggle.wav");
+              //jiggleJiggle.dateiAnspielen("/jiggleJiggle.wav");
               highScore.add("" + playersPlaying.get(i).getUsername(),
                   Integer.parseInt(calendar.year + "" + String.format("%02d", calendar.month) + "" + String.format("%02d", calendar.day)), "global");
               highScoreGame.add("" + playersPlaying.get(i).getUsername(),
@@ -226,7 +226,7 @@ public class Game implements Runnable {
     if (user.getIsNotActivelyRollingTheDice()) {
       time = maxTimeWhenInactive;
     }
-    String[] diceMusic = {"src/main/resources/dice1.wav", "src/main/resources/dice2.wav", "src/main/resources/dice3.wav", "src/main/resources/dice4.wav"};
+    String[] diceMusic = {"/dice1.wav", "/dice2.wav", "/dice3.wav", "/dice4.wav"};
     Random random = new Random();
     for (int i = 0; i < time; i++) {
       if (!GameServer.isonline) {
@@ -241,14 +241,14 @@ public class Game implements Runnable {
         dice = Dice.specialDice();
         lobbyBroadcastToPlayer(user.getUsername() + " rolled a special dice and has " + user.getSpecialDiceLeft() + " dices left");
         sendToClient.send(user.getClienthandler(), CommandsToClient.DICEDICELEFT, Integer.toString(user.getSpecialDiceLeft()));
-        music("src/main/resources/specialDice.wav");
+        music("/specialDice.wav");
         break;
       } else if (i == time - 1) {
         user.setNotActivelyRollingTheDice();
         music(diceMusic[random.nextInt(4)]);
       } else if (time - i == 5000) {
         lobbyBroadcastToPlayer(user.getUsername() + " has 5 seconds left roll the dice");
-        music("src/main/resources/wetClick.wav");
+        music("/wetClick.wav");
       }
       pause(1);
     }
@@ -376,7 +376,7 @@ public class Game implements Runnable {
       for (int i = 0; i < playersPlaying.size(); i++) {
         if (playersPlaying.get(i).getPlayingField() == newPosition && playersPlaying.get(i).getPlayingField() != user.getPlayingField()) {
           playersPlaying.get(i).setPlayingField(currentPosition);
-          music("src/main/resources/laughter.wav");
+          music("/laughter.wav");
           lobbyBroadcastToPlayer(user.getUsername() + " pushed back " + playersPlaying.get(i).getUsername() + " to " + currentPosition);
         }
       }
@@ -412,7 +412,7 @@ public class Game implements Runnable {
   public void checkField(User user, int field) {
     if (field == 3 || field == 55) {
       pause(1500);
-      music("src/main/resources/correct.wav");
+      music("/correct.wav");
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder up");
       if (field == 3) { // 1 + 55 ladder up
         changePosition(user, 16 - field);
@@ -421,7 +421,7 @@ public class Game implements Runnable {
       }
     } else if (field == 21 || field == 28 || field == 52 || field == 57 || field == 80 || field == 87) {
       pause(1500);
-      music("src/main/resources/wrong.wav");
+      music("/wrong.wav");
       lobbyBroadcastToPlayer(user.getUsername() + ": ladder down");
       if (field == 21) { // 20 - 87 ladder down
         changePosition(user, 18 - field);
@@ -442,9 +442,9 @@ public class Game implements Runnable {
       String[] arr = card.split(" ", 2);
       int positionToChange = Integer.parseInt(arr[0]);
       if (positionToChange > 0) {
-        music("src/main/resources/correct.wav");
+        music("/correct.wav");
       } else {
-        music("src/main/resources/wrong.wav");
+        music("/wrong.wav");
       }
       String textCard = arr[1];
       lobbyBroadcastToPlayer("§" + user.getUsername() + " draws an action card:" + "§" + textCard + "§");
@@ -461,7 +461,7 @@ public class Game implements Runnable {
       for (int i = 0; i < maxTimeToAnswerQuiz; i++) {
         if (quizAnsweredCorrect) {
           lobbyBroadcastToPlayer(user.getUsername() + "'s answer: " + quiz[1] + " is correct.");
-          music("src/main/resources/correct.wav");
+          music("/correct.wav");
           changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]));
           quizAnsweredCorrect = false;
           break;
@@ -470,17 +470,17 @@ public class Game implements Runnable {
           lobbyBroadcastToPlayer(user.getUsername() + "'s answer is wrong.");
           if (user.isFirstTime()) {
             user.setFirstTime(false);
-            music("src/main/resources/wrong.wav");
+            music("/wrong.wav");
             changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]) * -1);
           } else {
             gameOver(user);
-            sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.MUSIC, "src/main/resources/nooh.wav");
+            sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.MUSIC, "/nooh.wav");
           }
           break;
         } else {
           if (maxTimeToAnswerQuiz - i == 5000) {
             lobbyBroadcastToPlayer(userToAnswerQuiz.getUsername() +" has 5 seconds left to answer");
-            music("src/main/resources/wetClick.wav");
+            music("/wetClick.wav");
           }
           pause(1);
         }
@@ -572,7 +572,7 @@ public class Game implements Runnable {
    * Closes the game and sets the lobby's status to finished
    */
   public void closeGame() {
-    music("src/main/resources/click.wav");
+    music("/click.wav");
     lobbyBroadcastToPlayer("All time leaders:§" + highScore.getTop10("global"));
     sendToClient.serverBroadcast(CommandsToClient.PRINTWINNERSGUI, highScore.getTop10("global"));
     if (highScoreGame.getTop10("game").length() > 0) {
