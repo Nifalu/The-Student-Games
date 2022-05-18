@@ -9,6 +9,11 @@ import java.io.File;
  * MusicPlayer plays the given music from folder resources
  */
 public class MusicPlayer {
+    /**
+     * Plays the given music
+     *
+     * @param music Music to be played
+     */
     public void play(String music) {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(music).getAbsoluteFile());
