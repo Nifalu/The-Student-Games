@@ -63,8 +63,6 @@ public class IntroController implements Initializable {
 
         Main.setIntroController(this);
         loadMedia();
-        //file = new File("src/main/resources/Intro4.1.mp4");
-        //media = new Media(file.toURI().toString());
     }
 
 
@@ -75,6 +73,9 @@ public class IntroController implements Initializable {
         mediaPlayer.play();
     }
 
+    /**
+     * loads media (intro)
+     */
     public void loadMedia() {
         media = new Media(getClass().getResource("/Intro4.1.mp4").toExternalForm());
 

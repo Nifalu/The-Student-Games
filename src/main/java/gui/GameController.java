@@ -339,16 +339,22 @@ public class GameController implements Initializable {
 
     if (msg.startsWith("/nick")) {
       String[] split = msg.split(" ", 2);
-      String newName = split[1];
-      sendToServer.send(CommandsToServer.NICK, newName);
+      if (split[1].length() > 0) {
+        String newName = split[1];
+        sendToServer.send(CommandsToServer.NICK, newName);
+      }
     } else if (msg.startsWith("/winnerwinnerchickendinner")) {
       String[] input = msg.split(" ", 2);
-      sendToServer.send(CommandsToServer.WWCD, input[1]);
+      if (input[1].length() > 0) {
+        sendToServer.send(CommandsToServer.WWCD, input[1]);
+      }
     } else if (msg.startsWith("/whisper")) {
       String[] split = msg.split(" ", 3);
       if (split.length > 1) {
-        String whisperMsg = split[1] + "-" + split[2];
-        sendToServer.send(CommandsToServer.WHISPER, whisperMsg);
+        if (split[1].length() > 0 && split[2].length() > 0) {
+          String whisperMsg = split[1] + "-" + split[2];
+          sendToServer.send(CommandsToServer.WHISPER, whisperMsg);
+        }
       } else {
         chat.appendText("You cannot whisper nothing!");
       }

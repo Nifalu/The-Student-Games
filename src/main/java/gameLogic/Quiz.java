@@ -46,7 +46,7 @@ public class Quiz {
     questionList[8][0] = "Wie viele Studierende und Doktorierende" + "§" + "hat es an der Theologischen Fakultät? (HS21)§A: 98, B: 102, C: 108, D: 110";
     questionList[8][1] = "B";
     questionList[8][2] = "5";
-    questionList[9][0] = "Was kann man an der Uni Basel nicht studieren?§A: Architecktur, B: Hispanistik, C: Kulturanthropologie, D: Soziologie";
+    questionList[9][0] = "Was kann man an der Uni Basel nicht studieren?§A: Architektur, B: Hispanistik, C: Kulturanthropologie, D: Soziologie";
     questionList[9][1] = "A";
     questionList[9][2] = "5";
     questionList[10][0] = "Wann beginnen die Vorlesungen im HS22?§A: 18.09.2022, B: 19.09.2022, C: 20.09.2022, D: 21.09.2022";
