@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CharSelectionController">
+<Pane xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CharSelectionController">
    <children>
       <ImageView fitHeight="736.0" fitWidth="593.0" pickOnBounds="true" preserveRatio="true">
          <image>
