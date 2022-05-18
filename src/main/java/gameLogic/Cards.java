@@ -30,6 +30,7 @@ public class Cards {
         "4 Deine Eltern unterstützen dich finanziell, so dass du nicht arbeiten musst.",
         "-4 Du hast dich für Analysis statt Mathematische Methoden entschieden. Gehe 4 Felder zurück.",
         "-6 Das Leben besteht aus Höhen und Tiefen," + "§" + "vor allem während des Studiums. Gehe 6 Schritte zurück.",
+        "-10 Du erfährst 10 Stunden vor der Abgabe, " + "§" + "dass du javazoom nicht benutzen darfst.",
         "5 Ein Gruppenmitglied wechselt im Sommer auf Wirtschaft." + "§" + "Jedoch ist er ein Ehrenmann und gibt 100% für die Gruppenarbeit. Gehe 5 Felder vor."
     };
 
