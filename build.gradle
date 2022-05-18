@@ -58,8 +58,6 @@ dependencies {
      */
     implementation 'org.openjfx:javafx-controls:11.0.2'
 
-    implementation 'javazoom:jlayer:1.0.1'
-
     implementation 'org.openjfx:javafx-media:11.0.2'
 
     // JUNIT

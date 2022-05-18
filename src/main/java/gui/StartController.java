@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import utility.io.SendToServer;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -77,7 +76,7 @@ public class StartController implements Initializable {
    * switches the client over to the menu scene, when their happy with their username
    */
   public void nameYes() {
-    music("audio/whistle.mp3");
+    music("src/main/resources/whistle.wav");
     switchToMenu();
   }
 
@@ -87,6 +86,6 @@ public class StartController implements Initializable {
    */
   public void music(String music) {
     MusicPlayer mp = new MusicPlayer();
-    mp.startMusic(music);
+    mp.play(music);
   }
 }
