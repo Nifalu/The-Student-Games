@@ -474,7 +474,7 @@ public class Game implements Runnable {
             changePosition(userToAnswerQuiz, Integer.parseInt(quiz[2]) * -1);
           } else {
             gameOver(user);
-            sendToClient.send(userToAnswerQuiz.getClienthandler(), CommandsToClient.MUSIC, "/nooh.wav");
+            music("/nooh.wav");
           }
           break;
         } else {
