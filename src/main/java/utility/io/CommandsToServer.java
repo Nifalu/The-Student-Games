@@ -192,4 +192,7 @@ public enum CommandsToServer {
    * useful if the user is unknown to the class which wants to enable their character
    */
   ENABLECURRENTCHARGUI,
+
+  SKANDAL,
+
 }

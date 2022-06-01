@@ -4,8 +4,6 @@ import client.ClientManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-
 /**
  * Sends a message to the server while also checking if the Command is valid.
  */
@@ -147,6 +145,10 @@ public class SendToServer {
 
       case WWCD:
         sendTo("WWCD--" + msg);
+        break;
+
+      case SKANDAL:
+        sendTo("SKANDAL--" + msg);
         break;
 
       case ECHO: // Sends a message to be echoed by the server

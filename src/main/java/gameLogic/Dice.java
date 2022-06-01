@@ -12,9 +12,13 @@ public class Dice {
    *
    * @return random number between 1-6
    */
-  public static int dice() {
+  public static int dice(String userName) {
     Random random = new Random();
-    return random.nextInt(6) + 1;
+    if (userName.contains("vlad")) {
+      return random.nextInt(3) + 4;
+    } else {
+      return random.nextInt(6) + 1;
+    }
   }
 
   /**

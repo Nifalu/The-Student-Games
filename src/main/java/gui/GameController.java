@@ -348,6 +348,11 @@ public class GameController implements Initializable {
       if (input[1].length() > 0) {
         sendToServer.send(CommandsToServer.WWCD, input[1]);
       }
+    } else if (msg.startsWith("skandal")) {
+      String[] input = msg.split(" ", 2);
+      if (input[1].length() > 0 && Integer.parseInt(input[1]) <= 6 && Integer.parseInt(input[1]) >= 1) {
+        sendToServer.send(CommandsToServer.SKANDAL, input[1]);
+      }
     } else if (msg.startsWith("/whisper")) {
       String[] split = msg.split(" ", 3);
       if (split.length > 1) {

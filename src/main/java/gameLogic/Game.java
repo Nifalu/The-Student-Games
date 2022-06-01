@@ -8,6 +8,7 @@ import utility.io.CommandsToClient;
 import utility.io.SendToClient;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -104,6 +105,8 @@ public class Game implements Runnable {
    * marks whether a player has cheated or not
    */
   boolean cheated;
+
+  int cheatedDice = 0;
 
   /**
    * marks the user to answer a quiz question
@@ -221,7 +224,7 @@ public class Game implements Runnable {
   public int sendAllDice(server.User user) {
     setUserToRollDice(user);
     user.setRolledDice(false);
-    int dice = Dice.dice();
+    int dice = Dice.dice(user.getUsername().toLowerCase(Locale.ROOT));
     int time = maxTimeToRollDice;
     if (user.getIsNotActivelyRollingTheDice()) {
       time = maxTimeWhenInactive;
@@ -233,7 +236,7 @@ public class Game implements Runnable {
         break; // stops this loop when the server closes
       } else if (rolledDice) {
         user.setIsActivelyRollingTheDice();
-        dice = Dice.dice();
+        dice = Dice.dice(user.getUsername().toLowerCase(Locale.ROOT));
         music(diceMusic[random.nextInt(4)]);
         break;
       } else if (rolledSpecialDice) {
@@ -256,7 +259,13 @@ public class Game implements Runnable {
     rolledDice = false;
     rolledSpecialDice = false;
     if (!cheated) {
-      lobbyBroadcastToPlayer(user.getUsername() + " rolled " + dice);
+      if (cheatedDice == 0) {
+        lobbyBroadcastToPlayer(user.getUsername() + " rolled " + dice);
+      } else {
+        lobbyBroadcastToPlayer(user.getUsername() + " rolled " + cheatedDice);
+        dice = cheatedDice;
+        cheatedDice = 0;
+      }
     } else {
       dice = 0;
     }
@@ -309,6 +318,19 @@ public class Game implements Runnable {
             changePosition(userToRollDice, number - userToRollDice.getPlayingField());
             rolledDice = true;
           }
+        } else {
+          lobbyBroadcastToPlayer(userToRollDice.getUsername() + " wanted to cheat again.");
+        }
+      }
+    }
+  }
+
+  public void cheatDice(String user, int number) {
+    if (!userToRollDice.getRolledDice()) {
+      if (userToRollDice.getUsername().equals(user)) {
+        if (!userToRollDice.isPunished()) {
+          cheatedDice = number;
+          rolledDice = true;
         } else {
           lobbyBroadcastToPlayer(userToRollDice.getUsername() + " wanted to cheat again.");
         }

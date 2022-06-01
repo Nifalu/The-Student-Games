@@ -332,6 +332,9 @@ public class Lobby {
             case "wwcd": // cheat code
               game.cheat(answer[1], Integer.parseInt(answer[2]));
               break;
+            case "skandal":
+              game.cheatDice(answer[1], Integer.parseInt(answer[2]));
+              break;
           }
         }
       }

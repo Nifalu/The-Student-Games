@@ -276,6 +276,10 @@ public class ServerReceive implements Runnable {
               msg + " is not a number");
         }
 
+      case SKANDAL:
+        client.user.getLobby().receiveFromProtocol.setMessage("skandal§" + client.user.getUsername() + "§" + msg);
+        break;
+
       case QUIZ: // speaks to the quiz
         client.user.getLobby().receiveFromProtocol.setMessage("quiz§" + client.user.getUsername() + "§" + msg);
         break;
