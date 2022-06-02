@@ -508,6 +508,8 @@ public class Game implements Runnable {
         }
       }
       quizOngoing = false;
+    } else if (field == 69) {
+      music("/69.wav");
     } else if (field > 88) { // This is the end of the game for a player
       lobbyBroadcastToPlayer(user.getUsername() + " has successfully graduated from university");
     }
