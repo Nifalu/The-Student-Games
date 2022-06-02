@@ -6,6 +6,8 @@ import utility.io.CommandsToClient;
 import utility.io.SendToClient;
 import utility.io.ReceiveFromProtocol;
 
+import java.util.Locale;
+
 /**
  * This class handles all methods related to setting and changing usernames as well as checking
  * if a certain name is available and if not propose an alternative.
@@ -86,6 +88,9 @@ public class Name {
     preferredName = preferredName.replaceAll("!", "_");
     preferredName = preferredName.replaceAll("§", "_");
     preferredName = preferredName.replaceAll("-1", "_");
+    if (preferredName.toLowerCase(Locale.ROOT).startsWith("andr")) {
+      preferredName = "Lori";
+    }
     if (currentName.equals(preferredName)) {
       sendToClient.send(clientHandler, CommandsToClient.PRINT, ("This is already your name"));
     } else if (nameAlreadyExists(preferredName)) { // Wenn preferredName bereits exisitert:
