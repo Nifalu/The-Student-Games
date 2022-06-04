@@ -134,7 +134,7 @@ public class GameServer {
     // Send goodbye and disconnect everyone
     sendToClient.serverBroadcast(CommandsToClient.CHAT, "[SERVER] SHUTTING DOWN");
     try {
-      for (int i = 0; i >= 0; i--) {
+      for (int i = 10; i >= 0; i--) {
         sendToClient.serverBroadcast(CommandsToClient.CHAT, "[SERVER] " + i);
         TimeUnit.SECONDS.sleep(1);
       }
