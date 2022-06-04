@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +46,11 @@ public class GameServer {
    * SendToClient object which is used to communicate with the server
    */
   private static final SendToClient sendToClient = new SendToClient();
+
+  /**
+   * Time Format
+   */
+  private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
 
 
@@ -88,13 +96,16 @@ public class GameServer {
       ServerManager.createMainLobby();
 
       logger.info("server is running! " + InetAddress.getLocalHost() + ":" + port);
-      System.out.println("server created: " + InetAddress.getLocalHost() + ":" + port);
+      System.out.println("[" +dtf.format(LocalDateTime.now()) +"] " +"server created: " + InetAddress.getLocalHost() + ":" + port);
       System.out.println("server is running and waiting for a connection... ");
 
       int i = 0;
 
       while (isonline) {
         Socket socket = serverSocket.accept(); // program waits here until someone connects !
+        System.out.println("NEW CONNECTION FROM: ");
+        System.out.println();
+        System.out.println("[" +dtf.format(LocalDateTime.now()) +"] " + "IP: " + socket.getRemoteSocketAddress());
         // Each User gets his own thread
         if (isonline) {
           ClientHandler clientHandler = new ClientHandler(socket);
